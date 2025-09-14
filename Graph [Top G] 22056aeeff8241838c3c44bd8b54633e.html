@@ -1,0 +1,3705 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Graph [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="22056aee-ff82-4183-8c3c-44bd8b54633e" class="page sans"><header><h1 class="page-title"><strong>Graph [Top G]</strong></h1><p class="page-description"></p></header><div class="page-body"><h1 id="ae5f8c1a-0a31-490f-a92f-70b9fcb07b5b" class=""><strong>DSA Quick Revision</strong></h1><ul id="095fa96a-0ab4-4428-874e-209492cac6bf" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-i/number-of-islands">Number of Islands [Multisource BFS]</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0f2fe109-85f2-4aca-afa3-953f6e393325" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to find the number of islands.
+    public int numIslands(char[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        int islandCount = 0;
+
+        // Traverse the grid
+        for (int i = 0; i &lt; rows; i++) {
+            for (int j = 0; j &lt; cols; j++) {
+                // Check if the cell is unvisited and represents land
+                if (!visited[i][j] &amp;&amp; grid[i][j] == &#x27;1&#x27;) {
+                    // Explore the island using BFS
+                    bfs(grid, visited, i, j);
+                    // Increment the count as a new island is found
+                    islandCount++;
+                }
+            }
+        }
+        return islandCount;
+    }
+
+    static class Pair {
+        int row;
+        int col;
+
+        Pair(int r, int c) {
+            row = r;
+            col = c;
+        }
+    }
+
+    // Helper function for BFS traversal
+    public static void bfs(char[][] grid, boolean visited[][], int startRow, int startCol) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        Queue&lt;Pair&gt; queue = new LinkedList&lt;&gt;();
+        queue.add(new Pair(startRow, startCol));
+        visited[startRow][startCol] = true;
+
+        while (!queue.isEmpty()) {
+            Pair current = queue.poll();
+            int currentRow = current.row;
+            int currentCol = current.col;
+
+            // Explore all 8 directions
+            for (int i = -1; i &lt;= 1; i++) {
+                for (int j = -1; j &lt;= 1; j++) {
+                    int newRow = currentRow + i;
+                    int newCol = currentCol + j;
+
+                    // Check if the new position is within bounds and represents unvisited land
+                    if (newRow &gt;= 0 &amp;&amp; newCol &gt;= 0 &amp;&amp; newRow &lt; rows &amp;&amp; newCol &lt; cols &amp;&amp; !visited[newRow][newCol]
+                            &amp;&amp; grid[newRow][newCol] == &#x27;1&#x27;) {
+                        // Mark as visited and add to the queue for further exploration
+                        visited[newRow][newCol] = true;
+                        queue.add(new Pair(newRow, newCol));
+                    }
+                }
+            }
+        }
+    }
+}</code></pre></details></li></ul><ul id="6e8460ee-32f2-4a5e-8a47-c35135355c99" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/rotten-oranges">Rotten Oranges</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="df84c29a-8b07-49a4-9f6c-519889d9d525" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    class Orange {
+        int row;
+        int col;
+        int time;
+
+        Orange(int r, int c, int t) {
+            row = r;
+            col = c;
+            time = t;
+        }
+    }
+
+    public int orangesRotting(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int[][] visited = new int[rows][cols];
+        Queue&lt;Orange&gt; queue = new LinkedList&lt;&gt;();
+
+        int freshOrangesCount = 0;
+
+        // Initialize the queue with rotten oranges and count fresh oranges
+        for (int i = 0; i &lt; rows; i++) {
+            for (int j = 0; j &lt; cols; j++) {
+                if (grid[i][j] == 1) {
+                    freshOrangesCount++;
+                } else if (grid[i][j] == 2) {
+                    queue.add(new Orange(i, j, 0));
+                    visited[i][j] = 2; //Jo bhi queue mai push hoga voh visited mark hoga.
+                }
+            }
+        }
+
+        int maxTime = 0;
+        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int rottenOrangesCount = 0;
+
+        while (!queue.isEmpty()) {
+            Orange currentOrange = queue.poll();
+            int currentRow = currentOrange.row;
+            int currentCol = currentOrange.col;
+            int currentTime = currentOrange.time;
+            maxTime = Math.max(currentTime, maxTime);
+
+            // Explore neighboring oranges
+            for (int[] dir : directions) {
+                int newRow = currentRow + dir[0];
+                int newCol = currentCol + dir[1];
+
+                // Check if the neighbor is within bounds and is a fresh orange
+                if (newRow &gt;= 0 &amp;&amp; newCol &gt;= 0 &amp;&amp; newRow &lt; rows &amp;&amp; newCol &lt; cols &amp;&amp;
+                    visited[newRow][newCol] == 0 &amp;&amp; grid[newRow][newCol] == 1) {
+                    visited[newRow][newCol] = 2;
+                    queue.add(new Orange(newRow, newCol, currentTime + 1));
+                    rottenOrangesCount++; // Imp: why we whote this here only and not inside while?
+                }
+            }
+        }
+
+        // Check if all fresh oranges were reached
+        if (rottenOrangesCount == freshOrangesCount) {
+            return maxTime;
+        }
+
+        // Some fresh oranges couldn&#x27;t be reached
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="9ed17786-83e4-4acd-b8b7-6216e7907644" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-iii/course-schedule-ii">Course Schedule 2 - Kahn’s Algorithm [DAG Only] [Directed Graph Cycle]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4bbef488-e2c4-48b5-bd66-568cd71a96f9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int[] findOrder(int V, int[][] prerequisites) {
+				// Topo Sort: For every directed edge u to v, u must appear before v.
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; V; i++) {
+            adj.add(new ArrayList&lt;&gt;());
+        }
+
+        for (int i = 0; i &lt; prerequisites.length; i++) {
+            int course = prerequisites[i][0];
+            int prerequisite = prerequisites[i][1];
+            adj.get(prerequisite).add(course);
+        }
+				// Abhi tak toh sirf Graph banaya hai bhai, lol.
+        int[] indegree = new int[V]; // indegree naam ka array bana, size = Vertices.
+        for (int i = 0; i &lt; V; i++) {
+            for (int nei : adj.get(i)) {
+                indegree[nei]++; // graph ki saari Vertex mai jaakr unke neighbours ki indegree ++ karde.
+            }
+        }
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;(); // Queue bana for BFS : Topo Sort is BFS Only.
+        for (int i = 0; i &lt; V; i++) { // indegree array pr loop chala and jiski indegree 0 hai uss vtx ko queue mai push kar.
+            if (indegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        int[] topo = new int[V]; // ek array bana topo sort store karne ke liye, same size.
+        int idx = 0; // ek idx bana topo sort array ke liye.
+
+        while (!queue.isEmpty()) { // BFS toh tujhe aata hi hai.
+            int curr = queue.poll();
+            topo[idx++] = curr; // jo node pop kiya usko topo array mai daal.
+						
+            for (int nei : adj.get(curr)) { // adjacent neighbours ke liye loop chala bfs wala.
+                indegree[nei]--; // neighbour ki indegree -- kar.
+                if (indegree[nei] == 0) {
+                    queue.add(nei); // -- karke agar indegree 0 ho jaye toh isko bhi queue mai daal de.
+                }
+            }
+        }
+
+        if (idx == V) { 
+            return topo;
+        } else { // if idx!=V there is a cycle.
+            return new int[] {};
+        }
+    }
+}</code></pre></details></li></ul><ul id="21e0b7b2-80b6-4dce-a8f9-86032f28cd85" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-iv/word-ladder-i">Word Ladder 1</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="38bb2de4-4985-4663-816b-eb79fb136381" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    class WordPair {
+        String word;
+        int steps;
+
+        WordPair(String w, int s) {
+            word = w;
+            steps = s;
+        }
+    }
+
+    public int wordLadderLength(String beginWord, String endWord, List&lt;String&gt; wordList) {
+        Queue&lt;WordPair&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;String&gt; wordSet = new HashSet&lt;&gt;();
+
+        // Add words to the set for efficient lookup
+        for (String word : wordList) {
+            wordSet.add(word);
+        }
+        
+        // Initialize the queue with the starting word and steps
+        queue.add(new WordPair(beginWord, 1)); // putting 1 because beginWord is also count as transformation in this Que.
+
+        // whenever we put something in queue, we mark it visited, lol.
+        wordSet.remove(beginWord); // here marking visited means removing from set xD.
+
+        while (!queue.isEmpty()) { //We are using BFS baby XD.
+            WordPair currentWordPair = queue.poll();
+            String currentWord = currentWordPair.word;
+            int currentSteps = currentWordPair.steps;
+
+            // Check if the current word is the target word
+            if (currentWord.equals(endWord)) {
+                return currentSteps;
+            }
+
+            // Explore possible transformations of the current word
+            for (int i = 0; i &lt; currentWord.length(); i++) {
+                char[] wordArray = currentWord.toCharArray(); // Why we did this here only?
+
+                // Try replacing each character with all lowercase letters
+                for (char ch = &#x27;a&#x27;; ch &lt;= &#x27;z&#x27;; ch++) {
+                    wordArray[i] = ch;
+                    String newWord = new String(wordArray); //Note: you can pass char Array in string constructor to get string.
+
+                    // Check if the transformed word is in the word set
+                    if (wordSet.contains(newWord)) {
+                        // Remove the word from the set to avoid duplicates
+                        wordSet.remove(newWord);
+                        queue.add(new WordPair(newWord, currentSteps + 1));
+                    }
+                }
+            }
+        }
+
+        // No transformation sequence found
+        return 0;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-80b8-bbb0-e5fb2ec8924c" class="toggle"><li><details open=""><summary><mark class="highlight-default">Evaluate Division</mark></summary></details></li></ul><ul id="2de358cc-82bc-4323-aab9-c3502d6528f0" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/clone-graph/">Clone Graph</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c8418aad-c468-48dd-815e-49a8bf3e5e15" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+	private Map&lt;Node, Node&gt; visited = new HashMap&lt;&gt;();
+
+	public Node cloneGraph(Node node) {
+		if (node == null) {
+			return null;
+		}
+
+		if (visited.containsKey(node)) {
+			return visited.get(node);
+		}
+
+		Node clone = new Node(node.val);
+		visited.put(node, clone);
+
+		for (Node nei: node.neighbors) {
+			clone.neighbors.add(cloneGraph(nei));
+		}
+
+		return clone;
+	}
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-801f-ac24-d65894af171c" class="toggle"><li><details open=""><summary><mark class="highlight-default">Max Area of Island</mark></summary></details></li></ul><ul id="035aa63a-8782-4bf2-b955-7fb8851d8dd9" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/alient-dictionary">Alien Dictionary</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d6cee4a0-21b5-40f9-a17a-578cca28af16" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+	public static String findOrder(String[] dict, int N, int K) {
+		// Create an adjacency list to represent the directed graph of characters.
+		List &lt;List&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+
+		for (int i = 0; i &lt; K; i++) {
+			adj.add(new ArrayList&lt;&gt;());
+		}
+
+		// Populate the adjacency list based on the given dictionary of words.
+		for (int i = 0; i &lt; N - 1; i++) {
+			String word1 = dict[i];
+			String word2 = dict[i + 1];
+			int len = Math.min(word1.length(), word2.length());
+
+			for (int ptr = 0; ptr &lt; len; ptr++) {
+				if (word1.charAt(ptr) != word2.charAt(ptr)) {
+					adj.get(word1.charAt(ptr) - &#x27;a&#x27;).add(word2.charAt(ptr) - &#x27;a&#x27;);
+					// Break once the first differing character is found.
+					break; // ye matt bhoolna
+				}
+			}
+		}
+
+		// Perform topological sort to get the order of characters.
+		List&lt;Integer&gt; topo = topoSort(K, adj);
+
+		// Convert the topological order to a string.
+		StringBuilder result = new StringBuilder();
+
+		for (int it: topo) {
+			result.append((char)(it + &#x27;a&#x27;));
+		}
+
+		return result.toString();
+	}
+
+	// Helper function for topological sort.
+	private static List&lt;Integer&gt; topoSort(int V, List &lt;List&lt;Integer&gt;&gt; adj) {
+		int indegree[] = new int[V];
+
+		for (int i = 0; i &lt; V; i++) {
+			for (int it: adj.get(i)) {
+				indegree[it]++;
+			}
+		}
+
+		Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();
+
+		for (int i = 0; i &lt; V; i++) {
+			if (indegree[i] == 0) {
+				q.add(i);
+			}
+		}
+
+		List&lt;Integer&gt; topo = new ArrayList&lt;&gt;();
+
+		while (!q.isEmpty()) {
+			int node = q.poll();
+			topo.add(node);
+
+			for (int it: adj.get(node)) {
+				indegree[it]--;
+
+				if (indegree[it] == 0)
+					q.add(it);
+			}
+		}
+
+		return topo;
+	}
+}</code></pre></details></li></ul><ul id="92901771-e2f5-4544-9fc8-fae6934bd9b4" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-vi/making-a-large-island">Making A Large Island</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="49cac98e-aa55-427d-8af0-a263ad1dad70" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    int[] par;
+    int[] size;
+
+    // Initialize Union-Find structure
+    void init(int n) {
+        par = new int[n];
+        size = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            par[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    // Find with path compression
+    int find(int x) {
+        if (x == par[x])
+            return x;
+        return par[x] = find(par[x]);
+    }
+
+    // Union by size
+    void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+        if (parA == parB)
+            return;
+
+        if (size[parA] &lt; size[parB]) {
+            par[parA] = parB;
+            size[parB] += size[parA];
+        } else {
+            par[parB] = parA;
+            size[parA] += size[parB];
+        }
+    }
+
+    // Check if cell is within grid boundaries
+    boolean isValid(int r, int c, int n) {
+        return r &gt;= 0 &amp;&amp; c &gt;= 0 &amp;&amp; r &lt; n &amp;&amp; c &lt; n;
+    }
+
+    int[][] dirs = { { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } };
+
+    public int largestIsland(int[][] grid) {
+        int n = grid.length;
+        init(n * n);
+
+        // Union-Find preprocessing
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (grid[i][j] == 0)
+                    continue;
+                for (int[] dir : dirs) {
+                    int nr = dir[0] + i;
+                    int nc = dir[1] + j;
+                    if (isValid(nr, nc, n) &amp;&amp; grid[nr][nc] == 1) {
+                        int node = i * n + j;
+                        int neiNode = nr * n + nc;
+                        union(node, neiNode);
+                    }
+                }
+            }
+        }
+
+        // Trying to convert each 0 to 1 and see the size of the connected component
+        int max = 0;
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (grid[i][j] == 1)
+                    continue;
+                Set&lt;Integer&gt; components = new HashSet&lt;&gt;();
+
+                for (int[] dir : dirs) {
+                    int nr = dir[0] + i;
+                    int nc = dir[1] + j;
+                    if (isValid(nr, nc, n) &amp;&amp; grid[nr][nc] == 1) {
+                        components.add(find(nr * n + nc)); // Add only top parent
+                    }
+                }
+                int totalSize = 0;
+                for (int node : components) {
+                    totalSize+= size[node];
+                }
+                max = Math.max(max, totalSize+ 1); // +1 for the converted cell
+            }
+        }
+
+        // If all cells are 1, or max is 0 (no 0s were converted to 1s)
+        for (int cellNo = 0; cellNo &lt; n * n; cellNo++) {
+            max = Math.max(max, size[find(cellNo)]);
+        }
+
+        return max;
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-804b-8f92-fab52e8d6220" class="toggle"><li><details open=""><summary><mark class="highlight-default">Shortest Distance from All Buildings</mark></summary></details></li></ul><ul id="22fb255d-72ff-80d3-b4a6-f6e51b5760fc" class="toggle"><li><details open=""><summary><mark class="highlight-default">Open the Lock</mark></summary></details></li></ul><ul id="22fb255d-72ff-800c-b834-f36a512008d2" class="toggle"><li><details open=""><summary><mark class="highlight-default">Bus Routes</mark></summary></details></li></ul><ul id="e4a10376-c6fe-4bd2-9b0c-4eeda5697f6b" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/cheapest-flight-within-k-stops">Cheapest Flights Within K Stops</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a42bec13-3852-465f-ba69-f78386377a72" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int CheapestFlight(int n, int[][] edges, int src, int dst, int k) {
+        // Adjacency list to represent the graph
+        ArrayList&lt;ArrayList&lt;Edge&gt;&gt; adjacencyList = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; n; i++) {
+            adjacencyList.add(new ArrayList&lt;&gt;());
+        }
+
+        // Adding edges to the adjacency list
+        for (int[] edge : edges) {
+            adjacencyList.get(edge[0]).add(new Edge(edge[1], edge[2]));
+        }
+
+        // Array to store minimum distances from source to each node
+        int[] minDistances = new int[n];
+        Arrays.fill(minDistances, Integer.MAX_VALUE);
+        minDistances[src] = 0;
+
+        // Queue for BFS traversal
+        Queue&lt;Triple&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer(new Triple(0, src, 0));
+
+        // BFS traversal
+        while (!queue.isEmpty()) {
+            Triple front = queue.poll();
+
+            // Check if steps exceed the limit
+            if (front.steps &gt; k) {
+                continue;
+            }
+
+            // Explore neighbors and update minimum distances
+            for (Edge neighbor : adjacencyList.get(front.node)) {
+                int totalDistance = front.distance + neighbor.weight;
+
+                // Update if the new distance is smaller
+                if (totalDistance &lt; minDistances[neighbor.destination]) {
+                    minDistances[neighbor.destination] = totalDistance;
+                    queue.offer(new Triple(front.steps + 1, neighbor.destination, totalDistance));
+                }
+            }
+        }
+
+        // If destination is not reachable, return -1; otherwise, return the minimum
+        // distance
+        return minDistances[dst] == Integer.MAX_VALUE ? -1 : minDistances[dst];
+    }
+
+    // Pair class to represent an edge in the graph
+    class Edge {
+        int destination;
+        int weight;
+
+        public Edge(int destination, int weight) {
+            this.destination = destination;
+            this.weight = weight;
+        }
+    }
+
+    // Triple class to represent a step, node, and distance during BFS
+    class Triple {
+        int steps;
+        int node;
+        int distance;
+
+        public Triple(int steps, int node, int distance) {
+            this.steps = steps;
+            this.node = node;
+            this.distance = distance;
+        }
+    }
+
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8022-b59d-ef4888ecf2fb" class="toggle"><li><details open=""><summary><mark class="highlight-default">Reconstruct Itinerary</mark></summary></details></li></ul><ul id="22fb255d-72ff-8054-a5a3-e66ca8f5362a" class="toggle"><li><details open=""><summary><mark class="highlight-default">Longest Increasing Path in a Matrix</mark></summary></details></li></ul><ul id="18bb255d-72ff-8040-aa75-e491893c1292" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-ii/number-of-distinct-islands">Number of distinct islands</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="18bb255d-72ff-8011-aeee-c55162bd2d95" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int countDistinctIslands(int[][] grid) {
+        int rows = grid.length, cols = grid[0].length;
+        Set&lt;Set&lt;String&gt;&gt; uniqueIslands = new HashSet&lt;&gt;();
+        boolean[][] visited = new boolean[rows][cols];
+
+        for (int i = 0; i &lt; rows; i++) {
+            for (int j = 0; j &lt; cols; j++) {
+                if (grid[i][j] == 1 &amp;&amp; !visited[i][j]) {
+                    Set&lt;String&gt; shape = new HashSet&lt;&gt;();
+                    dfs(grid, visited, i, j, i, j, shape);
+                    uniqueIslands.add(shape);
+                }
+            }
+        }
+        return uniqueIslands.size();
+    }
+
+    private void dfs(int[][] grid, boolean[][] visited, int i, int j, int baseX, int baseY, Set&lt;String&gt; shape) {
+        if (i &lt; 0 || j &lt; 0 || i &gt;= grid.length || j &gt;= grid[0].length || grid[i][j] == 0 || visited[i][j]) {
+            return;
+        }
+
+        visited[i][j] = true;
+        shape.add((i - baseX) + &quot;,&quot; + (j - baseY)); // Store relative position
+
+        // Explore all 4 directions
+        dfs(grid, visited, i + 1, j, baseX, baseY, shape); // Down
+        dfs(grid, visited, i - 1, j, baseX, baseY, shape); // Up
+        dfs(grid, visited, i, j + 1, baseX, baseY, shape); // Right
+        dfs(grid, visited, i, j - 1, baseX, baseY, shape); // Left
+    }
+
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80c1-bab7-df366ee1a618" class="toggle"><li><details open=""><summary><mark class="highlight-default">Walls and Gates</mark></summary></details></li></ul><ul id="ac4cb929-fd90-4edc-896a-23f697e25731" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/hard-problems-ii/accounts-merge">Accounts Merge</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="aa89b62c-acb8-41d4-8452-33b717b20815" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+	public List &lt; List&lt;String&gt;&gt; accountsMerge(List &lt; List&lt;String&gt;&gt; accounts) {
+		int n = accounts.size();
+
+		// Initialize Disjoint Set
+		DisjointSet ds = new DisjointSet(n);
+
+		// Map to store the association between emails and their corresponding nodes
+		HashMap&lt;String, Integer&gt; mapMailNode = new HashMap&lt;String, Integer&gt;();
+
+		// Step 1: Build associations and perform unions
+		for (int i = 0; i &lt; n; i++) {
+			for (int j = 1; j &lt; accounts.get(i).size(); j++) {
+				String mail = accounts.get(i).get(j);
+
+				// If the email is encountered for the first time
+				if (!mapMailNode.containsKey(mail)) {
+					mapMailNode.put(mail, i);
+				} else {
+					// Union the current node with the node associated with the existing email
+					ds.union(i, mapMailNode.get(mail));
+				}
+			}
+		}
+
+		// Step 2: Build mergedMail array to group emails based on their root nodes
+		ArrayList&lt;String&gt; [] mergedMail = new ArrayList[n];
+
+		for (int i = 0; i &lt; n; i++)
+			mergedMail[i] = new ArrayList&lt;String&gt;();
+
+		for (Map.Entry&lt;String, Integer&gt; it: mapMailNode.entrySet()) {
+			String mail = it.getKey();
+			int node = ds.find(it.getValue()); // Top G: Important Step hai ye.
+			mergedMail[node].add(mail);
+		}
+
+		// Step 3: Construct the final result
+		List &lt;List&lt;String&gt;&gt; ans = new ArrayList&lt;&gt;();
+
+		for (int i = 0; i &lt; n; i++) {
+			if (mergedMail[i].size() == 0)
+				continue;
+
+			// Sort the emails within each group for consistency
+			Collections.sort(mergedMail[i]);
+
+			// Build the merged account information
+			List&lt;String&gt; temp = new ArrayList&lt;&gt;();
+			temp.add(accounts.get(i).get(0)); // Name (first element in each account)
+			for (String it: mergedMail[i]) {
+				temp.add(it); // Append sorted emails
+			}
+
+			ans.add(temp); // Add the merged account to the result
+		}
+
+		return ans;
+	}
+
+	class DisjointSet {
+		// Array to store parent nodes
+		int par[];
+
+		// Array to store rank for rank-based optimization
+		int rank[];
+
+		// Initialization: Set each element as a parent of itself and rank as 0
+		public DisjointSet(int n) {
+			par = new int[n];
+			rank = new int[n];
+
+			for (int i = 0; i &lt; n; i++) {
+				par[i] = i;
+				rank[i] = 0;
+			}
+		}
+
+		// Find operation with path compression
+		public int find(int x) {
+			if (x == par[x])
+				return x;
+			return par[x] = find(par[x]); // Path compression: Update parent to root during find
+		}
+
+		// Union operation with rank-based optimization
+		public void union(int a, int b) {
+			int parA = find(a);
+			int parB = find(b);
+			
+			if(parA == parB) return; // Important.
+			
+			if (rank[parA] == rank[parB]) {
+				par[parA] = parB;
+				rank[parB] += 1;
+			} else if (rank[parA]&lt;rank[parB]) {
+				par[parA] = parB;
+			} else {
+				par[parB] = parA;
+
+			}
+		}
+	}
+}</code></pre><p id="334edbf3-c988-4cbf-b8bf-86b2682d198f" class="">
+</p></details></li></ul><ul id="17ab255d-72ff-80c3-a97b-de42310024ca" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-i/flood-fill-algorithm">Flood Fill</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17ab255d-72ff-8051-a07f-ef9a0759c1f4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    boolean[][] visited; // Tracks visited cells
+    int rows; // Number of rows in the image
+    int cols; // Number of columns in the image
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int newColor) {
+        rows = image.length;
+        cols = image[0].length;
+        visited = new boolean[rows][cols];
+        int original = image[sr][sc]; // Original color to replace
+
+        // Start DFS from the given starting pixel
+        dfs(image, sr, sc, original, newColor);
+        return image;
+    }
+
+    public void dfs(int[][] grid, int sr, int sc, int original, int newColor) {
+        // Base case: Out of bounds, different color, or already visited
+        if (sr &gt;= rows || sc &gt;= cols || sr &lt; 0 || sc &lt; 0 || grid[sr][sc] != original || visited[sr][sc]) {
+            return;
+        }
+
+        // Mark cell as visited and update its color
+        visited[sr][sc] = true;
+        grid[sr][sc] = newColor;
+
+        // Recurse in all 4 directions
+        dfs(grid, sr + 1, sc, original, newColor); // Down
+        dfs(grid, sr - 1, sc, original, newColor); // Up
+        dfs(grid, sr, sc - 1, original, newColor); // Left
+        dfs(grid, sr, sc + 1, original, newColor); // Right
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80c5-a7d5-cc7e0027787d" class="toggle"><li><details open=""><summary><mark class="highlight-default">Shortest Path in a Grid with Obstacles Elimination</mark></summary></details></li></ul><ul id="22fb255d-72ff-8047-9518-eab6a7df3254" class="toggle"><li><details open=""><summary><mark class="highlight-default">Shortest Bridge</mark></summary></details></li></ul><ul id="22fb255d-72ff-801d-a128-dc568bd22f96" class="toggle"><li><details open=""><summary><mark class="highlight-default">Snakes and Ladders</mark></summary></details></li></ul><ul id="22fb255d-72ff-807e-a41b-e4c029284bca" class="toggle"><li><details open=""><summary><mark class="highlight-default">Parallel Courses III</mark></summary></details></li></ul><ul id="17ab255d-72ff-8079-8dc4-e6804d746f55" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/traversal-problems/number-of-provinces">Number of Provinces</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17ab255d-72ff-80d6-9efa-dcac245cead3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+    static int numProvinces(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; matrix, int V) {
+        // Create an adjacency list representation of the graph
+        List&lt;List&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; V; i++) {
+            adj.add(new ArrayList&lt;&gt;());
+        }
+
+        // Build the adjacency list from the given adjacency matrix
+        for (int i = 0; i &lt; V; i++) {
+            for (int j = 0; j &lt; V; j++) {
+                if (matrix.get(i).get(j) == 1 &amp;&amp; i != j) {
+                    adj.get(i).add(j);
+                    adj.get(j).add(i);
+                }
+            }
+        }
+
+        boolean[] visited = new boolean[V];
+        int count = 0;
+
+        // Count connected components using DFS
+        for (int i = 0; i &lt; V; i++) {
+            if (!visited[i]) {
+                dfs(i, visited, adj);
+                count++; // Increment count for each connected component
+            }
+        }
+        return count;
+    }
+
+    // Perform Depth First Search (DFS) to mark all nodes in the same component
+    static void dfs(int node, boolean[] visited, List&lt;List&lt;Integer&gt;&gt; adj) {
+        visited[node] = true;
+        for (int neighbor : adj.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, visited, adj);
+            }
+        }
+    }
+};
+</code></pre></details></li></ul><ul id="cb7669de-31a1-4855-88fb-34273ea9dea5" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/pacific-atlantic-water-flow/description/">Pacific Atlantic Water Flow</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2f3ba7de-80dc-40fb-87d5-47b62ff60792" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+	int rows;
+	int cols;
+
+	public List &lt; List&lt;Integer&gt;&gt; pacificAtlantic(int[][] grid) {
+		this.rows = grid.length;
+		this.cols = grid[0].length;
+
+		boolean[][] pecific = new boolean[rows][cols];
+		boolean[][] atlantic = new boolean[rows][cols];
+
+		for (int i = 0; i &lt; rows; i++) {
+			dfs(grid, pecific, i, 0, grid[i][0]);
+			dfs(grid, atlantic, i, cols - 1, grid[i][cols - 1]);
+		}
+
+		for (int j = 0; j &lt; cols; j++) {
+			dfs(grid, pecific, 0, j, grid[0][j]);
+			dfs(grid, atlantic, rows - 1, j, grid[rows - 1][j]);
+		}
+
+		List &lt; List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+
+		for (int i = 0; i &lt; rows; i++) {
+			for (int j = 0; j &lt; cols; j++) {
+				if (pecific[i][j] &amp;&amp; atlantic[i][j]) {
+					List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+					list.add(i);
+					list.add(j);
+					ans.add(list);
+				}
+			}
+		}
+
+		return ans;
+	}
+
+	public void dfs(int[][] grid, boolean[][] visited, int r, int c, int prevHeight) {
+		if (r &lt; 0 || c &lt; 0 || r &gt;= rows || c &gt;= cols || visited[r][c] || prevHeight &gt; grid[r][c]) {
+			return;
+		}
+
+		visited[r][c] = true;
+
+		dfs(grid, visited, r + 1, c, grid[r][c]);
+		dfs(grid, visited, r - 1, c, grid[r][c]);
+		dfs(grid, visited, r, c + 1, grid[r][c]);
+		dfs(grid, visited, r, c - 1, grid[r][c]);
+
+	}
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-802e-a5da-fdec877d3034" class="toggle"><li><details open=""><summary><mark class="highlight-default">Minimum Knight Moves</mark></summary></details></li></ul><ul id="17ab255d-72ff-8077-849f-f999d25409d0" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-i/surrounded-regions">Surrounded Regions</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17ab255d-72ff-80cc-ae9e-dbac8567190e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    static char[][] fill(char grid[][]) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        // Step 1: Traverse boundary and mark connected &#x27;O&#x27;s
+        for (int i = 0; i &lt; rows; i++) {
+            if (grid[i][0] == &#x27;O&#x27;) dfs(grid, i, 0, rows, cols);
+            if (grid[i][cols - 1] == &#x27;O&#x27;) dfs(grid, i, cols - 1, rows, cols);
+        }
+        for (int j = 0; j &lt; cols; j++) {
+            if (grid[0][j] == &#x27;O&#x27;) dfs(grid, 0, j, rows, cols);
+            if (grid[rows - 1][j] == &#x27;O&#x27;) dfs(grid, rows - 1, j, rows, cols);
+        }
+
+        // Step 2: Replace all unmarked &#x27;O&#x27;s with &#x27;X&#x27; and restore marked &#x27;O&#x27;s
+        for (int i = 0; i &lt; rows; i++) {
+            for (int j = 0; j &lt; cols; j++) {
+                if (grid[i][j] == &#x27;O&#x27;) grid[i][j] = &#x27;X&#x27;; // Replace surrounded &#x27;O&#x27;
+                if (grid[i][j] == &#x27;*&#x27;) grid[i][j] = &#x27;O&#x27;; // Restore safe &#x27;O&#x27;
+            }
+        }
+
+        return grid;
+    }
+
+    // DFS to mark boundary-connected &#x27;O&#x27;s
+    static void dfs(char[][] grid, int r, int c, int rows, int cols) {
+        if (r &lt; 0 || c &lt; 0 || r &gt;= rows || c &gt;= cols || grid[r][c] != &#x27;O&#x27;) return;
+
+        grid[r][c] = &#x27;*&#x27;; // Mark as visited (safe)
+        dfs(grid, r + 1, c, rows, cols); // Down
+        dfs(grid, r - 1, c, rows, cols); // Up
+        dfs(grid, r, c + 1, rows, cols); // Right
+        dfs(grid, r, c - 1, rows, cols); // Left
+    }
+}
+</code></pre></details></li></ul><ul id="18bb255d-72ff-80c7-99c4-c3d68c2f1185" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/bipartite-graph">Bipartite Graph [Possible Bipartition Leetcode]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80c6-8553-e477d32354c4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    
+     /* Can you color a graph with two colors such that no adjacent node has same color. */
+    private boolean dfs(int node, int col, int[] color, 
+                        List&lt;Integer&gt; adj[]) {
+                            
+        // Color the current node
+        color[node] = col;
+
+        // Traverse adjacent nodes
+        for(int it : adj[node]) {
+            
+            // if uncoloured
+            if(color[it] == -1) {
+                
+                // Recursively color the nodes 
+                if(dfs(it, 1 - col, color, adj) == false) 
+                    return false; 
+            }
+            
+            // if previously coloured and have the same colour
+            else if(color[it] == col) {
+                
+                // Return false as it is not bipartite
+                return false; 
+            }
+        }
+        
+        // Return true if all the nodes can 
+        // be colored with alternate colors
+        return true; 
+    }
+
+    // Function to check if the given graph is bipartite
+    public boolean isBipartite(int V, List&lt;Integer&gt; adj[]) {
+        
+        // To store the color of nodes, where 
+        // each node is uncolored initially
+        int[] color = new int[V];
+        Arrays.fill(color, -1);
+
+        // Start Traversal of connected components
+        for(int i = 0; i &lt; V; i++) {
+            
+            // if a node is not colored, 
+            // a new component is found
+            
+            if(color[i] == -1) {
+                // Start DFS traversal 
+                // and color each node
+                
+                if(dfs(i, 0, color, adj) == false) {
+                    
+                    // Return false if component 
+                    // is found not to be bipartite
+                    return false;
+                }
+            }
+        }
+        
+        // Return true if each 
+        // component is bipartite
+        return true;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-802f-8458-ec8cf3153966" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-vi/number-of-operations-to-make-network-connected">Number of operations to make network connected</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80fe-a35b-e3cb45514def" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class DisjointSet { //DSAConceptRevision
+    /* To store the ranks, parents and 
+    sizes of different set of vertices */
+    int[] rank, parent, size;
+
+    // Constructor
+    DisjointSet(int n) {
+        rank = new int[n + 1];
+        parent = new int[n + 1];
+        size = new int[n + 1];
+        for (int i = 0; i &lt;= n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    // Function to find ultimate parent
+    int findUPar(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findUPar(parent[node]);
+    }
+
+    // Function to implement union by rank
+    void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (rank[ulp_u] &lt; rank[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+        }
+        else if (rank[ulp_v] &lt; rank[ulp_u]) {
+            parent[ulp_v] = ulp_u;
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+
+    // Function to implement union by size
+    void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (size[ulp_u] &lt; size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+}
+
+// Solution class
+class Solution{
+
+    /* Function to get the number of 
+    operations to make network connected */
+    public int solve(int n, int[][] Edge){
+
+        // Get the number of edges
+        int size = Edge.length;
+
+        /* Return -1 if connecting all 
+        vertices is not possible */
+        if(size &lt; n-1) return -1;
+
+        // Disjoint Set data structure
+        DisjointSet ds = new DisjointSet(n);
+
+        // Add all the edges in the set
+        for(int i=0; i&lt;size; i++) {
+            ds.unionByRank(Edge[i][0], Edge[i][1]);
+        }
+
+        // To store count of required edges
+        int count = 0;
+
+        // Finding the number of components
+        for(int i=0; i&lt;n; i++) {
+            if(ds.parent[i] == i) count++;
+        }
+
+        // Return the result
+        return count-1;
+    }
+}</code></pre></details></li></ul><ul id="17ab255d-72ff-804a-9246-e106417e1318" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa/graph/traversal-problems/distance-of-nearest-cell-having-one">Distance of nearest cell having 1 [01 Matrix Leetcode]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17ab255d-72ff-80b4-9176-e78503f3b6c9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Pair { //DSAStriver
+    int r; // Row index
+    int c; // Column index
+    int dist; // Distance from the nearest 1
+    Pair(int r, int c, int dist) {
+        this.r = r;
+        this.c = c;
+        this.dist = dist;
+    }
+}
+
+class Solution {
+    int rows; // Number of rows in the grid
+    int cols; // Number of columns in the grid
+
+    public int[][] nearest(int[][] grid) {
+        rows = grid.length;
+        cols = grid[0].length;
+        Queue&lt;Pair&gt; q = new LinkedList&lt;&gt;(); // BFS queue to process cells
+        boolean[][] visited = new boolean[rows][cols]; // Tracks visited cells
+        int[][] distArr = new int[rows][cols]; // Stores the distances
+
+        // Add all cells with value 1 to the queue and mark them visited
+        for (int i = 0; i &lt; rows; i++) {
+            for (int j = 0; j &lt; cols; j++) {
+                if (grid[i][j] == 1) {
+                    q.add(new Pair(i, j, 0));
+                    visited[i][j] = true;
+                }
+            }
+        }
+
+        // Directions for moving up, down, left, and right
+        int[][] dirs = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+
+        // BFS to calculate distances
+        while (!q.isEmpty()) {
+            Pair p = q.poll();
+            int r = p.r;
+            int c = p.c;
+            int dist = p.dist;
+
+            distArr[r][c] = dist; // Update distance in the result array
+
+            // Explore all 4 adjacent cells
+            for (int[] dir : dirs) {
+                int nr = dir[0] + r;
+                int nc = dir[1] + c;
+
+                // Check bounds and if the cell is unvisited
+                if (nr &gt;= 0 &amp;&amp; nc &gt;= 0 &amp;&amp; nr &lt; rows &amp;&amp; nc &lt; cols &amp;&amp; !visited[nr][nc]) {
+                    q.add(new Pair(nr, nc, dist + 1)); // Add to queue with updated distance
+                    visited[nr][nc] = true; // Mark as visited
+                }
+            }
+        }
+        return distArr; // Return the distance matrix
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-801a-a487-ce28e6a88df7" class="toggle"><li><details open=""><summary><mark class="highlight-default">Keys and Rooms</mark></summary></details></li></ul><ul id="22fb255d-72ff-806b-b0ab-fd444b4ff431" class="toggle"><li><details open=""><summary><mark class="highlight-default">Swim in Rising Water</mark></summary></details></li></ul><ul id="3ccb0a3a-d504-45ce-b5b2-c798b2ce3ec2" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://neetcode.io/problems/valid-tree">Graph Valid Tree</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6a83733b-a896-47f5-90dd-7cac0a5df9c2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    int[] par;  // Array to store the parent of each node
+
+    // Initialize Union-Find data structure
+    void init(int n) {
+        par = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            par[i] = i;  // Initially, each node is its own parent
+        }
+    }
+
+    // Find the root of the node with path compression
+    int find(int x) {
+        if (x == par[x]) return x;  // If the node is its own parent, it&#x27;s the root
+        return par[x] = find(par[x]);  // Path compression: update the parent to the root
+    }
+
+    // Union operation to connect two nodes
+    void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+
+        if (parA == parB) return;  // If they are already connected, do nothing
+
+        par[parA] = parB;  // Connect the trees
+    }
+
+    // Function to check if the given edges form a valid tree
+    public boolean validTree(int n, int[][] edges) {
+        // A tree with n nodes must have exactly n-1 edges
+        if (edges.length != n - 1) return false;
+
+        init(n);  // Initialize the Union-Find structure
+
+        for (int[] edge : edges) {
+            int parA = find(edge[0]);
+            int parB = find(edge[1]);
+
+            if (parA == parB) return false;  // If a cycle is found, it&#x27;s not a valid tree
+
+            union(edge[0], edge[1]);  // Union operation for each edge
+        }
+
+        return true;  // If no cycles are found and edges are n-1, it&#x27;s a valid tree
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-8003-a168-c86240811b9b" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-iv/word-ladder-ii">Word ladder II</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80bf-8253-d8dcf112b58f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    
+    /* Function to determine number of steps
+    to reach from start word to target word */
+    public List&lt;List&lt;String&gt;&gt; findSequences(String beginWord, String endWord,
+                                            List&lt;String&gt; wordList) {
+        // To store the answer
+        List&lt;List&lt;String&gt;&gt; ans = new ArrayList&lt;&gt;();
+        
+        // Queue data structure to store 
+        // the sequence of transformations
+        Queue&lt;List&lt;String&gt;&gt; q = new LinkedList&lt;&gt;();
+        
+        // Add all the words to a hashset
+        Set&lt;String&gt; st = new HashSet&lt;&gt;(wordList);
+        
+        // Add the sequence containing starting word to queue
+        q.add(new ArrayList&lt;&gt;(Arrays.asList(beginWord)));
+        
+        // Erase starting word from set if it exists
+        st.remove(beginWord);
+        
+        // Set to store the words that must be deleted 
+        // after traversal of a level is complete
+        Set&lt;String&gt; toErase = new HashSet&lt;&gt;();
+        
+        // Until the queue is empty
+        while (!q.isEmpty()) {
+            
+            // Size of queue
+            int size = q.size();
+            
+            // Traversing all words in current level
+            for (int i = 0; i &lt; size; i++) {
+                
+                // Sequence 
+                List&lt;String&gt; seq = q.poll();
+                
+                // Last added word in sequence
+                String word = seq.get(seq.size() - 1);
+                
+                // If the last word same as end word
+                if (word.equals(endWord)) {
+                    // Add the sequence to the answer
+                    if (ans.isEmpty()) {
+                        ans.add(new ArrayList&lt;&gt;(seq));
+                    }
+                    else if (ans.get(ans.size() - 1).size() == 
+                             seq.size()) {
+                        ans.add(new ArrayList&lt;&gt;(seq));
+                    }
+                }
+                
+                // Iterate on every character
+                for (int pos = 0; pos &lt; word.length(); pos++) {
+                    
+                    // Original letter
+                    char original = word.charAt(pos);
+                    
+                    // Replacing current character with
+                    // letters from &#x27;a&#x27; to &#x27;z&#x27; to match 
+                    // any possible word from set
+                    for (char ch = &#x27;a&#x27;; ch &lt;= &#x27;z&#x27;; ch++) {
+                        char[] wordArray = word.toCharArray();
+                        wordArray[pos] = ch;
+                        String newWord = new String(wordArray);
+                        
+                        // Check if it exists in the set
+                        if (st.contains(newWord)) {
+                            // Update the sequence
+                            seq.add(newWord);
+                            
+                            // Push in the queue
+                            q.add(new ArrayList&lt;&gt;(seq));
+                            
+                            // Add the word to erase map
+                            toErase.add(newWord);
+                            
+                            // Backtracking step
+                            seq.remove(seq.size() - 1);
+                        }
+                    }
+                    
+                    // Update the original letter back
+                    String beforePos = word.substring(0, pos);
+                    String afterPos = word.substring(pos + 1);
+                    word = beforePos + original + afterPos;
+                }
+            }
+            
+            // Erase all the words in set after
+            // traversal of a level is completed
+            for (String it : toErase) st.remove(it);
+            toErase.clear();
+            
+            // If answer is found, break
+            if (!ans.isEmpty()) break;
+        }
+        
+        // Return the result found
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8088-b265-ee6503a62866" class="toggle"><li><details open=""><summary><mark class="highlight-default">Web Crawler Multithreaded</mark></summary></details></li></ul><ul id="22fb255d-72ff-8096-bcc5-e8ef79271ea9" class="toggle"><li><details open=""><summary><mark class="highlight-default">The Maze</mark></summary></details></li></ul><ul id="22fb255d-72ff-806e-b606-c252b7edf9ae" class="toggle"><li><details open=""><summary><mark class="highlight-default">Nested List Weight Sum</mark></summary></details></li></ul><ul id="1c7b255d-72ff-804b-a4a0-f570f57e403d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/shortest-path-with-minimum-effort">Shortest Distance in a Binary Maze [Shortest Path in Binary Matrix Leetcode]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-80af-aacc-c129db9a8841" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+    // Delta row and column array
+    private int[] delRow = {-1, 0, 1, 0};
+    private int[] delCol = {0, -1, 0, 1};
+
+    // Function to check if a cell is valid
+    private boolean isValid(int row, int col, 
+                            int n, int m) {
+
+        // Return false if the cell is invalid
+        if (row &lt; 0 || row &gt;= n) return false;
+        if (col &lt; 0 || col &gt;= m) return false;
+        
+        // Return true if the cell is valid
+        return true;
+    }
+
+    /* Function to determine the shortest distance
+    between source and destination */
+    public int shortestPath(int[][] grid, int[] source, 
+                            int[] destination) {
+
+        // Edge Case
+        if (source[0] == destination[0] &amp;&amp; 
+            source[1] == destination[1])
+            return 0;
+
+        /* Queue data structure to store the pairs of the 
+        form: {dist, {coordinates of cell}} */
+        Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
+        
+        // Dimensions of grid
+        int n = grid.length;
+        int m = grid[0].length;
+
+        // Distance matrix
+        int[][] dist = new int[n][m];
+        for (int[] row : dist) {
+            Arrays.fill(row, Integer.MAX_VALUE);
+        }
+        
+        // Distance of source from itself is zero
+        dist[source[0]][source[1]] = 0;
+        
+        // Add the source to queue
+        q.add(new int[]{0, source[0], source[1]});
+
+        // Until the queue is empty
+        while (!q.isEmpty()) {
+            // Get the element
+            int[] it = q.poll();
+            
+            int dis = it[0]; // Distance
+            int row = it[1]; // Row of cell
+            int col = it[2]; // Column of cell
+
+            // Iterate through all the neighbors
+            for (int i = 0; i &lt; 4; i++) {
+                
+                // Coordinates of the new cell
+                int newRow = row + delRow[i];
+                int newCol = col + delCol[i];
+
+                /* Checking the validity of the cell and 
+                updating if a shorter distance is found */
+                if (isValid(newRow, newCol, n, m) &amp;&amp; 
+                    grid[newRow][newCol] == 1 &amp;&amp; 
+                    dis + 1 &lt; dist[newRow][newCol]) {
+                    
+                    // Update the distance
+                    dist[newRow][newCol] = 1 + dis;
+
+                    /* Return the distance if the 
+                    destination is reached */
+                    if (newRow == destination[0] &amp;&amp; 
+                        newCol == destination[1])
+                        return dis + 1;
+                    
+                    // Add the new cell to queue
+                    q.add(new int[]{1 + dis, newRow, newCol});
+                }
+            }
+        }
+        
+        // If no path is found from source to destination
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-804b-b077-c6acfcb0763c" class="toggle"><li><details open=""><summary><mark class="highlight-default">Min Cost to Connect All Points</mark></summary></details></li></ul><ul id="22fb255d-72ff-808a-96d8-f1c9334162df" class="toggle"><li><details open=""><summary><mark class="highlight-default">Find All Possible Recipes from Given Supplies</mark></summary></details></li></ul><ul id="1c6b255d-72ff-8024-a71e-ffdba0ebfc99" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-vi/number-of-islands-ii">Number of islands II</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80a7-a4f7-dc53727fba3e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class DisjointSet { //DSAConceptRevision
+    /* To store the ranks, parents and 
+    sizes of different set of vertices */
+    int[] rank, parent, size;
+
+    // Constructor
+    DisjointSet(int n) {
+        rank = new int[n + 1];
+        parent = new int[n + 1];
+        size = new int[n + 1];
+        for (int i = 0; i &lt;= n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    // Function to find ultimate parent
+    int findUPar(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findUPar(parent[node]);
+    }
+
+    // Function to implement union by rank
+    void unionByRank(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (rank[ulp_u] &lt; rank[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+        }
+        else if (rank[ulp_v] &lt; rank[ulp_u]) {
+            parent[ulp_v] = ulp_u;
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            rank[ulp_u]++;
+        }
+    }
+
+    // Function to implement union by size
+    void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (size[ulp_u] &lt; size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+}
+
+// Solution class
+class Solution {
+    // DelRow and delCol for neighbors
+    int[] delRow = {-1, 0, 1, 0};
+    int[] delCol = {0, 1, 0, -1};
+
+    /* Helper Function to check if a 
+    cell is within boundaries */
+    boolean isValid(int i, int j, int n, int m) {
+        
+        // Return false if cell is invalid
+        if (i &lt; 0 || i &gt;= n) return false;
+        if (j &lt; 0 || j &gt;= m) return false;
+        
+        // Return true if cell is valid
+        return true;
+    }
+
+    /* Function to return the number 
+    of islands after each operation */
+    public List&lt;Integer&gt; numOfIslands(int n, int m, int[][] A) {
+        
+        // Disjoint set Data structure
+        DisjointSet ds = new DisjointSet(n * m);
+
+        // Visited array
+        int[][] vis = new int[n][m];
+        for (int[] row : vis) Arrays.fill(row, 0);
+
+        // To store the count of islands
+        int cnt = 0;
+
+        // To store the result
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+        // Perform each operation
+        for (int[] it : A) {
+            int row = it[0]; // Row
+            int col = it[1]; // Column
+
+            /* If already a land cell, no new 
+            islands will be formed */
+            if (vis[row][col] == 1) {
+                ans.add(cnt);
+                continue;
+            }
+
+            // Make the cell as land
+            vis[row][col] = 1;
+
+            /* Increment the count considering 
+            the land cell was alone */
+            cnt++;
+
+            // Check all the neighbors
+            for (int ind = 0; ind &lt; 4; ind++) {
+                // Get the coordinates of cell
+                int newRow = row + delRow[ind];
+                int newCol = col + delCol[ind];
+
+                // If the cell is a valid land cell
+                if (isValid(newRow, newCol, n, m) &amp;&amp; 
+                    vis[newRow][newCol] == 1) {
+                        
+                    // Get the node and adjacent node number
+                    int nodeNo = row * m + col;
+                    int adjNodeNo = newRow * m + newCol;
+
+                    // If not already connected, perform the union
+                    if (ds.findUPar(nodeNo) != 
+                        ds.findUPar(adjNodeNo)) {
+                        // Decrement count
+                        cnt--;
+
+                        // Perform the union
+                        ds.unionBySize(nodeNo, adjNodeNo);
+                    }
+                }
+            }
+
+            /* Store the number of islands after 
+            current operation in the result list */
+            ans.add(cnt);
+        }
+
+        // Return the result
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="12a066e7-e1af-4685-9be1-a6b7e127314d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/dijkstra&#x27;s-algorithm">Dijkstra’s Algorithm [Will not work if graph has Negative Weights]</a></strong></mark></summary><p id="29ac302e-5b4e-4d5f-b4db-b9c2ea64db26" class=""><mark class="highlight-red"><strong>Dijkstra’s Algorithm gives single source shortest path for all the vertices. work only for positive weights.</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="eba4d467-e014-49b9-bdd4-0d790493b00d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+	static int[] dijkstra(int V, ArrayList &lt;ArrayList&lt;ArrayList&lt;Integer&gt;&gt;&gt; adj, int sourceVertex) {
+
+		int[] distArr = new int[V]; // Step 1: Ek distance array bana and (int)1e9 daal usme
+		Arrays.fill(distArr, (int) 1e9);
+		distArr[sourceVertex] = 0; // Step 2: src ka distance zero hoga [Imp]
+		PriorityQueue&lt;Pair&gt; pq = new PriorityQueue&lt;&gt;();
+		pq.add(new Pair(sourceVertex, 0)); // Step 3: PQ banakr usme (src, 0) daal
+
+		while (!pq.isEmpty()) { // Step 4: Bhai ye toh tu janta hi hai.
+			Pair currNode = pq.poll();
+			int u = currNode.vertex;
+			int currDist = currNode.distance;
+
+			// Explore the neighbors
+			for (ArrayList&lt;Integer&gt; nei: adj.get(u)) {
+				int v = nei.get(0);
+				int weight = nei.get(1);
+
+				// Only consider this new path if it&#x27;s better
+				if (currDist + weight &lt; distArr[v]) {
+					distArr[v] = currDist + weight;
+					pq.add(new Pair(v, distArr[v]));
+				}
+			}
+		}
+
+		return distArr;
+	}
+
+	static class Pair implements Comparable&lt;Pair&gt; {
+		int vertex;
+		int distance;
+
+		public Pair(int vertex, int distance) {
+			this.vertex = vertex;
+			this.distance = distance;
+		}
+
+		@Override
+
+		public int compareTo(Pair other) {
+			return this.distance - other.distance;
+		}
+	}
+}</code></pre></details></li></ul><ul id="9eb8187e-66dd-47f7-be80-98f616a65d0e" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/floyd-warshall-algorithm">Floyd Warshall Algorithm</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="78f3cc72-8075-4e4d-ae57-a4b622c09f3e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+	public void shortest_distance(int[][] graph) {
+		int n = graph.length;
+
+		// Initialize graph values
+		for (int i = 0; i &lt; n; i++) {
+			for (int j = 0; j &lt; n; j++) {
+				// If the value is -1, set it to a large value (1e9)
+				if (graph[i][j] == -1) {
+					graph[i][j] = (int)(1e9);
+				}
+
+				// Set diagonal elements to 0
+				if (i == j)
+					graph[i][j] = 0;
+			}
+		}
+
+		// Perform Floyd Warshall algorithm
+		for (int via = 0; via &lt; n; via++) {
+			for (int i = 0; i &lt; n; i++) {
+				for (int j = 0; j &lt; n; j++) {
+					// Update the shortest path between i and j through &#x27;via&#x27;
+					graph[i][j] = Math.min(graph[i][j], graph[i][via] + graph[via][j]);
+				}
+			}
+		}
+
+		// Convert large values back to -1 for unreachable paths
+		for (int i = 0; i &lt; n; i++) {
+			for (int j = 0; j &lt; n; j++) {
+				if (graph[i][j] == (int)(1e9)) {
+					graph[i][j] = -1;
+				}
+			}
+		}
+
+	}
+}</code></pre></details></li></ul><ul id="318327c1-b41d-4bed-81b2-bf011041db51" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/disjoint-set-">Disjoint Set [Union Find] - Dynamic Graph</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="05fe4789-e84f-442a-a84b-a6fac7362b3f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class DSU { //DSAQuickRevision
+    int rank[];
+    int par[];
+
+    public DSU(int n) {
+        rank = new int[n];
+        par = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            par[i] = i;
+        }
+    }
+
+    public int find(int x) {
+        if (x == par[x])
+            return x;
+        return par[x] = find(par[x]);
+    }
+
+    public void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+
+        if (parA == parB)
+            return;
+
+        if (rank[parA] == rank[parB]) {
+            par[parB] = parA;
+            rank[parA]++;
+        } else if (rank[parA] &lt; rank[parB]) {
+            par[parA] = parB;
+        } else {
+            par[parB] = parA;
+        }
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+        DSU disjointSet = new DSU(7);
+
+        System.out.println(disjointSet.find(3));
+        disjointSet.union(1, 3);
+        System.out.println(disjointSet.find(3));
+        disjointSet.union(2, 4);
+        disjointSet.union(3, 6);
+        disjointSet.union(1, 4);
+        System.out.println(disjointSet.find(3));
+        System.out.println(disjointSet.find(4));
+        disjointSet.union(1, 5);
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="25036ed9-a789-4b23-a550-8e67b59be0f1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class DSU {
+    int[] par;
+    int[] size;
+
+    public DSU(int n) {
+        par = new int[n];
+        size = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            par[i] = i;
+            size[i] = 1; // Important
+        }
+    }
+
+    public int find(int x) {
+        if (x == par[x])
+            return x;
+        return par[x] = find(par[x]);
+    }
+
+    public void unionBySize(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+
+        if (rootA == rootB)
+            return;
+
+        if (size[rootA] &lt; size[rootB]) {
+            par[rootA] = rootB;
+            size[rootB] += size[rootA];
+        } else {
+            par[rootB] = rootA;
+            size[rootA] += size[rootB];
+        }
+
+    }
+}
+
+public class Solution {
+
+    public static void main(String[] args) {
+        DSU disjointSet = new DSU(7);
+
+        System.out.println(disjointSet.find(3));
+        disjointSet.unionBySize(1, 3);
+        System.out.println(disjointSet.find(3));
+        disjointSet.unionBySize(2, 4);
+        disjointSet.unionBySize(3, 6);
+        disjointSet.unionBySize(1, 4);
+        System.out.println(disjointSet.find(3));
+        System.out.println(disjointSet.find(4));
+        disjointSet.unionBySize(1, 5);
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-80f4-98bd-e9215ad89483" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-8-lms/kosaraju&#x27;s-algorithm">Kosaraju&#x27;s algorithm</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8030-8432-f89000b2f6e3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int kosaraju(int V, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        boolean[] visited = new boolean[V];
+
+        // Step 1: Topological sort using DFS and push into stack
+        for (int i = 0; i &lt; V; i++) {
+            if (!visited[i]) {
+                dfs(i, visited, adj, stack);
+            }
+        }
+
+        // Step 2: Reverse the graph
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; reversedGraph = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; V; i++) {
+            reversedGraph.add(new ArrayList&lt;&gt;());
+        }
+
+        for (int u = 0; u &lt; V; u++) {
+            for (int v : adj.get(u)) {
+                reversedGraph.get(v).add(u); // reverse the edge
+            }
+        }
+
+        // Step 3: Do DFS on reversed graph in stack order
+        Arrays.fill(visited, false);
+        int sccCount = 0;
+
+        while (!stack.isEmpty()) {
+            int node = stack.pop();
+            if (!visited[node]) {
+                reverseDFS(node, visited, reversedGraph);
+                sccCount++;
+            }
+        }
+
+        return sccCount;
+    }
+
+    private void dfs(int node, boolean[] visited, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, Stack&lt;Integer&gt; stack) {
+        visited[node] = true;
+        for (int neighbor : adj.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, visited, adj, stack);
+            }
+        }
+        stack.push(node);
+    }
+
+    private void reverseDFS(int node, boolean[] visited, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; reversedGraph) {
+        visited[node] = true;
+        for (int neighbor : reversedGraph.get(node)) {
+            if (!visited[neighbor]) {
+                reverseDFS(neighbor, visited, reversedGraph);
+            }
+        }
+    }
+}
+</code></pre></details></li></ul><h2 id="1c7b255d-72ff-808f-8b4c-d96c046a0d56" class=""><mark class="highlight-default"><strong>DSA Concepts Revision</strong></mark></h2><ul id="91f078dd-a0bb-4303-b047-4ff2cb340855" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-ii/detect-a-cycle-in-a-directed-graph">Detect cycle in a Directed graph (using DFS)</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2451a8b1-8f4b-4701-bf6a-d702a1513913" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    // Check if there is a cycle in a directed graph using DFS.
+    public boolean isCyclic(int V, List&lt;List&lt;Integer&gt;&gt; adj) {
+        int[] visited = new int[V];       // Track visited vertices
+        int[] pathVisited = new int[V];   // Track visited vertices in current path
+        
+        // Iterate through each vertex
+        for (int i = 0; i &lt; V; i++) {
+            if (dfs(adj, i, visited, pathVisited)) {
+                return true;  // Found cycle
+            }
+        }
+        return false;  // No cycle found
+    }
+
+    // DFS function to recursively check for cycles
+    public boolean dfs(List&lt;List&lt;Integer&gt;&gt; adj, int node, int[] visited, int[] pathVisited) {
+        visited[node] = 1;        // Mark node as visited
+        pathVisited[node] = 1;    // Mark node as visited in current path
+        
+        // Traverse neighbors of the current node
+        for (int nei : adj.get(node)) {
+            // If neighbor not visited, recursively call DFS
+            if (visited[nei] == 0) {
+                if (dfs(adj, nei, visited, pathVisited)) {
+                    return true;   // Cycle detected
+                }
+            }
+            // If neighbor is visited in current path, cycle detected
+            else if (pathVisited[nei] == 1) {
+                return true;
+            }
+        }
+        
+        pathVisited[node] = 0;    // Backtrack: mark node as not visited in current path
+        return false;             // No cycle found for this node
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-8047-bcbb-c088b0b73625" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-ii/find-eventual-safe-states">Find eventual safe states</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80f7-8aba-c2131eb2d4f0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    /* Function to perform DFS traversal 
+    while checking for safe nodes */
+    private boolean dfsCheck(int node, int[][] adj, 
+                             boolean[] vis, 
+                             boolean[] pathVis, 
+                             boolean[] check) {
+                                 
+        // Mark the node as visited
+        vis[node] = true;
+        
+        // Add the node to current path
+        pathVis[node] = true;
+        
+        // Mark the node as potentially unsafe
+        check[node] = false;
+        
+        // Traverse for adjacent nodes
+        for (int it : adj[node]) {
+            
+            // When the node is not visited
+            if (!vis[it]) {
+                
+                /* Perform DFS recursively and if 
+                a cycle is found, return false */
+                if (dfsCheck(it, adj, vis, pathVis, check)) {
+                    
+                    /* Return true since a 
+                    cycle was detected */
+                    return true;
+                }
+
+            }
+            
+            /* Else if the node has been previously 
+            visited in the same path*/
+            else if (pathVis[it]) {
+                
+                /* Return true since a 
+                cycle was detected */
+                return true;
+            }
+        }
+        
+        /* If the current node neither exist 
+        in a cycle nor points to a cycle, 
+        it can be marked as a safe node */
+        check[node] = true;
+        
+        // Remove the node from the current path
+        pathVis[node] = false;
+        
+        // Return false since no cycle was found
+        return false;
+    }
+    
+    // Function to get the eventually safe nodes
+    public int[] eventualSafeNodes(int V, int[][] adj) {
+        
+        // Visited array
+        boolean[] vis = new boolean[V];
+        
+        // Path Visited array
+        boolean[] pathVis = new boolean[V];
+        
+        // To keep a check of safe nodes
+        boolean[] check = new boolean[V];
+        
+        /* Traverse the graph and 
+        check for safe nodes */
+        for (int i = 0; i &lt; V; i++) {
+            if (!vis[i]) {
+                
+                // Start DFS traversal
+                dfsCheck(i, adj, vis, pathVis, check);
+            }
+        }
+        
+        // To store the result
+        List&lt;Integer&gt; temp = new ArrayList&lt;&gt;();
+        
+        // Add the safe nodes to the result
+        for (int i = 0; i &lt; V; i++) {
+            if (check[i]) 
+                temp.add(i);
+        }
+        
+        // Convert List to array
+        int[] ans = new int[temp.size()];
+        for (int i = 0; i &lt; temp.size(); i++) {
+            ans[i] = temp.get(i);
+        }
+        
+        // Return the result
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="213b255d-72ff-80a1-bc5f-db3d561de12d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-iii/shortest-path-in-undirected-graph-with-unit-weights">Shortest path in undirected graph with unit weights</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="213b255d-72ff-804c-9846-ee76b48a5d54" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int[] shortestPath(int[][] edges, int N, int M) {
+
+        // Step 1: Create adjacency list
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; N; i++) {
+            adj.add(new ArrayList&lt;&gt;());
+        }
+
+        // Step 2: Fill adjacency list with edges
+        for (int i = 0; i &lt; M; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            adj.get(u).add(v);
+            adj.get(v).add(u);
+        }
+
+        // Step 3: Distance array initialized with large value
+        int[] distArr = new int[N];
+        Arrays.fill(distArr, (int) 1e9);
+        distArr[0] = 0;
+
+        // Step 4: BFS queue initialization
+        Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();
+        q.add(0);
+
+        // Step 5: BFS traversal to find shortest distances
+        while (!q.isEmpty()) {
+            int node = q.poll();
+
+            for (int nei : adj.get(node)) {
+                if (distArr[node] + 1 &lt; distArr[nei]) {
+                    distArr[nei] = distArr[node] + 1;
+                    q.add(nei);
+                }
+            }
+        }
+
+        // Step 6: Replace unreachable node distances with -1
+        for (int i = 0; i &lt; N; i++) {
+            if (distArr[i] == (int) 1e9) {
+                distArr[i] = -1;
+            }
+        }
+
+        return distArr;
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-80b0-86aa-c84bec57d35c" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-iv/path-with-minimum-effort">Path with minimum effort</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80cb-be70-c50724f38631" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    // Delta row and column array
+    int[] delRow = {-1, 0, 1, 0};
+    int[] delCol = {0, -1, 0, 1};
+
+    // Function to check if a cell is valid
+    boolean isValid(int row, int col, int n, int m) {
+        // Return false if the cell is invalid
+        if (row &lt; 0 || row &gt;= n) return false;
+        if (col &lt; 0 || col &gt;= m) return false;
+
+        // Return true if the cell is valid
+        return true;
+    }
+
+    /* Function to determine minimum efforts 
+    to go from top-left to bottom-right */
+    public int MinimumEffort(List&lt;List&lt;Integer&gt;&gt; heights) {
+
+        // Get the dimensions of grid
+        int n = heights.size();
+        int m = heights.get(0).size();
+
+        // To store maximum difference
+        int[][] maxDiff = new int[n][m];
+        for (int[] row : maxDiff)
+            Arrays.fill(row, Integer.MAX_VALUE);
+
+        /* Min-Heap storing the pair: 
+        {diff, {row of cell, column of cell}} */
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;(Comparator.comparingInt(a -&gt; a[0]));
+
+        // Mark the initial position as 0
+        maxDiff[0][0] = 0;
+
+        // Push the starting cell to min-heap
+        pq.add(new int[]{0, 0, 0});
+
+        // Until the min-heap is not empty
+        while (!pq.isEmpty()) {
+
+            /* Get the cell with minimum 
+            difference (effort) */
+            int[] p = pq.poll();
+
+            // Get the difference
+            int diff = p[0];
+
+            int row = p[1]; // Row
+            int col = p[2]; // Column
+
+            /* If the destination cell is reached, 
+            return the difference */
+            if (row == n - 1 &amp;&amp; col == m - 1)
+                return diff;
+
+            // Traverse its neighbors
+            for (int i = 0; i &lt; 4; i++) {
+
+                /* Get the coordinates 
+                of neighboring cell */
+                int newRow = row + delRow[i];
+                int newCol = col + delCol[i];
+
+                // Check if the cell is valid
+                if (isValid(newRow, newCol, n, m)) {
+
+                    /* Get the current difference 
+                    in heights of cells */
+                    int currDiff = Math.abs(heights.get(newRow).get(newCol) - heights.get(row).get(col));
+
+                    /* Check if the current difference is 
+                    less than earlier known difference */
+                    if (Math.max(currDiff, diff) &lt; maxDiff[newRow][newCol]) {
+
+                        // Store the current difference
+                        maxDiff[newRow][newCol] = Math.max(currDiff, diff);
+
+                        // Add the new pair found in the min-heap
+                        pq.add(new int[]{Math.max(currDiff, diff), newRow, newCol});
+                    }
+                }
+            }
+        }
+
+        // Return -1
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-804c-a1f8-da796d1c8ba7" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-v/number-of-ways-to-arrive-at-destination">Number of ways to arrive at destination</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80cb-a76f-c7d358beaeb3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+/* Function to get the number of ways to arrive
+at destinations in shortest possible time */
+public int countPaths(int n, List&lt;List&lt;Integer&gt;&gt; roads) {
+    
+    int mod = 1000000007; // Mod value
+    
+    // To store the graph
+    List&lt;int[]&gt;[] adj = new ArrayList[n];
+    for (int i = 0; i &lt; n; i++) {
+        adj[i] = new ArrayList&lt;&gt;();
+    }
+    
+    // Adding the edges to the graph
+    for (List&lt;Integer&gt; it : roads) {
+        adj[it.get(0)].add(new int[]{it.get(1), it.get(2)});
+        adj[it.get(1)].add(new int[]{it.get(0), it.get(2)});
+    }
+    
+    /* Array to store the minimum 
+    time to get to nodes */
+    long[] minTime = new long[n];
+    Arrays.fill(minTime, Long.MAX_VALUE);
+    
+    /* To store the number of 
+    ways to reach nodes */
+    int[] ways = new int[n];
+    
+    // Priority queue to store: {time, node}
+    PriorityQueue&lt;long[]&gt; pq = 
+    new PriorityQueue&lt;&gt;(Comparator.comparingLong(a -&gt; a[0]));
+    
+    // Initial configuration
+    minTime[0] = 0;
+    ways[0] = 1;
+    pq.add(new long[]{0, 0});
+    
+    // Until the priority queue is empty
+    while (!pq.isEmpty()) {
+        
+        // Get the element
+        long[] p = pq.poll();
+        long time = p[0]; // time
+        int node = (int) p[1]; // node
+        
+        // Traverse its neighbors
+        for (int[] it : adj[node]) {
+            
+            int adjNode = it[0]; // adjacent node
+            int travelTime = it[1]; // travel time
+            
+            /* If the current time taken is less than
+            earlier known time to reach adjacent node */
+            if (minTime[adjNode] &gt; time + travelTime) {
+                
+                // Update the time to reach adjacent node
+                minTime[adjNode] = time + travelTime;
+                
+                // Update the number of ways
+                ways[adjNode] = ways[node];
+                
+                // Add the new element in priority queue
+                pq.add(new long[]{minTime[adjNode], adjNode});
+            }
+            
+            /* Else if the current time taken is same as
+            earlier known time to reach adjacent node */ 
+            else if (minTime[adjNode] == time + travelTime) {
+                
+                /* Update the number of ways 
+                to reach adjacent nodes */
+                ways[adjNode] = (ways[adjNode] + ways[node]) % mod;
+            }
+        }
+    }
+    
+    // Return the result
+    return ways[n - 1] % mod;
+}
+}</code></pre></details></li></ul><ul id="abb4647e-b41b-4e0b-afdd-f6bdfb0de43c" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-v/bellman-ford-algorithm">Bellman Ford Algorithm [ Directed Graph Only. Convert to Directed if Undirected Graph]</a></strong></mark></summary><p id="46c151f4-a854-4d22-ad52-b396cc61b766" class=""><mark class="highlight-red"><strong>Node: ye Dijkstra jaise hi single source shortest path nikalkr dega pr ye negative weights ke liye bhi kaam karega.</strong></mark></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ca16cef5-10d7-460c-aad7-cbc067d190df" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+	static int[] bellman_ford(int V, ArrayList &lt; ArrayList&lt;Integer&gt;&gt; edges, int S) {
+		// Initialize the distance array with a large value (infinity)
+		int[] dist = new int[V];
+		Arrays.fill(dist, (int) 1e9);
+
+		// The distance to the source is 0
+		dist[S] = 0;
+
+		// Relax all edges |V| - 1 times
+		for (int i = 0; i &lt; V - 1; i++) {
+			for (ArrayList&lt;Integer&gt; edge: edges) {
+				int u = edge.get(0); 
+				int v = edge.get(1); 
+				int weight = edge.get(2);
+
+				// If the distance to u is not infinity and distance to v can be shortened
+				if (dist[u] != (int) 1e9 &amp;&amp; dist[u] + weight  &lt;  dist[v]) {
+					dist[v] = dist[u] + weight;
+				}
+			}
+		}
+
+		// Check for negative weight cycles
+		for (ArrayList&lt;Integer&gt; edge: edges) {
+			int u = edge.get(0);
+			int v = edge.get(1);
+			int weight = edge.get(2);
+
+			// If we can still relax an edge, then there is a negative weight cycle
+			if (dist[u] != (int) 1e9 &amp;&amp; dist[u] + weight  &lt;  dist[v]) {
+				// Return an array with only -1 if a negative cycle is detected
+				return new int[] {-1};
+			}
+		}
+
+		// Return the distance array
+		return dist;
+	}
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-806d-a52d-f0dc3668620f" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-v/find-the-city-with-the-smallest-number-of-neighbors">Find the city with the smallest number of neighbors</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80c7-80cf-cc308f1e03ec" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    /* Function to find the city with 
+    the smallest number of neighbors. */
+    public int findCity(int n, int m, int[][] edges, 
+                        int distanceThreshold) {
+        
+        // Adjacency matrix to store the graph
+        int[][] adjMat = new int[n][n];
+        for (int[] row : adjMat) Arrays.fill(row, (int)1e9);
+        
+        // Filling up the adjacency matrix
+        for(int[] it : edges) {
+            adjMat[it[0]][it[1]] = it[2];
+            adjMat[it[1]][it[0]] = it[2];
+        }
+        
+        // Applying Floyd Warshall Algorithm
+        
+        // For intermediate node k
+        for(int k = 0; k &lt; n; k++) {
+            
+            // node i ---&gt; node j
+            for(int i = 0; i &lt; n; i++) {
+                for(int j = 0; j &lt; n; j++) {
+                    adjMat[i][j] = 
+                        Math.min(adjMat[i][j], adjMat[i][k] + adjMat[k][j]);
+                }
+            }
+        }
+        
+        // To store the minimum count of neighbors 
+        int minCount = (int)1e9;
+        
+        /* To store the answer (city having 
+        smallest number of neighbors) */
+        int ans = -1;
+        
+        // Check every city
+        for(int i = 0; i &lt; n; i++) {
+            
+            /* To count the neighbors of given city 
+            having distance lesser than threshold */
+            int count = 0;
+
+            // City i ---&gt; City j
+            for(int j = 0; j &lt; n; j++) {
+                
+                /* If the distance to reach city j from 
+                city i is less than threshold */
+                if(i != j &amp;&amp; adjMat[i][j] &lt;= distanceThreshold) {
+                    
+                    // Increment count
+                    count++;
+                }
+            }
+            
+            // if current count is less than minimum count
+            if(count &lt; minCount) {
+                
+                // Update minimum count
+                minCount = count;
+                
+                // Store the answer
+                ans = i;
+            }
+            
+            /* Else if current count is 
+            equal to minimum count */
+            else if(count == minCount) {
+                
+                /* Update the answer (to store 
+                city with greater number) */
+                ans = i;
+            }
+        }
+        
+        // Return the resulting city as answer
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="68d15d95-48aa-4f7b-8a76-76a778995b28" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-vi/find-the-mst-weight">Kruskal’s Algorithm – Minimum Spanning Tree</a></strong></mark></summary><ul id="015a2742-8409-41b3-9e68-afcb6e901ec4" class="bulleted-list"><li style="list-style-type:disc">MST: A Minimum Spanning Tree (MST) of a connected, undirected graph is a tree that spans all the vertices with the minimum possible sum of edge weights, ensuring connectivity while avoiding cycles.</li></ul><ul id="b0c9ea9c-d1dd-4d1b-898c-45e4354d0d65" class="bulleted-list"><li style="list-style-type:disc"><strong>it has N vertices and N-1 Edges and we can go from any node to any node.</strong></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="7a7f1df3-7138-492f-8efc-d3445d68a416" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Edge implements Comparable&lt;Edge&gt; { //DSAConceptRevision
+    int src;
+    int dest;
+    int weight;
+
+    Edge(int src, int dest, int weight) {
+        this.src = src;
+        this.dest = dest;
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Edge that) {
+        return this.weight - that.weight;
+    }
+}
+
+class Solution {
+    static int par[];
+    static int rank[];
+
+    // Initialize Union-Find structures
+    static void init(int N) {
+        par = new int[N];
+        rank = new int[N];
+        for (int i = 0; i &lt; N; i++) {
+            par[i] = i;
+        }
+    }
+
+    // Find with path compression
+    static int find(int x) {
+        if (x == par[x]) return x;
+        return par[x] = find(par[x]);
+    }
+
+    // Union by rank
+    static void union(int a, int b) {
+        int parA = find(a);
+        int parB = find(b);
+
+        if (parA == parB) return; // Important.
+
+        if (rank[parA] == rank[parB]) {
+            par[parA] = parB;
+            rank[parB]++;
+        } else if (rank[parA] &lt; rank[parB]) {
+            par[parA] = parB;
+        } else {
+            par[parB] = parA;
+        }
+    }
+
+    // Kruskal&#x27;s algorithm for MST
+    public int spanningTree(int V, List&lt;List&lt;List&lt;Integer&gt;&gt;&gt; adj) {
+        init(V); // Initialize Union-Find
+        List&lt;Edge&gt; edges = new ArrayList&lt;&gt;();
+
+        for (int i = 0; i &lt; V; i++) {
+            for (List&lt;Integer&gt; edge : adj.get(i)) {
+                int neighbor = edge.get(0);
+                int weight = edge.get(1);
+                edges.add(new Edge(i, neighbor, weight));
+                
+            }
+        }
+
+        Collections.sort(edges); // Sort edges by weight
+        int count = 0;
+        int mstCost = 0;
+
+        for (int i = 0; i &lt; edges.size(); i++) {
+            if (count == V - 1) break; // MST complete
+
+            Edge e = edges.get(i);
+            int u = e.src;
+            int v = e.dest;
+            int weight = e.weight;
+            int parU = find(u);
+            int parB = find(v);
+
+            if (parU != parB) {
+                union(u, v);
+                mstCost += weight;
+                count++;
+            }
+        }
+
+        return mstCost; // Return total cost of MST
+    }
+}
+</code></pre></details></li></ul><ul id="11da450f-cc00-4a0b-85c1-6e0187c766dd" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-vii-and-maths/bridges-in-graph">Bridges in Graph - Using Tarjan&#x27;s Algorithm</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="612abab3-6ee9-4e20-8db0-7ad987349d04" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+private int timer = 1;
+
+/* Helper function to make DFS calls while 
+checking for bridges in the graph */
+private void dfs(int node, int parent, int[] vis, List&lt;Integer&gt;[] adj, 
+                 int[] tin, int[] low, List&lt;List&lt;Integer&gt;&gt; bridges) {
+    
+    // Mark the node as visited
+    vis[node] = 1;
+    
+    /* Time of insertion and the lowest time of 
+    insert for node will be the current time */
+    tin[node] = low[node] = timer;
+    
+    // Increment the current time
+    timer++;
+    
+    // Traverse all its neighbors
+    for (int it : adj[node]) {
+        
+        // Skip the parent
+        if (it == parent) continue;
+        
+        // If a neighbor is not visited
+        if (vis[it] == 0) {
+            
+            // Make a recursive DFS call
+            dfs(it, node, vis, adj, tin, low, bridges);
+            
+            /* Once the recursive DFS call returns, update
+            the lowest time of insertion for the node */
+            low[node] = Math.min(low[it], low[node]);
+            
+            /* If the lowest time of insertion of the 
+            node is found to be greater than the 
+            time of insertion of the neighbor */
+            if (low[it] &gt; tin[node]) {
+                
+                // The edge represents a bridge
+                bridges.add(Arrays.asList(it, node));
+            }
+        }
+        
+        // Else if the neighbor is already visited
+        else {
+            // Update the lowest time of insertion of the node
+            low[node] = Math.min(low[node], low[it]);
+        }
+    }
+}
+
+// Function to identify the bridges in a graph
+public List&lt;List&lt;Integer&gt;&gt; criticalConnections(int n, 
+        List&lt;List&lt;Integer&gt;&gt; connections) {
+
+    // Adjacency list
+    List&lt;Integer&gt;[] adj = new ArrayList[n];
+    for (int i = 0; i &lt; n; i++) {
+        adj[i] = new ArrayList&lt;&gt;();
+    }
+    
+    // Add all the edges to the adjacency list
+    for (List&lt;Integer&gt; it : connections) {
+        int u = it.get(0), v = it.get(1);
+        adj[u].add(v);
+        adj[v].add(u);
+    }
+    
+    // Visited array
+    int[] vis = new int[n];
+    
+    // To store the time of insertion (discovery time) of nodes
+    int[] tin = new int[n];
+    
+    // To store the lowest time of insert of the nodes
+    int[] low = new int[n];
+    
+    // To store the bridges of the graph
+    List&lt;List&lt;Integer&gt;&gt; bridges = new ArrayList&lt;&gt;();
+    
+    // Start a DFS traversal from node 0 with its parent as -1
+    dfs(0, -1, vis, adj, tin, low, bridges);
+    
+    // Return the computed result
+    return bridges;
+}
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-80ff-98d9-e205f738bcca" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/graph-vii-and-maths/articulation-point-in-graph">Articulation point in graph</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8033-bd06-f2fb225acf7e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    private int timer = 1;
+
+    /* Helper function to make DFS calls while 
+    identifying articulation points */
+    private void dfs(int node, int parent, boolean[] vis, 
+                     int[] tin, int[] low, boolean[] mark, 
+                     ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+
+        // Mark the node as visited
+        vis[node] = true;
+
+        /* Time of insertion and the lowest time of 
+        insert for node will be the current time */
+        tin[node] = low[node] = timer;
+
+        // Increment the timer
+        timer++;
+
+        // To count the number of children of the node
+        int child = 0;
+
+        // Traverse all its neighbor
+        for (int it : adj.get(node)) {
+
+            // Skip the parent
+            if (it == parent) continue;
+
+            // If a neighbor is not visited
+            if (!vis[it]) {
+
+                // Make a recursive DFS call
+                dfs(it, node, vis, tin, low, mark, adj);
+
+                /* Once the recursive DFS call returns, upate
+                the lowest time of insertion for the node */
+                low[node] = Math.min(low[node], low[it]);
+
+                /* If the lowest time of insertion of the node is 
+                found to be greater than the time of insertion 
+                of the neighbor and it is node the starting node */
+                if (low[it] &gt;= tin[node] &amp;&amp; parent != -1) {
+
+                    // Mark the node as an articulation point
+                    mark[node] = true;
+                }
+
+                // Increment the child counter
+                child++;
+            }
+
+            // Else if the neighbor is already visited
+            else {
+
+                // Update the lowest time of insertion of the node
+                low[node] = Math.min(low[node], tin[it]);
+            }
+        }
+
+        /* If the node is not a starting node 
+        and has more than one child */
+        if (child &gt; 1 &amp;&amp; parent == -1) {
+
+            // Mark the node as an articulation point
+            mark[node] = true;
+        }
+    }
+
+    /* Function to determine the articulation 
+    points in the given graph */
+    public ArrayList&lt;Integer&gt; articulationPoints(int n,
+            ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+
+        // Visited array 
+        boolean[] vis = new boolean[n];
+
+        // To store the time of insertion(discovery time) of nodes
+        int[] tin = new int[n];
+
+        // To store the lowest time of insert of the nodes
+        int[] low = new int[n];
+
+        // To mark if a node is an articulation point
+        boolean[] mark = new boolean[n];
+
+        // Start DFS traversal of the graph
+        for (int i = 0; i &lt; n; i++) {
+
+            // If a node is not visited
+            if (!vis[i]) {
+
+                // Perform DFS starting from that node
+                dfs(i, -1, vis, tin, low, mark, adj);
+            }
+        }
+
+        // To store the nodes that are articulation point
+        ArrayList&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+        // Traverse all nodes 
+        for (int i = 0; i &lt; n; i++) {
+
+            // If the node is marked as an articulation point
+            if (mark[i]) {
+                // Add it to the result
+                ans.add(i);
+            }
+        }
+
+        // If there are no articulation points, return -1
+        if (ans.size() == 0) 
+            return new ArrayList&lt;&gt;(Arrays.asList(-1));
+
+        // Return the result
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="bd0fafa3-b21b-4540-bc73-a5153f131129" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/cycles/detect-a-cycle-in-an-undirected-graph">Detect Cycle in an Undirected Graph (using BFS)</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8dcdea32-fdd3-4b09-a95a-7cf55b87bbc4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">import java.util.*;
+
+public class Solution { //DSAConceptRevision
+    
+    // Function to detect cycle in an undirected graph.
+    public boolean isCycle(int V, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+        boolean[] visited = new boolean[V];
+        
+        // Iterate through all vertices to check for cycles.
+        for (int i = 0; i &lt; V; i++) { //Graph disconnected bhi ho sakta hai na babu!
+            if (!visited[i]) {
+                if (detectCycle(adj, i, visited)) {
+                    return true;  // Cycle detected.
+                }
+            }
+        }
+        return false;  // No cycle found.
+    }
+
+    static class Pair {
+        int node;
+        int parent;
+        
+        Pair(int n, int p) {
+            node = n;
+            parent = p;
+        }
+    }
+
+    // Function to perform BFS and detect cycles.
+    public static boolean detectCycle(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, int vtx, boolean[] visited) {
+        Queue&lt;Pair&gt; q = new LinkedList&lt;&gt;();
+        q.add(new Pair(vtx, -1));  // Vertex and its parent.
+
+        visited[vtx] = true;
+        
+        while (!q.isEmpty()) {
+            Pair curr = q.poll();
+            int node = curr.node;
+            int parent = curr.parent;
+            
+            // Explore neighbors of the current vertex.
+            for (int nei : adj.get(node)) {
+                if (!visited[nei]) {
+                    visited[nei] = true;
+                    q.add(new Pair(nei, node));
+                } else if (nei != parent) { //bhai yaha &#x27;else if&#x27; hi ayega, iske alawa kuch aur matt likh dena.
+                    return true;  // Cycle detected.
+                }
+            }
+        }
+        return false;  // No cycle found.
+    }
+}</code></pre></details></li></ul><ul id="eb7689f3-c20c-4265-b643-3d504db61142" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/cycles/detect-a-cycle-in-an-undirected-graph">Detect Cycle in an Undirected Graph (using DFS)</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e6b7b184-6ef8-4507-88ac-2b13a2109b8c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    // Function to check if the given undirected graph contains a cycle.
+    public boolean isCycle(int V, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+        boolean visited[] = new boolean[V];
+        
+        // Iterate over all vertices and check for cycles using DFS.
+        for (int i = 0; i &lt; V; i++) {
+            if (!visited[i] &amp;&amp; detectCycle(adj, i, visited, -1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // DFS-based function to detect cycles in an undirected graph.
+    public static boolean detectCycle(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, int vtx, boolean[] visited, int parent) {
+        
+        // Mark the current vertex as visited.
+        visited[vtx] = true;
+        
+        // Explore neighbors of the current vertex.
+        for (int nei : adj.get(vtx)) {
+            if (!visited[nei]) {
+                // Recursively call detectCycle for an unvisited neighbor.
+                if (detectCycle(adj, nei, visited, vtx)) {
+                    return true; // Cycle detected.
+                }
+            } else if (nei != parent) {
+                return true; // Visited neighbor is not the parent, indicating a cycle.
+            }
+        }
+        return false; // No cycle detected in this DFS traversal.
+    }
+}</code></pre></details></li></ul><ul id="c1490d6d-72a1-4571-b992-4c09135675e0" class="block-color-default toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1">BFS Algorithm</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="8c4cadea-d625-467f-ad6b-0e6ad66e2f63" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">import java.util.*;
+
+public class Solution { //DSAConceptRevision
+
+    public static ArrayList&lt;Integer&gt; bfsOfGraph(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, int startVertex) {
+
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        ArrayList&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+        queue.add(startVertex);
+        visited.add(startVertex); // BFS Rule: whenever we push something in a queue, we mark it visited.
+
+        while (!queue.isEmpty()) {
+            int curr = queue.remove(); // remove
+            ans.add(curr); // work
+
+            for (int neighbor : adj.get(curr)) { // visit neighbors and add them to queue.
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adjList = new ArrayList&lt;&gt;();
+        int V = 6;
+
+        for (int i = 0; i &lt; V; i++) {
+            adjList.add(new ArrayList&lt;&gt;());
+        }
+
+        addEdge(adjList, 0, 1);
+        addEdge(adjList, 0, 2);
+        addEdge(adjList, 1, 3);
+        addEdge(adjList, 1, 4);
+        addEdge(adjList, 2, 5);
+
+        printGraph(adjList);
+
+        ArrayList&lt;Integer&gt; bfsResult = bfsOfGraph(adjList, 0);
+
+        System.out.println(&quot;BFS of the graph: &quot; + bfsResult);
+    }
+
+    private static void addEdge(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+    }
+
+    private static void printGraph(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+        for (int i = 0; i &lt; adj.size(); i++) {
+            System.out.print(&quot;Vertex &quot; + i + &quot;: &quot;);
+            for (int neighbor : adj.get(i)) {
+                System.out.print(neighbor + &quot; &quot;);
+            }
+            System.out.println();
+        }
+
+    }
+
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="942279c4-e55a-4050-8027-8bad55eacd7b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">import java.util.*;
+
+public class Solution {
+
+    public static ArrayList&lt;ArrayList&lt;Integer&gt;&gt; bfsOfGraph(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, int startVertex) {
+
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+
+        queue.add(startVertex);
+        visited.add(startVertex); // BFS Rule: whenever we push something in a queue, we mark it visited.
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            ArrayList&lt;Integer&gt; currLevel = new ArrayList&lt;&gt;();
+            for (int i = 0; i &lt; size; i++) { // for loop ke ander hoga saara bfs wala kaam, lol.
+                int curr = queue.remove(); // remove
+                currLevel.add(curr); // work
+
+                for (int neighbor : adj.get(curr)) { // visit neighbors and add them to queue.
+                    if (!visited.contains(neighbor)) {
+                        visited.add(neighbor);
+                        queue.add(neighbor);
+                    }
+                }
+            }
+            ans.add(currLevel);
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adjList = new ArrayList&lt;&gt;();
+        int V = 6;
+
+        for (int i = 0; i &lt; V; i++) {
+            adjList.add(new ArrayList&lt;&gt;());
+        }
+
+        addEdge(adjList, 0, 1);
+        addEdge(adjList, 0, 2);
+        addEdge(adjList, 1, 3);
+        addEdge(adjList, 1, 4);
+        addEdge(adjList, 2, 5);
+
+        printGraph(adjList);
+
+        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; bfsResult = bfsOfGraph(adjList, 0);
+
+        System.out.println(&quot;BFS of the graph: &quot; + bfsResult);
+    }
+
+    private static void addEdge(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, int u, int v) {
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+    }
+
+    private static void printGraph(ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+        for (int i = 0; i &lt; adj.size(); i++) {
+            System.out.print(&quot;Vertex &quot; + i + &quot;: &quot;);
+            for (int neighbor : adj.get(i)) {
+                System.out.print(neighbor + &quot; &quot;);
+            }
+            System.out.println();
+        }
+
+    }
+
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="44366a43-0be2-4c11-bddc-6519c38f2d83" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">import java.util.*;
+
+public class Solution {
+    public static ArrayList&lt;Integer&gt; bfsOfGraph(int[][] adjMatrix) {
+        Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+
+        int startVertex = 0;
+        queue.add(startVertex);
+        visited.add(startVertex);
+
+        while (!queue.isEmpty()) {
+            int curr = queue.remove();
+            ans.add(curr);
+
+            for (int neighbor = 0; neighbor &lt; adjMatrix.length; neighbor++) { 
+                if (adjMatrix[curr][neighbor] == 1 &amp;&amp; !visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        return ans;
+    }
+
+    static ArrayList&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+    public static void main(String[] args) {
+        int numVertices = 5; // Number of vertices in the graph
+        int[][] adjMatrix = new int[numVertices][numVertices];
+
+        // Initialize the adjacency matrix with zeros (no edges)
+        for (int i = 0; i &lt; numVertices; i++) {
+            for (int j = 0; j &lt; numVertices; j++) {
+                adjMatrix[i][j] = 0;
+            }
+        }
+
+        // Add edges to the graph
+        addEdge(adjMatrix, 0, 1);
+        addEdge(adjMatrix, 0, 2);
+        addEdge(adjMatrix, 1, 3);
+        addEdge(adjMatrix, 2, 4);
+
+        // Perform BFS on the graph represented by the adjacency matrix
+        ArrayList&lt;Integer&gt; bfsResult = bfsOfGraph(adjMatrix);
+
+        // Print the BFS result
+        System.out.println(&quot;BFS result: &quot; + bfsResult);
+    }
+
+    // Utility function to add an undirected edge to the adjacency matrix
+    private static void addEdge(int[][] adj, int u, int v) {
+        adj[u][v] = 1;
+        adj[v][u] = 1;
+    }
+
+}</code></pre></details></li></ul><ul id="bbefc911-7e44-438e-b59e-73a0409103de" class="block-color-default toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1">DFS Algorithm</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1035b087-e1d7-4c73-9b63-1f2bbfad8a17" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">import java.util.*;
+
+public class Solution { //DSAConceptRevision
+
+    // Function to perform DFS traversal of the graph.
+    public ArrayList&lt;Integer&gt; dfsOfGraph(int V, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj) {
+        Set&lt;Integer&gt; visited = new HashSet&lt;&gt;();
+        ArrayList&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+        // Start DFS traversal from the first vertex (vertex 0).
+        dfs(0, adj, visited, ans);
+
+        return ans;
+    }
+
+    // Recursive DFS function to explore the graph.
+    private static void dfs(int vertex, ArrayList&lt;ArrayList&lt;Integer&gt;&gt; adj, Set&lt;Integer&gt; visited,
+            ArrayList&lt;Integer&gt; ans) {
+        visited.add(vertex); // Mark the current vertex as visited.
+        ans.add(vertex); // Add the current vertex to the result list.
+
+        // Explore neighbors of the current vertex.
+        for (int nei : adj.get(vertex)) {
+            if (!visited.contains(nei)) {
+                dfs(nei, adj, visited, ans);
+            }
+        }
+    }
+}</code></pre></details></li></ul><h1 id="2f4bc5dd-6a00-460c-8cb2-393a567589b3" class=""><mark class="highlight-default"><strong>DSA</strong></mark></h1><ul id="17ab255d-72ff-8003-a1a5-fb54f1d5506f" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/traversal-problems/number-of-enclaves">Number of Enclaves</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17ab255d-72ff-8054-84b7-ca5b780c0a80" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int numberOfEnclaves(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
+        // Step 1: Mark all land cells connected to the boundary
+        for (int i = 0; i &lt; rows; i++) {
+            if (grid[i][0] == 1) dfs(grid, i, 0, rows, cols); // Left boundary
+            if (grid[i][cols - 1] == 1) dfs(grid, i, cols - 1, rows, cols); // Right boundary
+        }
+        for (int j = 0; j &lt; cols; j++) {
+            if (grid[0][j] == 1) dfs(grid, 0, j, rows, cols); // Top boundary
+            if (grid[rows - 1][j] == 1) dfs(grid, rows - 1, j, rows, cols); // Bottom boundary
+        }
+
+        // Step 2: Count remaining land cells
+        int enclaveCount = 0;
+        for (int i = 0; i &lt; rows; i++) {
+            for (int j = 0; j &lt; cols; j++) {
+                if (grid[i][j] == 1) {
+                    enclaveCount++;
+                }
+            }
+        }
+
+        return enclaveCount;
+    }
+
+    // Helper function to perform DFS and mark boundary-connected land cells as visited
+    private void dfs(int[][] grid, int r, int c, int rows, int cols) {
+        if (r &lt; 0 || c &lt; 0 || r &gt;= rows || c &gt;= cols || grid[r][c] == 0) return;
+
+        grid[r][c] = 0; // Mark the cell as visited by converting it to sea
+        dfs(grid, r + 1, c, rows, cols); // Down
+        dfs(grid, r - 1, c, rows, cols); // Up
+        dfs(grid, r, c + 1, rows, cols); // Right
+        dfs(grid, r, c - 1, rows, cols); // Left
+    }
+}
+</code></pre></details></li></ul><ul id="1c7b255d-72ff-80ea-9247-e5639e348549" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/print-shortest-path-">Print Shortest Path</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-80f7-8cef-d210442b3bb4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to find the shortest 
+    path from node 1 to node n */
+    public List&lt;Integer&gt; shortestPath(int n, int m, int[][] edges) {
+        
+        // Adjacency list to store graph
+        List&lt;List&lt;int[]&gt;&gt; adj = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt;= n; i++) {
+            adj.add(new ArrayList&lt;&gt;());
+        }
+        
+        // Adding the edges to the graph
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(new int[]{edge[1], edge[2]});
+            adj.get(edge[1]).add(new int[]{edge[0], edge[2]});
+        }
+        
+        /* Using priority queue to 
+        implement Dijkstra Algorithm */
+        PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;(Comparator.comparingInt(a -&gt; a[0]));
+        
+        // Distance array
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        
+        // Parent array
+        int[] parent = new int[n + 1];
+        
+        /* Marking each node as 
+        its own parent initially */
+        for (int i = 1; i &lt;= n; i++) {
+            parent[i] = i;
+        }
+        
+        /* Distance of source node 
+        (node 1) to itself is zero */
+        dist[1] = 0;
+        
+        // Push the source node to the queue.
+        pq.add(new int[]{0, 1});
+        
+        // Until the queue is empty
+        while (!pq.isEmpty()) {
+            /* Get the pair containing node having 
+            minimum distance from source node */
+            int[] curr = pq.poll();
+            
+            int node = curr[1]; // node
+            int dis = curr[0]; // distance
+            
+            // Iterate through the neighbors
+            for (int[] neighbor : adj.get(node)) {
+                int adjNode = neighbor[0]; // node
+                int edWt = neighbor[1]; // edge weight
+                
+                /* If the tentative distance to 
+                reach adjacent node is smaller 
+                than the known distance */
+                if (dis + edWt &lt; dist[adjNode]) {
+                    
+                    // Update the known distance
+                    dist[adjNode] = dis + edWt;
+                    
+                    // Push the new pair to priority queue
+                    pq.add(new int[]{dis + edWt, adjNode});
+                    
+                    /* Update the parent of the adjNode 
+                    to the recent node(where it came from) */
+                    parent[adjNode] = node;
+                }
+            }
+        }
+        
+        /* If distance to the node could not be found, 
+        return an array containing -1. */
+        if (dist[n] == Integer.MAX_VALUE) {
+            return Arrays.asList(-1);
+        }
+        
+        // Array to store the path
+        List&lt;Integer&gt; path = new ArrayList&lt;&gt;();
+        
+        // Start from the destination node
+        int node = n;
+        
+        /* Iterate backwards from destination 
+        to source through the parent array */
+        while (parent[node] != node) {
+            
+            // Add the node to the path
+            path.add(node); 
+            
+            // Take a step back
+            node = parent[node];
+        }
+        
+        // Add the source node to the path
+        path.add(1);
+        
+        /* Since the path stored is in a 
+        reverse order, reverse the array 
+        to get the actual path */
+        Collections.reverse(path);
+        
+        // Add the path weight in the beginning
+        path.add(0, dist[n]);
+        
+        // Return the result
+        return path;
+    }
+}</code></pre></details></li></ul><ul id="1c7b255d-72ff-8014-8443-d7cdcbe309b3" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/shortest-path-algorithms/minimum-multiplications-to-reach-end">Minimum multiplications to reach end</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-80b6-aa72-e92b74ce295a" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+/* Function to determine minimum 
+multiplications to reach end */
+public int minimumMultiplications(int[] arr, 
+                        int start, int end) {
+    
+    // Base case
+    if (start == end) return 0;
+    
+    // Size of array
+    int n = arr.length;
+    int mod = 100000; // mod
+    
+    /* Array to store minimum 
+    steps (distance array) */
+    int[] minSteps = new int[mod];
+    Arrays.fill(minSteps, Integer.MAX_VALUE);
+    
+    /* Queue to implement 
+    Dijkstra&#x27;s algorithm */
+    Queue&lt;int[]&gt; q = new LinkedList&lt;&gt;();
+    
+    // Mark initial position as 0
+    minSteps[start] = 0;
+    
+    // Add the initial node to queue
+    q.add(new int[]{0, start});
+    
+    // Until the queue is empty
+    while (!q.isEmpty()) {
+        
+        // Get the element
+        int[] p = q.poll();
+        
+        int steps = p[0]; // steps 
+        int val = p[1]; // value
+        
+        // Check for adjacent neighbors
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Value of neighboring node
+            int num = (val * arr[i]) % mod;
+            
+            // If end is reached, return steps taken
+            if (num == end) return steps + 1;
+            
+            /* Check if the current steps taken is 
+            less than earlier known steps */
+            if (steps + 1 &lt; minSteps[num]) {
+                
+                // Update the known steps
+                minSteps[num] = steps + 1;
+                
+                // Insert the pair in queue
+                q.add(new int[]{steps + 1, num});
+            }
+        }
+    }
+    
+    /* Return -1 if reaching 
+    end is not possible */
+    return -1;
+}
+}</code></pre></details></li></ul><ul id="1c7b255d-72ff-80f7-93bb-e577adc0cef9" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/graph/hard-problems-ii/most-stones-removed-with-same-row-or-column">Most stones removed with same row or column</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-8039-bcd2-fa4e2e0c7aa9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class DisjointSet { //DSAStriver
+    /* To store the ranks, parents and 
+    sizes of different set of vertices */
+    int[] rank, parent, size;
+
+    // Constructor
+    DisjointSet(int n) {
+        rank = new int[n + 1];
+        parent = new int[n + 1];
+        size = new int[n + 1];
+        for (int i = 0; i &lt;= n; i++) {
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    // Function to find ultimate parent
+    int findUPar(int node) {
+        if (node == parent[node])
+            return node;
+        return parent[node] = findUPar(parent[node]);
+    }
+
+    // Function to implement union by size
+    void unionBySize(int u, int v) {
+        int ulp_u = findUPar(u);
+        int ulp_v = findUPar(v);
+        if (ulp_u == ulp_v) return;
+        if (size[ulp_u] &lt; size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
+        }
+    }
+}
+
+// Solution class
+class Solution {
+    // Function to remove maximum stones
+    public int maxRemove(int[][] stones, int n) {
+        
+        /* To store the maximum row 
+        and column having a stone */
+        int maxRow = 0;
+        int maxCol = 0;
+
+        // Iterate on all the nodes
+        for (int[] stone : stones) {
+            maxRow = Math.max(maxRow, stone[0]);
+            maxCol = Math.max(maxCol, stone[1]);
+        }
+
+        // Disjoint Set data structure
+        DisjointSet ds = 
+            new DisjointSet(maxRow + maxCol + 1);
+
+        // To store the nodes having a stone in Disjoint Set
+        Map&lt;Integer, Integer&gt; stoneNodes = new HashMap&lt;&gt;();
+
+        // Iterate on all stones
+        for (int[] stone : stones) {
+            // Row number
+            int nodeRow = stone[0];
+
+            // Converted column number
+            int nodeCol = stone[1] + maxRow + 1;
+
+            // United two nodes
+            ds.unionBySize(nodeRow, nodeCol);
+
+            // Add the nodes to the map
+            stoneNodes.put(nodeRow, 1);
+            stoneNodes.put(nodeCol, 1);
+        }
+
+        // To store the number of connected components
+        int k = 0;
+
+        // Iterate on the set
+        for (int key : stoneNodes.keySet()) {
+            /* Increment the count if 
+            a new component is found */
+            if (ds.findUPar(key) == key) {
+                k++;
+            }
+        }
+
+        // Return the answer
+        return n - k;
+    }
+}</code></pre></details></li></ul><h2 id="22fb255d-72ff-8041-aae0-fa1ad385130c" class="">Extras</h2><table id="22fb255d-72ff-80cf-8c7c-fe3d43ca7eac" class="simple-table"><tbody><tr id="22fb255d-72ff-807c-ab84-c33e7c5ff740"><td id="eSJg" class="">Link</td><td id="Qu`O" class="">Title</td><td id="Z&lt;K;" class="">Frequency</td><td id="xct;" class="">Companies Count</td><td id="uvQx" class="">Topics</td></tr><tr id="22fb255d-72ff-8008-abfd-db51c60dd663"><td id="eSJg" class="">https://leetcode.com/problems/number-of-islands</td><td id="Qu`O" class="">Number of Islands</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">86</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="22fb255d-72ff-80f5-a6df-d9db88359fed"><td id="eSJg" class="">https://leetcode.com/problems/coin-change</td><td id="Qu`O" class="">Coin Change</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">37</td><td id="uvQx" class="">Array, Dynamic Programming, Breadth-First Search</td></tr><tr id="22fb255d-72ff-80ed-9036-f9bab951fb0d"><td id="eSJg" class="">https://leetcode.com/problems/rotting-oranges</td><td id="Qu`O" class="">Rotting Oranges</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">34</td><td id="uvQx" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-80d8-90d7-e4e1c9b108b0"><td id="eSJg" class="">https://leetcode.com/problems/course-schedule</td><td id="Qu`O" class="">Course Schedule</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">34</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Graph, Topological Sort</td></tr><tr id="22fb255d-72ff-8033-a3f8-f25126e21f69"><td id="eSJg" class="">https://leetcode.com/problems/course-schedule-ii</td><td id="Qu`O" class="">Course Schedule II</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">33</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Graph, Topological Sort</td></tr><tr id="22fb255d-72ff-80d9-b5bd-c7e4ab169dff"><td id="eSJg" class="">https://leetcode.com/problems/word-ladder</td><td id="Qu`O" class="">Word Ladder</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">25</td><td id="uvQx" class="">Hash Table, String, Breadth-First Search</td></tr><tr id="22fb255d-72ff-80ae-ad10-de0d5c26ccb5"><td id="eSJg" class="">https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal</td><td id="Qu`O" class="">Binary Tree Zigzag Level Order Traversal</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">19</td><td id="uvQx" class="">Tree, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-8001-bb3f-fd984a25a2fd"><td id="eSJg" class="">https://leetcode.com/problems/evaluate-division</td><td id="Qu`O" class="">Evaluate Division</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">17</td><td id="uvQx" class="">Array, String, Depth-First Search, Breadth-First Search, Union Find, Graph, Shortest Path</td></tr><tr id="22fb255d-72ff-80ae-9950-c3ead0721e98"><td id="eSJg" class="">https://leetcode.com/problems/maximum-depth-of-binary-tree</td><td id="Qu`O" class="">Maximum Depth of Binary Tree</td><td id="Z&lt;K;" class="">88.2</td><td id="xct;" class="">16</td><td id="uvQx" class="">Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80e6-a2a8-fa949fbb4f99"><td id="eSJg" class="">https://leetcode.com/problems/binary-tree-level-order-traversal</td><td id="Qu`O" class="">Binary Tree Level Order Traversal</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">15</td><td id="uvQx" class="">Tree, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80a2-b2e1-e110d1bd2d34"><td id="eSJg" class="">https://leetcode.com/problems/clone-graph</td><td id="Qu`O" class="">Clone Graph</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">14</td><td id="uvQx" class="">Hash Table, Depth-First Search, Breadth-First Search, Graph</td></tr><tr id="22fb255d-72ff-80d1-8225-eeec4562a4a7"><td id="eSJg" class="">https://leetcode.com/problems/max-area-of-island</td><td id="Qu`O" class="">Max Area of Island</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">14</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="22fb255d-72ff-80a2-84dd-e175bd1f8fb1"><td id="eSJg" class="">https://leetcode.com/problems/alien-dictionary</td><td id="Qu`O" class="">Alien Dictionary</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">13</td><td id="uvQx" class="">Array, String, Depth-First Search, Breadth-First Search, Graph, Topological Sort</td></tr><tr id="22fb255d-72ff-80cc-b92b-dd5f072e44c4"><td id="eSJg" class="">https://leetcode.com/problems/serialize-and-deserialize-binary-tree</td><td id="Qu`O" class="">Serialize and Deserialize Binary Tree</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">13</td><td id="uvQx" class="">String, Tree, Depth-First Search, Breadth-First Search, Design, Binary Tree</td></tr><tr id="22fb255d-72ff-80ea-8557-f7173ac63b5d"><td id="eSJg" class="">https://leetcode.com/problems/binary-tree-right-side-view</td><td id="Qu`O" class="">Binary Tree Right Side View</td><td id="Z&lt;K;" class="">87.3</td><td id="xct;" class="">13</td><td id="uvQx" class="">Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-807c-898a-f0a914bc7017"><td id="eSJg" class="">https://leetcode.com/problems/making-a-large-island</td><td id="Qu`O" class="">Making A Large Island</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">11</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="22fb255d-72ff-80ad-9803-c139e9f06c9e"><td id="eSJg" class="">https://leetcode.com/problems/symmetric-tree</td><td id="Qu`O" class="">Symmetric Tree</td><td id="Z&lt;K;" class="">88.9</td><td id="xct;" class="">11</td><td id="uvQx" class="">Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80f9-81a6-cbcf171597ba"><td id="eSJg" class="">https://leetcode.com/problems/same-tree</td><td id="Qu`O" class="">Same Tree</td><td id="Z&lt;K;" class="">50.7</td><td id="xct;" class="">11</td><td id="uvQx" class="">Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80e1-8d19-f9726c952f3d"><td id="eSJg" class="">https://leetcode.com/problems/shortest-distance-from-all-buildings</td><td id="Qu`O" class="">Shortest Distance from All Buildings</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">10</td><td id="uvQx" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8087-9b0c-c5f139b37ffc"><td id="eSJg" class="">https://leetcode.com/problems/open-the-lock</td><td id="Qu`O" class="">Open the Lock</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">10</td><td id="uvQx" class="">Array, Hash Table, String, Breadth-First Search</td></tr><tr id="22fb255d-72ff-8080-ab0c-f424c925563b"><td id="eSJg" class="">https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree</td><td id="Qu`O" class="">All Nodes Distance K in Binary Tree</td><td id="Z&lt;K;" class="">88.4</td><td id="xct;" class="">10</td><td id="uvQx" class="">Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-8025-b1ff-fe211b83d915"><td id="eSJg" class="">https://leetcode.com/problems/populating-next-right-pointers-in-each-node</td><td id="Qu`O" class="">Populating Next Right Pointers in Each Node</td><td id="Z&lt;K;" class="">65.3</td><td id="xct;" class="">10</td><td id="uvQx" class="">Linked List, Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80e0-9b4e-d94a25b1ff10"><td id="eSJg" class="">https://leetcode.com/problems/bus-routes</td><td id="Qu`O" class="">Bus Routes</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">9</td><td id="uvQx" class="">Array, Hash Table, Breadth-First Search</td></tr><tr id="22fb255d-72ff-8032-bcca-ff83c7f03eb1"><td id="eSJg" class="">https://leetcode.com/problems/cheapest-flights-within-k-stops</td><td id="Qu`O" class="">Cheapest Flights Within K Stops</td><td id="Z&lt;K;" class="">88.8</td><td id="xct;" class="">9</td><td id="uvQx" class="">Dynamic Programming, Depth-First Search, Breadth-First Search, Graph, Heap (Priority Queue), Shortest Path</td></tr><tr id="22fb255d-72ff-809e-99d2-dd3eac1463d2"><td id="eSJg" class="">https://leetcode.com/problems/longest-increasing-path-in-a-matrix</td><td id="Qu`O" class="">Longest Increasing Path in a Matrix</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">8</td><td id="uvQx" class="">Array, Dynamic Programming, Depth-First Search, Breadth-First Search, Graph, Topological Sort, Memoization, Matrix</td></tr><tr id="22fb255d-72ff-80a3-b46d-e1ab62f71a7e"><td id="eSJg" class="">https://leetcode.com/problems/number-of-distinct-islands</td><td id="Qu`O" class="">Number of Distinct Islands</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">8</td><td id="uvQx" class="">Hash Table, Depth-First Search, Breadth-First Search, Union Find, Hash Function</td></tr><tr id="22fb255d-72ff-80c6-9fe8-f51206ecfe05"><td id="eSJg" class="">https://leetcode.com/problems/walls-and-gates</td><td id="Qu`O" class="">Walls and Gates</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">8</td><td id="uvQx" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8049-bb13-d14be9f978b6"><td id="eSJg" class="">https://leetcode.com/problems/amount-of-time-for-binary-tree-to-be-infected</td><td id="Qu`O" class="">Amount of Time for Binary Tree to Be Infected</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">8</td><td id="uvQx" class="">Hash Table, Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80ae-83c3-fab6fd39406a"><td id="eSJg" class="">https://leetcode.com/problems/accounts-merge</td><td id="Qu`O" class="">Accounts Merge</td><td id="Z&lt;K;" class="">69.1</td><td id="xct;" class="">8</td><td id="uvQx" class="">Array, Hash Table, String, Depth-First Search, Breadth-First Search, Union Find, Sorting</td></tr><tr id="22fb255d-72ff-8006-afac-f1dff9622b3e"><td id="eSJg" class="">https://leetcode.com/problems/path-sum</td><td id="Qu`O" class="">Path Sum</td><td id="Z&lt;K;" class="">46.9</td><td id="xct;" class="">8</td><td id="uvQx" class="">Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-8034-b921-da58fea3bed9"><td id="eSJg" class="">https://leetcode.com/problems/flood-fill</td><td id="Qu`O" class="">Flood Fill</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">7</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8053-820a-e6345bc08e65"><td id="eSJg" class="">https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination</td><td id="Qu`O" class="">Shortest Path in a Grid with Obstacles Elimination</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">7</td><td id="uvQx" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-809f-958f-c688829a8404"><td id="eSJg" class="">https://leetcode.com/problems/shortest-bridge</td><td id="Qu`O" class="">Shortest Bridge</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">7</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8008-a1e9-de8a81546368"><td id="eSJg" class="">https://leetcode.com/problems/snakes-and-ladders</td><td id="Qu`O" class="">Snakes and Ladders</td><td id="Z&lt;K;" class="">83.5</td><td id="xct;" class="">7</td><td id="uvQx" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-80c4-bfe0-f01c3febd50e"><td id="eSJg" class="">https://leetcode.com/problems/perfect-squares</td><td id="Qu`O" class="">Perfect Squares</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">6</td><td id="uvQx" class="">Math, Dynamic Programming, Breadth-First Search</td></tr><tr id="22fb255d-72ff-80fd-b5b0-d96f50effb07"><td id="eSJg" class="">https://leetcode.com/problems/number-of-provinces</td><td id="Qu`O" class="">Number of Provinces</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">6</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Union Find, Graph</td></tr><tr id="22fb255d-72ff-8029-a9c0-cf8387d8e03c"><td id="eSJg" class="">https://leetcode.com/problems/pacific-atlantic-water-flow</td><td id="Qu`O" class="">Pacific Atlantic Water Flow</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">6</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8087-ab1d-f8647d707b75"><td id="eSJg" class="">https://leetcode.com/problems/trapping-rain-water-ii</td><td id="Qu`O" class="">Trapping Rain Water II</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">6</td><td id="uvQx" class="">Array, Breadth-First Search, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-806e-946f-d62ca05c1eaa"><td id="eSJg" class="">https://leetcode.com/problems/minimum-knight-moves</td><td id="Qu`O" class="">Minimum Knight Moves</td><td id="Z&lt;K;" class="">94.2</td><td id="xct;" class="">6</td><td id="uvQx" class="">Breadth-First Search</td></tr><tr id="22fb255d-72ff-8055-93dc-c75568ccb33e"><td id="eSJg" class="">https://leetcode.com/problems/surrounded-regions</td><td id="Qu`O" class="">Surrounded Regions</td><td id="Z&lt;K;" class="">92.3</td><td id="xct;" class="">6</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="22fb255d-72ff-8028-8349-cafe863d85c1"><td id="eSJg" class="">https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree</td><td id="Qu`O" class="">Vertical Order Traversal of a Binary Tree</td><td id="Z&lt;K;" class="">85.5</td><td id="xct;" class="">6</td><td id="uvQx" class="">Hash Table, Tree, Depth-First Search, Breadth-First Search, Sorting, Binary Tree</td></tr><tr id="22fb255d-72ff-80a5-9970-e71db7e6fa0a"><td id="eSJg" class="">https://leetcode.com/problems/possible-bipartition</td><td id="Qu`O" class="">Possible Bipartition</td><td id="Z&lt;K;" class="">84.8</td><td id="xct;" class="">6</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Union Find, Graph</td></tr><tr id="22fb255d-72ff-80bb-9f05-e10d7b3462f9"><td id="eSJg" class="">https://leetcode.com/problems/01-matrix</td><td id="Qu`O" class="">01 Matrix</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">5</td><td id="uvQx" class="">Array, Dynamic Programming, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-80e1-bc2c-c22273e68ba9"><td id="eSJg" class="">https://leetcode.com/problems/number-of-operations-to-make-network-connected</td><td id="Qu`O" class="">Number of Operations to Make Network Connected</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">5</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Union Find, Graph</td></tr><tr id="22fb255d-72ff-8011-b3d0-d5c91127c864"><td id="eSJg" class="">https://leetcode.com/problems/swim-in-rising-water</td><td id="Qu`O" class="">Swim in Rising Water</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">5</td><td id="uvQx" class="">Array, Binary Search, Depth-First Search, Breadth-First Search, Union Find, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-80d3-a9a6-e461fefb73a7"><td id="eSJg" class="">https://leetcode.com/problems/keys-and-rooms</td><td id="Qu`O" class="">Keys and Rooms</td><td id="Z&lt;K;" class="">100</td><td id="xct;" class="">5</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Graph</td></tr><tr id="22fb255d-72ff-803f-9797-df24fad5402b"><td id="eSJg" class="">https://leetcode.com/problems/graph-valid-tree</td><td id="Qu`O" class="">Graph Valid Tree</td><td id="Z&lt;K;" class="">97.6</td><td id="xct;" class="">5</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Union Find, Graph</td></tr><tr id="22fb255d-72ff-80d4-86a6-c37d07f26549"><td id="eSJg" class="">https://leetcode.com/problems/word-ladder-ii</td><td id="Qu`O" class="">Word Ladder II</td><td id="Z&lt;K;" class="">97.5</td><td id="xct;" class="">5</td><td id="uvQx" class="">Hash Table, String, Backtracking, Breadth-First Search</td></tr><tr id="22fb255d-72ff-80da-ae99-e16b6fef10ae"><td id="eSJg" class="">https://leetcode.com/problems/web-crawler-multithreaded</td><td id="Qu`O" class="">Web Crawler Multithreaded</td><td id="Z&lt;K;" class="">95.2</td><td id="xct;" class="">5</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search, Concurrency</td></tr><tr id="22fb255d-72ff-800a-be1a-fa73f8d8134c"><td id="eSJg" class="">https://leetcode.com/problems/the-maze</td><td id="Qu`O" class="">The Maze</td><td id="Z&lt;K;" class="">91.1</td><td id="xct;" class="">5</td><td id="uvQx" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8035-8ac2-c52b95c477f9"><td id="eSJg" class="">https://leetcode.com/problems/nested-list-weight-sum</td><td id="Qu`O" class="">Nested List Weight Sum</td><td id="Z&lt;K;" class="">83.5</td><td id="xct;" class="">5</td><td id="uvQx" class="">Depth-First Search, Breadth-First Search</td></tr><tr id="22fb255d-72ff-807e-9e62-c3fc158d0efb"><td id="eSJg" class="">https://leetcode.com/problems/shortest-path-in-binary-matrix</td><td id="Qu`O" class="">Shortest Path in Binary Matrix</td><td id="Z&lt;K;" class="">79.1</td><td id="xct;" class="">5</td><td id="uvQx" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-808e-ace2-f728472059fd"><td id="eSJg" class="">https://leetcode.com/problems/remove-invalid-parentheses</td><td id="Qu`O" class="">Remove Invalid Parentheses</td><td id="Z&lt;K;" class="">78.3</td><td id="xct;" class="">5</td><td id="uvQx" class="">String, Backtracking, Breadth-First Search</td></tr></tbody></table><p id="1c7b255d-72ff-804c-8a41-fea95c3e295a" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

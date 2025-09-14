@@ -1,0 +1,2979 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Dynamic Programming [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="176b255d-72ff-800c-afd4-cd742638754d" class="page sans"><header><h1 class="page-title">Dynamic Programming [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h3 id="232b255d-72ff-80fa-9529-c110fec6650b" class=""><strong>DP (Memoization) Approach</strong></h3><ol type="1" id="232b255d-72ff-80e1-a0cb-c1ef03de6a9a" class="numbered-list" start="1"><li><strong>Try to represent the problem in terms of index or state</strong><p id="232b255d-72ff-8088-9fff-c7e4272b3a2c" class="">→ <code>f(i)</code>, <code>f(i, sum)</code>, <code>f(i, j)</code> etc.</p></li></ol><ol type="1" id="232b255d-72ff-8042-986e-d59b51ff5d73" class="numbered-list" start="2"><li><strong>Do all possible stuffs on that index</strong><p id="232b255d-72ff-80ec-82f1-ca2544fdb434" class="">→ Choices: pick / not pick, go left / right, cut / no cut, etc.</p></li></ol><ol type="1" id="232b255d-72ff-8018-94d4-cd0a05bfddee" class="numbered-list" start="3"><li><strong>sum of all stuffs</strong> → if question says <strong>&quot;count all ways&quot;</strong><p id="232b255d-72ff-8039-8e24-dd351a939367" class=""><strong>min (of all stuffs)</strong> → if question says <strong>&quot;find min cost / time / jumps&quot;</strong></p></li></ol><h2 id="185b255d-72ff-804e-849c-e74116750eb3" class=""><strong>DSA Quick Revision</strong></h2><ul id="19eb255d-72ff-8066-b2b8-f12216e41922" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/dynamic-programming/dp-on-stocks/best-time-to-buy-and-sell-stock">Best time to buy and sell stock</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-809a-bffd-e0705800a61a" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Top G: One transaction Only
+    public int stockBuySell(int[] arr, int n) {
+        int maxProfit = 0;
+        // Initialize mini to the first element of arr
+        int mini = arr[0]; 
+
+        // Traverse through the array 
+        for (int i = 1; i &lt; n; i++) {
+            // Calculate current profit
+            int curProfit = arr[i] - mini; 
+            
+            // Update maxProfit if curProfit is larger
+            maxProfit = Math.max(maxProfit, curProfit); 
+            
+            // Update mini to minimum value encountered so far
+            mini = Math.min(mini, arr[i]); 
+        }
+        // Return the maximum profit
+        return maxProfit; 
+    }
+}</code></pre></details></li></ul><ul id="180b255d-72ff-8088-b660-cbb7eeea5ebc" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/house-robber">House Robber 2</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-801b-abad-f6415307ca35" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Helper function to solve the House Robber I problem using recursion and memoization
+    public int helper(int[] nums, int ind, Integer[] dp) {
+        if (ind == 0) {
+            return nums[0]; // Base case: If at the first house, return its value.
+        }
+        if (ind &lt; 0) return 0; // Base case: If out of bounds, return 0.
+
+        if (dp[ind] != null) return dp[ind]; // Use the precomputed result if available.
+
+        // Choose between picking the current house and skipping it:
+        int pick = nums[ind] + helper(nums, ind - 2, dp); // If picked, skip the adjacent house.
+        int notPick = helper(nums, ind - 1, dp); // If not picked, move to the previous house.
+
+        // Store the maximum value of the two choices and return it.
+        return dp[ind] = Math.max(pick, notPick);
+    }
+
+    // Main function to solve House Robber II problem
+    public int rob(int[] nums) {
+        int n = nums.length;
+        
+        // Edge cases
+        if (n == 1) return nums[0];
+        if (n == 2) return Math.max(nums[0], nums[1]);
+        
+        // Case 1: Rob houses from 0 to n-2 (ignore the last house)
+        Integer[] dp1 = new Integer[n];
+        int case1 = helper(Arrays.copyOfRange(nums, 0, n - 1), n - 2, dp1);
+        
+        // Case 2: Rob houses from 1 to n-1 (ignore the first house)
+        Integer[] dp2 = new Integer[n];
+        int case2 = helper(Arrays.copyOfRange(nums, 1, n), n - 2, dp2);
+        
+        // Return the maximum of the two cases
+        return Math.max(case1, case2);
+    }
+}
+</code></pre></details></li></ul><ul id="176b255d-72ff-8077-ab9c-f7e406f39261" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-v/minimum-coins">Coin Change (Minimum Coin)</a></strong></summary><figure id="176b255d-72ff-80a2-aa69-f1747f0e035b" class="image"><a href="image%2016.png"><img style="width:679.9625244140625px" src="image%2016.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="176b255d-72ff-80db-9bdc-cb435495291f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { // DSAConceptRevision
+    Integer[][] dp;
+
+    public int coinChange(int[] coins, int amount) {
+        int n = coins.length;
+        dp = new Integer[n][amount + 1];
+
+        int ans = helper(n - 1, amount, coins);
+
+        return ans == (int)1e9 ? -1 : ans;
+    }
+
+    private int helper(int idx, int amount, int[] coins) {
+        // Base case: check if amount can be formed using first coin
+        if (idx == 0) {
+            if (amount % coins[0] == 0) return amount / coins[0];
+            return (int)1e9;
+        }
+
+        if (dp[idx][amount] != null) return dp[idx][amount];
+
+        int notPick = helper(idx - 1, amount, coins);
+
+        int pick = (int)1e9;
+        if (coins[idx] &lt;= amount) {
+            pick = 1 + helper(idx, amount - coins[idx], coins);
+        }
+
+        return dp[idx][amount] = Math.min(pick, notPick);
+    }
+}
+</code></pre><p id="176b255d-72ff-80ab-8301-fcf9b9c991b4" class="">
+</p></details></li></ul><ul id="176b255d-72ff-807b-acc4-f41e87dc845c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-i/climbing-stairs">Climbing Stairs</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="176b255d-72ff-80fb-983d-c50cfa611d6b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    Integer[] dp;
+
+    public int climbStairs(int n) {
+        dp = new Integer[n + 1];
+        return helper(n); // 0 se n tak jaane ke total ways
+    }
+
+    private int helper(int idx) { // 0 se idx tak jaane ke total ways
+        if (idx == 0) return 1; // Reached top exactly
+        if (idx &lt; 0) return 0;  // Invalid step (overshoot)
+
+        if (dp[idx] != null) return dp[idx];
+
+        int oneStep = helper(idx - 1); // 1 step climb
+        int twoStep = helper(idx - 2); // 2 steps climb
+
+        return dp[idx] = oneStep + twoStep;
+    }
+}
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="232b255d-72ff-804e-99ae-da98e49d728d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int climbStairs(int n) {
+
+        // dp[i] = total ways to reach step i
+        int[] dp = new int[n + 1];
+        dp[0] = 1; // 1 way to stay at 0th step
+        dp[1] = 1; // 1 way to reach 1st step
+
+        for (int i = 2; i &lt;= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2]; // 1 step + 2 step ways
+        }
+
+        return dp[n];
+    }
+}
+</code></pre></details></li></ul><ul id="19eb255d-72ff-806c-b89d-f59f050db1ec" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/dynamic-programming/dp-on-stocks/best-time-to-buy-and-sell-stock-ii">Best time to buy and sell stock II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-8041-b115-c3f8e9d9634d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Top G: Infinite transactions
+    private int func(int ind, int buy, int n, int[] arr, int[][] dp) {
+        // Base case 
+        if (ind == n) {
+            return 0;
+        }
+        /* If the result for this state has 
+        already been calculated, return it*/
+        if (dp[ind][buy] != -1) {
+            return dp[ind][buy];
+        }
+        int profit = 0;
+        
+        // We can buy the stock
+        if (buy == 0) { 
+            profit = Math.max(0 + func(ind + 1, 0, n, arr, dp), (-1)*arr[ind] + func(ind + 1, 1, n, arr, dp));
+        }
+        
+        // We can sell the stock
+        if (buy == 1) { 
+            profit = Math.max(0 + func(ind + 1, 1, n, arr, dp), arr[ind] + func(ind + 1, 0, n, arr, dp));
+        }
+
+        /* Store the value in dp array and
+        return the calculated profit */
+        return dp[ind][buy] = profit;
+    }
+
+    // Function to calculate the maximum profit earned 
+    public int stockBuySell(int[] arr, int n) {
+        if (n == 0) 
+            return 0;
+            
+        // Initialize a DP table to memoize results
+        int[][] dp = new int[n][2];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        int ans = func(0, 0, n, arr, dp);
+        
+        // Return the maximum profit
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-803e-bb34-d32d3e524811" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/word-break/">Word Break</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="23cb255d-72ff-8091-a37d-fb055f159f01" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    Boolean[] dp;
+
+    public boolean wordBreak(String s, List&lt;String&gt; wordDict) {
+        dp = new Boolean[s.length()]; // Memoization array
+        Set&lt;String&gt; dict = new HashSet&lt;&gt;(wordDict); // Faster lookup
+        return canBreak(0, s, dict);
+    }
+
+    // Recursive function to check if substring from &#x27;start&#x27; can be segmented
+    private boolean canBreak(int start, String s, Set&lt;String&gt; dict) {
+        if (start == s.length()) return true; // Reached end → valid segmentation
+
+        if (dp[start] != null) return dp[start]; // Return memoized result
+
+        // Try every possible prefix starting from &#x27;start&#x27;
+        for (int end = start + 1; end &lt;= s.length(); end++) {
+            String prefix = s.substring(start, end);
+            // If prefix is valid word and rest of string can be segmented
+            if (dict.contains(prefix) &amp;&amp; canBreak(end, s, dict)) {
+                return dp[start] = true; // Memoize and return true
+            }
+        }
+
+        return dp[start] = false; // No valid segmentation found
+    }
+}
+</code></pre></details></li></ul><ul id="17cb255d-72ff-8070-b642-d88eb317981c" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/edit-distance">Edit Distance</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17cb255d-72ff-80a0-9e39-fdeae5c3b013" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int editDistance(String word1, String word2) {
+        int n = word1.length();
+        int m = word2.length();
+        int[][] dp = new int[n][m];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1); // Initialize DP table with -1
+        }
+        return helper(n - 1, m - 1, word1, word2, dp);
+    }
+
+    private int helper(int i, int j, String word1, String word2, int[][] dp) {
+        if (i &lt; 0) return j + 1; // Insert all remaining characters from word2
+        if (j &lt; 0) return i + 1; // Delete all remaining characters from word1
+
+        if (dp[i][j] != -1) return dp[i][j]; // Return precomputed value
+
+        if (word1.charAt(i) == word2.charAt(j)) {
+            return dp[i][j] = helper(i - 1, j - 1, word1, word2, dp); // No operation needed
+        }
+
+        // Replace: Change word1[i] to word2[j] and move diagonally
+        int replace = helper(i - 1, j - 1, word1, word2, dp);
+
+        // Delete: Remove word1[i] and move up in word1
+        int delete = helper(i - 1, j, word1, word2, dp);
+
+        // Insert: Add word2[j] to word1 and move left in word2
+        int insert = helper(i, j - 1, word1, word2, dp);
+
+        // Take the minimum of all three operations and add 1 for the current operation
+        return dp[i][j] = 1 + Math.min(replace, Math.min(delete, insert));
+    }
+}
+</code></pre></details></li></ul><ul id="176b255d-72ff-80c3-b37d-fa0fe532f59f" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/longest-increasing-subsequence">Longest Increasing Subsequence</a></strong></summary><figure id="176b255d-72ff-8006-867d-de9fc2cf313b" class="image"><a href="image%2017.png"><img style="width:651.8875122070312px" src="image%2017.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="176b255d-72ff-8020-9335-ea1e7806cbff" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    Integer[][] dp; // Memoization table
+
+    public int LIS(int[] nums) {
+        int n = nums.length;
+        dp = new Integer[n][n + 1]; // DP table: [index][prevIndex + 1]
+        return helper(0, -1, nums); // Start with index 0 and no previous index
+    }
+
+    private int helper(int idx, int prevIdx, int[] nums) {
+        if (idx == nums.length) return 0; // Base case: no more elements
+
+        if (dp[idx][prevIdx + 1] != null) return dp[idx][prevIdx + 1]; // Return cached result
+
+        // Option 1: Skip current element
+        int notPick = helper(idx + 1, prevIdx, nums);
+
+        // Option 2: Include current element if valid
+        int pick = 0;
+        if (prevIdx == -1 || nums[idx] &gt; nums[prevIdx]) {
+            pick = 1 + helper(idx + 1, idx, nums);
+        }
+
+        // Cache and return the maximum of the two choices
+        return dp[idx][prevIdx + 1] = Math.max(notPick, pick);
+    }
+}
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="219b255d-72ff-809c-92c2-fd8484c8221b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int LIS(int[] nums) {
+        int n = nums.length;
+        int[][] dp = new int[n + 1][n + 1]; // dp[idx][prevIdx+1]
+
+        // Base case: When idx == n, LIS is 0 → already 0-filled
+
+        // Fill table bottom-up
+        for (int idx = n - 1; idx &gt;= 0; idx--) {
+            for (int prevIdx = n - 1; prevIdx &gt;= -1; prevIdx--) {
+                int notPick = dp[idx + 1][prevIdx + 1];
+
+                int pick = 0;
+                if (prevIdx == -1 || nums[idx] &gt; nums[prevIdx]) {
+                    pick = 1 + dp[idx + 1][idx + 1];
+                }
+
+                dp[idx][prevIdx + 1] = Math.max(pick, notPick);
+            }
+        }
+
+        // Final answer is for index 0 and no previous index (prevIdx = -1 → +1 = 0)
+        return dp[0][0];
+    }
+
+}
+</code></pre><h3 id="219b255d-72ff-8022-bd0d-f835a35f1b39" class="">What is <code>insertionPoint</code>?</h3><blockquote id="219b255d-72ff-8068-9fe2-f488281e36da" class="">It&#x27;s the index where the element should be inserted to keep the list sorted.</blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="219b255d-72ff-80e7-973a-ca801459906a" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">List&lt;Integer&gt; list = Arrays.asList(2, 4, 6, 8);
+int idx = Collections.binarySearch(list, 5);
+// idx = -3 → insertion point = 2
+
+
+// Java binary search ka result ko usable banane ke liye:
+int idx = Collections.binarySearch(list, key);
+if (idx &lt; 0) idx = -(idx + 1); // convert to insertion index</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8004-9a3d-d0601766768f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int LIS(int[] arr) {
+		    int n = arr.length;
+        List&lt;Integer&gt; temp = new ArrayList&lt;&gt;();
+        temp.add(arr[0]); // Start with the first element
+
+        for (int i = 1; i &lt; n; i++) {
+            int num = arr[i];
+
+            // If current element is greater than last in temp → extend LIS
+            if (num &gt; temp.get(temp.size() - 1)) {
+                temp.add(num);
+            } else {
+                // Find index where num can replace using binary search
+                int idx = Collections.binarySearch(temp, num);
+
+                // If not found, convert to insertion point
+                if (idx &lt; 0) idx = -(idx + 1);
+
+                // Replace to maintain the lowest possible ending value
+                temp.set(idx, num);
+            }
+        }
+
+        // Length of temp is length of LIS
+        return temp.size();
+    }
+
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-8052-a630-c0340bea02c5" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/regular-expression-matching/description/">Regular Expression Matching</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="23cb255d-72ff-807e-a345-e739588d6b36" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    Map&lt;String, Boolean&gt; memo = new HashMap&lt;&gt;();
+
+    public boolean isMatch(String s, String p) {
+        return match(0, 0, s, p);
+    }
+
+    private boolean match(int i, int j, String s, String p) {
+        String key = i + &quot;,&quot; + j;
+        if (memo.containsKey(key)) return memo.get(key);
+
+        // Base case: pattern khatam ho gaya
+        if (j == p.length()) {
+            return i == s.length(); // string bhi khatam ho?
+        }
+
+        // First character match ho raha?
+        boolean firstMatch = (i &lt; s.length()) &amp;&amp;
+                             (s.charAt(i) == p.charAt(j) || p.charAt(j) == &#x27;.&#x27;);
+
+        // Check for &#x27;*&#x27;
+        if (j + 1 &lt; p.length() &amp;&amp; p.charAt(j + 1) == &#x27;*&#x27;) {
+            // 2 options: 
+            // 1. Ignore x* → move j by 2
+            // 2. Consume if first matches → move i
+            boolean ans = match(i, j + 2, s, p) || (firstMatch &amp;&amp; match(i + 1, j, s, p));
+            memo.put(key, ans);
+            return ans;
+        } else {
+            // Move both forward if first char matched
+            boolean ans = firstMatch &amp;&amp; match(i + 1, j + 1, s, p);
+            memo.put(key, ans);
+            return ans;
+        }
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80fa-ae4a-e4c3d2081a4e" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/maximal-square/description/">Maximal Square</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="23cb255d-72ff-80c9-ba73-e8353ea75db2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    private int[][] memo;
+    private char[][] grid;
+    private int m, n, maxSide;
+
+    public int maximalSquare(char[][] matrix) {
+        grid = matrix;
+        m = matrix.length;
+        n = matrix[0].length;
+        memo = new int[m][n];
+        for (int[] row : memo) Arrays.fill(row, -1); // init memo
+
+        maxSide = 0;
+
+        // Try to start square from every cell
+        for (int i = 0; i &lt; m; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                maxSide = Math.max(maxSide, dfs(i, j));
+            }
+        }
+
+        return maxSide * maxSide; // return area
+    }
+
+    // Returns largest square side starting at (i, j)
+    private int dfs(int i, int j) {
+        if (i &gt;= m || j &gt;= n) return 0;          // out of bounds
+        if (memo[i][j] != -1) return memo[i][j]; // already solved
+        if (grid[i][j] == &#x27;0&#x27;) return memo[i][j] = 0; // can&#x27;t form square
+
+        // check right, down, diagonal
+        int right = dfs(i, j + 1);
+        int down = dfs(i + 1, j);
+        int diag = dfs(i + 1, j + 1);
+
+        return memo[i][j] = 1 + Math.min(right, Math.min(down, diag));
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-80e3-a07c-d27a9a3819bd" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-ii/unique-paths-ii">Unique paths II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8025-8e14-e59c054d9108" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+private int func(int i, int j, int[][] matrix, int[][] dp) {
+    // Base cases
+    if (i &lt; 0 || j &lt; 0 || matrix[i][j] == 1) return 0;
+    else if (i == 0 &amp;&amp; j == 0) return 1;
+
+    // If the result is already computed, return it
+    if (dp[i][j] != -1) return dp[i][j];
+
+    /* Calculate the number of ways by
+    moving up and left recursively. */
+    int up = func(i - 1, j, matrix, dp);
+    int left = func(i, j - 1, matrix, dp);
+
+    // Return the total ways
+    return dp[i][j] = up + left;
+}
+
+/* Function to find all unique paths to reach
+matrix[m-1][n-1] from matrix[0][0] with obstacles */
+public int uniquePathsWithObstacles(int[][] matrix) {
+    int m = matrix.length;
+    int n = matrix[0].length;
+
+    // Initialize DP table to memoize results
+    int[][] dp = new int[m][n];
+    for (int[] row : dp) Arrays.fill(row, -1);
+
+    // Return the total number of paths
+    return func(m - 1, n - 1, matrix, dp);
+}
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8077-ac89-c4a3d01c915c" class="toggle"><li><details open=""><summary>Decode Ways</summary></details></li></ul><ul id="18ab255d-72ff-8034-b83e-c93074ad0b9b" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vii/wildcard-matching">Wildcard Matching</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="18ab255d-72ff-8063-ba36-c5a275acca18" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public boolean wildCard(String s, String p) {
+        int n = s.length();  // Length of the input string
+        int m = p.length();  // Length of the pattern
+
+        // DP table for memoization (initialized with null, meaning uncomputed states)
+        Boolean[][] dp = new Boolean[n][m];
+        for (Boolean[] row : dp) Arrays.fill(row, null);  // Filling the DP table with null initially
+
+        // Recursive function with memoization (starting from n-1, m-1)
+        return match(n - 1, m - 1, s, p, dp);  // Start the matching from the end of both strings
+    }
+
+    private boolean match(int i, int j, String s, String p, Boolean[][] dp) {
+        // Base case: If both strings are fully matched (both are exhausted)
+        if (i &lt; 0 &amp;&amp; j &lt; 0) return true;
+
+        // If the pattern is exhausted but the string is not, it&#x27;s an automatic mismatch
+        if (j &lt; 0) return false;
+
+        // If the string is exhausted, the pattern should only contain &#x27;*&#x27; to still match
+        if (i &lt; 0) {
+            // All remaining pattern characters must be &#x27;*&#x27; to match the empty string
+            for (int k = j; k &gt;= 0; k--) {
+                if (p.charAt(k) != &#x27;*&#x27;) return false;  // If any non &#x27;*&#x27; character is found, return false
+            }
+            return true;  // All characters in the pattern are &#x27;*&#x27; so it matches
+        }
+
+        // If this state (i, j) is already computed, simply return the stored result from the DP table
+        if (dp[i][j] != null) return dp[i][j];  // Memoization check
+
+        // Variable to store the result for this state (i, j)
+        Boolean ans = false;
+
+        // Case 1: Direct character match OR &#x27;?&#x27; wildcard (which matches any single character)
+        if (s.charAt(i) == p.charAt(j) || p.charAt(j) == &#x27;?&#x27;) {
+            // If characters match or pattern[j] is &#x27;?&#x27;, move both string and pattern indexes
+            ans = match(i - 1, j - 1, s, p, dp);  // Recursively match the next characters
+        } 
+        // Case 2: &#x27;*&#x27; wildcard (can match empty sequence or any sequence of characters)
+        else if (p.charAt(j) == &#x27;*&#x27;) {
+            // &#x27;*&#x27; can match an empty sequence (move the pattern forward)
+            // OR it can consume one character from the string and keep &#x27;*&#x27; in play (move the string forward)
+            ans = match(i, j - 1, s, p, dp) || match(i - 1, j, s, p, dp);
+        }
+
+        // Store the result in the DP table for this state (i, j)
+        dp[i][j] = ans;  // Memoization: store the computed result for future reference
+
+        return ans;  // Return the final result for this state
+    }
+}
+</code></pre></details></li></ul><ul id="18ab255d-72ff-804f-b80c-e450daca77f6" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/minimum-falling-path-sum">Minimum path sum</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="18ab255d-72ff-8053-ba3a-f2602a14b846" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    /* Function to recursively find the
+    minimum path sum for a given cell*/
+    private int helper(int i, int j, int m, int[][] matrix, Integer[][] dp) {
+        // Base Conditions
+        if (j &lt; 0 || j &gt;= m)
+            return (int) 1e9; 
+        if (i == 0)
+            return matrix[0][j]; 
+        
+        /* If the result for this cell is
+        already calculated, return it*/
+        if (dp[i][j] != null)
+            return dp[i][j];
+    
+        /* Calculate the minimum path sum by 
+        considering three possible directions:
+        up, left diagonal, and right diagonal*/
+        int up = matrix[i][j] + helper(i - 1, j, m, matrix, dp);
+        int leftDiagonal = matrix[i][j] + helper(i - 1, j - 1, m, matrix, dp);
+        int rightDiagonal = matrix[i][j] + helper(i - 1, j + 1, m, matrix, dp);
+    
+        // Store the minimum of the three paths in dp
+        return dp[i][j] = Math.min(up, Math.min(leftDiagonal, rightDiagonal));
+    }
+
+    // Function to find the minimum path sum in given matrix
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+    
+        // Memoization table to store computed results
+        Integer[][] dp = new Integer[n][m];
+    
+        int mini = Integer.MAX_VALUE;
+    
+        /* Iterate through each cell in the first row to 
+        find minimum path sum starting from each of them*/
+        for (int j = 0; j &lt; m; j++) {
+            int ans = helper(n - 1, j, m, matrix, dp);
+            mini = Math.min(mini, ans);
+        }
+        // Return the minimum path sum
+        return mini;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8005-b5c3-c471bcbcf534" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-viii/maximum-rectangles">Maximum Rectangle</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-803c-b196-c75070fc6729" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to find the largest rectangle area
+    private int largestRectangleArea(int[] heights) {
+        
+        int n = heights.length; // Size of array
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // To store largest area
+        int largestArea = 0;
+        
+        // To store current area
+        int area;
+        
+        /* To store the indices of next 
+        and previous smaller elements */
+        int nse, pse;
+        
+        // Traverse on the array
+        for(int i = 0; i &lt; n; i++) {
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            elements is not the smaller element */
+            while(!st.isEmpty() &amp;&amp; 
+                  heights[st.peek()] &gt;= heights[i]){
+                      
+                // Get the index of top of stack
+                int ind = st.pop(); 
+                
+                /* Update the index of 
+                previous smaller element */
+                pse = st.isEmpty() ? -1 : st.peek();
+                
+                /* Next smaller element index for 
+                the popped element is current index */
+                nse = i;
+                
+                // Calculate the area of the popped element
+                area = heights[ind] * (nse - pse - 1);
+                
+                // Update the maximum area
+                largestArea = Math.max(largestArea, area);
+            }
+            
+            // Push the current index in stack
+            st.push(i);
+        }
+        
+        // For elements that are not popped from stack
+        while(!st.isEmpty()) {
+            
+            // NSE for such elements is size of array
+            nse = n;
+            
+            // Get the index of top of stack
+            int ind = st.pop(); 
+            
+            // Update the previous smaller element
+            pse = st.isEmpty() ? -1 : st.peek();
+            
+            // Calculate the area of the popped element
+            area = heights[ind] * (nse - pse - 1);
+            
+            // Update the maximum area
+            largestArea = Math.max(largestArea, area);
+        }
+        
+        // Return largest area found
+        return largestArea;
+    }
+    
+    /* Function to find the largest 
+    rectangle area containing all 1s */ 
+    public int maximalAreaOfSubMatrixOfAll1(int[][] matrix){
+        
+        // Determine the size of matrix
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        /* Prefix sum matric to store heights 
+        for different ground levels */
+        int[][] prefixSum = new int[n][m];
+        
+        // Fill up the prefix sum matrix column wise
+        for(int j = 0; j &lt; m; j++) {
+            int sum = 0;
+            
+            for(int i = 0; i &lt; n; i++) {
+                sum += matrix[i][j];
+                
+                // If there is no base present
+                if(matrix[i][j] == 0) {
+                    prefixSum[i][j] = 0;
+                    sum = 0;
+                } else {
+                    // Store the height
+                    prefixSum[i][j] = sum;
+                }
+            }
+        }
+        
+        // To store the maximum area
+        int maxArea = 0;
+        
+        // Traverse for different levels of ground
+        for(int i = 0; i &lt; n; i++) {
+            
+            // Get the largest area for current level
+            int area = largestRectangleArea(prefixSum[i]);
+            
+            // Update the maximum area
+            maxArea = Math.max(area, maxArea);
+        }
+        
+        // Return the maximum area
+        return maxArea;
+    }
+};
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80d9-a990-e0a40d98ed81" class="toggle"><li><details open=""><summary>Interleaving String</summary></details></li></ul><ul id="17cb255d-72ff-807f-a58d-c0425c347e62" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/longest-common-subsequence">Longest Common Subsequence</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17cb255d-72ff-80e3-9ee5-c8d98eca62dd" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    int[][] dp;
+
+    public int lcs(String s1, String s2) {
+        int len1 = s1.length();
+        int len2 = s2.length();
+        dp = new int[len1][len2]; // DP table for memoization
+        for (int[] row : dp) {
+            Arrays.fill(row, -1); // Initialize with -1 to indicate uncomputed states
+        }
+
+        return helper(len1 - 1, len2 - 1, s1, s2); // Start recursion from the last indices
+    }
+
+    public int helper(int ind1, int ind2, String s1, String s2) {
+        if (ind1 &lt; 0 || ind2 &lt; 0) return 0; // Base case: If either string is exhausted, LCS is 0
+
+        if (dp[ind1][ind2] != -1) return dp[ind1][ind2]; // Return precomputed value if available
+
+        // If characters match, add 1 to the LCS count and move diagonally in the DP table
+        if (s1.charAt(ind1) == s2.charAt(ind2)) {
+            return dp[ind1][ind2] = 1 + helper(ind1 - 1, ind2 - 1, s1, s2);
+        }
+
+        // If characters don&#x27;t match, take the max LCS by moving one step in either string
+        return dp[ind1][ind2] = Math.max(
+            helper(ind1 - 1, ind2, s1, s2), 
+            helper(ind1, ind2 - 1, s1, s2)
+        );
+    }
+}
+</code></pre></details></li></ul><ul id="19eb255d-72ff-8093-914f-d3f0878f1b59" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/best-time-to-buy-and-sell-stock-iv">Best time to buy and sell stock IV</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-80d2-985f-f60b22d53255" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAQuickRevision
+     // Top G: At most K transactions
+    private int func(int ind, int buy, int cap, int n, int[] arr, int[][][] dp) {
+        // Base case 
+        if (ind == n || cap == 0) {
+            return 0;
+        }
+        /* If the result for this state has 
+        already been calculated, return it*/
+        if (dp[ind][buy][cap] != -1) {
+            return dp[ind][buy][cap];
+        }
+        int profit = 0;
+        
+        // We can buy the stock
+        if (buy == 0) { 
+            profit = Math.max(0 + func(ind + 1, 0, cap, n, arr, dp), (-1)*arr[ind] + func(ind + 1, 1, cap, n, arr, dp));
+        }
+        
+        // We can sell the stock
+        if (buy == 1) { 
+            profit = Math.max(0 + func(ind + 1, 1, cap, n, arr, dp), arr[ind] + func(ind + 1, 0, cap-1, n, arr, dp));
+        }
+
+        /* Store the value in dp array and
+        return the calculated profit */
+        return dp[ind][buy][cap] = profit;
+    }
+
+    // Function to calculate the maximum profit earned 
+    public int stockBuySell(int[] arr, int n, int k) {
+        if (n == 0) 
+            return 0;
+            
+        // Declare a DP table to memoize results
+        int[][][] dp = new int[n][2][k+1];
+        
+        // Initialize the dp array with -1
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; 2; j++) {
+                Arrays.fill(dp[i][j], -1);
+            }
+        }
+
+        int ans = func(0, 0, k, n, arr, dp);
+        
+        // Return the maximum profit
+        return ans;
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-800e-a831-eac9e58c3098" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    // Function to find the maximum profit using tabulation
+    private int func(int[] arr, int n, int k) {
+        /* Declaring a 3D DP array of 
+        size [n+1][2][k+1] initialized to 0*/
+        int[][][] dp = new int[n + 1][2][k+1];
+
+        /* Base case: dp array is already i
+        nitialized to 0, covering the base case.*/
+
+        // Iterate backwards through the prices array
+        for (int ind = n - 1; ind &gt;= 0; ind--) {
+            
+            // buy can be 0 (buying) or 1 (selling)
+            for (int buy = 0; buy &lt;= 1; buy++) {
+                
+                /* cap represents the number of 
+                transactions completed (can be 1 to k)*/
+                for (int cap = 1; cap &lt;= k; cap++) {
+                    // We can buy the stock
+                    if (buy == 0) { 
+                        dp[ind][buy][cap] = Math.max(0 + dp[ind + 1][0][cap],
+                                                     (-1)*arr[ind] + dp[ind + 1][1][cap]);
+                    }
+                    // We can sell the stock
+                    if (buy == 1) { 
+                        dp[ind][buy][cap] = Math.max(0 + dp[ind + 1][1][cap],
+                                                     arr[ind] + dp[ind + 1][0][cap - 1]);
+                    }
+                }
+            }
+        }
+
+        /* The result is stored in dp[0][0][k] which
+        represents maximum profit after the final transaction.*/
+        return dp[0][0][k];
+    }
+
+    // Function to find the maximum profit
+    public int stockBuySell(int[] arr, int n, int k) {
+        // Return the answer
+        return func(arr, n, k);
+    }
+}</code></pre><p id="19eb255d-72ff-8012-92c4-e62ae7d6bedd" class="">
+</p></details></li></ul><ul id="22fb255d-72ff-8065-9620-db05bdcc6842" class="toggle"><li><details open=""><summary>Word Break II</summary></details></li></ul><ul id="22fb255d-72ff-801e-96d7-d000d8c382f6" class="toggle"><li><details open=""><summary>Minimum Number of Taps to Open to Water a Garden</summary></details></li></ul><ul id="1c6b255d-72ff-809b-b56e-fa02a2f56f2d" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vii/longest-string-chain">Longest String Chain</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80f8-bb6f-e1ba882fd5bc" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">
+class Solution { //DSAConceptRevision
+    public int longestStringChain(String[] words) {
+        Map&lt;String, Integer&gt; chains = new HashMap&lt;&gt;();  // Stores the max chain length for each word
+        String[] sortedWords = Arrays.copyOf(words, words.length);
+        Arrays.sort(sortedWords, (a, b) -&gt; a.length() - b.length());  // Sort words by length
+
+        for (String word : sortedWords) {
+            chains.put(word, 1);  // Initialize the chain length for the current word
+
+            for (int i = 0; i &lt; word.length(); i++) {
+                String pred = word.substring(0, i) + word.substring(i + 1);  // Generate predecessor by removing one character
+                if (chains.containsKey(pred)) {
+                    chains.put(word, Math.max(chains.getOrDefault(word, 0), chains.get(pred) + 1));
+                }
+            }
+        }
+
+        int maxChainLength = chains.values().stream().mapToInt(Integer::intValue).max().orElse(0);
+        return maxChainLength;        
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-801a-8dfc-cd901ee7e595" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-viii/burst-balloons">Burst balloons</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80ab-a4a4-c1dd9c993806" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    /* Recursive function to calculate
+    the maximum coins obtained*/
+    private int func(int i, int j, int[] nums, int[][] dp) {
+        if (i &gt; j) return 0;
+        
+        // Check if the subproblem is already solved
+        if (dp[i][j] != -1) return dp[i][j];
+        
+        int maxCoins = Integer.MIN_VALUE;
+
+        // Iterate through each balloon to burst last
+        for (int k = i; k &lt;= j; k++) {
+            /* Calculate the coins obtained
+            by bursting the k-th balloon last*/
+            int coins = nums[i - 1] * nums[k] * nums[j + 1];
+            
+            /* Recursively calculate the maximum 
+            coins for the remaining balloons*/
+            int remainingCoins = func(i, k - 1, nums, dp) + func(k + 1, j, nums, dp);
+            
+            // Update the maximum coins
+            maxCoins = Math.max(maxCoins, coins + remainingCoins);
+        }
+        // Return the result
+        return dp[i][j] = maxCoins;
+    }
+
+    // Function to calculate the maximum coins obtained
+    public int maxCoins(int[] nums) {
+        int n = nums.length;
+
+        // Add 1 to the beginning and end of nums array
+        int[] newNums = new int[n + 2];
+        newNums[0] = 1;
+        newNums[n + 1] = 1;
+        System.arraycopy(nums, 0, newNums, 1, n);
+
+        // Create a DP array for memoization
+        int[][] dp = new int[n + 2][n + 2];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Call helper function to compute maximum coins
+        return func(1, n, newNums, dp);
+}
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-80cc-85fa-d164bd9bcc45" class="toggle"><li><details open=""><summary>Minimum Cost For Tickets</summary></details></li></ul><ul id="22fb255d-72ff-80b9-89a4-f8e5cf7e685f" class="toggle"><li><details open=""><summary>Cherry Pickup</summary></details></li></ul><ul id="22fb255d-72ff-80d7-9322-f65969455706" class="toggle"><li><details open=""><summary>Perfect Squares</summary></details></li></ul><ul id="1c6b255d-72ff-80cf-ac10-dde6d35bb446" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/partition-a-set-into-two-subsets-with-minimum-absolute-sum-difference">Partition Array Into Two Arrays to Minimize Sum Difference</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80e8-80a7-ee3fdffacba6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Function to solve the subset sum problem
+    private boolean func(int ind, int target, int[] arr, Boolean[][] dp) {
+        // Base case: If the target sum is 0, return true
+        if (target == 0)
+            return true;
+
+        /* Base case: If we have considered all elements
+        and the target is still not 0, return false*/
+        if (ind == 0)
+            return arr[0] == target;
+
+        if (dp[ind][target] != null)
+            return dp[ind][target];
+
+        boolean notTaken = func(ind - 1, target, arr, dp);
+
+        boolean taken = false;
+        if (arr[ind] &lt;= target)
+            taken = func(ind - 1, target - arr[ind], arr, dp);
+
+        return  dp[ind][target] = notTaken || taken;
+    }
+
+    /* Function to find the minimum absolute
+    difference between two subset sums*/
+    public int minDifference(int[] arr, int n) {
+        if (n == 1) {
+            // If there&#x27;s only one element, no subsets can be divided, so the result is arr[0]
+            return arr[0];
+        }
+        
+        int totSum = 0;
+
+        // Calculate the total sum of the array
+        for (int i = 0; i &lt; n; i++) {
+            totSum += arr[i];
+        }
+        
+        /* Initialize a DP table to store the
+        results of the subset sum problem*/
+        Boolean[][] dp = new Boolean[n][totSum + 1];
+        
+        /* Calculate the subset sum for each 
+        possible sum from 0 to the total sum*/
+        for (int sum = 0; sum &lt;= totSum; sum++) {
+            func(n - 1, sum, arr, dp);
+        }
+
+        int mini = Integer.MAX_VALUE;
+        for (int sum = 0; sum &lt;= totSum; sum++) {
+            if (dp[n-1][sum]!=null &amp;&amp; dp[n-1][sum] == true) {
+                int diff = Math.abs(sum - (totSum - sum));
+                mini = Math.min(mini, diff);
+            }
+        }
+        return mini;
+    }
+}</code></pre></details></li></ul><ul id="18ab255d-72ff-802d-9043-c814001e1021" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vi/distinct-subsequences">Distinct Subsequences</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="18ab255d-72ff-8033-bcff-c37d3741e42b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    int[][] dp; // Memoization table
+
+    public int numDistinct(String s, String t) {
+        int n = s.length(), m = t.length();
+        dp = new int[n][m]; 
+        for (int[] row : dp) Arrays.fill(row, -1);
+        return helper(n - 1, m - 1, s, t);
+    }
+
+    private int helper(int i, int j, String s, String t) {
+        // Base Case: If `t` is empty, we found a valid subsequence
+        if (j &lt; 0) return 1;
+        // If `s` is exhausted but `t` still remains, return 0
+        if (i &lt; 0) return 0;
+
+        // If already computed, return cached result
+        if (dp[i][j] != -1) return dp[i][j];
+
+        // Option 1: If characters match, we can either take it or skip it
+        int take = 0;
+        if (s.charAt(i) == t.charAt(j)) {
+            take = helper(i - 1, j - 1, s, t); // Take this char
+        }
+
+        // Option 2: Skip current character in `s`
+        int notTake = helper(i - 1, j, s, t);
+
+        // Store and return total distinct subsequences
+        return dp[i][j] = take + notTake;
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80ba-b396-d889d067dab6" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/frog-jump/description/">Frog Jump</a></summary></details></li></ul><ul id="19eb255d-72ff-801a-b34f-d3395ac0f1d5" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-ii/triangle">Triangle</a></strong></summary><figure id="19eb255d-72ff-8024-9053-c0664407b47a" class="image"><a href="image%2018.png"><img style="width:384px" src="image%2018.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-80d9-a498-e5dc0f61fe74" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    // Function to find the minimum path sum using memoization
+    private int func(int i, int j, int[][] triangle, int n, int[][] dp) {
+        /* If the result for this cell is
+        already calculated, return it*/
+        if (dp[i][j] != -1)
+            return dp[i][j];
+
+        // If we&#x27;re at bottom row, return value of current cell
+        if (i == n - 1)
+            return triangle[i][j];
+
+        // Calculate the sum of two possible paths
+        int down = triangle[i][j] + func(i + 1, j, triangle, n, dp);
+        int diagonal = triangle[i][j] + func(i + 1, j + 1, triangle, n, dp);
+
+        // Store the minimum sum in dp and return it
+        return dp[i][j] = Math.min(down, diagonal);
+    }
+
+    // Function to find out the minimum path sum
+    public int minTriangleSum(int[][] triangle) {
+        // Get the number of rows in the triangle
+        int n = triangle.length;
+
+        // Initialize a memoization table to store computed results
+        int[][] dp = new int[n][n];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Return the minimum path sum
+        return func(0, 0, triangle, n, dp);
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-8046-ae0f-d66ddcb27553" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{    
+// Function to find the minimum path sum using tabulation
+    private int func(int[][] triangle, int n, int[][] dp) {
+        /* Initialize the bottom row of dp 
+        with the values from the triangle*/
+        for (int j = 0; j &lt; n; j++) {
+            dp[n - 1][j] = triangle[n - 1][j];
+        }
+
+        // Iterate through the triangle rows in reverse order
+        for (int i = n - 2; i &gt;= 0; i--) {
+            for (int j = i; j &gt;= 0; j--) {
+                // Calculate the minimum path sum for current cell
+                int down = triangle[i][j] + dp[i + 1][j];
+                int diagonal = triangle[i][j] + dp[i + 1][j + 1];
+
+                // Store the minimum of the two possible paths in dp
+                dp[i][j] = Math.min(down, diagonal);
+            }
+        }
+        // Top-left cell of dp now contains the minimum path sum
+        return dp[0][0];
+    }
+
+    // Function to find out the minimum path sum
+    public int minTriangleSum(int[][] triangle) {
+        // Get the number of rows in the triangle
+        int n = triangle.length;
+        
+        /* Initialize a memoization table
+        to store computed results*/
+        int[][] dp = new int[n][n];
+    
+        // Return the minimum path sum
+        return func(triangle, n, dp);
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-80ca-b2ad-fd9e29a5705c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-iv/target-sum">Target sum</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8062-a665-e27fc38cd1c1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    /* Function to count partitions of the 
+    array into subsets with a given target sum */
+    private int func(int ind, int target, int[] arr, int[][] dp) {
+        // Base case
+        if (ind == 0) {
+            // Include or exclude the element
+            if (target == 0 &amp;&amp; arr[0] == 0)
+                return 2; 
+            // One way to partition
+            if (target == 0 || target == arr[0])
+                return 1; 
+            return 0;
+        }
+    
+        /* If the result for this index and target
+        sum is already calculated, return it */
+        if (dp[ind][target] != -1)
+            return dp[ind][target];
+        
+        /* Calculate the number of ways
+        without taking the current element */
+        int notTaken = func(ind - 1, target, arr, dp);
+    
+        /* Calculate the number of ways
+        by taking the current element */
+        int taken = 0;
+        if (arr[ind] &lt;= target)
+            taken = func(ind - 1, target - arr[ind], arr, dp);
+        
+        /* Store the sum of ways in
+        the DP array and return it */
+        return dp[ind][target] = (notTaken + taken);
+    }
+
+    /* Function to count the number 
+    of ways to achieve the target sum */
+    public int targetSum(int n, int target, int[] nums) {
+        int totSum = 0;
+        for (int i = 0; i &lt; nums.length; i++) {
+            totSum += nums[i];
+        }
+    
+        // Not possible to achieve the target sum
+        if (totSum - target &lt; 0)
+            return 0; 
+        /* The difference between the total 
+        sum and target sum must be even */
+        if ((totSum - target) % 2 == 1)
+            return 0; 
+    
+        // Calculate the required sum for each subset
+        int s2 = (totSum - target) / 2; 
+    
+        // Initialize DP table
+        int[][] dp = new int[n][s2 + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        
+        // Return the result
+        return func(n - 1, s2, nums, dp); 
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8083-bf8d-dec69607fe94" class="toggle"><li><details open=""><summary>Scramble String</summary></details></li></ul><ul id="22fb255d-72ff-800c-9d17-e1e5779e70d1" class="toggle"><li><details open=""><summary>Paint House</summary></details></li></ul><ul id="22fb255d-72ff-8081-a193-cacc6d17a387" class="toggle"><li><details open=""><summary>Minimum Operations to Reduce an Integer to 0</summary></details></li></ul><ul id="1c6b255d-72ff-8073-b357-f9a7921c8e41" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/frog-jump-with-k-distances">Frog jump with K distances</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8000-bd46-d7bb4a4ec7a3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAQuickRevision
+    private int func(int ind, int[] heights, int k, Integer[] dp) { //0 se n - 1 [i.e complete arr] tak ka ans return karega.
+
+        if (ind == 0) { //0 se 0 tak jaane ki min energy?
+            return 0;
+        }
+        
+        if (dp[ind] != null) {
+            return dp[ind];
+        }
+        
+        int mmStep = Integer.MAX_VALUE; //why this?
+        
+        // Try all possible jumps
+        for (int j = 1; j &lt;= k; j++) {
+            
+            // Check if ind - j is non-negative
+            if (ind - j &gt;= 0) {
+                int jump = func(ind - j, heights, k, dp) + Math.abs(heights[ind] - heights[ind - j]);
+                
+                //Update the minimum energy
+                mmStep = Math.min(jump, mmStep);
+            }
+        }
+        
+        return dp[ind] = mmStep;
+    }
+    
+    public int frogJump(int[] heights, int k) {
+        int n = heights.length;
+        Integer[] dp = new Integer[n];
+        return func(n - 1, heights, k, dp);
+    }
+}</code></pre></details></li></ul><ul id="17cb255d-72ff-80bd-81e0-dce1393e4766" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/0-and-1-knapsack">0/1 Knapsack</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17cb255d-72ff-8056-b5c1-d5825bff4938" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    static int[][] dp; // DP array to store results of subproblems
+  
+    static int knapSack(int capacity, int val[], int wt[]) {
+        int n = val.length;
+        dp = new int[n][capacity + 1];
+        
+        // Initialize DP array with -1 (uncomputed states)
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; capacity + 1; j++) {
+                dp[i][j] = -1;
+            }
+        }
+        
+        // Call the helper function to solve the problem
+        return helper(n - 1, capacity, val, wt);
+    }
+    
+    static int helper(int ind, int capacity, int[] val, int[] wt) {
+        // Base case: If at index 0, check if the item can be picked
+        if (ind == 0) {
+            if (wt[ind] &lt;= capacity) {
+                return val[ind];
+            }
+            return 0; // If not, return 0
+        }
+        
+        // If already computed, return the stored value
+        if (dp[ind][capacity] != -1) return dp[ind][capacity];
+        
+        // Explore the pick case if the item fits
+        int pick = Integer.MIN_VALUE;
+        if (wt[ind] &lt;= capacity) 
+            pick = val[ind] + helper(ind - 1, capacity - wt[ind], val, wt);
+        
+        // Explore the not pick case
+        int notPick = helper(ind - 1, capacity, val, wt);
+    
+        // Store the result in DP array and return the maximum of the two cases
+        return dp[ind][capacity] = Math.max(pick, notPick);
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-80c9-9ccb-f42062acab91" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-9-lms/matrix-chain-multiplication">Matrix chain multiplication</a></strong></summary><figure id="243b255d-72ff-801d-957d-c0aca2c67b6a" class="image"><a href="image%2019.png"><img style="width:1315.1624755859375px" src="image%2019.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80a9-bd23-cc1574b462e1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAQuickRevision
+/* Recursive function to compute the 
+    minimum cost of matrix multiplication*/
+    private int func(int[] arr, int i, int j, int[][] dp) {
+        /* Base case: When there is only one 
+        matrix, no multiplication is needed*/
+        if (i == j)
+            return 0;
+        
+        // Check if the subproblem is already calculated
+        if (dp[i][j] != -1)
+            return dp[i][j];
+        
+        int mini = Integer.MAX_VALUE;
+
+        // Partition the matrices between i and j
+        for (int k = i; k &lt; j; k++) {
+            /* Compute the cost of multiplying 
+            matrices from i to k and from k+1 to j*/
+            int ans = func(arr, i, k, dp) + func(arr, k + 1, j, dp) + arr[i - 1] * arr[k] * arr[j];
+            
+            // Update the minimum cost
+            mini = Math.min(mini, ans);
+        }
+        // Store and return the minimum cost found
+        dp[i][j] = mini;
+        return mini;
+    }
+
+    /* Function to set up the parameters
+    and call the recursive function*/
+    public int matrixMultiplication(int[] nums) {
+        int N = nums.length;
+
+        // Starting index of the matrix chain
+        int i = 1;
+        
+        // Ending index of the matrix chain
+        int j = N - 1;
+
+        int[][] dp = new int[N][N];
+        for (int[] row : dp)
+            Arrays.fill(row, -1);
+
+        // Call the recursive function
+        return func(nums, i, j, dp);
+    }
+}</code></pre></details></li></ul><h2 id="1c7b255d-72ff-8019-b1e2-e1dd0e43e1f4" class=""><strong>DSA Concepts Revision</strong></h2><ul id="19eb255d-72ff-8002-8300-cb2dd9bd17b3" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-ii/cherry-pickup-ii">Cherry pickup II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-8031-89d3-d9dc0d2e062c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+/* Function to find the maximum cherries
+that can be collected using memoization*/
+private int func(int i, int j1, int j2, int n, int m, int[][] matrix, int[][][] dp) {
+    // Base cases
+    if (j1 &lt; 0 || j1 &gt;= m || j2 &lt; 0 || j2 &gt;= m)
+        return (int)(-1e9);
+
+    if (i == n - 1) {
+        if (j1 == j2)
+            return matrix[i][j1];
+        else
+            return matrix[i][j1] + matrix[i][j2];
+    }
+    
+    /* If the result for this state 
+    is already computed, return it*/
+    if (dp[i][j1][j2] != -1)
+        return dp[i][j1][j2];
+
+    int maxi = Integer.MIN_VALUE;
+
+    // Try all possible moves for both positions (j1, j2)
+    for (int di = -1; di &lt;= 1; di++) {
+        for (int dj = -1; dj &lt;= 1; dj++) {
+            int ans;
+
+            if (j1 == j2)
+                ans = matrix[i][j1] + func(i + 1, j1 + di, j2 + dj, n, m, matrix, dp);
+            else
+                ans = matrix[i][j1] + matrix[i][j2] + func(i + 1, j1 + di, j2 + dj, n, m, matrix, dp);
+
+            // Update the maximum result
+            maxi = Math.max(maxi, ans);
+        }
+    }
+
+    // Store the result in the dp array and return it
+    return dp[i][j1][j2] = maxi;
+}
+
+// Function to find maximum cherries that can be collected
+public int cherryPickup(int[][] matrix) {
+    int n = matrix.length;
+    int m = matrix[0].length;
+    
+    // Declare a 3D array to store computed results
+    int dp[][][] = new int[n][m][m];
+
+    // Initialize the dp array with -1
+    for (int row1[][] : dp) {
+        for (int row2[] : row1) {
+            Arrays.fill(row2, -1);
+        }
+    }
+
+    // Return the maximum cherries collected
+    return func(0, 0, m - 1, n, m, matrix, dp);
+}
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-8079-8acf-cf178fe853c2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    /* Function to find the maximum cherries 
+    that can be collected using tabulation*/
+    private int func(int n, int m, int[][] matrix) {
+        // Initialize a 3D DP array to store computed results
+        int[][][] dp = new int[n][m][m];
+
+        // Initialize the DP array for the last row
+        for (int j1 = 0; j1 &lt; m; j1++) {
+            for (int j2 = 0; j2 &lt; m; j2++) {
+                if (j1 == j2)
+                    dp[n - 1][j1][j2] = matrix[n - 1][j1];
+                else
+                    dp[n - 1][j1][j2] = matrix[n - 1][j1] + matrix[n - 1][j2];
+            }
+        }
+
+        /* Outer nested loops for traversing the DP array
+        from the second-to-last row up to the first row*/
+        for (int i = n - 2; i &gt;= 0; i--) {
+            for (int j1 = 0; j1 &lt; m; j1++) {
+                for (int j2 = 0; j2 &lt; m; j2++) {
+                    int maxi = Integer.MIN_VALUE;
+
+                    // Inner nested loops to try out 9 options 
+                    for (int di = -1; di &lt;= 1; di++) {
+                        for (int dj = -1; dj &lt;= 1; dj++) {
+                            int ans;
+
+                            if (j1 == j2)
+                                ans = matrix[i][j1];
+                            else
+                                ans = matrix[i][j1] + matrix[i][j2];
+
+                            // Check if the move is valid 
+                            if ((j1 + di &lt; 0 || j1 + di &gt;= m) || (j2 + dj &lt; 0 || j2 + dj &gt;= m))
+                                /* A very large negative value 
+                                to represent an invalid move*/
+                                ans += -1e9; 
+                            else
+                                ans += dp[i + 1][j1 + di][j2 + dj]; 
+                                
+                            // Update the maximum result
+                            maxi = Math.max(ans, maxi); 
+                        }
+                    }
+                    /* Store the maximum result for 
+                    this state in the DP array*/
+                    dp[i][j1][j2] = maxi; 
+                }
+            }
+        }
+
+        /* The maximum cherries that can be collected is
+        stored at the top-left corner of the DP array*/
+        return dp[0][0][m - 1];
+    }
+
+    // Function to find the maximum cherries picked
+    public int cherryPickup(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        // Return the answer
+        return func(n, m, matrix);
+    }
+}</code></pre></details></li></ul><ul id="17cb255d-72ff-80aa-b470-ee5eb2bd1942" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-i/ninja&#x27;s-training">Ninja’s Training</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17cb255d-72ff-8050-837d-e46035ff405c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    Integer dp[][];
+    public int ninjaTraining(int arr[][]) {
+        int n = arr.length;
+        dp = new Integer[n][4]; // DP array to store results for (day, lastTask)
+        return helper(arr, n - 1, 3); // Start from the last day with no previous task (indicated by 3)
+    }
+
+    public int helper(int[][] arr, int ind, int lastTask) {
+        // Base case: First day (ind == 0)
+        if (ind == 0) {
+            int max = 0;
+            for (int task = 0; task &lt; 3; task++) { // Iterate through all tasks
+                if (task != lastTask) { // Only consider tasks not equal to lastTask
+                    max = Math.max(max, arr[0][task]);
+                }
+            }
+            return max; // Return the maximum points
+        }
+
+        // If the result for this state is already computed, return it
+        if (dp[ind][lastTask] != null) {
+            return dp[ind][lastTask];
+        }
+
+        int max = 0; // Initialize max points for this state
+        for (int task = 0; task &lt; 3; task++) { // Iterate through tasks
+            if (task != lastTask) { // Only consider tasks not equal to lastTask
+                int points = arr[ind][task] + helper(arr, ind - 1, task); // Add points for current task
+                max = Math.max(max, points); // Update max points
+            }
+        }
+
+        return dp[ind][lastTask] = max; // Store and return the maximum points for this state
+    }
+}
+</code></pre></details></li></ul><ul id="1f0b255d-72ff-8062-ba14-cfe7da2fd6c8" class="toggle"><li><details open=""><summary><strong><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/">Best Time to Buy and Sell Stock with Cooldown</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1f0b255d-72ff-80bc-8ff1-dc31df7db34d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+	// Top G: Infinite transactions
+	// Cooldown means can&#x27;t buy right after sell
+	private int func(int ind, int buy, int n, int[] arr, int[][] dp) {
+		// Base case 
+		if (ind &gt;= n) {
+			return 0;
+		}
+
+		if (dp[ind][buy] != -1) {
+			return dp[ind][buy];
+		}
+
+		int profit = 0;
+
+		// We can buy the stock
+		if (buy == 0) {
+			profit = Math.max(0 + func(ind + 1, 0, n, arr, dp), (-1) * arr[ind] + func(ind + 1, 1, n, arr, dp));
+		}
+
+		// We can sell the stock
+		if (buy == 1) {
+			profit = Math.max(0 + func(ind + 1, 1, n, arr, dp), arr[ind] + func(ind + 2, 0, n, arr, dp));
+		}
+
+		return dp[ind][buy] = profit;
+	}
+
+	public int maxProfit(int[] arr) {
+		int n = arr.length;
+
+		if (n == 0)
+			return 0;
+
+		// Initialize a DP table to memoize results
+		int[][] dp = new int[n][2];
+
+		for (int[] row: dp) {
+			Arrays.fill(row, -1);
+		}
+
+		int ans = func(0, 0, n, arr, dp);
+
+		// Return the maximum profit
+		return ans;
+	}
+
+}</code></pre></details></li></ul><ul id="19eb255d-72ff-809b-898d-ebe5f5995180" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/dynamic-programming/dp-on-stocks/best-time-to-buy-and-sell-stock-with-cooldown-and-transaction-fees">Best time to buy and sell stock with transaction fees</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-80d0-86ec-e6652e4a274d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    // Top G: Infinite transactions + fees
+    private int func(int ind, int buy, int fee, int n, int[] arr, int[][] dp) {
+        // Base case 
+        if (ind == n) {
+            return 0;
+        }
+        /* If the result for this state has 
+        already been calculated, return it*/
+        if (dp[ind][buy] != -1) {
+            return dp[ind][buy];
+        }
+        int profit = 0;
+        
+        // We can buy the stock
+        if (buy == 0) { 
+            profit = Math.max(0 + func(ind + 1, 0, fee, n, arr, dp), (-1)*arr[ind] + func(ind + 1, 1, fee, n, arr, dp));
+        }
+        
+        // We can sell the stock
+        if (buy == 1) { 
+            profit = Math.max(0 + func(ind + 1, 1, fee, n, arr, dp), arr[ind] - fee + func(ind + 1, 0, fee, n, arr, dp));
+        }
+
+        /* Store the value in dp array and
+        return the calculated profit */
+        return dp[ind][buy] = profit;
+    }
+
+    // Function to calculate the maximum profit earned 
+    public int stockBuySell(int[] arr, int n, int fee) {
+        if (n == 0) 
+            return 0;
+            
+        // Declare a DP table to memoize results
+        int[][] dp = new int[n][2];
+        
+        // Initialize the dp array with -1
+        for (int i = 0; i &lt; n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+
+        int ans = func(0, 0, fee, n, arr, dp);
+        
+        // Return the maximum profit
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-803a-a3a1-c42b5f86d0d2" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-iv/count-subsets-with-sum-k">Count subsets with sum K</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80cc-bffc-fa5e5f6aa26d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    private static final int MODULO = 1000000007;
+
+    /* Function to count the number of 
+    subsets with sum k using memoization */
+    private int findWaysUtil(int ind, int target, int[] arr, int[][] dp) {
+        /* Base case: If the target sum 
+        is 0, we found a valid subset */
+        if (target == 0)
+            return 1;
+
+        /* Base case: If we have considered all elements
+        and the target is still not 0, return 0 */
+        if (ind == 0)
+            return (arr[0] == target) ? 1 : 0;
+
+        /* If the result for this state 
+        is already calculated, return it */
+        if (dp[ind][target] != -1)
+            return dp[ind][target];
+
+        // Exclude the current element
+        int notTaken = findWaysUtil(ind - 1, target, arr, dp);
+
+        /* Include the current element if
+        it doesn&#x27;t exceed the target */
+        int taken = 0;
+        if (arr[ind] &lt;= target)
+            taken = findWaysUtil(ind - 1, target - arr[ind], arr, dp);
+
+        /* Store the result in DP table and return
+        Also, take modulo for the code to be accepted*/
+        return dp[ind][target] = (notTaken + taken) % MODULO;
+    }
+
+    // Function to find out number of subsets with sum k
+    public int perfectSum(int[] arr, int K) {
+        int n = arr.length;
+
+        // DP array to store the subproblems
+        int[][] dp = new int[n][K + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Return the result
+        return findWaysUtil(n - 1, K, arr, dp);
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8005-8385-e6423df2b555" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-iv/count-partitions-with-given-difference">Count partitions with given difference</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80c0-8cd0-d765b321976f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    // Modulus value to avoid overflow in calculations.
+    int mod = (int)1e9 + 7;
+
+    /* Recursive function to count the number of subsets
+       with a given target sum. Uses memoization to store results
+       of subproblems to avoid redundant computations. */
+    int countPartitionsUtil(int ind, int target, int[] arr, int[][] dp) {
+        // Base case: If we are at the first element.
+        if (ind == 0) {
+            /* If target is 0 and the element is also 0, there 
+            are 2 ways to achieve this (include or exclude). */
+            if (target == 0 &amp;&amp; arr[0] == 0)
+                return 2;
+
+            /* If target is 0 or the element is equal to 
+            target, there is 1 way to achieve this. */
+            if (target == 0 || target == arr[0])
+                return 1;
+
+            return 0;
+        }
+
+        // Return the result if it has already been computed.
+        if (dp[ind][target] != -1)
+            return dp[ind][target];
+
+        // Calculate number of ways not including current element.
+        int notTaken = countPartitionsUtil(ind - 1, target, arr, dp);
+
+        /* Calculate the number of ways including the
+        current element (if it can be included). */
+        int taken = 0;
+        if (arr[ind] &lt;= target)
+            taken = countPartitionsUtil(ind - 1, target - arr[ind], arr, dp);
+
+        // Store and return the result for current subproblem.
+        return dp[ind][target] = (notTaken + taken) % mod;
+    }
+
+    /* Function to count number of subsets with a given
+    difference.Uses the helper function `countPartitionsUtil`
+    to find the number of subsets with a specific target sum. */
+    public int countPartitions(int n, int diff, int[] arr) {
+        int totSum = 0;
+
+        // Calculate the total sum of elements in the array.
+        for (int i = 0; i &lt; arr.length; i++) {
+            totSum += arr[i];
+        }
+
+        /* If the total sum minus the difference is negative,
+           or if it is not even, it&#x27;s not possible to divide 
+           the array into two subsets with the given difference. */
+        if (totSum - diff &lt; 0) return 0;
+        if ((totSum - diff) % 2 == 1) return 0;
+
+        // Calculate the target sum for one of the subsets.
+        int s2 = (totSum - diff) / 2;
+
+        // Initialize the DP table with -1 for memoization.
+        int[][] dp = new int[n][s2 + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        /* Call the helper function to count
+        the number of subsets with sum s2. */
+        return countPartitionsUtil(n - 1, s2, arr, dp);
+    }
+}</code></pre></details></li></ul><ul id="176b255d-72ff-803b-868b-ddb53f7205a4" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-v/coin-change-ii">Coin Change 2</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="176b255d-72ff-806f-8a7b-e8a676ec3732" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    int[][] dp; // DP table to store the results of subproblems
+
+    // Main function to count the number of ways to make change for the given amount
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        dp = new int[n][amount + 1]; // DP table to store the number of ways for each subproblem
+        
+        // Initialize the DP table with -1 to represent unvisited subproblems
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Call helper function to compute the number of ways
+        return helper(n - 1, amount, coins);
+    }
+
+    // Helper function to recursively compute the number of ways
+    public int helper(int idx, int amount, int coins[]) {
+        // Base case: If we are at the first coin, check if amount is divisible by that coin
+        if (idx == 0) {
+            if (amount % coins[idx] == 0) return 1; // Return 1 if divisible, else 0
+            return 0;
+        }
+
+        // If the result for this subproblem is already computed, return it
+        if (dp[idx][amount] != -1) return dp[idx][amount];
+
+        // Initialize the take and notTake choices
+        int take = 0;
+        if (amount &gt;= coins[idx]) { 
+            // If the current coin can be taken, calculate the number of ways by taking it
+            take = helper(idx, amount - coins[idx], coins); 
+            // Top G Question: Why no +1 here like previous problem
+        }
+        
+        // Calculate the number of ways without taking the current coin
+        int notTake = helper(idx - 1, amount, coins);
+
+        // Store the result in the dp array: sum of ways from both choices
+        return dp[idx][amount] = take + notTake;
+    }
+}
+</code></pre><figure id="176b255d-72ff-804a-b893-cf78e2b1279b" class="image"><a href="image%2020.png"><img style="width:651.9375px" src="image%2020.png"/></a></figure></details></li></ul><ul id="1c6b255d-72ff-8007-8eaf-dfdd5b4fadbb" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-v/unbounded-knapsack">Unbounded knapsack</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8031-9ed8-e5f355332a1f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to solve the unbounded knapsack problem
+    private int func(int[] wt, int[] val, int ind, int W, int[][] dp) {
+        // Base case: if we&#x27;re at the first item
+        if (ind == 0) {
+            /* Calculate and return the maximum
+            value for the given weight limit*/
+            return (W / wt[0]) * val[0];
+        }
+    
+        /* If the result for this index and weight
+        limit is already calculated, return it*/
+        if (dp[ind][W] != -1)
+            return dp[ind][W];
+        
+        /* Calculate the maximum value 
+        without taking the current item*/
+        int notTaken = func(wt, val, ind - 1, W, dp);
+    
+        /* Calculate the maximum value
+        by taking the current item*/
+        int taken = Integer.MIN_VALUE;
+        if (wt[ind] &lt;= W)
+            taken = val[ind] + func(wt, val, ind, W - wt[ind], dp);
+        
+        /* Store the maximum value in
+        the DP table and return it*/
+        return dp[ind][W] = Math.max(notTaken, taken);
+    }
+    
+    // Function to solve the unbounded knapsack problem
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+        int[][] dp = new int[n][W + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+    
+        /* Call the utility function
+        to calculate the maximum value*/
+        return func(wt, val, n - 1, W, dp);
+    }
+}</code></pre></details></li></ul><ul id="17cb255d-72ff-803c-a06d-eb684d9130fe" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-v/rod-cutting-problem">Rod Cutting</a></strong></mark><mark class="highlight-default"><strong> (Unbounded Knapsack)</strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17cb255d-72ff-800b-9eb0-d88cb9eea418" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    int[][] dp; // Memoization table
+
+    public int cutRod(int[] price) {
+        int n = price.length;
+        int[] length = new int[n]; // Length array (1-based rod lengths)
+        for (int i = 0; i &lt; n; i++) length[i] = i + 1;
+
+        // Initialize DP table with -1 (uncomputed states)
+        dp = new int[n][n + 1]; 
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return helper(n - 1, n, price, length);
+    }
+
+    private int helper(int ind, int n, int[] price, int[] length) {
+        // Base case: Only 1-length rod left, take max possible pieces
+        if (ind == 0) return (n / length[0]) * price[0];
+
+        // If already computed, return cached result
+        if (dp[ind][n] != -1) return dp[ind][n];
+
+        // Option 1: Skip current rod length
+        int notPick = helper(ind - 1, n, price, length);
+        
+        int pick = Integer.MIN_VALUE;
+        // Option 2: Pick current rod if it fits
+        if (length[ind] &lt;= n) {
+            pick = price[ind] + helper(ind, n - length[ind], price, length);
+        }
+
+        // Store and return max profit
+        return dp[ind][n] = Math.max(pick, notPick);
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-8099-b683-e0046fc21616" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vi/longest-common-substring">Longest common substring</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8053-a9f5-e153ab353448" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    /* Function to find the length of 
+    the Longest Common Substring (LCS) */
+    public int longestCommonSubstr(String str1, String str2) {
+        int n = str1.length();
+        int m = str2.length();
+    
+        // Initialize a 2D DP table with dimensions
+        int[][] dp = new int[n + 1][m + 1];
+
+        // Initialize the answer variable
+        int ans = 0;
+
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= m; j++) {
+                // Characters match, increment substring length
+                if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                    
+                    /* Update the maximum substring 
+                    length found so far */
+                    ans = Math.max(ans, dp[i][j]);
+                } else {
+                    /* Characters don&#x27;t match, 
+                    substring length becomes 0 */
+                    dp[i][j] = 0;
+                }
+            }
+        }
+        // Return the length of Longest Common Substring
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-80e4-8315-c16847a8c412" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vi/minimum-insertions-or-deletions-to-convert-string-a-to-b">Minimum insertions or deletions to convert string A to B</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80b8-a32d-ebaf18a36290" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    /* Function to calculate the length 
+    of the Longest Common Subsequence*/
+    private int lcs(String s1, String s2) {
+        int n = s1.length();
+        int m = s2.length();
+        
+        int[][] dp = new int[n + 1][m + 1];
+        
+        // Initialize the base cases
+        for (int i = 0; i &lt;= n; i++) {
+            dp[i][0] = 0;
+        }
+        for (int i = 0; i &lt;= m; i++) {
+            dp[0][i] = 0;
+        }
+
+        // Fill in the DP table to calculate the length of LCS
+        for (int ind1 = 1; ind1 &lt;= n; ind1++) {
+            for (int ind2 = 1; ind2 &lt;= m; ind2++) {
+                
+                // Characters match, increment LCS length
+                if (s1.charAt(ind1 - 1) == s2.charAt(ind2 - 1))
+                    dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1];
+                /* Characters don&#x27;t match, consider
+                the maximum from left or above*/
+                else
+                    dp[ind1][ind2] = Math.max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
+            }
+        }
+        // Return the length of Longest Common Subsequence
+        return dp[n][m];
+    }
+    /* Function to calculate the minimum insertions
+    required to make a string palindrome*/
+    public int minOperations(String str1, String str2) {
+        int n = str1.length();
+        int m = str2.length();
+    
+        /* Calculate the length of the longest 
+        common subsequence between str1 and str2*/
+        int k = lcs(str1, str2);
+    
+        /* Calculate the minimum operations
+        required to convert str1 to str2*/
+        return (n - k) + (m - k);
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8013-80ab-c0779e836dea" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vi/shortest-common-supersequence">Shortest common supersequence</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8072-8cd2-d8367c1abc63" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to find the shortest common supersequence
+    public String shortestCommonSupersequence(String str1, String str2) {
+        int n = str1.length();
+        int m = str2.length();
+
+        // Create a DP table initialized to 0
+        int[][] dp = new int[n + 1][m + 1];
+
+        // Initialize the first row and column of DP table
+        for (int i = 0; i &lt;= n; i++) {
+            dp[i][0] = 0;
+        }
+        for (int i = 0; i &lt;= m; i++) {
+            dp[0][i] = 0;
+        }
+
+        // Fill the DP table
+        for (int ind1 = 1; ind1 &lt;= n; ind1++) {
+            for (int ind2 = 1; ind2 &lt;= m; ind2++) {
+                if (str1.charAt(ind1 - 1) == str2.charAt(ind2 - 1))
+                    dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1];
+                else
+                    dp[ind1][ind2] = Math.max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
+            }
+        }
+
+        // Reconstruct the shortest supersequence from DP table
+        int len = dp[n][m];
+        int i = n;
+        int j = m;
+
+        int index = len - 1;
+        StringBuilder ans = new StringBuilder();
+
+        // Build the shortest supersequence by backtracking
+        while (i &gt; 0 &amp;&amp; j &gt; 0) {
+            if (str1.charAt(i - 1) == str2.charAt(j - 1)) {
+                ans.append(str1.charAt(i - 1));
+                index--;
+                i--;
+                j--;
+            } else if (dp[i - 1][j] &gt; dp[i][j - 1]) {
+                ans.append(str1.charAt(i - 1));
+                i--;
+            } else {
+                ans.append(str2.charAt(j - 1));
+                j--;
+            }
+        }
+
+        // Add remaining characters from str1 or str2
+        while (i &gt; 0) {
+            ans.append(str1.charAt(i - 1));
+            i--;
+        }
+        while (j &gt; 0) {
+            ans.append(str2.charAt(j - 1));
+            j--;
+        }
+
+        // Reverse the result since we built it backwards
+        ans.reverse();
+        return ans.toString();
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8005-82ab-c7b20b2a0022" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vii/longest-bitonic-subsequence">Longest Bitonic Subsequence</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8027-b35f-d83e212439d4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+// Function to find the longest decreasing subsequence 
+// to the left
+static int left(int prev, int idx, ArrayList&lt;Integer&gt; arr) {
+    if (idx &lt; 0) {
+        return 0;
+    }
+
+    // Check if nums[idx] can be included 
+    // in decreasing subsequence
+    int include = 0;
+    if (arr.get(idx) &lt; arr.get(prev)) {
+        include = 1 + left(idx, idx - 1, arr);
+    }
+
+    // Return the maximum of including 
+    // or excluding nums[idx]
+    return Math.max(include, left(prev, idx - 1, arr));
+}
+
+// Function to find the longest decreasing 
+// subsequence to the right
+static int right(int prev, int idx, ArrayList&lt;Integer&gt; arr) {
+    if (idx &gt;= arr.size()) {
+        return 0;
+    }
+
+    // Check if nums[idx] can be included 
+    // in decreasing subsequence
+    int include = 0;
+    if (arr.get(idx) &lt; arr.get(prev)) {
+        include = 1 + right(idx, idx + 1, arr);
+    }
+
+    // Return the maximum of including or 
+    // excluding nums[idx]
+    return Math.max(include, right(prev, idx + 1, arr));
+}
+
+// Function to find the longest bitonic sequence
+public int LongestBitonicSequence(int[] arr) {
+    ArrayList&lt;Integer&gt; arrayList = new ArrayList&lt;&gt;();
+    for (int num : arr) {
+        arrayList.add(num);
+    }
+    int maxLength = 0;
+
+    // Iterate over potential peaks in the array
+    for (int i = 1; i &lt; arrayList.size() - 1; i++) {
+        // Find the longest decreasing subsequences 
+        // on both sides of nums[i]
+        int leftLen = left(i, i - 1, arrayList);
+        int rightLen = right(i, i + 1, arrayList);
+
+        // Ensure both left and right subsequences are valid
+        if (leftLen == 0 || rightLen == 0) {
+            leftLen = 0;
+            rightLen = 0;
+        }
+
+        // Update maximum bitonic sequence length
+        maxLength = Math.max(maxLength, leftLen + rightLen + 1);
+    }
+
+    // If no valid bitonic sequence, return 0
+    return (maxLength &lt; 3) ? 0 : maxLength;
+}
+};
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-803f-9cf5-e8e92d83f350" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vii/number-of-longest-increasing-subsequences">Number of Longest Increasing Subsequences</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-802d-851f-f21601314904" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int numberOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];    // LIS length at index i
+        int[] count = new int[n]; // Number of LIS at index i
+        Arrays.fill(dp, 1);
+        Arrays.fill(count, 1);
+        
+        int maxLen = 1;  // Overall max LIS length
+        
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; i; j++) {
+                if (nums[j] &lt; nums[i]) {  // Strictly increasing
+                    if (dp[j] + 1 &gt; dp[i]) {  
+                        dp[i] = dp[j] + 1;
+                        count[i] = count[j]; // Reset count since a new LIS found
+                    } else if (dp[j] + 1 == dp[i]) {
+                        count[i] += count[j]; // Same LIS length, add count
+                    }
+                }
+            }
+            maxLen = Math.max(maxLen, dp[i]); // Update overall max LIS length
+        }
+        
+        // Count all subsequences with max LIS length
+        int totalLIS = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (dp[i] == maxLen) {
+                totalLIS += count[i];
+            }
+        }
+        return totalLIS;
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-80d2-8fdf-c78c5723dede" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-vii/print-longest-increasing-subsequence">Print Longest Increasing Subsequence</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8084-927f-e78566d5f39b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public List&lt;Integer&gt; longestIncreasingSubsequence(int[] arr) {
+        int n = arr.length;
+        if (n == 0) return new ArrayList&lt;&gt;();
+
+        int[] dp = new int[n]; // Stores LIS length ending at index i
+        int[] parent = new int[n]; // Stores previous index for reconstruction
+        Arrays.fill(dp, 1); // Initialize all LIS values as 1
+        Arrays.fill(parent, -1); // Initialize parent array
+
+        int maxLength = 1, lastIndex = 0;
+
+        // Compute LIS using Tabulation
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 0; j &lt; i; j++) {
+                if (arr[j] &lt; arr[i] &amp;&amp; dp[j] + 1 &gt; dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    parent[i] = j; // Store previous index
+                }
+            }
+            if (dp[i] &gt; maxLength) {
+                maxLength = dp[i];
+                lastIndex = i; // Store last index of LIS
+            }
+        }
+
+        // Reconstruct LIS
+        List&lt;Integer&gt; lis = new ArrayList&lt;&gt;();
+        while (lastIndex != -1) {
+            lis.add(arr[lastIndex]);
+            lastIndex = parent[lastIndex];
+        }
+
+        Collections.reverse(lis); // Get correct order
+        return lis;
+    }
+}
+</code></pre></details></li></ul><ul id="1c6b255d-72ff-80fd-b5af-c2a1de3e0efa" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-viii/palindrome-partitioning-ii-">Palindrome partitioning II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80ca-910d-d31f5af3fd6c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to check if substring is a palindrome.
+    private boolean isPalindrome(int i, int j, String s) {
+        while (i &lt; j) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    /* Recursive function to find the minimum 
+    number of partitions to make palindromes.*/
+    private int minPartitions(int i, int n, String str, int[] dp) {
+        // Base case: If we&#x27;ve reached the end of string.
+        if (i == n) return 0;
+
+        // Check if the subproblem is already solved
+        if (dp[i] != -1) return dp[i];
+
+        int minCost = Integer.MAX_VALUE;
+        /* Consider all possible substrings 
+        starting from the current index.*/
+        for (int j = i; j &lt; n; j++) {
+            if (isPalindrome(i, j, str)) {
+                /* If the substring is a palindrome,
+                calculate the cost and minimize it.*/
+                int cost = 1 + minPartitions(j + 1, n, str, dp);
+                minCost = Math.min(minCost, cost);
+            }
+        }
+        // Return the result
+        return dp[i] = minCost;
+    }
+
+    /* Main function to find the minimum number
+    of partitions for palindrome partitioning.*/
+    int minCut(String s) {
+        int n = s.length();
+
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+
+        /* Calling recursive function and subtracting 
+        1 as it counts partitions, not cuts.*/
+        return minPartitions(0, n, s, dp) - 1;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8007-8230-f70e6f0c19bf" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/dynamic-programming-viii/minimum-cost-to-cut-the-stick">Minimum cost to cut the stick</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80a2-a3dd-e1e20371a1e1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+   private int func(int i, int j, int[] cuts, int[][] dp) {
+        /* Base case: If i is greater than
+        j, there are no cuts to consider.*/
+        if (i &gt; j) {
+            return 0;
+        }
+
+        // Check if the subproblem is already solved
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+
+        int mini = Integer.MAX_VALUE;
+
+        for (int ind = i; ind &lt;= j; ind++) {
+            /* Calculate the cost for 
+            making a cut at position &#x27;ind&#x27;.*/
+            int ans = cuts[j + 1] - cuts[i - 1] + func(i, ind - 1, cuts, dp) + func(ind + 1, j, cuts, dp);
+
+            mini = Math.min(mini, ans);
+        }
+        // Return the result
+        return dp[i][j] = mini;
+    }
+
+    // Function to compute the minimum cost
+    public int minCost(int n, List&lt;Integer&gt; cuts) {
+        int c = cuts.size();
+        /* Convert List&lt;Integer&gt; to int[] */
+        int[] newCuts = new int[c + 2];
+        newCuts[0] = 0;
+        for (int i = 0; i &lt; c; i++) {
+            newCuts[i + 1] = cuts.get(i);
+        }
+        newCuts[c + 1] = n;
+        Arrays.sort(newCuts);
+
+        // Create a DP table to store calculated values.
+        int[][] dp = new int[c + 1][c + 1];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        // Call the recursive function to find minimum cost.
+        return func(1, c, newCuts, dp);
+    }
+}</code></pre></details></li></ul><h2 id="18ab255d-72ff-8064-a0d5-df19c72206e5" class=""><strong>DSA Striver</strong></h2><ul id="19eb255d-72ff-809e-bd0b-f6dafeccac23" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/dynamic-programming/dp-on-subsequences/subset-sum-equals-to-target">Subset sum equals to target</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-8082-8708-cd39f312f2f0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+    /* Function to check if there is a subset
+    of &#x27;arr&#x27; with sum equal to &#x27;target&#x27;*/
+    public boolean isSubsetSum(int[] arr, int target) {
+        // Declare a DP table with dimensions [n][k+1]
+        int dp[][] = new int[arr.length][target + 1];
+        
+        // Initialize DP table with -1 
+        for (int row[] : dp)
+            Arrays.fill(row, -1);
+            
+        // Return the result
+        return func(arr.length - 1, target, arr, dp);
+    }
+    
+    /* Function to check if there is a subset of
+    arr with sum equal to &#x27;target&#x27; using memoization*/
+    private boolean func(int ind, int target, int[] arr, int[][] dp) {
+        // Base cases
+        if (target == 0)
+            return true;
+        
+        if (ind == 0)
+            return arr[0] == target;
+            
+        /* If the result for this subproblem has 
+        already been calculated, return it*/
+        if (dp[ind][target] != -1)
+            return dp[ind][target] == 0 ? false : true;
+        
+        // Try not taking the current element into subset
+        boolean notTaken = func(ind - 1, target, arr, dp);
+        
+        /* Try taking the current element into the
+        subset if it doesn&#x27;t exceed the target*/
+        boolean taken = false;
+        if (arr[ind] &lt;= target)
+            taken = func(ind - 1, target - arr[ind], arr, dp);
+        
+        /* Store the result in the DP table and 
+        return whether either option was successful*/
+        dp[ind][target] = notTaken || taken ? 1 : 0;
+        return notTaken || taken;
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19eb255d-72ff-80bb-a000-fe81907c733d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+/* Function to check if there is a subset
+of &#x27;arr&#x27; with sum equal to &#x27;target&#x27;*/
+private boolean func(int n, int target, int[] arr) {
+    /* Initialize a 2D DP array with dimensions 
+    (n x target+1) to store subproblem results*/
+    boolean[][] dp = new boolean[n][target + 1];
+
+    // Base case (when target = 0)
+    for (int i = 0; i &lt; n; i++) {
+        dp[i][0] = true;
+    }
+
+    /* Base case (If the first element of 
+    &#x27;arr&#x27; is less than or equal to &#x27;target&#x27;)*/
+    if (arr[0] &lt;= target) {
+        dp[0][arr[0]] = true;
+    }
+
+    // Fill the DP array iteratively
+    for (int ind = 1; ind &lt; n; ind++) {
+        for (int i = 1; i &lt;= target; i++) {
+            /* If we don&#x27;t take the current element, the 
+            result is the same as the previous row*/
+            boolean notTaken = dp[ind - 1][i];
+
+            /* If we take the current element, subtract its
+            value from the target and check the previous row*/
+            boolean taken = false;
+            if (arr[ind] &lt;= i) {
+                taken = dp[ind - 1][i - arr[ind]];
+            }
+
+            /* Store the result in the DP 
+            array for the current subproblem*/
+            dp[ind][i] = notTaken || taken;
+        }
+    }
+
+    // The final result is stored in dp[n-1][target]
+    return dp[n - 1][target];
+}
+
+/* Function to check if there is a subset
+of &#x27;arr&#x27; with sum equal to &#x27;target&#x27;*/
+public boolean isSubsetSum(int[] arr, int target) {
+    // Return the result
+    return func(arr.length, target, arr);
+}
+}</code></pre></details></li></ul><ul id="18ab255d-72ff-8056-90c7-db44f3ba359c" class="toggle"><li><details open=""><summary><strong><a href="https://leetcode.com/problems/count-square-submatrices-with-all-ones/description/">Count Square Submatrices with All Ones</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="18ab255d-72ff-8041-bcdc-de3a0dd94106" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int countSquares(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        
+        // DP table to store the size of the largest square submatrix at each position
+        int[][] dp = new int[m][n];
+        int count = 0;
+        
+        // Iterate through each cell in the matrix
+        for (int i = 0; i &lt; m; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (matrix[i][j] == 1) {
+                    // If it&#x27;s the first row or first column, the largest square can only be 1
+                    if (i == 0 || j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        // Otherwise, compute dp[i][j] based on the adjacent cells
+                        dp[i][j] = 1 + Math.min(dp[i-1][j], Math.min(dp[i][j-1], dp[i-1][j-1]));
+                    }
+                    // Add the size of the square ending at (i, j) to the count
+                    count += dp[i][j];
+                }
+            }
+        }
+        
+        return count;
+    }
+}
+</code></pre></details></li></ul><ul id="1cab255d-72ff-800d-9bb6-c2820e104e3e" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/dynamic-programming/lis-dp/largest-divisible-subset">Largest Divisible Subset</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cab255d-72ff-807a-b6ac-f215bf1b9aec" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public List&lt;Integer&gt; largestDivisibleSubset(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums); // Step 1: Sorting
+        
+        int[] dp = new int[n];   // dp[i] -&gt; largest subset ending at index i
+        int[] prev = new int[n]; // prev[i] -&gt; previous index in subset
+        Arrays.fill(dp, 1);
+        Arrays.fill(prev, -1);
+        
+        int maxSize = 1, lastIndex = 0;
+
+        // Step 2: DP loop
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 0; j &lt; i; j++) {
+                if (nums[i] % nums[j] == 0 &amp;&amp; dp[i] &lt; dp[j] + 1) {
+                    dp[i] = dp[j] + 1;
+                    prev[i] = j;
+                }
+            }
+            if (dp[i] &gt; maxSize) {
+                maxSize = dp[i];
+                lastIndex = i;
+            }
+        }
+
+        // Step 3: Backtracking to get the subset
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        while (lastIndex != -1) {
+            result.add(nums[lastIndex]);
+            lastIndex = prev[lastIndex];
+        }
+
+        Collections.reverse(result); // Kyunki hum last se traverse kar rahe the
+        return result;
+    }
+}
+</code></pre></details></li></ul><ul id="17cb255d-72ff-80d1-a668-c2e64280875d" class="toggle"><li><details open=""><summary><strong><a href="https://leetcode.com/problems/longest-palindromic-subsequence/description/">Longest Palindromic Subsequence</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17cb255d-72ff-8040-801b-f438f08f0826" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int longestPalindromeSubseq(String str) {
+        String reversedStr = new StringBuilder(str).reverse().toString();
+        return longestCommonSubsequence(str, reversedStr); // LPS is the LCS of the string and its reverse
+    }
+    
+    int[][] dp;
+
+    public int longestCommonSubsequence(String s1, String s2) {
+        int len1 = s1.length();
+        int len2 = s2.length();
+        dp = new int[len1][len2];
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+        return helper(len1 - 1, len2 - 1, s1, s2);
+    }
+
+    public int helper(int ind1, int ind2, String s1, String s2) {
+        if (ind1 &lt; 0 || ind2 &lt; 0) return 0; // Base case: If any string is exhausted
+        if (dp[ind1][ind2] != -1) return dp[ind1][ind2]; // Use cached result if available
+
+        // If characters match, move diagonally
+        if (s1.charAt(ind1) == s2.charAt(ind2)) {
+            return dp[ind1][ind2] = 1 + helper(ind1 - 1, ind2 - 1, s1, s2);
+        }
+
+        // If characters don&#x27;t match, take the maximum of the two possibilities
+        return dp[ind1][ind2] = Math.max(
+            helper(ind1 - 1, ind2, s1, s2), 
+            helper(ind1, ind2 - 1, s1, s2)
+        );
+    }
+}
+</code></pre></details></li></ul><ul id="1cab255d-72ff-8097-b7f1-e74f5d761257" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/dynamic-programming/dp-on-strings/minimum-insertions-to-make-string-palindrome">Minimum insertions to make string palindrome</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cab255d-72ff-80c5-94b3-c1572fdb1ecd" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+/* Function to calculate the length 
+of the Longest Common Subsequence*/
+private int lcs(String s1, String s2) {
+    int n = s1.length();
+    int m = s2.length();
+
+    int[][] dp = new int[n + 1][m + 1];
+
+    // Initialize the first row and first column to 0
+    for (int i = 0; i &lt;= n; i++) {
+        dp[i][0] = 0;
+    }
+    for (int i = 0; i &lt;= m; i++) {
+        dp[0][i] = 0;
+    }
+
+    for (int ind1 = 1; ind1 &lt;= n; ind1++) {
+        for (int ind2 = 1; ind2 &lt;= m; ind2++) {
+            if (s1.charAt(ind1 - 1) == s2.charAt(ind2 - 1))
+                dp[ind1][ind2] = 1 + dp[ind1 - 1][ind2 - 1];
+            else
+                dp[ind1][ind2] = Math.max(dp[ind1 - 1][ind2], dp[ind1][ind2 - 1]);
+        }
+    }
+    // Return the result
+    return dp[n][m];
+}
+/* Function to calculate the length of 
+the Longest Palindromic Subsequence*/
+private int longestPalindromeSubsequence(String s) {
+    String t = new StringBuilder(s).reverse().toString();
+    return lcs(s, t);
+}
+/* Function to calculate the minimum insertions
+required to make a string palindrome*/
+public int minInsertion(String s) {
+    int n = s.length();
+    int k = longestPalindromeSubsequence(s);
+
+    /* The minimum insertions required is the
+    difference between the string length and
+    its longest palindromic subsequence length*/
+    return n - k;
+}  
+}</code></pre></details></li></ul><h2 id="22fb255d-72ff-805a-a888-cc4c8fd1a167" class="">Extras</h2><table id="22fb255d-72ff-8062-8199-cd5dce7790e5" class="simple-table"><tbody><tr id="22fb255d-72ff-80d4-af3b-d234d78081f3"><td id="~k=D" class="">Link</td><td id="R&gt;Ei" class="">Title</td><td id="JmG]" class="">Frequency</td><td id="i=LO" class="">Companies Count</td><td id="|Jdk" class="">Topics</td></tr><tr id="22fb255d-72ff-807b-aac6-eedb335fa4a2"><td id="~k=D" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock</td><td id="R&gt;Ei" class="">Best Time to Buy and Sell Stock</td><td id="JmG]" class="">100</td><td id="i=LO" class="">120</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8045-8882-dcd283c9e9bd"><td id="~k=D" class="">https://leetcode.com/problems/trapping-rain-water</td><td id="R&gt;Ei" class="">Trapping Rain Water</td><td id="JmG]" class="">100</td><td id="i=LO" class="">81</td><td id="|Jdk" class="">Array, Two Pointers, Dynamic Programming, Stack, Monotonic Stack</td></tr><tr id="22fb255d-72ff-8044-ba2a-f86c22153aca"><td id="~k=D" class="">https://leetcode.com/problems/longest-palindromic-substring</td><td id="R&gt;Ei" class="">Longest Palindromic Substring</td><td id="JmG]" class="">100</td><td id="i=LO" class="">74</td><td id="|Jdk" class="">Two Pointers, String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-803e-8826-d9a6591a32d9"><td id="~k=D" class="">https://leetcode.com/problems/maximum-subarray</td><td id="R&gt;Ei" class="">Maximum Subarray</td><td id="JmG]" class="">100</td><td id="i=LO" class="">55</td><td id="|Jdk" class="">Array, Divide and Conquer, Dynamic Programming</td></tr><tr id="22fb255d-72ff-805d-bef8-cf301244c8fd"><td id="~k=D" class="">https://leetcode.com/problems/generate-parentheses</td><td id="R&gt;Ei" class="">Generate Parentheses</td><td id="JmG]" class="">100</td><td id="i=LO" class="">40</td><td id="|Jdk" class="">String, Dynamic Programming, Backtracking</td></tr><tr id="22fb255d-72ff-805a-9207-fd0e25747765"><td id="~k=D" class="">https://leetcode.com/problems/house-robber</td><td id="R&gt;Ei" class="">House Robber</td><td id="JmG]" class="">100</td><td id="i=LO" class="">37</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8077-b51e-c6668dfdd9c5"><td id="~k=D" class="">https://leetcode.com/problems/coin-change</td><td id="R&gt;Ei" class="">Coin Change</td><td id="JmG]" class="">100</td><td id="i=LO" class="">37</td><td id="|Jdk" class="">Array, Dynamic Programming, Breadth-First Search</td></tr><tr id="22fb255d-72ff-805e-b8c8-c35b8556e70f"><td id="~k=D" class="">https://leetcode.com/problems/climbing-stairs</td><td id="R&gt;Ei" class="">Climbing Stairs</td><td id="JmG]" class="">100</td><td id="i=LO" class="">36</td><td id="|Jdk" class="">Math, Dynamic Programming, Memoization</td></tr><tr id="22fb255d-72ff-808f-a721-d441247587c0"><td id="~k=D" class="">https://leetcode.com/problems/jump-game</td><td id="R&gt;Ei" class="">Jump Game</td><td id="JmG]" class="">100</td><td id="i=LO" class="">35</td><td id="|Jdk" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="22fb255d-72ff-804b-9940-f4af49928642"><td id="~k=D" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii</td><td id="R&gt;Ei" class="">Best Time to Buy and Sell Stock II</td><td id="JmG]" class="">100</td><td id="i=LO" class="">34</td><td id="|Jdk" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="22fb255d-72ff-8032-b5a6-d85285119885"><td id="~k=D" class="">https://leetcode.com/problems/jump-game-ii</td><td id="R&gt;Ei" class="">Jump Game II</td><td id="JmG]" class="">100</td><td id="i=LO" class="">31</td><td id="|Jdk" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="22fb255d-72ff-80ef-92b5-d69b96bf929f"><td id="~k=D" class="">https://leetcode.com/problems/word-break</td><td id="R&gt;Ei" class="">Word Break</td><td id="JmG]" class="">100</td><td id="i=LO" class="">31</td><td id="|Jdk" class="">Array, Hash Table, String, Dynamic Programming, Trie, Memoization</td></tr><tr id="22fb255d-72ff-80b7-a548-ff8a2115f42d"><td id="~k=D" class="">https://leetcode.com/problems/binary-tree-maximum-path-sum</td><td id="R&gt;Ei" class="">Binary Tree Maximum Path Sum</td><td id="JmG]" class="">100</td><td id="i=LO" class="">27</td><td id="|Jdk" class="">Dynamic Programming, Tree, Depth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-8090-90c5-d84aa0be7ebf"><td id="~k=D" class="">https://leetcode.com/problems/edit-distance</td><td id="R&gt;Ei" class="">Edit Distance</td><td id="JmG]" class="">100</td><td id="i=LO" class="">26</td><td id="|Jdk" class="">String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-803f-804f-e60f448a2816"><td id="~k=D" class="">https://leetcode.com/problems/longest-increasing-subsequence</td><td id="R&gt;Ei" class="">Longest Increasing Subsequence</td><td id="JmG]" class="">100</td><td id="i=LO" class="">23</td><td id="|Jdk" class="">Array, Binary Search, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80d8-a4e9-ecf94c4bfbe7"><td id="~k=D" class="">https://leetcode.com/problems/regular-expression-matching</td><td id="R&gt;Ei" class="">Regular Expression Matching</td><td id="JmG]" class="">100</td><td id="i=LO" class="">23</td><td id="|Jdk" class="">String, Dynamic Programming, Recursion</td></tr><tr id="22fb255d-72ff-80cb-8c9b-d9adaa45d1a3"><td id="~k=D" class="">https://leetcode.com/problems/maximal-square</td><td id="R&gt;Ei" class="">Maximal Square</td><td id="JmG]" class="">100</td><td id="i=LO" class="">22</td><td id="|Jdk" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="22fb255d-72ff-80c7-ba1e-d24d40272394"><td id="~k=D" class="">https://leetcode.com/problems/unique-paths</td><td id="R&gt;Ei" class="">Unique Paths</td><td id="JmG]" class="">100</td><td id="i=LO" class="">21</td><td id="|Jdk" class="">Math, Dynamic Programming, Combinatorics</td></tr><tr id="22fb255d-72ff-80a0-a1d0-f582d9b4c8a2"><td id="~k=D" class="">https://leetcode.com/problems/decode-ways</td><td id="R&gt;Ei" class="">Decode Ways</td><td id="JmG]" class="">100</td><td id="i=LO" class="">21</td><td id="|Jdk" class="">String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80a8-ace8-f70f19268026"><td id="~k=D" class="">https://leetcode.com/problems/longest-valid-parentheses</td><td id="R&gt;Ei" class="">Longest Valid Parentheses</td><td id="JmG]" class="">100</td><td id="i=LO" class="">21</td><td id="|Jdk" class="">String, Dynamic Programming, Stack</td></tr><tr id="22fb255d-72ff-80fb-984f-e7c0693363cb"><td id="~k=D" class="">https://leetcode.com/problems/maximum-profit-in-job-scheduling</td><td id="R&gt;Ei" class="">Maximum Profit in Job Scheduling</td><td id="JmG]" class="">100</td><td id="i=LO" class="">21</td><td id="|Jdk" class="">Array, Binary Search, Dynamic Programming, Sorting</td></tr><tr id="22fb255d-72ff-805e-bdb2-c5d1bfeea785"><td id="~k=D" class="">https://leetcode.com/problems/pascals-triangle</td><td id="R&gt;Ei" class="">Pascal&#x27;s Triangle</td><td id="JmG]" class="">100</td><td id="i=LO" class="">20</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-806c-adf6-d56d8f69717f"><td id="~k=D" class="">https://leetcode.com/problems/unique-paths-ii</td><td id="R&gt;Ei" class="">Unique Paths II</td><td id="JmG]" class="">100</td><td id="i=LO" class="">20</td><td id="|Jdk" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="22fb255d-72ff-80b6-9f3d-e67d12a9387d"><td id="~k=D" class="">https://leetcode.com/problems/maximum-product-subarray</td><td id="R&gt;Ei" class="">Maximum Product Subarray</td><td id="JmG]" class="">100</td><td id="i=LO" class="">19</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8048-87bf-d5e043478d21"><td id="~k=D" class="">https://leetcode.com/problems/wildcard-matching</td><td id="R&gt;Ei" class="">Wildcard Matching</td><td id="JmG]" class="">93.8</td><td id="i=LO" class="">19</td><td id="|Jdk" class="">String, Dynamic Programming, Greedy, Recursion</td></tr><tr id="22fb255d-72ff-80f8-af43-d7998e3eb1fb"><td id="~k=D" class="">https://leetcode.com/problems/palindromic-substrings</td><td id="R&gt;Ei" class="">Palindromic Substrings</td><td id="JmG]" class="">100</td><td id="i=LO" class="">18</td><td id="|Jdk" class="">Two Pointers, String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8026-aa60-e1424e14e65e"><td id="~k=D" class="">https://leetcode.com/problems/minimum-path-sum</td><td id="R&gt;Ei" class="">Minimum Path Sum</td><td id="JmG]" class="">74.8</td><td id="i=LO" class="">15</td><td id="|Jdk" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="22fb255d-72ff-802f-8988-d47ceba20d89"><td id="~k=D" class="">https://leetcode.com/problems/maximal-rectangle</td><td id="R&gt;Ei" class="">Maximal Rectangle</td><td id="JmG]" class="">61.3</td><td id="i=LO" class="">15</td><td id="|Jdk" class="">Array, Dynamic Programming, Stack, Matrix, Monotonic Stack</td></tr><tr id="22fb255d-72ff-809e-a685-c0271bef9776"><td id="~k=D" class="">https://leetcode.com/problems/fibonacci-number</td><td id="R&gt;Ei" class="">Fibonacci Number</td><td id="JmG]" class="">100</td><td id="i=LO" class="">13</td><td id="|Jdk" class="">Math, Dynamic Programming, Recursion, Memoization</td></tr><tr id="22fb255d-72ff-8051-9551-f9a1b60d17b0"><td id="~k=D" class="">https://leetcode.com/problems/interleaving-string</td><td id="R&gt;Ei" class="">Interleaving String</td><td id="JmG]" class="">87.1</td><td id="i=LO" class="">13</td><td id="|Jdk" class="">String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80e7-9b80-e475cf78c8af"><td id="~k=D" class="">https://leetcode.com/problems/is-subsequence</td><td id="R&gt;Ei" class="">Is Subsequence</td><td id="JmG]" class="">100</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">Two Pointers, String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80af-8d15-e03577863c93"><td id="~k=D" class="">https://leetcode.com/problems/longest-common-subsequence</td><td id="R&gt;Ei" class="">Longest Common Subsequence</td><td id="JmG]" class="">100</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-805d-987e-c200a053a0d7"><td id="~k=D" class="">https://leetcode.com/problems/unique-binary-search-trees</td><td id="R&gt;Ei" class="">Unique Binary Search Trees</td><td id="JmG]" class="">100</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">Math, Dynamic Programming, Tree, Binary Search Tree, Binary Tree</td></tr><tr id="22fb255d-72ff-8070-9a66-e562a33b9a83"><td id="~k=D" class="">https://leetcode.com/problems/split-array-largest-sum</td><td id="R&gt;Ei" class="">Split Array Largest Sum</td><td id="JmG]" class="">100</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">Array, Binary Search, Dynamic Programming, Greedy, Prefix Sum</td></tr><tr id="22fb255d-72ff-8001-b0ed-cdd2b22df1c9"><td id="~k=D" class="">https://leetcode.com/problems/partition-equal-subset-sum</td><td id="R&gt;Ei" class="">Partition Equal Subset Sum</td><td id="JmG]" class="">100</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8001-a53b-f4e9d5446afa"><td id="~k=D" class="">https://leetcode.com/problems/word-break-ii</td><td id="R&gt;Ei" class="">Word Break II</td><td id="JmG]" class="">90.4</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">Array, Hash Table, String, Dynamic Programming, Backtracking, Trie, Memoization</td></tr><tr id="22fb255d-72ff-803a-9a4e-f315c12e1e47"><td id="~k=D" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii</td><td id="R&gt;Ei" class="">Best Time to Buy and Sell Stock III</td><td id="JmG]" class="">76</td><td id="i=LO" class="">12</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80b6-97d7-c00790bcafc0"><td id="~k=D" class="">https://leetcode.com/problems/house-robber-ii</td><td id="R&gt;Ei" class="">House Robber II</td><td id="JmG]" class="">100</td><td id="i=LO" class="">10</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8013-9cdd-fe7d7162fe20"><td id="~k=D" class="">https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden</td><td id="R&gt;Ei" class="">Minimum Number of Taps to Open to Water a Garden</td><td id="JmG]" class="">100</td><td id="i=LO" class="">9</td><td id="|Jdk" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="22fb255d-72ff-8008-9927-f0e7e628dd02"><td id="~k=D" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv</td><td id="R&gt;Ei" class="">Best Time to Buy and Sell Stock IV</td><td id="JmG]" class="">100</td><td id="i=LO" class="">9</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-800c-bea6-d0f325886027"><td id="~k=D" class="">https://leetcode.com/problems/longest-string-chain</td><td id="R&gt;Ei" class="">Longest String Chain</td><td id="JmG]" class="">100</td><td id="i=LO" class="">9</td><td id="|Jdk" class="">Array, Hash Table, Two Pointers, String, Dynamic Programming, Sorting</td></tr><tr id="22fb255d-72ff-80b2-a1ce-de10108e27e9"><td id="~k=D" class="">https://leetcode.com/problems/binary-tree-cameras</td><td id="R&gt;Ei" class="">Binary Tree Cameras</td><td id="JmG]" class="">100</td><td id="i=LO" class="">9</td><td id="|Jdk" class="">Dynamic Programming, Tree, Depth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80f0-add1-f42dcc8bd599"><td id="~k=D" class="">https://leetcode.com/problems/cheapest-flights-within-k-stops</td><td id="R&gt;Ei" class="">Cheapest Flights Within K Stops</td><td id="JmG]" class="">88.8</td><td id="i=LO" class="">9</td><td id="|Jdk" class="">Dynamic Programming, Depth-First Search, Breadth-First Search, Graph, Heap (Priority Queue), Shortest Path</td></tr><tr id="22fb255d-72ff-80c6-bed8-e4cdd08632b3"><td id="~k=D" class="">https://leetcode.com/problems/longest-increasing-path-in-a-matrix</td><td id="R&gt;Ei" class="">Longest Increasing Path in a Matrix</td><td id="JmG]" class="">100</td><td id="i=LO" class="">8</td><td id="|Jdk" class="">Array, Dynamic Programming, Depth-First Search, Breadth-First Search, Graph, Topological Sort, Memoization, Matrix</td></tr><tr id="22fb255d-72ff-80d0-94b8-f86b5f2ef817"><td id="~k=D" class="">https://leetcode.com/problems/non-overlapping-intervals</td><td id="R&gt;Ei" class="">Non-overlapping Intervals</td><td id="JmG]" class="">100</td><td id="i=LO" class="">8</td><td id="|Jdk" class="">Array, Dynamic Programming, Greedy, Sorting</td></tr><tr id="22fb255d-72ff-80c0-bab7-d8ff0eb18a66"><td id="~k=D" class="">https://leetcode.com/problems/optimal-account-balancing</td><td id="R&gt;Ei" class="">Optimal Account Balancing</td><td id="JmG]" class="">100</td><td id="i=LO" class="">8</td><td id="|Jdk" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="22fb255d-72ff-80c9-912b-ca9b0908770c"><td id="~k=D" class="">https://leetcode.com/problems/valid-parenthesis-string</td><td id="R&gt;Ei" class="">Valid Parenthesis String</td><td id="JmG]" class="">100</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">String, Dynamic Programming, Stack, Greedy</td></tr><tr id="22fb255d-72ff-80fe-ad74-c3677bdc5c3a"><td id="~k=D" class="">https://leetcode.com/problems/sum-of-subarray-minimums</td><td id="R&gt;Ei" class="">Sum of Subarray Minimums</td><td id="JmG]" class="">100</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">Array, Dynamic Programming, Stack, Monotonic Stack</td></tr><tr id="22fb255d-72ff-8022-8c8f-dfdc5e38b117"><td id="~k=D" class="">https://leetcode.com/problems/burst-balloons</td><td id="R&gt;Ei" class="">Burst Balloons</td><td id="JmG]" class="">100</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8014-9c24-cdcb80e6aa45"><td id="~k=D" class="">https://leetcode.com/problems/minimum-cost-for-tickets</td><td id="R&gt;Ei" class="">Minimum Cost For Tickets</td><td id="JmG]" class="">100</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8062-aba8-d6f473b230cb"><td id="~k=D" class="">https://leetcode.com/problems/cherry-pickup</td><td id="R&gt;Ei" class="">Cherry Pickup</td><td id="JmG]" class="">97.6</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="22fb255d-72ff-8019-b772-e1acaec885c4"><td id="~k=D" class="">https://leetcode.com/problems/parallel-courses-iii</td><td id="R&gt;Ei" class="">Parallel Courses III</td><td id="JmG]" class="">89.6</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">Array, Dynamic Programming, Graph, Topological Sort</td></tr><tr id="22fb255d-72ff-80de-aca3-e8acc365e0d1"><td id="~k=D" class="">https://leetcode.com/problems/palindrome-partitioning</td><td id="R&gt;Ei" class="">Palindrome Partitioning</td><td id="JmG]" class="">61.5</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">String, Dynamic Programming, Backtracking</td></tr><tr id="22fb255d-72ff-800e-ad04-db812e0ccadd"><td id="~k=D" class="">https://leetcode.com/problems/unique-binary-search-trees-ii</td><td id="R&gt;Ei" class="">Unique Binary Search Trees II</td><td id="JmG]" class="">37</td><td id="i=LO" class="">7</td><td id="|Jdk" class="">Dynamic Programming, Backtracking, Tree, Binary Search Tree, Binary Tree</td></tr><tr id="22fb255d-72ff-80d8-a5a7-da8f07f2473e"><td id="~k=D" class="">https://leetcode.com/problems/perfect-squares</td><td id="R&gt;Ei" class="">Perfect Squares</td><td id="JmG]" class="">100</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">Math, Dynamic Programming, Breadth-First Search</td></tr><tr id="22fb255d-72ff-8025-a4a6-f3983d32ed38"><td id="~k=D" class="">https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference</td><td id="R&gt;Ei" class="">Partition Array Into Two Arrays to Minimize Sum Difference</td><td id="JmG]" class="">100</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">Array, Two Pointers, Binary Search, Dynamic Programming, Bit Manipulation, Ordered Set, Bitmask</td></tr><tr id="22fb255d-72ff-80d6-a91a-d2ececbce98d"><td id="~k=D" class="">https://leetcode.com/problems/minimum-number-of-refueling-stops</td><td id="R&gt;Ei" class="">Minimum Number of Refueling Stops</td><td id="JmG]" class="">100</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">Array, Dynamic Programming, Greedy, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-806c-ba3e-fdda4d866e03"><td id="~k=D" class="">https://leetcode.com/problems/distinct-subsequences</td><td id="R&gt;Ei" class="">Distinct Subsequences</td><td id="JmG]" class="">100</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8020-8800-fbaac40bd579"><td id="~k=D" class="">https://leetcode.com/problems/frog-jump</td><td id="R&gt;Ei" class="">Frog Jump</td><td id="JmG]" class="">100</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-8026-8f4f-f3f013716336"><td id="~k=D" class="">https://leetcode.com/problems/triangle</td><td id="R&gt;Ei" class="">Triangle</td><td id="JmG]" class="">70</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80af-a023-cb3792a96673"><td id="~k=D" class="">https://leetcode.com/problems/beautiful-arrangement</td><td id="R&gt;Ei" class="">Beautiful Arrangement</td><td id="JmG]" class="">65.5</td><td id="i=LO" class="">6</td><td id="|Jdk" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="22fb255d-72ff-808b-8a94-f68479cb49d4"><td id="~k=D" class="">https://leetcode.com/problems/01-matrix</td><td id="R&gt;Ei" class="">01 Matrix</td><td id="JmG]" class="">100</td><td id="i=LO" class="">5</td><td id="|Jdk" class="">Array, Dynamic Programming, Breadth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-80b5-ab69-f897822450a9"><td id="~k=D" class="">https://leetcode.com/problems/scramble-string</td><td id="R&gt;Ei" class="">Scramble String</td><td id="JmG]" class="">100</td><td id="i=LO" class="">5</td><td id="|Jdk" class="">String, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80cd-a22a-d05a13d43dc7"><td id="~k=D" class="">https://leetcode.com/problems/paint-house</td><td id="R&gt;Ei" class="">Paint House</td><td id="JmG]" class="">100</td><td id="i=LO" class="">5</td><td id="|Jdk" class="">Array, Dynamic Programming</td></tr><tr id="22fb255d-72ff-80a8-9f9e-cf0e6934d808"><td id="~k=D" class="">https://leetcode.com/problems/minimum-operations-to-reduce-an-integer-to-0</td><td id="R&gt;Ei" class="">Minimum Operations to Reduce an Integer to 0</td><td id="JmG]" class="">100</td><td id="i=LO" class="">5</td><td id="|Jdk" class="">Dynamic Programming, Greedy, Bit Manipulation</td></tr><tr id="22fb255d-72ff-809c-bc88-c4a3c025c450"><td id="~k=D" class="">https://leetcode.com/problems/target-sum</td><td id="R&gt;Ei" class="">Target Sum</td><td id="JmG]" class="">69.8</td><td id="i=LO" class="">5</td><td id="|Jdk" class="">Array, Dynamic Programming, Backtracking</td></tr></tbody></table><p id="1cab255d-72ff-8025-b3bb-ebd335d333ff" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

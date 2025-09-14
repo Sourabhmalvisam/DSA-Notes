@@ -1,0 +1,2124 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Linked List [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="829ef8ad-892a-4312-b4a8-23e03ad0358a" class="page sans"><header><h1 class="page-title"><strong>Linked List [Top G]</strong></h1><p class="page-description"></p></header><div class="page-body"><h2 id="1c7b255d-72ff-80e4-bb0a-dbadfc017816" class=""><strong>DSA Quick Revision</strong></h2><ul id="a35228b4-f25c-4ffc-9766-2ad8b41017ba" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-5-lms/lru-cache">LRU Cache</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a55ebc58-fb49-46d9-914b-70dafd39a20e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class LRUCache { //DSAQuickRevision
+    // Initialize the dummy head and tail nodes
+    Node head = new Node(0, 0);
+    Node tail = new Node(0, 0);
+
+    // Capacity of the LRUCache
+    int capacity;
+
+    // Map to store key-value pairs for quick retrieval
+    Map&lt;Integer, Node&gt; map = new HashMap&lt;&gt;();
+
+    // Constructor to initialize the LRUCache with a given capacity
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+
+        // Connect the head and tail nodes
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    // Retrieve the value for a given key from the LRUCache
+    public int get(int key) {
+        if (map.containsKey(key)) {
+            // If the key exists, move the corresponding node to the front of the list
+            Node node = map.get(key);
+            remove(node);
+            insertAfterHead(node);
+            return node.value;
+        } else {
+            // If the key doesn&#x27;t exist, return -1
+            return -1;
+        }
+    }
+
+    // Insert or update the value for a given key in the LRUCache
+    public void put(int key, int value) {
+        if (map.containsKey(key)) {
+            // If the key exists, remove the corresponding node
+            remove(map.get(key));
+        }
+        if (map.size() == capacity) {
+            // If the LRUCache is at capacity, remove the least recently used node (before
+            // tail)
+            remove(tail.prev);
+        }
+        // Insert the new node at the front of the list
+        insertAfterHead(new Node(key, value));
+    }
+
+    // Remove a node from the doubly linked list
+    private void remove(Node node) {
+        map.remove(node.key);
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+    }
+
+    // Insert a node at the front of the doubly linked list
+    private void insertAfterHead(Node node) {
+        map.put(node.key, node);
+        node.next = head.next;
+        node.next.prev = node;
+        head.next = node;
+        node.prev = head;
+    }
+
+    // Node class representing a doubly linked list node with key-value pair
+    class Node {
+        Node prev, next;
+        int key, value;
+
+        // Constructor to initialize a Node with a given key and value
+        Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+}</code></pre></details></li></ul><ul id="b2f53c37-58bc-4b95-a9c3-3f4e3f20fbeb" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/faqs--hard/merge-sorted-lists-">Merge two sorted Linked list</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0a8406cf-d28c-4ac2-9ff0-c38c5ab9e7df" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        // Create a dummy node to act as the starting point of the merged list
+        ListNode dummy = new ListNode(-1);
+        ListNode current = dummy;
+
+        // Traverse through both lists
+        while (list1 != null &amp;&amp; list2 != null) {
+            // Compare the values from both lists and choose the smaller one
+            if (list1.val &lt;= list2.val) {
+                current.next = list1;
+                list1 = list1.next;
+            } else {
+                current.next = list2;
+                list2 = list2.next;
+            }
+            // Move to the next node in the merged list
+            current = current.next;
+        }
+
+        // Attach the remaining nodes from either list1 or list2
+        if (list1 != null) {
+            current.next = list1;
+        } else if (list2 != null) {
+            current.next = list2;
+        }
+
+        // Return the merged list starting from the next of the dummy node
+        return dummy.next;
+    }
+}
+
+</code></pre></details></li></ul><ul id="1cdb255d-72ff-800f-a5d9-cc72b4725010" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/logic-building/add-two-numbers-in-ll">Add two numbers in LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8040-9c6a-cb9c4d11570d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to add two numbers as linked list
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        /* Dummy node to act as the
+        starting point of the result list */
+        ListNode dummy = new ListNode(0);
+        /* Temp pointer to build
+        the result list */
+        ListNode temp = dummy;
+        // Initialize carry
+        int carry = 0;
+
+        /* Iterate while there are nodes in l1 or l2,
+        or there&#x27;s a carry to process */
+        while (l1 != null || l2 != null || carry != 0) {
+            int sum = 0;
+
+            /* Add the value from l1
+            if available */
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+
+            /* Add the value from l2
+            if available */
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+
+            // Add the carry
+            sum += carry;
+            // Update the carry
+            carry = sum / 10;
+
+            /* Create a new node with the digit value
+            and attach it to the result list */
+            ListNode node = new ListNode(sum % 10);
+            temp.next = node;
+            /* Move to the
+            next position in the result list */
+            temp = temp.next;
+        }
+        /* Return the result list
+        skipping the dummy node */
+        return dummy.next;
+    }
+};</code></pre></details></li></ul><ul id="1b5b255d-72ff-8068-91fe-d22f0577b4fa" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/reverse-ll-in-group-of-given-size-k">Reverse Nodes in k-Group</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-8021-8533-e42a0d429951" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">
+class Solution { //DSAQuickRevision
+    public ListNode reverseKGroup(ListNode head, int k) {
+        // Step 1: Check if we have at least k nodes
+        ListNode temp = head;
+        for (int i = 0; i &lt; k; i++) {
+            if (temp == null) return head; // less than k → return as-is
+            temp = temp.next;
+        }
+
+        // Step 2: Reverse first k nodes
+        ListNode prev = null;
+        ListNode curr = head; // curr ko chorke baaki sab null.
+        ListNode next = null;
+        int count = 0;
+
+        while (count &lt; k) {
+            next = curr.next; // pehle next move hoga
+            curr.next = prev; 
+            prev = curr; 
+            curr = next; // ye imp hai.
+            count++;
+        }
+
+        // Step 3: Recursively call for the next group
+        head.next = reverseKGroup(curr, k);
+
+        // Step 4: Return new head after reversing k-group
+        return prev;
+    }
+}
+</code></pre></details></li></ul><ul id="1b5b255d-72ff-8046-8577-cc0421f53f45" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/clone-a-ll-with-random-and-next-pointer">Clone a LL with random and next pointer</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-802a-819d-ca7826157b30" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Function to clone linked list with random pointers
+    public ListNode copyRandomList(ListNode head) {
+        // If the head is null, return null
+        if (head == null) return null;
+
+        /*Create a HashMap to map 
+        original nodes to their corresponding copied nodes*/
+        HashMap&lt;ListNode, ListNode&gt; map = new HashMap&lt;&gt;();
+        ListNode temp = head;
+
+        // Create copies of each node
+        while (temp != null) {
+            // Create new node with same value as original
+            ListNode newNode = new ListNode(temp.val);
+            // Map to original node 
+            map.put(temp, newNode);
+            // Move to next node
+            temp = temp.next;
+        }
+
+        // Reset temp 
+        temp = head;
+
+        /*Connect the next and 
+        random pointers of the 
+        copied nodes using the map*/
+        while (temp != null) {
+            // Get copied node from the map
+            ListNode copyNode = map.get(temp);
+            /*Set next pointer of copied node 
+            to the copied node of the next 
+            original node*/
+            copyNode.next = map.get(temp.next);
+            /*Set the random pointer of the 
+            copied node to the copied node of 
+            the random original node*/
+            copyNode.random = map.get(temp.random);
+            temp = temp.next;
+        }
+
+        // Return the head
+        return map.get(head);
+    }
+}</code></pre></details></li></ul><ul id="8836d7e4-be2b-424c-a896-95009cc63429" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/linked-list-cycle-ii/description/">Linked List Cycle II</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12cdd7d4-a545-451c-8ca6-e65102350522" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        ListNode slow = head, fast = head;
+
+        // Step 1: Detect cycle (Floyd&#x27;s Algorithm)
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                // Cycle detected
+                // Step 2: Find the cycle&#x27;s starting node
+                ListNode start = head;
+                while (start != slow) {
+                    start = start.next;
+                    slow = slow.next;
+                }
+                return start; // Start of the cycle
+            }
+        }
+        return null; // No cycle
+    }
+}
+</code></pre></details></li></ul><ul id="22eb255d-72ff-8080-910f-eda188174230" class="toggle"><li><details open=""><summary><strong><a href="https://leetcode.com/problems/reverse-linked-list-ii/description/">Reverse Linked List II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22eb255d-72ff-80d6-b5de-f78a4d905215" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null)
+            return null;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        // 1. prev ko left-1th node par le jao
+        for (int i = 1; i &lt; left; i++)
+            prev = prev.next;
+
+        ListNode curr = prev.next;
+
+        // 2. Reverse karo (right-left) steps
+        for (int i = 0; i &lt; right - left; i++) {
+            ListNode temp = curr.next;
+            curr.next = temp.next;
+            temp.next = prev.next;
+            prev.next = temp;
+        }
+        return dummy.next;
+    }
+
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-805e-a5fa-e0ba1c5720d1" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/faqs/lfu-cache">LFU Cache</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-806e-b7b5-ee1402795445" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">
+class Node { //DSAStriver
+   int key, value, cnt;
+   Node next;
+   Node prev;
+   Node(int _key, int _value) {
+       key = _key;
+       value = _value;
+       cnt = 1;
+   }
+}
+
+// To implement the doubly linked list
+class List {
+   int size; // Size 
+   Node head; // Dummy head
+   Node tail; // Dummy tail
+   
+   // Constructor
+   List() {
+       head = new Node(0, 0);
+       tail = new Node(0, 0);
+       head.next = tail;
+       tail.prev = head;
+       size = 0;
+   }
+   
+   // Function to add node in front 
+   void addFront(Node node) {
+       Node temp = head.next;
+       node.next = temp;
+       node.prev = head;
+       head.next = node;
+       temp.prev = node;
+       size++;
+   }
+   
+   // Function to remove node from the list
+   void removeNode(Node delnode) {
+       Node prevNode = delnode.prev;
+       Node nextNode = delnode.next;
+       prevNode.next = nextNode;
+       nextNode.prev = prevNode;
+       size--;
+   }
+}
+
+// Class to implement LFU cache
+class LFUCache {
+   // Hashmap to store the key-nodes pairs
+   private Map&lt;Integer, Node&gt; keyNode;
+   
+   /* Hashmap to maintain the lists 
+   having different frequencies */
+   private Map&lt;Integer, List&gt; freqListMap;
+   
+   private int maxSizeCache; // Max size of cache
+   
+   /* To store the frequency of least 
+   frequently used data-item */
+   private int minFreq;
+   
+   // To store current size of cache
+   private int curSize;
+   
+   // Constructor
+   public LFUCache(int capacity) {
+       // Set the capacity
+       maxSizeCache = capacity;
+       minFreq = 0; // Set minimum frequency
+       curSize = 0; // Set current frequency
+       keyNode = new HashMap&lt;&gt;();
+       freqListMap = new HashMap&lt;&gt;();
+   }
+   
+   // Method to update frequency of data-items
+   private void updateFreqListMap(Node node) {
+       // Remove from Hashmap
+       keyNode.remove(node.key);
+       
+       // Update the frequency list hashmap
+       freqListMap.get(node.cnt).removeNode(node);
+       
+       // If node was the last node having its frequency
+       if (node.cnt == minFreq &amp;&amp; 
+           freqListMap.get(node.cnt).size == 0) {
+           // Update the minimum frequency
+           minFreq++;
+       }
+       
+       // Creating a dummy list for next higher frequency
+       List nextHigherFreqList = new List();
+       
+       // If the next higher frequency list already exists
+       if (freqListMap.containsKey(node.cnt + 1)) {
+           // Update pointer to already existing list
+           nextHigherFreqList = 
+               freqListMap.get(node.cnt + 1);
+       }
+       
+       // Increment the count of data-item
+       node.cnt += 1;
+       
+       // Add the node in front of higher frequency list
+       nextHigherFreqList.addFront(node);
+       
+       // Update the frequency list map
+       freqListMap.put(node.cnt, nextHigherFreqList);
+       keyNode.put(node.key, node);
+   }
+   
+   // Method to get the value of key from LFU cache
+   public int get(int key) {
+       // Return the value if key exists
+       if (keyNode.containsKey(key)) {
+           Node node = keyNode.get(key); // Get the node
+           int val = node.value; // Get the value
+           updateFreqListMap(node); // Update the frequency
+           // Return the value
+           return val;
+       }
+       // Return -1 if key is not found
+       return -1;
+   }
+   
+   public void put(int key, int value) {
+       /* If the size of Cache is 0, 
+       no data-items can be inserted */
+       if (maxSizeCache == 0) {
+           return;
+       }
+       
+       // If key already exists
+       if (keyNode.containsKey(key)) {
+           // Get the node
+           Node node = keyNode.get(key);
+           // Update the value
+           node.value = value;
+           // Update the frequency
+           updateFreqListMap(node);
+       } else {
+           // If cache limit is reached
+           if (curSize == maxSizeCache) {
+               // Remove the least frequently used data-item
+               List list = freqListMap.get(minFreq);
+               keyNode.remove(list.tail.prev.key);
+               
+               // Update the frequency map
+               freqListMap.get(minFreq).removeNode(list.tail.prev);
+               // Decrement the current size of cache
+               curSize--;
+           }
+           // Increment the current cache size
+           curSize++;
+           
+           // Adding new value to the cache
+           minFreq = 1; // Set its frequency to 1
+           
+           // Create a dummy list
+           List listFreq = new List();
+           
+           // If the list already exists
+           if (freqListMap.containsKey(minFreq)) {
+               // Update the pointer to already present list
+               listFreq = freqListMap.get(minFreq);
+           }
+           
+           // Create the node to store data-item
+           Node node = new Node(key, value);
+           
+           // Add the node to dummy list
+           listFreq.addFront(node);
+           
+           // Add the node to Hashmap
+           keyNode.put(key, node);
+           
+           // Update the frequency list map
+           freqListMap.put(minFreq, listFreq);
+       }
+   }
+}
+</code></pre></details></li></ul><ul id="aca87ed7-055d-40cd-add5-6df3dfa81bae" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/logic-building/remove-nth-node-from-the-back-of-the-ll">Remove Nth Node From End of List</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0ff10da6-5fcb-456d-9b06-570c93147e3d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fast = head;
+        ListNode slow = head;
+
+        // Move the fast pointer `n` steps ahead
+        for (int i = 0; i &lt; n; i++) {
+            fast = fast.next;
+        }
+
+        // If fast becomes null, it means we need to remove the head node
+        if (fast == null) {
+            return head.next;
+        }
+
+        // Move both pointers until fast reaches the end
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+
+        // Remove the nth node from the end
+        slow.next = slow.next.next;
+
+        return head;
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-803d-94ff-d8a44137eb74" class="toggle"><li><details open=""><summary>Swap Nodes in Pairs</summary></details></li></ul><ul id="1b2b255d-72ff-80d8-8a4c-eef94eaa1382" class="block-color-default toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/check-if-ll-is-palindrome-or-not">Check if LL is palindrome or not</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b2b255d-72ff-8018-adb2-cbaf55531aef" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public boolean isPalindrome(ListNode head) {
+        if (head == null || head.next == null) return true;
+
+        // Find middle
+        ListNode slow = head, fast = head;
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Reverse second half
+        ListNode rev = reverse(slow);
+
+        // Compare both halves
+        while (rev != null) {
+            if (rev.val != head.val) return false;
+            rev = rev.next;
+            head = head.next;
+        }
+
+        return true;
+    }
+
+    public ListNode reverse(ListNode head) {
+        ListNode prev = null, next = null;
+        ListNode curr = head; // curr ko chorke baaki sab null.
+        while (curr != null) { // Condition curr pe lagegi
+            next = curr.next; // pehle next move hoga
+            curr.next = prev; 
+            prev = curr; 
+            curr = next; // ye imp hai.
+        }
+        return prev; // prev hi ans hai kyoki iss time curr null ho jayega.
+    }
+}
+</code></pre><p id="1b2b255d-72ff-8077-a747-c0565108f0ca" class="">
+</p></details></li></ul><ul id="1cdb255d-72ff-80c2-b334-c5529eaf964b" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/faqs--hard/rotate-a-ll">Rotate a LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80b1-999e-c3c548cc5b5e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to rotate the list by k steps
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) 
+            return head;
+
+        // Calculating length
+        ListNode temp = head;
+        int length = 1;
+        while (temp.next != null) {
+            ++length;
+            temp = temp.next;
+        }
+
+        // Link last node to first node
+        temp.next = head;
+        // When k is more than length of list
+        k = k % length; 
+        // To get end of the list
+        int end = length - k; 
+        while (end-- &gt; 0) 
+            temp = temp.next;
+
+        // Breaking last node link and pointing to NULL
+        head = temp.next;
+        temp.next = null;
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1b2b255d-72ff-801c-b34c-f96f806e3478" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/find-the-intersection-point-of-y-ll">Find the intersection point of Y LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b2b255d-72ff-806d-bfac-ea7200743ea0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Function to find the intersection node of two linked lists
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        // Initialize two pointers, d1 and d2
+        // To the heads of the two lists
+        ListNode d1 = headA;
+        ListNode d2 = headB;
+
+        // Traverse both lists until the pointers meet
+        while (d1 != d2) {
+            // Move pointer d1 to the head
+            // Of the second list if it reaches
+            // The end of the first list
+            d1 = (d1 == null) ? headB : d1.next;
+            // Move pointer d2 to the head
+            // Of the first list if it reaches
+            // The end of the second list
+            d2 = (d2 == null) ? headA : d2.next;
+        }
+
+        // Return the intersection node
+        return d1;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8077-a2a2-e577ad31ea85" class="toggle"><li><details open=""><summary>Design HashMap</summary></details></li></ul><ul id="22fb255d-72ff-80d8-b0bc-d7f40e960e67" class="toggle"><li><details open=""><summary>Reorder List</summary></details></li></ul><ul id="1cdb255d-72ff-80b6-afaa-e94b7c9ad03c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/faqs--dll/remove-duplicated-from-sorted-dll">Remove duplicated from sorted DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8027-aee3-f14dca7f36a4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // To remove duplicates from a sorted doubly linked list
+    public ListNode removeDuplicates(ListNode head) {
+        ListNode temp = head;
+
+        // Traverse the list
+        while (temp != null &amp;&amp; temp.next != null) {
+            ListNode nextNode = temp.next;
+
+            // Remove all duplicate nodes
+            while (nextNode != null &amp;&amp; nextNode.val == temp.val) {
+                // Store the duplicate node
+                ListNode duplicate = nextNode;
+                // Move to the next node
+                nextNode = nextNode.next;
+                // Delete the duplicate node
+                duplicate = null;
+            }
+
+            /* Link the current node 
+               to the next non-duplicate node */
+            temp.next = nextNode;
+            /* Update previous pointer 
+               of next non-duplicate node */
+            if (nextNode != null) {
+                nextNode.prev = temp;
+            }
+
+            // Move to the next node
+            temp = temp.next;
+        }
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8040-9cd3-db6f2ab4f508" class="toggle"><li><details open=""><summary>Design a Text Editor</summary></details></li></ul><ul id="22fb255d-72ff-801a-9d05-e087e0734480" class="toggle"><li><details open=""><summary>Remove Duplicates from Sorted List II</summary></details></li></ul><ul id="22fb255d-72ff-8027-9fca-ee849f8af87f" class="toggle"><li><details open=""><summary>Partition List</summary></details></li></ul><ul id="22fb255d-72ff-8090-ad99-c8ca8f7dc7e6" class="toggle"><li><details open=""><summary>Design Authentication Manager</summary></details></li></ul><ul id="6fcbe0ac-01d5-48d0-b20a-5c956bf93fe8" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-ii/sort-ll">Sort Linked List</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-806c-b312-d3f1303dfcb5" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public ListNode sortList(ListNode head) {
+        // Base case: empty or single element list
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        // Step 1: Find the middle node (to divide the list)
+        ListNode mid = middleNode(head);
+        ListNode left = head;
+        ListNode right = mid.next;
+        mid.next = null; // Split the list into two halves
+
+        // Step 2: Recursively sort both halves
+        left = sortList(left);
+        right = sortList(right);
+
+        // Step 3: Merge the sorted halves
+        return mergeTwoLists(left, right);
+    }
+
+    // Find the middle of the list using slow and fast pointers
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head.next; // Fast pointer starts from next node
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;        // Move slow pointer by 1 step
+            fast = fast.next.next;   // Move fast pointer by 2 steps
+        }
+        return slow; // Middle node found
+    }
+
+    // Merge two sorted lists
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode(-1); // Dummy node to simplify merging
+        ListNode current = dummy; // Pointer for the merged list
+
+        // Step 1: Compare and merge nodes from both lists
+        while (list1 != null &amp;&amp; list2 != null) {
+            if (list1.val &lt;= list2.val) {
+                current.next = list1;
+                list1 = list1.next;
+            } else {
+                current.next = list2;
+                list2 = list2.next;
+            }
+            current = current.next; // Move to next node in merged list
+        }
+
+        // Step 2: Attach the remaining part of the list (if any)
+        if (list1 != null) {
+            current.next = list1;
+        } else if (list2 != null) {
+            current.next = list2;
+        }
+
+        return dummy.next; // Return the merged list starting from the next node
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-809f-87ee-ff26408b7771" class="toggle"><li><details open=""><summary>All O`one Data Structure</summary></details></li></ul><ul id="22fb255d-72ff-802d-82b2-eecc37e3ae0e" class="toggle"><li><details open=""><summary>Design Browser History</summary></details></li></ul><ul id="1b2b255d-72ff-8050-82e9-fa1b325ee34e" class="block-color-teal toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/sort-a-ll-of-0&#x27;s-1&#x27;s-and-2&#x27;s">Sort a LL of 0&#x27;s 1&#x27;s and 2&#x27;s</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b2b255d-72ff-8050-b980-d15ae3689c42" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        // Dummy heads for 0s, 1s, 2s lists
+        ListNode zeroHead = new ListNode(-1);
+        ListNode oneHead = new ListNode(-1);
+        ListNode twoHead = new ListNode(-1);
+
+        // Tail pointers for building each list
+        ListNode zero = zeroHead, one = oneHead, two = twoHead;
+
+        ListNode curr = head;
+
+        // Distribute nodes into 0s, 1s, 2s lists
+        while (curr != null) {
+            if (curr.val == 0) {
+                zero.next = curr;
+                zero = curr;
+            } else if (curr.val == 1) {
+                one.next = curr;
+                one = curr;
+            } else {
+                two.next = curr;
+                two = curr;
+            }
+            curr = curr.next;
+        }
+
+        // Connect all lists
+        zero.next = (oneHead.next != null) ? oneHead.next : twoHead.next;
+        one.next = twoHead.next;
+        two.next = null;
+
+        return zeroHead.next;
+    }
+}
+</code></pre></details></li></ul><ul id="1b5b255d-72ff-808d-892f-c229255fe910" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/find-the-starting-point-in-ll">Find the starting point in LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80c1-97c4-dbdb8c87b47e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public ListNode findStartingPoint(ListNode head) {
+        // Initialize a slow and fast 
+        // pointers to the head of the list
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Phase 1: Detect the loop
+        while (fast != null &amp;&amp; fast.next != null) {
+            
+            // Move slow one step
+            slow = slow.next;
+            
+            // Move fast two steps
+            fast = fast.next.next;
+
+            // If slow and fast meet,
+            // a loop is detected
+            if (slow == fast) {
+                
+                // Reset the slow pointer
+                // to the head of the list
+                slow = head;
+
+                // Phase 2: Find the first node of the loop
+                while (slow != fast) {
+                    
+                    // Move slow and fast one step
+                    // at a time
+                    slow = slow.next;
+                    fast = fast.next;
+
+                    // When slow and fast meet again,
+                    // it&#x27;s the first node of the loop
+                }
+                
+                // Return the first node of the loop
+                return slow;
+            }
+        }
+        
+        // If no loop is found, return null
+        return null;
+    }
+}</code></pre></details></li></ul><ul id="1b5b255d-72ff-801c-8952-d41896c9f043" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-4-lms/flattening-of-ll">Flattening of LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-8069-99e1-d652226377f0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+    // Merge two sorted child-linked lists
+    private ListNode merge(ListNode list1, ListNode list2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = dummy;
+
+        while (list1 != null &amp;&amp; list2 != null) {
+            if (list1.val &lt; list2.val) {
+                curr.child = list1;
+                list1 = list1.child;
+            } else {
+                curr.child = list2;
+                list2 = list2.child;
+            }
+            curr = curr.child;
+            curr.next = null; // avoid leftover &#x27;next&#x27; links
+        }
+
+        curr.child = (list1 != null) ? list1 : list2;
+        return dummy.child;
+    }
+
+    // Flatten the 2D linked list to a single sorted list using &#x27;child&#x27; pointers
+    public ListNode flattenLinkedList(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        head.next = flattenLinkedList(head.next); // flatten rest
+        return merge(head, head.next);            // merge current with rest
+    }
+}
+</code></pre></details></li></ul><h2 id="180b255d-72ff-8088-bad6-ca17aa5fabee" class=""><strong>DSA Concept Revision</strong></h2><ul id="17db255d-72ff-80c2-bcd0-d53abe1c414f" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-i/segregate-odd-and-even-nodes-in-ll">Segregate odd and even nodes in LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80b6-afcc-e8df4ef5ab89" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to rearrange nodes
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        /*Initialize pointers for odd 
+        and even nodes and keep 
+        track of the first even node*/
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode firstEven = head.next;
+
+        // Rearranging nodes
+        while (even != null &amp;&amp; even.next != null) {
+            odd.next = odd.next.next;
+            even.next = even.next.next;
+            odd = odd.next;
+            even = even.next;
+        }
+
+        /* Connect the last odd 
+       node to the first even node*/
+        odd.next = firstEven;
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1b5b255d-72ff-8079-90ca-e4b38122e336" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-ii/length-of-loop-in-ll">Length of loop in LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-8032-9e6e-c303af7a8667" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to find the length of the loop
+    int findLength(ListNode slow, ListNode fast) {
+        // Count to keep track of nodes encountered in loop
+        int cnt = 1;
+        
+        // Move fast by one step
+        fast = fast.next;
+        
+        // Traverse fast till it reaches back to slow
+        while (slow != fast) {
+            /* At each node 
+            increase count by 1
+            move fast forward 
+            by one step */
+            cnt++;
+            fast = fast.next;
+        }
+        
+        /* Loop terminates 
+        when fast reaches slow again 
+        and the count is returned*/
+        return cnt;
+    }
+
+    // Function to find the length of the loop
+    public int findLengthOfLoop(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // Traverse the list to detect a loop
+        while (fast != null &amp;&amp; fast.next != null) {
+            // Move slow one step
+            slow = slow.next;
+            // Move fast two steps
+            fast = fast.next.next;
+
+            // If the slow and fast pointers meet
+            // there is a loop
+            if (slow == fast) {
+                // return the number of nodes 
+                return findLength(slow, fast);
+            }
+        }
+
+        /* If the fast pointer 
+        reaches the end, 
+        there is no loop */
+        return 0;
+    }
+}</code></pre></details></li></ul><ul id="1b5b255d-72ff-806d-98a1-d44580b580ee" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-iii-and-bit-manipulation/delete-the-middle-node-in-ll">Delete the middle node in LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80cf-8dd7-f2110706fe84" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to delete the middle node of a linked list
+    public ListNode deleteMiddle(ListNode head) {
+        /* If the list is empty or has only one node,
+         * return null as there is no middle node to delete */
+        if (head == null || head.next == null) {
+            return null;
+        }
+
+        // Initialize slow and fast pointers
+        ListNode slow = head;
+        ListNode fast = head.next.next;
+
+        // Move &#x27;fast&#x27; pointer twice as fast as &#x27;slow&#x27;
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Delete the middle node by skipping it
+        slow.next = slow.next.next;
+        return head;
+    }
+}</code></pre></details></li></ul><h2 id="180b255d-72ff-8097-91d9-d3b13beb7f3c" class="">DSA Striver</h2><ul id="e3e820c5-67fc-4951-ba48-55bdd9059f35" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-iii-and-bit-manipulation/delete-the-middle-node-in-ll">Find Middle Node of the linked list</a></strong></summary><figure id="17db255d-72ff-8065-ba42-e594a89f126c" class="image"><a href="image%208.png"><img style="width:664px" src="image%208.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d165b0df-4272-4f03-bad8-3b2255304e84" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public ListNode middleOfLinkedList(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head; 
+        // Note 1: agar fast = head lega toh middle node 4 ayega.
+        // Note 2: agar fast = head.next lega toh middle node 3 ayega.
+        // Note 3: sort LinkedList wala question dekh, lol.
+        while (fast != null &amp;&amp; fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8057-b1bb-ce11425280fe" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/faqs--dll/delete-all-occurrences-of-a-key-in-dll">Delete all occurrences of a key in DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-809b-8f87-ee48cfbb3286" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to delete all occurrences of a target value
+    public ListNode deleteAllOccurrences(ListNode head, int target) {
+        ListNode temp = head;
+
+        while (temp != null) {
+            if (temp.val == target) {
+                // Update head if needed
+                if (temp == head) {
+                    head = temp.next;
+                }
+
+                ListNode nextNode = temp.next;
+                ListNode prevNode = temp.prev;
+
+                // Update previous node&#x27;s next
+                if (nextNode != null) {
+                    nextNode.prev = prevNode;
+                }
+
+                // Update next node&#x27;s previous
+                if (prevNode != null) {
+                    prevNode.next = nextNode;
+                }
+
+                // Delete the current node
+                temp = nextNode;
+            } else {
+                temp = temp.next;
+            }
+        }
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8037-83ba-ea3e69fc1cd3" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/faqs--medium/add-one-to-a-number-represented-by-ll">Add one to a number represented by LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8020-ab6f-f33f8b30488d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to reverse the linked list
+    public ListNode reverseList(ListNode head) {
+        // Initialize pointers
+        ListNode prev = null;
+        ListNode current = head;
+        ListNode next = null;
+        
+        while (current != null) {
+            // Store next node
+            next = current.next;
+            // Reverse the link
+            current.next = prev;
+            // Move prev to current
+            prev = current;
+            // Move current to next
+            current = next;
+        }
+        
+        return prev;
+    }
+    
+    // Function to add one to Linked List
+    public ListNode addOne(ListNode head) {
+        // Reverse the linked list
+        head = reverseList(head);
+        
+        // Create a dummy node
+        ListNode current = head;
+        // Initialize carry with 1
+        int carry = 1;  
+        
+        while (current != null) {
+            /* Sum the current node&#x27;s value 
+            and the carry */
+            int sum = current.val + carry;
+            // Update carry
+            carry = sum / 10;
+            // Update the node&#x27;s value
+            current.val = sum % 10;
+            
+            /* If no carry left
+            break the loop */
+            if (carry == 0) {
+                break;
+            }
+            
+            /* If we&#x27;ve reached the end of the list
+            and there&#x27;s still a carry,
+            add a new node with the carry value */
+            if (current.next == null &amp;&amp; carry != 0) {
+                current.next = new ListNode(carry);
+                break;
+            }
+            
+            // Move to the next node
+            current = current.next;
+        }
+        
+        // Reverse the list 
+        head = reverseList(head);
+        
+        // New head
+        return head;
+    }
+}</code></pre></details></li></ul><h2 id="1c7b255d-72ff-80bf-80a9-cbe0b5a406ee" class="">Fundamentals of LL</h2><ul id="1cdb255d-72ff-8039-a114-cc99c18626ba" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/deletion-of-the-head-of-ll">Deletion of the head of LL</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80d3-9881-d6f6a112d5db" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to delete the head node of the linked list
+    public ListNode deleteHead(ListNode head) {
+        // If list is empty, nothing to delete
+        if (head == null) 
+            return null;
+
+        // Set temporary pointer
+        ListNode temp = head;
+
+        // Update head to the next node 
+        head = head.next;
+
+        // Delete original head    
+        temp = null;
+
+        // Return new head          
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-801e-bfee-e78f1ae34338" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/deletion-of-the-tail-of-ll">Deletion of the tail of LL</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80d9-be89-cab5229f4cc0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to delete the tail node of linked list
+    public ListNode deleteTail(ListNode head) {
+
+        // If the list is empty or has only one node
+        if (head == null || head.next == null) {
+            return null; // Return null
+        }
+
+        // Temporary pointer
+        ListNode temp = head;
+
+        /* Traverse to the second last 
+        node in the list */
+        while (temp.next.next != null) {
+            temp = temp.next;
+        }
+
+        // Delete the last node
+        temp.next = null;
+
+        // Return head of modified list
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8016-9607-c3c4854aabd3" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/delete-the-element-with-value-x">Delete the element with value X</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8095-aecf-dae1a7bffb27" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Solution class
+class Solution { //DSAStriver
+    // To delete a node with a specific value in a linked list
+    public ListNode deleteNodeWithValueX(ListNode head, int X) {
+        // Check if list is empty
+        if (head == null)
+            return head;
+
+        // If first node has target value, delete
+        if (head.val == X) {
+            head = head.next;
+            return head;
+        }
+
+        ListNode temp = head;
+        ListNode prev = null;
+
+        /* Traverse the list to find 
+        the node with the target value */
+        while (temp != null) {
+            if (temp.val == X) {
+                // Adjust the pointers
+                prev.next = temp.next;
+                return head;
+            }
+            prev = temp;
+            temp = temp.next;
+        }
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8050-9177-e13e9c54201b" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/deletion-of-the-kth-element-of-ll">Deletion of the Kth element of LL</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8064-854e-f9f2a570adbc" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to delete the k-th node of a linked list
+    public ListNode deleteKthNode(ListNode head, int k) {
+        // If the list is empty, return null
+        if (head == null)
+            return null;
+
+        // If k is 1, delete the head node
+        if (k == 1) {
+            ListNode temp = head;
+            head = head.next;
+            return head;
+        }
+
+        // Initialize a temporary pointer
+        ListNode temp = head;
+
+        // Traverse to the (k-1)th node
+        for (int i = 0; temp != null &amp;&amp; i &lt; k - 2; i++) {
+            temp = temp.next;
+        }
+
+        /* If k is greater than the number of nodes, 
+        return the unchanged list */
+        if (temp == null || temp.next == null)
+            return head;
+
+        // Delete the k-th node
+        ListNode next = temp.next.next;
+        temp.next = next;
+
+        // Return head
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8039-bafb-f600afab701c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/insertion-at-the-head-of-ll">Insertion at the head of LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80d7-850c-f2434544954b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Solution class
+class Solution { //DSAStriver
+    // Function to insert at head
+    public ListNode insertAtHead(ListNode head, int X) {
+        // Creating a new node 
+        ListNode newnode = new ListNode(X);
+        
+        /* Making next of newly created node to 
+        point to the head of the LinkedList */
+        newnode.next = head;
+        
+        // Making newly created node as head
+        head = newnode;
+        
+        // Return the head of modified list
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8027-bedb-e684a2a14e73" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/insertion-at-the-tail-of-ll">Insertion at the tail of LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8067-98ef-e664cd60a2ad" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Solution class
+class Solution { //DSAStriver
+    // Function to insert a new node at the tail of the linked list
+    public ListNode insertAtTail(ListNode head, int X) {
+        if (head == null)
+            return new ListNode(X);
+
+        ListNode temp = head;
+        // Traversing until the last node
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        ListNode newNode = new ListNode(X);
+        temp.next = newNode;
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8097-abb6-e85a70d2bf64" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/insertion-at-the-kth-position-of-ll">Insertion at the Kth position of LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-809c-ac29-c4d8611cd90c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Solution class
+class Solution { //DSAStriver
+    // Function to insert a new node at the kth position 
+    public ListNode insertAtKthPosition(ListNode head, int X, int K) {
+        /* If the linked list is empty 
+        and k is 1, insert the 
+        new node as the head */
+        if (head == null) {
+            if (K == 1)
+                return new ListNode(X);
+            else
+                return head;
+        }
+
+        /* If K is 1, insert the new
+        node at the beginning 
+        of the linked list */
+        if (K == 1)
+            return new ListNode(X, head);
+
+        int cnt = 0;
+        ListNode temp = head;
+
+        /* Traverse the linked list 
+        to find the node at position k-1 */
+        while (temp != null) {
+            cnt++;
+            if (cnt == K - 1) {
+                /* Insert the new node after the node 
+                at position k-1 */
+                ListNode newNode = new ListNode(X, temp.next);
+                temp.next = newNode;
+                break;
+            }
+            temp = temp.next;
+        }
+
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8000-a7a0-d3ca1dc398ad" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-single-ll/insertion-before-the-value-x-in-ll">Insertion before the value X in LL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8014-848f-d819a78eef3b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Solution class
+class Solution { //DSAStriver
+    // Function to insert a new node before the given node
+    public ListNode insertBeforeX(ListNode head, int X, int val) {
+        if (head == null) {
+            return null;
+        }
+
+        /* Insert at the beginning if the
+        value matches the head&#x27;s data */
+        if (head.val == X)
+            return new ListNode(val, head);
+
+        ListNode temp = head;
+        while (temp.next != null) {
+            /* Insert at the current position if 
+            the next node has the desired value */
+            if (temp.next.val == X) {
+                ListNode newNode = new ListNode(val, temp.next);
+                temp.next = newNode;
+                break;
+            }
+            temp = temp.next;
+        }
+        return head;
+    }
+}</code></pre></details></li></ul><h2 id="1cdb255d-72ff-80f3-8125-cd3cac041a11" class="">Fundamentals of DLL</h2><ul id="1cdb255d-72ff-806c-b974-e2d4b4059e77" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/convert-array-to-dll">Convert Array to DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80b9-a662-ebb542f1dfd6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to convert an array to a doubly linked list
+    public ListNode arrayToLinkedList(int[] nums) {
+        // If array is empty, return null
+        if (nums.length == 0) return null;
+
+        // Create head node with first element of the array
+        ListNode head = new ListNode(nums[0]);
+        // Initialize &#x27;prev&#x27; to the head node
+        ListNode prev = head;
+
+        for (int i = 1; i &lt; nums.length; i++) {
+            // Create a new node
+            ListNode temp = new ListNode(nums[i], null, prev);
+            // Update &#x27;next&#x27; pointer
+            prev.next = temp;
+            // Move &#x27;prev&#x27; to newly created node
+            prev = temp;
+        }
+
+        // Return head
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-80ad-8932-fb3d0d8b27ac" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/delete-head-of-dll">Delete head of DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-809c-a363-e789c637a716" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to delete the head of the doubly linked list
+    public ListNode deleteHead(ListNode head) {
+        if (head == null || head.next == null)
+            return null; // Return null if the list is empty or has one node
+        
+        // Store current head as &#x27;prev&#x27;
+        ListNode prev = head;
+        // Move &#x27;head&#x27; to next node
+        head = head.next;
+
+        // Set &#x27;prev&#x27; pointer
+        head.prev = null;
+
+        // Set &#x27;next&#x27; pointer
+        prev.next = null;
+
+        // Return new head
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-804e-9246-da9590f9817c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/delete-tail-of-dll">Delete Tail of DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8092-8ba8-d94b7a63071e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to delete the tail of a doubly linked list
+    public ListNode deleteTail(ListNode head) {
+        if (head == null || head.next == null) {
+            return null;  
+        }
+        
+        // Navigate to the tail of the linked list
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+        
+        // Update the pointers
+        ListNode newTail = tail.prev;
+        newTail.next = null;
+        tail.prev = null;
+        
+        // Return head of modified list
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-807c-b061-e4c583c189b6" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/delete-kth-element-of-dll">Delete Kth Element of DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80a1-bc21-fa064a92371c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to remove the Kth element
+    public ListNode deleteKthElement(ListNode head, int k) {
+        // If the list is empty, return null
+        if (head == null) 
+            return null;
+    
+        int count = 0;
+        ListNode kNode = head;
+
+        // Traverse the list
+        while (kNode != null) {
+            count++;
+            if (count == k) break;
+            kNode = kNode.next;
+        }
+
+        // If k is larger than the list size
+        if (kNode == null) return head; 
+        
+        // Update the pointers
+        ListNode prev = kNode.prev;
+        ListNode front = kNode.next;
+
+        // If node to be deleted is the only node in the list
+        if (prev == null &amp;&amp; front == null) {
+            return null;
+        }
+        
+        // If node to be deleted is head of the list
+        else if (prev == null) {
+            head = front;
+            front.prev = null;
+        }
+        
+        // If node to be deleted is tail of the list
+        else if (front == null) {
+            prev.next = null;
+        }
+        
+        // If node to be deleted is in the middle of the list
+        else {
+            prev.next = front;
+            front.prev = prev;
+        }
+
+        // Return modified list head
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8042-ac48-d10a2c8de4dc" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/removing-given-node-in-dll">Removing given node in DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8035-8096-e215abbfeca7" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Solution class
+class Solution { //DSAStriver
+    /* Function to delete the given node 
+    from doubly linked list */
+    public void deleteGivenNode(ListNode node) {
+        ListNode prev = node.prev;
+        ListNode front = node.next;
+
+        // Edge case if the given node is the tail node
+        if (front == null) {
+            prev.next = null;
+            node.prev = null;
+            return;
+        }
+
+        // Disconnect node 
+        prev.next = front;
+        front.prev = prev;
+
+        // Set node&#x27;s pointers to null
+        node.next = null;
+        node.prev = null;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8001-8d6b-f649ab2a99f5" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/insert-node-before-head-in-dll">Insert node before head in DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-806f-b931-c869b4c25b11" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to insert a node before 
+    head in a doubly linked list */
+    public ListNode insertBeforeHead(ListNode head, int X) {
+        // Create new node which will be the new head
+        ListNode newHead = new ListNode(X, head, null);
+
+        // Point the current head back to new one
+        head.prev = newHead;
+
+        return newHead; // Return new head
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-80d5-9323-cefca4470663" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/insert-node-before-tail-in-dll">Insert node before tail in DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80bc-9d38-dce494f91f41" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to insert a node before tail of a doubly linked list
+    public ListNode insertBeforeTail(ListNode head, int X) {
+        // Edge case
+        if (head.next == null) {
+            // Create new node with data as X
+            ListNode newHead = new ListNode(X, head, null);
+            head.prev = newHead;
+            return newHead;
+        }
+
+        // Create pointer tail
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+        }
+
+        // Keep track of node before tail using prev
+        ListNode prev = tail.prev;
+
+        // Create new node with value X
+        ListNode newNode = new ListNode(X, tail, prev);
+
+        // Join the new node
+        prev.next = newNode;
+        tail.prev = newNode;
+
+        // Return updated linked list
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-80eb-b7f7-df9d86de8da1" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/insert-node-before-kth-node-in-dll">Insert node before (kth node) in DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-809a-927e-e353bc71eacd" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to insert a node before the
+    Kth node in a doubly linked list */
+    public ListNode insertBeforeKthPosition(ListNode head, int X, int K) {
+        // If node has to be inserted before the head
+        if (K == 1) {
+            ListNode newHead = new ListNode(X, head, null);
+            head.prev = newHead;
+            return newHead;
+        }
+
+        // Temporary pointer 
+        ListNode temp = head;
+
+        // Reach Kth node
+        int count = 0;
+        while (temp != null) {
+            count++;
+
+            // If Kth node is reached, Break out of the loop
+            if (count == K) break;
+
+            // Otherwise Keep moving temp forward
+            temp = temp.next;
+        }
+
+        // Track the node 
+        ListNode prev = temp.prev;
+
+        // Create new node with data as X
+        ListNode newNode = new ListNode(X, temp, prev);
+
+        // Join new node 
+        prev.next = newNode;
+        temp.prev = newNode;
+
+        // Return head 
+        return head;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-80a0-8d3c-f1b430900a10" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/linked-list/fundamentals-doubly-ll/insert-before-given-node-in-dll">Insert before given node in DLL</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80fa-bc63-e291f98bd9bf" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to insert a new node before
+    given node in a doubly linked list */
+    public void insertBeforeGivenNode(ListNode node, int X) {
+        // Get node before the given node
+        ListNode prev = node.prev;
+
+        // Create new node
+        ListNode newNode = new ListNode(X, node, prev);
+
+        // Connect newNode
+        prev.next = newNode;
+        node.prev = newNode;
+
+        // void function to just update
+        return;
+    }
+}</code></pre></details></li></ul><h2 id="22eb255d-72ff-8092-9c61-fe59ef07a293" class="">Extras</h2><table id="22fb255d-72ff-804c-a6c9-c81f501cf234" class="simple-table"><tbody><tr id="22fb255d-72ff-8078-9290-cc11eded25c1"><td id="gA~]" class="">Link</td><td id="\lvL" class="">Title</td><td id="tq&lt;&lt;" class="">Frequency</td><td id="xEEi" class="">Companies Count</td><td id="x{cb" class="">Topics</td></tr><tr id="22fb255d-72ff-8095-a722-d29c4481ee8b"><td id="gA~]" class="">https://leetcode.com/problems/lru-cache</td><td id="\lvL" class="">LRU Cache</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">109</td><td id="x{cb" class="">Hash Table, Linked List, Design, Doubly-Linked List</td></tr><tr id="22fb255d-72ff-801c-8a50-c924d717cc53"><td id="gA~]" class="">https://leetcode.com/problems/merge-two-sorted-lists</td><td id="\lvL" class="">Merge Two Sorted Lists</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">42</td><td id="x{cb" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-8023-a7f0-f5551a641860"><td id="gA~]" class="">https://leetcode.com/problems/merge-k-sorted-lists</td><td id="\lvL" class="">Merge k Sorted Lists</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">42</td><td id="x{cb" class="">Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort</td></tr><tr id="22fb255d-72ff-8029-a36c-f099b57c332e"><td id="gA~]" class="">https://leetcode.com/problems/add-two-numbers</td><td id="\lvL" class="">Add Two Numbers</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">36</td><td id="x{cb" class="">Linked List, Math, Recursion</td></tr><tr id="22fb255d-72ff-80d3-89b0-f6f7cd36c398"><td id="gA~]" class="">https://leetcode.com/problems/reverse-linked-list</td><td id="\lvL" class="">Reverse Linked List</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">35</td><td id="x{cb" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-804e-9e13-f9d8308446eb"><td id="gA~]" class="">https://leetcode.com/problems/reverse-nodes-in-k-group</td><td id="\lvL" class="">Reverse Nodes in k-Group</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">30</td><td id="x{cb" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-80cb-a1bd-ea1f459d1ebc"><td id="gA~]" class="">https://leetcode.com/problems/copy-list-with-random-pointer</td><td id="\lvL" class="">Copy List with Random Pointer</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">21</td><td id="x{cb" class="">Hash Table, Linked List</td></tr><tr id="22fb255d-72ff-801a-9c61-e02a42776c4a"><td id="gA~]" class="">https://leetcode.com/problems/linked-list-cycle</td><td id="\lvL" class="">Linked List Cycle</td><td id="tq&lt;&lt;" class="">79.7</td><td id="xEEi" class="">20</td><td id="x{cb" class="">Hash Table, Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-8090-85bb-e6b6cc1f35e5"><td id="gA~]" class="">https://leetcode.com/problems/reverse-linked-list-ii</td><td id="\lvL" class="">Reverse Linked List II</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">17</td><td id="x{cb" class="">Linked List</td></tr><tr id="22fb255d-72ff-8020-9872-e093fe331300"><td id="gA~]" class="">https://leetcode.com/problems/lfu-cache</td><td id="\lvL" class="">LFU Cache</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">17</td><td id="x{cb" class="">Hash Table, Linked List, Design, Doubly-Linked List</td></tr><tr id="22fb255d-72ff-80ac-8e00-db5c713583fa"><td id="gA~]" class="">https://leetcode.com/problems/remove-nth-node-from-end-of-list</td><td id="\lvL" class="">Remove Nth Node From End of List</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">15</td><td id="x{cb" class="">Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-80cd-898d-f46a77398ad4"><td id="gA~]" class="">https://leetcode.com/problems/swap-nodes-in-pairs</td><td id="\lvL" class="">Swap Nodes in Pairs</td><td id="tq&lt;&lt;" class="">84.9</td><td id="xEEi" class="">14</td><td id="x{cb" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-8030-8058-dea91d4eba61"><td id="gA~]" class="">https://leetcode.com/problems/palindrome-linked-list</td><td id="\lvL" class="">Palindrome Linked List</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">13</td><td id="x{cb" class="">Linked List, Two Pointers, Stack, Recursion</td></tr><tr id="22fb255d-72ff-8054-a5f8-c5bb5fde36f2"><td id="gA~]" class="">https://leetcode.com/problems/rotate-list</td><td id="\lvL" class="">Rotate List</td><td id="tq&lt;&lt;" class="">90.9</td><td id="xEEi" class="">13</td><td id="x{cb" class="">Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-8094-be88-e8adb28a53c1"><td id="gA~]" class="">https://leetcode.com/problems/flatten-binary-tree-to-linked-list</td><td id="\lvL" class="">Flatten Binary Tree to Linked List</td><td id="tq&lt;&lt;" class="">83.8</td><td id="xEEi" class="">11</td><td id="x{cb" class="">Linked List, Stack, Tree, Depth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-806f-8a2e-ea89f350710c"><td id="gA~]" class="">https://leetcode.com/problems/intersection-of-two-linked-lists</td><td id="\lvL" class="">Intersection of Two Linked Lists</td><td id="tq&lt;&lt;" class="">72.4</td><td id="xEEi" class="">11</td><td id="x{cb" class="">Hash Table, Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-8064-afcb-e078c37dfc25"><td id="gA~]" class="">https://leetcode.com/problems/design-hashmap</td><td id="\lvL" class="">Design HashMap</td><td id="tq&lt;&lt;" class="">79.4</td><td id="xEEi" class="">10</td><td id="x{cb" class="">Array, Hash Table, Linked List, Design, Hash Function</td></tr><tr id="22fb255d-72ff-80f3-9078-e9de4a01485b"><td id="gA~]" class="">https://leetcode.com/problems/populating-next-right-pointers-in-each-node</td><td id="\lvL" class="">Populating Next Right Pointers in Each Node</td><td id="tq&lt;&lt;" class="">65.3</td><td id="xEEi" class="">10</td><td id="x{cb" class="">Linked List, Tree, Depth-First Search, Breadth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-8082-bced-c5805ddd081a"><td id="gA~]" class="">https://leetcode.com/problems/design-circular-queue</td><td id="\lvL" class="">Design Circular Queue</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">9</td><td id="x{cb" class="">Array, Linked List, Design, Queue</td></tr><tr id="22fb255d-72ff-8033-beb3-f0fc8257c552"><td id="gA~]" class="">https://leetcode.com/problems/reorder-list</td><td id="\lvL" class="">Reorder List</td><td id="tq&lt;&lt;" class="">88.6</td><td id="xEEi" class="">9</td><td id="x{cb" class="">Linked List, Two Pointers, Stack, Recursion</td></tr><tr id="22fb255d-72ff-8093-89dd-eca97e8f0310"><td id="gA~]" class="">https://leetcode.com/problems/remove-duplicates-from-sorted-list</td><td id="\lvL" class="">Remove Duplicates from Sorted List</td><td id="tq&lt;&lt;" class="">80.9</td><td id="xEEi" class="">9</td><td id="x{cb" class="">Linked List</td></tr><tr id="22fb255d-72ff-8013-84be-def8e920161b"><td id="gA~]" class="">https://leetcode.com/problems/middle-of-the-linked-list</td><td id="\lvL" class="">Middle of the Linked List</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">8</td><td id="x{cb" class="">Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-80d7-a62d-f484928cef44"><td id="gA~]" class="">https://leetcode.com/problems/design-a-text-editor</td><td id="\lvL" class="">Design a Text Editor</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">8</td><td id="x{cb" class="">Linked List, String, Stack, Design, Simulation, Doubly-Linked List</td></tr><tr id="22fb255d-72ff-800c-8cde-de96e40453aa"><td id="gA~]" class="">https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii</td><td id="\lvL" class="">Remove Duplicates from Sorted List II</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">7</td><td id="x{cb" class="">Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-8029-818b-ca5de9171bb4"><td id="gA~]" class="">https://leetcode.com/problems/partition-list</td><td id="\lvL" class="">Partition List</td><td id="tq&lt;&lt;" class="">40.3</td><td id="xEEi" class="">7</td><td id="x{cb" class="">Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-80e4-b6f8-fc83b5a15f03"><td id="gA~]" class="">https://leetcode.com/problems/design-authentication-manager</td><td id="\lvL" class="">Design Authentication Manager</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">6</td><td id="x{cb" class="">Hash Table, Linked List, Design, Doubly-Linked List</td></tr><tr id="22fb255d-72ff-800c-9668-dee0b6735d58"><td id="gA~]" class="">https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree</td><td id="\lvL" class="">Convert Sorted List to Binary Search Tree</td><td id="tq&lt;&lt;" class="">97.6</td><td id="xEEi" class="">6</td><td id="x{cb" class="">Linked List, Divide and Conquer, Tree, Binary Search Tree, Binary Tree</td></tr><tr id="22fb255d-72ff-80ab-bb09-e59b9b6dd9d0"><td id="gA~]" class="">https://leetcode.com/problems/sort-list</td><td id="\lvL" class="">Sort List</td><td id="tq&lt;&lt;" class="">65.1</td><td id="xEEi" class="">6</td><td id="x{cb" class="">Linked List, Two Pointers, Divide and Conquer, Sorting, Merge Sort</td></tr><tr id="22fb255d-72ff-80e8-abc6-fe6445734cc7"><td id="gA~]" class="">https://leetcode.com/problems/all-oone-data-structure</td><td id="\lvL" class="">All O`one Data Structure</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">5</td><td id="x{cb" class="">Hash Table, Linked List, Design, Doubly-Linked List</td></tr><tr id="22fb255d-72ff-8089-af90-c337ee2f8ace"><td id="gA~]" class="">https://leetcode.com/problems/linked-list-cycle-ii</td><td id="\lvL" class="">Linked List Cycle II</td><td id="tq&lt;&lt;" class="">100</td><td id="xEEi" class="">5</td><td id="x{cb" class="">Hash Table, Linked List, Two Pointers</td></tr><tr id="22fb255d-72ff-802f-8e7e-c1e541fabe91"><td id="gA~]" class="">https://leetcode.com/problems/design-browser-history</td><td id="\lvL" class="">Design Browser History</td><td id="tq&lt;&lt;" class="">95.2</td><td id="xEEi" class="">5</td><td id="x{cb" class="">Array, Linked List, Stack, Design, Doubly-Linked List, Data Stream</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

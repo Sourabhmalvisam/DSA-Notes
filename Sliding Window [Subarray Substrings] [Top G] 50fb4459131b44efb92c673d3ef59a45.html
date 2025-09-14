@@ -1,0 +1,1280 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Sliding Window [Subarray/Substrings] [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="50fb4459-131b-44ef-b92c-673d3ef59a45" class="page sans"><header><h1 class="page-title"><strong>Sliding Window [Subarray/Substrings] [Top G]</strong></h1><p class="page-description"></p></header><div class="page-body"><ol type="1" id="22fb255d-72ff-804f-a8ec-cc51fb5a555f" class="numbered-list" start="1"><li>Jab bhi kabhi <mark class="highlight-red">Subarray/Substring</mark> dikhe toh ek baar<mark class="highlight-red"> Prefix Sum ya Sliding Window </mark>sochna</li></ol><ol type="1" id="22fb255d-72ff-80e7-a1a1-f8fbf18db140" class="numbered-list" start="2"><li>Limitations: Agar <mark class="highlight-red">Negative </mark>Values hai toh sliding window <mark class="highlight-red">nahi</mark> lagega.</li></ol><p id="22fb255d-72ff-8003-8216-cef2c2ccc684" class="">
+</p><h2 id="1c7b255d-72ff-80a2-a3d5-fa9e7be3383e" class="">DSA Quick Revision</h2><ul id="8b53e6da-1f93-4800-8183-1d9a7afd5b40" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/longest-substring-without-repeating-characters">Longest Substring without repeating characters </a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="85bd3d4d-71de-496e-93c0-6022b0e0db32" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int longestNonRepeatingSubstring(String s) {
+        // Use a HashMap to store character frequencies in the current window
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        int maxLength = 0; // To store the maximum length of the substring
+        int i = 0; // Start of the sliding window
+
+        // Traverse the string
+        for (int j = 0; j &lt; s.length(); j++) {
+            // Step 1: Add the current character to the map and update its frequency
+            char ch = s.charAt(j);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            // Step 2: If a character repeats (frequency &gt; 1), shrink the window
+            while (map.get(ch) &gt; 1) { // Top G Note: While loop pehle likhna, XD. (explain why?)
+                char charAtStart = s.charAt(i);
+                map.put(charAtStart, map.get(charAtStart) - 1);
+
+                // If the frequency of a character becomes 0, remove it from the map
+                if (map.get(charAtStart) == 0) {
+                    map.remove(charAtStart);
+                }
+
+                i++; // Move the start of the window forward
+            }
+
+            // Step 3: Update the maximum length of the substring
+			          maxLength = Math.max(maxLength, j - i + 1);
+        }
+
+        return maxLength; // Return the maximum length of substring without repeating characters
+    }
+}
+</code></pre></details></li></ul><ul id="c00696c8-961a-45f5-9e94-d8eed4c0f4c3" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/stack-and-queue-ii/sliding-window-maximum">Sliding Window Maximum (Deque pattern, interview favorite)</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9b57d400-7e4b-464e-a635-13a821ef70c7" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        LinkedList&lt;Integer&gt; deque = new LinkedList&lt;&gt;();
+        ArrayList&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+
+        int i = 0;
+        for (int j = 0; j &lt; nums.length; j++) {
+            // Step 1: Remove all elements smaller than the current element from the deque
+            while (!deque.isEmpty() &amp;&amp; deque.getLast() &lt; nums[j]) {
+                deque.removeLast();
+            }
+            deque.addLast(nums[j]); // Add the current value to the deque
+
+            // Step 2: Check if the window size has reached k
+            if (j - i + 1 == k) {
+                result.add(deque.getFirst()); // Add the maximum in the current window to the result
+                if (deque.getFirst() == nums[i]) { // Step 3: Remove the element at the start of the window
+                    deque.removeFirst();
+                }
+                i++; // Step 4: Slide the window
+            }
+        }
+
+        // Convert the result ArrayList to an array
+        int[] res = new int[result.size()];
+        for (int idx = 0; idx &lt; result.size(); idx++) {
+            res[idx] = result.get(idx);
+        }
+        return res;
+    }
+}
+</code></pre></details></li></ul><ul id="222d4f53-5214-450f-8baa-7633ee30fed0" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-ii/minimum-window-substring-">Minimum Window Substring</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6ea6227f-e589-4b04-ad71-58ccd0b15499" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public String minWindow(String s, String t) {
+        // Edge case: If s or t is null, or s is shorter than t
+        if (s == null || t == null || s.length() &lt; t.length()) {
+            return &quot;&quot;;
+        }
+
+        // Frequency map for characters in t
+        Map&lt;Character, Integer&gt; tMap = new HashMap&lt;&gt;();
+        for (char c : t.toCharArray()) {
+            tMap.put(c, tMap.getOrDefault(c, 0) + 1);
+        }
+
+        // Sliding window
+        Map&lt;Character, Integer&gt; windowMap = new HashMap&lt;&gt;();
+        int l = 0; // Left pointer of the window
+        int matched = 0; // Count of characters that match the frequency in tMap
+        int minLen = Integer.MAX_VALUE; // Minimum window length
+        int start = 0; // Start index of the minimum window
+
+        // Iterate over the string with the right pointer (r)
+        for (int r = 0; r &lt; s.length(); r++) {
+            char rightChar = s.charAt(r);
+            windowMap.put(rightChar, windowMap.getOrDefault(rightChar, 0) + 1);
+
+            // Check if the current character satisfies the frequency in tMap
+            if (tMap.containsKey(rightChar) &amp;&amp; windowMap.get(rightChar) == tMap.get(rightChar)) {
+                matched++;
+            }
+
+            // When all characters are matched, try to shrink the window
+            while (matched == tMap.size()) {
+                // Update the minimum window if needed
+                if (r - l + 1 &lt; minLen) {
+                    minLen = r - l + 1;
+                    start = l;
+                }
+
+                char leftChar = s.charAt(l);
+                windowMap.put(leftChar, windowMap.get(leftChar) - 1);
+
+                // Check if the character no longer satisfies the frequency
+                if (tMap.containsKey(leftChar) &amp;&amp; windowMap.get(leftChar) &lt; tMap.get(leftChar)) {
+                    matched--;
+                }
+
+                l++; // Shrink the window from the left
+            }
+        }
+
+        // Return the minimum window substring
+        return minLen == Integer.MAX_VALUE ? &quot;&quot; : s.substring(start, start + minLen);
+    }
+}
+</code></pre></details></li></ul><ul id="186b255d-72ff-808f-ac13-e096a2bd2936" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-i/longest-repeating-character-replacement">Longest Repeating Character Replacement (Replace at most k chars to make longest repeating substring)</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="186b255d-72ff-8089-8ab0-ff0c4f3b9856" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int characterReplacement(String s, int k) {
+        int i = 0; // Window start index
+        int maxFreq = 0; // Most frequent character count in current window
+        int maxLength = 0; // Final answer
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;(); // Character frequency map for current window
+
+        for (int j = 0; j &lt; s.length(); j++) {
+            char currChar = s.charAt(j);
+            
+            // 1. Expand the window by including s[j]
+            map.put(currChar, map.getOrDefault(currChar, 0) + 1);
+            
+            // Update the max frequency seen so far in the window
+            maxFreq = Math.max(maxFreq, map.get(currChar));
+
+            // 2. Check if window is invalid
+            // Condition: total letters to change = (window size - maxFreq) &gt; k
+            while ((j - i + 1) - maxFreq &gt; k) {
+                // Shrink window from left if too many changes needed
+                char leftChar = s.charAt(i);
+                map.put(leftChar, map.get(leftChar) - 1);
+                i++; // Move window forward
+            }
+
+            // 3. After ensuring window is valid, update max length
+	        if((j - i + 1) - maxFreq &lt;= k) maxLength = Math.max(maxLength, j - i + 1);
+        }
+
+        return maxLength;
+    }
+}
+</code></pre></details></li></ul><ul id="22eb255d-72ff-80d5-ae9e-ce3518859dc7" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/subarray-product-less-than-k/description/">Subarray Product Less Than K</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22eb255d-72ff-80bb-ba2b-fcc0e044223c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        if (k &lt;= 1) return 0; // Edge case
+
+        int n = nums.length;
+        int left = 0, prod = 1, count = 0;
+
+        for (int right = 0; right &lt; n; right++) {
+            prod *= nums[right];
+
+            // Shrink window till product &lt; k
+            while (prod &gt;= k &amp;&amp; left &lt;= right) {
+                prod /= nums[left];
+                left++;
+            }
+
+            // All subarrays ending at right with product &lt; k
+            count += (right - left + 1);
+        }
+
+        return count;
+    }
+}
+</code></pre></details></li></ul><ul id="1b5b255d-72ff-802e-9a6b-f80636028c16" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-i/max-consecutive-ones-iii">Max Consecutive Ones III (At most k zeroes)</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-8065-a3f5-c6f3e7b9f05b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    /* Function to find the length of the
+    longest substring with at most k zeros */
+    public int longestOnes(int[] nums, int k) {
+        
+        int i = 0, zeros = 0, ans = 0;
+        
+        for (int j = 0; j &lt; nums.length; j++) {
+            
+            if (nums[j] == 0) zeros++;
+            
+            // jab zeros zyada ho jaaye allowed se, to window ko shrink karo
+            while (zeros &gt; k) {
+                if (nums[i] == 0) zeros--;
+                i++;
+            }
+            
+            if(zeros &lt;= k) ans = Math.max(ans, j - i + 1);
+        }
+        
+        return ans;
+    }
+}
+</code></pre></details></li></ul><ul id="22eb255d-72ff-8058-acf0-cf0a8e0ee6cc" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://leetcode.com/problems/minimum-size-subarray-sum/description/">Minimum Size Subarray Sum (Smallest window with sum ≥ target)</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22eb255d-72ff-807b-b7cc-e7d60a1f67da" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int minLen = Integer.MAX_VALUE;
+        int left = 0, sum = 0;
+
+        for (int right = 0; right &lt; n; right++) {
+            sum += nums[right];
+
+            // Shrink window till sum &gt;= target
+            while (sum &gt;= target) {
+                minLen = Math.min(minLen, right - left + 1);
+                sum -= nums[left];
+                left++;
+            }
+        }
+
+        // If no valid subarray found, return 0
+        return (minLen == Integer.MAX_VALUE) ? 0 : minLen;
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-8037-8d4b-c803a3d0f823" class="toggle"><li><details open=""><summary><mark class="highlight-default">Substring with Concatenation of All Words</mark></summary></details></li></ul><ul id="22fb255d-72ff-80b4-a6de-e0dd12dbb0c3" class="toggle"><li><details open=""><summary><mark class="highlight-default">Contains Duplicate II</mark></summary></details></li></ul><ul id="b7273fdc-6cf4-4180-beb4-5aa3fd29856f" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/find-all-anagrams-in-a-string/description/">Find All Anagrams in a String</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a58549c3-2b29-4771-a862-abbab709b828" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public List&lt;Integer&gt; findAnagrams(String txt, String pat) {
+        int k = pat.length();
+        int n = txt.length();
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;(); // Stores start indices of all anagrams
+
+        if (n &lt; k) return ans;
+
+        // Frequency map for pattern
+        Map&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        for (int i = 0; i &lt; k; i++) {
+            char ch = pat.charAt(i);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+        }
+
+        int count = map.size(); // Unique characters yet to match
+        int i = 0; // Left pointer
+
+        for (int j = 0; j &lt; n; j++) {
+            char ch = txt.charAt(j);
+
+            // If current char is in pattern, decrement its count
+            if (map.containsKey(ch)) {
+                map.put(ch, map.get(ch) - 1);
+                if (map.get(ch) == 0) count--;
+            }
+
+            // Window size matches pattern length
+            if (j - i + 1 == k) {
+                if (count == 0) ans.add(i); // Anagram found, add start index
+
+                // Move window: restore count of outgoing character
+                char out = txt.charAt(i);
+                if (map.containsKey(out)) {
+                    map.put(out, map.get(out) + 1);
+                    if (map.get(out) == 1) count++;
+                }
+                i++;
+            }
+        }
+        return ans;
+    }
+}
+
+/*
+    // GFG &quot;Count Occurrences of Anagrams&quot; version:
+    // Just return the count instead of indices:
+    // return ans.size();
+*/
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80f4-a098-cb86c77a0f75" class="toggle"><li><details open=""><summary><mark class="highlight-default">Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit</mark></summary></details></li></ul><ul id="22fb255d-72ff-803f-9395-fe043b4b24a4" class="toggle"><li><details open=""><summary><mark class="highlight-default">Frequency of the Most Frequent Element</mark></summary></details></li></ul><ul id="22fb255d-72ff-8030-ae4c-f7008f9a041b" class="toggle"><li><details open=""><summary><mark class="highlight-default">Permutation in String</mark></summary></details></li></ul><ul id="22fb255d-72ff-80bd-8bb8-ce08bec9f63a" class="toggle"><li><details open=""><summary><mark class="highlight-default">Sliding Window Median</mark></summary></details></li></ul><ul id="22fb255d-72ff-80be-b16a-ee44750ad507" class="toggle"><li><details open=""><summary><mark class="highlight-default">Count Zero Request Servers</mark></summary></details></li></ul><ul id="d39bc18b-d5ef-45c2-a8c2-9681ded0d547" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/longest-substring-with-at-most-k-distinct-characters">Longest Substring With At Most K Distinct Characters</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="54def794-e04f-49de-9450-4717a7fea118" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int kDistinctChar(String s, int k) {
+        // Use a HashMap to store character frequencies in the current window
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        int maxLength = -1; // To store the maximum length of the substring
+        int i = 0; // Start of the sliding window
+
+        // Traverse the string
+        for (int j = 0; j &lt; s.length(); j++) {
+            // Step 1: Add the current character to the map and update its frequency
+            char ch = s.charAt(j);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            // Step 2: If the number of unique characters exceeds k, shrink the window
+            while (map.size() &gt; k) { // Valid window banane wala &quot;while&quot; hamesha &quot;if&quot; ke upar hona chaiye.
+                char charAtStart = s.charAt(i);
+                map.put(charAtStart, map.get(charAtStart) - 1);
+
+                // If the frequency of a character becomes 0, remove it from the map
+                if (map.get(charAtStart) == 0) {
+                    map.remove(charAtStart);
+                }
+
+                i++; // Move the start of the window forward
+            }
+
+            // Step 3: If the number of unique characters is &lt;= k, update the result
+                maxLength = Math.max(maxLength, j - i + 1);
+        }
+
+        return maxLength; // Return the maximum length, or -1 if no valid substring is found
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8065-8e87-d88db59d4126" class="toggle"><li><details open=""><summary>Count Subarrays With Fixed Bounds</summary></details></li></ul><ul id="1bcb255d-72ff-801c-88ee-ee7fd7783006" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/count-number-of-nice-subarrays">Count number of Nice subarrays (Exactly k odd numbers, use atMost(k) - atMost(k-1))</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-803a-8eb3-fc99dc78ec96" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+		// Prerequisite: Binary Subarrays With Sum
+		// count of subarrays with ≤ k odds - count of subarrays with ≤ k-1 odds
+    public int numberOfOddSubarrays(int[] nums, int k) {
+        return countSubarraysWithAtMostKOdds(nums, k) 
+             - countSubarraysWithAtMostKOdds(nums, k - 1);
+    }
+
+    // Helper: Count subarrays with at most k odd numbers
+    private int countSubarraysWithAtMostKOdds(int[] nums, int k) {
+        
+        if (k &lt; 0) return 0; // No subarray if k is negative
+        
+        int l = 0, count = 0, oddCount = 0;
+        
+        for (int r = 0; r &lt; nums.length; r++) {
+            // Add current element&#x27;s oddness
+            oddCount += nums[r] % 2;
+
+            // Shrink window if oddCount &gt; k
+            while (oddCount &gt; k) {
+                oddCount -= nums[l] % 2;
+                l++;
+            }
+
+            // All subarrays ending at r are valid
+            count += (r - l + 1);
+        }
+        
+        return count;
+    }
+}
+</code></pre></details></li></ul><ul id="1e2b255d-72ff-80f3-b0d1-d5259e2ff9be" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/subarrays-with-k-different-integers/description/">Count Subarrays with K Different Integers (Exactly k distinct, atMost trick)</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e2b255d-72ff-80ee-beb9-c43a61af01e5" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+    // Main: Find number of subarrays with exactly k distinct elements
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        return atMostKDistinct(nums, k) - atMostKDistinct(nums, k - 1);
+    }
+
+    // Helper: Find number of subarrays with at most k distinct elements
+    private int atMostKDistinct(int[] nums, int k) {
+        if (k &lt; 0) return 0; // No valid subarray if k is negative
+        
+        HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+        int l = 0, count = 0;
+        
+        for (int r = 0; r &lt; nums.length; r++) {
+            // Add nums[r] to window
+            map.put(nums[r], map.getOrDefault(nums[r], 0) + 1);
+            
+            // Shrink window if distinct elements &gt; k
+            while (map.size() &gt; k) {
+                map.put(nums[l], map.get(nums[l]) - 1);
+                if (map.get(nums[l]) == 0) map.remove(nums[l]);
+                l++;
+            }
+            
+            // All subarrays ending at r are valid
+            count += (r - l + 1);
+        }
+        
+        return count;
+    }
+}
+</code></pre><figure id="213b255d-72ff-80c7-a3f6-e6fee6ec3937"><div class="source"><a href="https://www.youtube.com/watch?v=7wYGbV_LsX4">https://www.youtube.com/watch?v=7wYGbV_LsX4</a></div></figure></details></li></ul><ul id="1b5b255d-72ff-8020-ab8b-d8014855f0d0" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-i/fruit-into-baskets">Fruit Into Baskets (a.k.a. longest subarray with at most 2 distinct elements)</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80cd-a0fb-f24911ab5da5" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { // DSAConceptRevision
+    // Max length subarray with at most 2 types of numbers
+    public int totalFruits(int[] fruits) {
+        
+        int n = fruits.length;
+        int maxLen = 0;  
+        
+        // Map to track the count of each fruit type in the current window
+        HashMap&lt;Integer, Integer&gt; mpp = new HashMap&lt;&gt;();
+        
+        for (int i = 0, j = 0; j &lt; n; j++) {
+            mpp.put(fruits[j], mpp.getOrDefault(fruits[j], 0) + 1);
+            
+            // If the number of different fruits exceeds 2, shrink the window from left
+            while (mpp.size() &gt; 2) {
+                mpp.put(fruits[i], mpp.get(fruits[i]) - 1);
+                if (mpp.get(fruits[i]) == 0) {
+                    mpp.remove(fruits[i]);
+                }
+                i++;
+            }
+            
+            // Update maxLen if the number of different fruits is at most 2
+            if(mpp.size() &lt;= 2) maxLen = Math.max(maxLen, j - i + 1);
+        }
+
+        return maxLen;
+    }
+}
+</code></pre></details></li></ul><h2 id="1c7b255d-72ff-8047-9d6b-cc017543c636" class="">DSA Concept Revision</h2><ul id="1bcb255d-72ff-80f2-b13e-d7ff3766394d" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-ii/number-of-substrings-containing-all-three-characters">Number of Substrings Containing All Three Characters</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-802a-a798-c308c775650d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int numberOfSubstrings(String s) {
+        // Create a map to count the occurrences of &#x27;a&#x27;, &#x27;b&#x27;, and &#x27;c&#x27;
+        HashMap&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        
+        int n = s.length();
+        int left = 0, result = 0;
+        
+        // Traverse through the string with the right pointer
+        for (int right = 0; right &lt; n; right++) {
+            // Add the current character to the map
+            map.put(s.charAt(right), map.getOrDefault(s.charAt(right), 0) + 1);
+            
+            // If the window contains all three characters, shrink from the left
+            while (map.size() == 3) {
+                // All substrings starting from left to the right pointer are valid
+                result += n - right;
+                
+                // Shrink the window from the left
+                map.put(s.charAt(left), map.get(s.charAt(left)) - 1);
+                if (map.get(s.charAt(left)) == 0) {
+                    map.remove(s.charAt(left));
+                }
+                left++;
+            }
+        }
+        
+        return result;
+    }
+
+}
+</code></pre></details></li></ul><ul id="1bcb255d-72ff-80e0-b12d-ce29d6816de3" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-ii/maximum-points-you-can-obtain-from-cards-">Maximum Points You Can Obtain from Cards</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-807e-b8f9-dfa2fac98cca" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    /* Function to calculate the maximum
+    score after picking k cards */
+    public int maxScore(int[] cardScore, int k) {
+        int lSum = 0, rSum = 0, maxSum = 0;
+
+        // Calculate the initial sum of the first k cards
+        for (int i = 0; i &lt; k; i++) {
+            lSum += cardScore[i];
+            
+            /* Initialize maxSum with the
+            sum of the first k cards */
+            maxSum = lSum;
+        }
+
+        // Initialize rightIndex to iterate array from last
+        int rightIndex = cardScore.length - 1;
+        
+        for (int i = k - 1; i &gt;= 0; i--) {
+            
+            // Remove the score of the ith card from left sum
+            lSum -= cardScore[i];   
+            
+            /* Add the score of the card
+            from the right to the right sum */
+            rSum += cardScore[rightIndex];  
+            
+            // Move to the next card from the right
+            rightIndex--; 
+
+            // Update maxSum with the maximum sum found so far
+            maxSum = Math.max(maxSum, lSum + rSum);
+        }
+
+        // Return the maximum score found
+        return maxSum; 
+    }
+}</code></pre></details></li></ul><ul id="1bcb255d-72ff-80e0-bb06-e938c98c8a18" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sliding-window-ii/binary-subarrays-with-sum">Binary Subarrays With Sum</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-8002-a801-c9fbd0bf9e0d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    // Main function: find number of subarrays with sum exactly equal to &#x27;goal&#x27;
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        // Difference of (sum &lt;= goal) and (sum &lt;= goal-1) gives (sum == goal)
+        return numSubarraysWithSumLessEqualToGoal(nums, goal) 
+             - numSubarraysWithSumLessEqualToGoal(nums, goal - 1);
+    }
+    
+    // Helper function: find number of subarrays with sum &lt;= goal
+    private int numSubarraysWithSumLessEqualToGoal(int[] nums, int goal) {
+        
+        // Base case: If goal &lt; 0, no subarray possible
+        if (goal &lt; 0) return 0;
+        
+        int l = 0;      // Left pointer
+        int sum = 0;    // Current window sum
+        int count = 0;  // Total valid subarrays
+
+        for (int r = 0; r &lt; nums.length; r++) {
+            sum += nums[r]; // Expand window by adding nums[r]
+
+            // Shrink window from left until sum &lt;= goal
+            while (sum &gt; goal) {
+                sum -= nums[l];
+                l++;
+            }
+
+            // For current r, all subarrays [l...r], [l+1...r], ..., [r...r] are valid
+            count += (r - l + 1);
+        }
+        
+        return count;
+    }
+}
+</code></pre></details></li></ul><h2 id="6d58a120-fe1f-4de0-9769-961190edfb4b" class=""><strong>Aditya Verma</strong></h2><h3 id="d4f9ae59-2b5b-45c4-8d44-48cf3f58877e" class=""><strong>Fixed Size Window</strong></h3><ul id="ef83eff0-31e6-469e-9097-71e578895fe7" class="toggle"><li><details open=""><summary><strong><a href="https://www.geeksforgeeks.org/problems/first-negative-integer-in-every-window-of-size-k3345/1">First negative in every window of size k</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="cec5c43a-ad07-491d-b247-d9f9536ee82e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+    // Function to find the first negative integer in every window of size k
+    static List&lt;Integer&gt; FirstNegativeInteger(int arr[], int k) {
+        // List to store the result
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        // LinkedList to store negative elements in the current window
+        LinkedList&lt;Integer&gt; linkedList = new LinkedList&lt;&gt;();
+        
+        int i = 0; // Start of the window
+        
+        for (int j = 0; j &lt; arr.length; j++) {
+            // Step 1: Add current negative number to the LinkedList
+            if (arr[j] &lt; 0) {
+                linkedList.addLast(arr[j]);
+            }
+
+            // Step 2: Check if the window size is k
+            if (j - i + 1 == k) {
+                // Step 3: Add the first negative number in the window to the result
+                if (linkedList.isEmpty()) {
+                    result.add(0); // No negative number in the window
+                } else {
+                    result.add(linkedList.peekFirst()); // Add the first negative number
+                }
+
+                // Step 4: Remove the element that is sliding out of the window
+                if (!linkedList.isEmpty() &amp;&amp; arr[i] == linkedList.peekFirst()) {
+                    linkedList.pollFirst(); // Remove from the front
+                }
+
+                // Slide the window
+                i++;
+            }
+        }
+        return result;
+    }
+}
+</code></pre></details></li></ul><h3 id="93956ca0-145b-460c-a95c-285af3de7e00" class=""><strong>Variable Size Window</strong></h3><ul id="5d933113-ccb9-4ca6-b8ce-498f6ec19e7f" class="toggle"><li><details open=""><summary><a href="https://www.naukri.com/code360/problems/longest-subarray-with-sum-k_6682399">Longest subarray with sum K  [Positive Values Only]</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9117fcf4-aba4-46ba-821d-da5b979467ef" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">public class Solution { //DSAStriver
+    public static int longestSubarrayWithSumK(int[] arr, long k) {
+        int i = 0; // Start of the window
+        long sum = 0; // Use long to handle large values of k
+        int maxSubarrayLength = 0; // To store the result
+
+        for (int j = 0; j &lt; arr.length; j++) {
+            sum += arr[j]; // Step 1: Add the current element to the sum
+
+            // Step 2: Shrink the window until sum &lt;= k
+            while (sum &gt; k) {
+                sum -= arr[i]; // Remove the element at the start of the window
+                i++;
+            }  // Top G Note: While loop pehle likhna, XD. (explain why?)
+            // Valid window banane wala &quot;while&quot; hamesha &quot;if&quot; ke upar hona chaiye.
+
+            // Step 3: If sum becomes exactly k, calculate the subarray length
+            if (sum == k) {
+                maxSubarrayLength = Math.max(maxSubarrayLength, (j - i + 1));
+            }
+        }
+
+        return maxSubarrayLength;
+    }
+}
+</code></pre></details></li></ul><ul id="1e9b255d-72ff-80a1-9dde-d0dee26c0bf5" class="toggle"><li><details open=""><summary><strong><a href="https://www.geeksforgeeks.org/problems/smallest-distant-window3132/1">Smallest distinct window</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1e9b255d-72ff-8074-b391-c70ade2eb473" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int findSubString(String str) {
+        int minLength = Integer.MAX_VALUE;
+        int n = str.length();
+        
+        // Step 1: Count unique characters in full string
+        Set&lt;Character&gt; set = new HashSet&lt;&gt;();
+        for (int i = 0; i &lt; n; i++) {
+            set.add(str.charAt(i));
+        }
+        int totalUnique = set.size();
+
+        Map&lt;Character, Integer&gt; map = new HashMap&lt;&gt;();
+        int i = 0;
+
+        for (int j = 0; j &lt; n; j++) {
+            char ch = str.charAt(j);
+            map.put(ch, map.getOrDefault(ch, 0) + 1);
+
+            // Shrink window from left while it&#x27;s valid
+            while (map.size() == totalUnique) {
+                minLength = Math.min(minLength, j - i + 1);
+                
+                char leftChar = str.charAt(i);
+                map.put(leftChar, map.get(leftChar) - 1);
+                if (map.get(leftChar) == 0) map.remove(leftChar);
+                i++;
+            }
+        }
+
+        return minLength;
+    }
+}
+</code></pre></details></li></ul><h2 id="22eb255d-72ff-80f3-bd23-c4a0ce293a27" class="">Extras</h2><table id="22fb255d-72ff-804c-a0ea-c1666a9cc333" class="simple-table"><tbody><tr id="22fb255d-72ff-803c-84c6-ede43231c42c"><td id="\fLz" class="">Link</td><td id="BlM&lt;" class="">Title</td><td id="jfaj" class="">Frequency</td><td id="tGh&gt;" class="">Companies Count</td><td id="iWRB" class="">Topics</td></tr><tr id="22fb255d-72ff-806e-ac32-dc33112e0a7d"><td id="\fLz" class="">https://leetcode.com/problems/longest-substring-without-repeating-characters</td><td id="BlM&lt;" class="">Longest Substring Without Repeating Characters</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">92</td><td id="iWRB" class="">Hash Table, String, Sliding Window</td></tr><tr id="22fb255d-72ff-80f1-81ec-c7014e71290d"><td id="\fLz" class="">https://leetcode.com/problems/sliding-window-maximum</td><td id="BlM&lt;" class="">Sliding Window Maximum</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">34</td><td id="iWRB" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Monotonic Queue</td></tr><tr id="22fb255d-72ff-80a1-ad51-d474cfc248bc"><td id="\fLz" class="">https://leetcode.com/problems/minimum-window-substring</td><td id="BlM&lt;" class="">Minimum Window Substring</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">31</td><td id="iWRB" class="">Hash Table, String, Sliding Window</td></tr><tr id="22fb255d-72ff-80de-9712-c46e7b3337b0"><td id="\fLz" class="">https://leetcode.com/problems/longest-repeating-character-replacement</td><td id="BlM&lt;" class="">Longest Repeating Character Replacement</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">16</td><td id="iWRB" class="">Hash Table, String, Sliding Window</td></tr><tr id="22fb255d-72ff-80b2-92c9-ce68b6f07ab2"><td id="\fLz" class="">https://leetcode.com/problems/subarray-product-less-than-k</td><td id="BlM&lt;" class="">Subarray Product Less Than K</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">14</td><td id="iWRB" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="22fb255d-72ff-8077-b0ba-d4895d3b758c"><td id="\fLz" class="">https://leetcode.com/problems/max-consecutive-ones-iii</td><td id="BlM&lt;" class="">Max Consecutive Ones III</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">13</td><td id="iWRB" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="22fb255d-72ff-8032-926e-f20c42bb7eec"><td id="\fLz" class="">https://leetcode.com/problems/minimum-size-subarray-sum</td><td id="BlM&lt;" class="">Minimum Size Subarray Sum</td><td id="jfaj" class="">59.7</td><td id="tGh&gt;" class="">12</td><td id="iWRB" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="22fb255d-72ff-80d1-8e3c-da899b59361e"><td id="\fLz" class="">https://leetcode.com/problems/substring-with-concatenation-of-all-words</td><td id="BlM&lt;" class="">Substring with Concatenation of All Words</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">10</td><td id="iWRB" class="">Hash Table, String, Sliding Window</td></tr><tr id="22fb255d-72ff-80e5-ae23-cc0afd0397b3"><td id="\fLz" class="">https://leetcode.com/problems/contains-duplicate-ii</td><td id="BlM&lt;" class="">Contains Duplicate II</td><td id="jfaj" class="">89.2</td><td id="tGh&gt;" class="">9</td><td id="iWRB" class="">Array, Hash Table, Sliding Window</td></tr><tr id="22fb255d-72ff-80b6-b4d5-ecc22cdf8a94"><td id="\fLz" class="">https://leetcode.com/problems/find-all-anagrams-in-a-string</td><td id="BlM&lt;" class="">Find All Anagrams in a String</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">8</td><td id="iWRB" class="">Hash Table, String, Sliding Window</td></tr><tr id="22fb255d-72ff-80eb-8cee-d9ff93e4dc23"><td id="\fLz" class="">https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit</td><td id="BlM&lt;" class="">Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">8</td><td id="iWRB" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Ordered Set, Monotonic Queue</td></tr><tr id="22fb255d-72ff-8084-be95-fe6253afdfb8"><td id="\fLz" class="">https://leetcode.com/problems/find-k-closest-elements</td><td id="BlM&lt;" class="">Find K Closest Elements</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">7</td><td id="iWRB" class="">Array, Two Pointers, Binary Search, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8093-9e03-cd3ab60f233b"><td id="\fLz" class="">https://leetcode.com/problems/frequency-of-the-most-frequent-element</td><td id="BlM&lt;" class="">Frequency of the Most Frequent Element</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">7</td><td id="iWRB" class="">Array, Binary Search, Greedy, Sliding Window, Sorting, Prefix Sum</td></tr><tr id="22fb255d-72ff-8078-ace6-c05d0376806a"><td id="\fLz" class="">https://leetcode.com/problems/permutation-in-string</td><td id="BlM&lt;" class="">Permutation in String</td><td id="jfaj" class="">84.8</td><td id="tGh&gt;" class="">7</td><td id="iWRB" class="">Hash Table, Two Pointers, String, Sliding Window</td></tr><tr id="22fb255d-72ff-803d-b92d-f2155a9b7b42"><td id="\fLz" class="">https://leetcode.com/problems/sliding-window-median</td><td id="BlM&lt;" class="">Sliding Window Median</td><td id="jfaj" class="">68.7</td><td id="tGh&gt;" class="">7</td><td id="iWRB" class="">Array, Hash Table, Sliding Window, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80a6-9b38-dff630fd19fe"><td id="\fLz" class="">https://leetcode.com/problems/count-zero-request-servers</td><td id="BlM&lt;" class="">Count Zero Request Servers</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">6</td><td id="iWRB" class="">Array, Hash Table, Sliding Window, Sorting</td></tr><tr id="22fb255d-72ff-8002-9ef2-f9e6debc9f24"><td id="\fLz" class="">https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters</td><td id="BlM&lt;" class="">Longest Substring with At Most K Distinct Characters</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">6</td><td id="iWRB" class="">Hash Table, String, Sliding Window</td></tr><tr id="22fb255d-72ff-80e9-ad10-d1f93435b033"><td id="\fLz" class="">https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists</td><td id="BlM&lt;" class="">Smallest Range Covering Elements from K Lists</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">6</td><td id="iWRB" class="">Array, Hash Table, Greedy, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8078-9c5d-cc88ec2d7679"><td id="\fLz" class="">https://leetcode.com/problems/count-subarrays-with-fixed-bounds</td><td id="BlM&lt;" class="">Count Subarrays With Fixed Bounds</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">6</td><td id="iWRB" class="">Array, Queue, Sliding Window, Monotonic Queue</td></tr><tr id="22fb255d-72ff-8058-ad34-f799c7b64d45"><td id="\fLz" class="">https://leetcode.com/problems/contains-duplicate-iii</td><td id="BlM&lt;" class="">Contains Duplicate III</td><td id="jfaj" class="">100</td><td id="tGh&gt;" class="">4</td><td id="iWRB" class="">Array, Sliding Window, Sorting, Bucket Sort, Ordered Set</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

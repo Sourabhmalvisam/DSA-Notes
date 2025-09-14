@@ -1,0 +1,1177 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Heap [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7fc2e61f-3693-4d8a-924c-b23e40300df0" class="page sans"><header><h1 class="page-title">Heap [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h2 id="179b255d-72ff-808e-bee7-e8f559e0b75b" class="">DSA Quick Revision</h2><ul id="22fb255d-72ff-8056-b083-f0a1da638318" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/top-k-frequent-words/description/">Top K Frequent Words</a> [<strong>Top K Frequent Elements] </strong><mark class="highlight-teal"><strong>[IMP]</strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="23cb255d-72ff-80a6-b11e-f70b5cad31c0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public List&lt;String&gt; topKFrequent(String[] words, int k) {
+        Map&lt;String, Integer&gt; freqMap = new HashMap&lt;&gt;();
+
+        // Step 1: Count frequency
+        for (String word : words) {
+            freqMap.put(word, freqMap.getOrDefault(word, 0) + 1);
+        }
+
+        // Step 2: Use min-heap with custom comparator
+        PriorityQueue&lt;String&gt; heap = new PriorityQueue&lt;&gt;((w1, w2) -&gt; {
+            int freqCompare = freqMap.get(w1) - freqMap.get(w2);
+            if (freqCompare == 0) {
+                // Reverse lexicographical order
+                return w2.compareTo(w1); // Imp: isko reverse compare kyu kiya?
+            }
+            return freqCompare;
+        });
+
+        // Step 3: Add to heap, maintain size k
+        for (String word : freqMap.keySet()) { // Imp: yaha map hi iterate krna, wrna wrong ans
+            heap.add(word); //Imp: Isko if ke niche kyu nahi likha?
+            if (heap.size() &gt; k) {
+                heap.poll(); // remove least frequent
+            }
+        }
+
+        // Step 4: Extract from heap (in reverse)
+        List&lt;String&gt; result = new LinkedList&lt;&gt;();
+        while (!heap.isEmpty()) {
+            result.add(0, heap.poll()); // reverse order
+        }
+
+        return result;
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-8082-becc-c5bd936cb971" class="toggle"><li><details open=""><summary>Merge k Sorted Lists</summary></details></li></ul><ul id="22fb255d-72ff-8070-844d-dc311910956d" class="toggle"><li><details open=""><summary>Find Median from Data Stream</summary></details></li></ul><ul id="22fb255d-72ff-8053-aabb-d22f2ed9ef3b" class="toggle"><li><details open=""><summary>Task Scheduler</summary></details></li></ul><ul id="22fb255d-72ff-8094-b259-db5683aa12c1" class="toggle"><li><details open=""><summary>Reorganize String</summary></details></li></ul><ul id="22fb255d-72ff-8078-918e-f5e8ac4909d4" class="toggle"><li><details open=""><summary>K Closest Points to Origin</summary></details></li></ul><ul id="22fb255d-72ff-800c-9c43-dfdbf0dc1984" class="toggle"><li><details open=""><summary>The Skyline Problem</summary></details></li></ul><ul id="22fb255d-72ff-80c8-ad40-ffe8ad17e286" class="toggle"><li><details open=""><summary>Find K Closest Elements</summary></details></li></ul><ul id="22fb255d-72ff-80aa-b2a8-c0e3c42cface" class="toggle"><li><details open=""><summary>IPO</summary></details></li></ul><ul id="22fb255d-72ff-80ae-a066-f6c440a65ca0" class="toggle"><li><details open=""><summary>Minimum Number of Refueling Stops</summary></details></li></ul><ul id="22fb255d-72ff-80cf-84d7-dd88fc790ce1" class="toggle"><li><details open=""><summary>Trapping Rain Water II</summary></details></li></ul><ul id="22fb255d-72ff-808f-be91-eea6b90fa4de" class="toggle"><li><details open=""><summary>Longest Happy String</summary></details></li></ul><ul id="22fb255d-72ff-806c-b380-e8d3fa65fe47" class="toggle"><li><details open=""><summary>Smallest Range Covering Elements from K Lists</summary></details></li></ul><ul id="22fb255d-72ff-80d5-b6a2-db6367413098" class="toggle"><li><details open=""><summary>Furthest Building You Can Reach</summary></details></li></ul><ul id="22fb255d-72ff-80d7-9fa4-e6a426d19a0e" class="toggle"><li><details open=""><summary>Car Pooling</summary></details></li></ul><ul id="1c1b255d-72ff-8053-bd1b-d283156fb7c6" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/kth-largest-element-in-a-stream-of-running-integers">Kth largest element in a stream of running integers</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c1b255d-72ff-80c7-a0f4-f5dcc0ef4026" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class KthLargest { //DSAQuickRevision
+    int k; // Store the kth position
+    PriorityQueue&lt;Integer&gt; pq; // Min-heap to store k largest elements
+
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        pq = new PriorityQueue&lt;&gt;(); // Default is min-heap
+
+        // Add all elements using the add() method to maintain k largest
+        for (int val : nums) {
+            add(val);
+        }
+    }
+
+    public int add(int val) {
+        pq.add(val); // Add the new element
+
+        // If heap size exceeds k, remove the smallest (not in top k)
+        if (pq.size() &gt; k) {
+            pq.poll();
+        }
+
+        // Top of min-heap is kth largest
+        return pq.peek();
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80c1-b10d-f414e5d54697" class="toggle"><li><details open=""><summary>Maximum Performance of a Team</summary></details></li></ul><ul id="22fb255d-72ff-80da-be8a-c68634ad9838" class="toggle"><li><details open=""><summary>Maximum Number of Events That Can Be Attended</summary></details></li></ul><ul id="22fb255d-72ff-8032-8739-fb9e52807887" class="toggle"><li><details open=""><summary>Meeting Rooms III</summary></details></li></ul><ul id="1c7b255d-72ff-80e7-a6f6-d4d5152ca565" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/heapify-algorithm">Heapify Algorithm</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-800f-99a6-db98406fa4ce" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    
+    // Swap two elements in the array
+    private void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // Heapify downwards to maintain min-heap property
+    private void heapifyDown(int[] arr, int ind) {
+        int n = arr.length;
+        int smallest = ind;
+        int left = 2 * ind + 1;
+        int right = 2 * ind + 2;
+
+        if (left &lt; n &amp;&amp; arr[left] &lt; arr[smallest]) {
+            smallest = left;
+        }
+        if (right &lt; n &amp;&amp; arr[right] &lt; arr[smallest]) {
+            smallest = right;
+        }
+
+        if (smallest != ind) {
+            swap(arr, ind, smallest);
+            heapifyDown(arr, smallest);
+        }
+    }
+
+    // Heapify upwards to maintain min-heap property
+    private void heapifyUp(int[] arr, int ind) {
+        int parent = (ind - 1) / 2;
+
+        if (arr[ind] &lt; arr[parent]) {
+            swap(arr, ind, parent);
+            heapifyUp(arr, parent);
+        }
+    }
+
+    // Update value at index and restore min-heap
+    public void heapify(int[] nums, int ind, int val) {
+        if (nums[ind] &gt; val) {
+            nums[ind] = val;
+            heapifyUp(nums, ind);
+        } else {
+            nums[ind] = val;
+            heapifyDown(nums, ind);
+        }
+    }
+}
+</code></pre></details></li></ul><ul id="186b255d-72ff-805b-adfb-cfcd8d5c3f9a" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/heap-sort">Heap Sort</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="186b255d-72ff-80f7-93a7-e4d288a4bb4d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+    // Main function to sort an array using Heap Sort
+    public void heapSort(int[] array) {
+        int n = array.length;
+
+        // Step 1: Build a Max-Heap
+        for (int i = n / 2 - 1; i &gt;= 0; i--) {
+            heapify(array, n, i);
+        }
+
+        // Step 2: Extract elements from the heap one by one
+        for (int i = n - 1; i &gt;= 0; i--) {
+            // Swap the root (maximum element) with the last element
+            swap(array, 0, i);
+
+            // Restore the Max-Heap property for the reduced heap
+            heapify(array, i, 0);
+        }
+    }
+
+    // Function to maintain the Max-Heap property
+    private void heapify(int[] array, int n, int i) {
+        int largest = i;        // Assume current node is the largest
+        int left = 2 * i + 1;   // Left child
+        int right = 2 * i + 2;  // Right child
+
+        // Check if the left child is larger than the current node
+        if (left &lt; n &amp;&amp; array[left] &gt; array[largest]) {
+            largest = left;
+        }
+
+        // Check if the right child is larger than the largest so far
+        if (right &lt; n &amp;&amp; array[right] &gt; array[largest]) {
+            largest = right;
+        }
+
+        // If the largest is not the current node, swap and recurse
+        if (largest != i) {
+            swap(array, i, largest);
+            heapify(array, n, largest);
+        }
+    }
+
+    // Utility function to swap two elements in an array
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+</code></pre></details></li></ul><h2 id="1c7b255d-72ff-80dc-b75e-c7f19921a910" class="">DSA Concepts Revision</h2><h2 id="1cdb255d-72ff-8061-89a7-e8bd4fa65958" class="">DSA Striver</h2><ul id="179b255d-72ff-8028-9870-db3d509e01ae" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/heaps/theory-and-implementation/implement-min-heap">Min Heap and Max Heap Implementation</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="179b255d-72ff-807a-b37e-ef206693978c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class MinHeap { //DSAStriver
+    private ArrayList&lt;Integer&gt; heap; // Internal ArrayList to store heap elements
+
+    // Constructor to initialize the heap
+    public MinHeap() {
+        heap = new ArrayList&lt;&gt;();
+    }
+
+    // Function to find the parent index of a given node
+    private int parent(int index) {
+        return (index - 1) / 2;
+    }
+
+    // Function to find the left child index of a given node
+    private int leftChild(int index) {
+        return 2 * index + 1;
+    }
+
+    // Function to find the right child index of a given node
+    private int rightChild(int index) {
+        return 2 * index + 2;
+    }
+
+    // Function to insert a new value into the heap
+    public void insert(int value) {
+        // Add the new value to the end of the heap
+        heap.add(value);
+        int currentIndex = heap.size() - 1; // Index of the newly added value
+
+        // Bubble up to maintain the heap property
+        while (currentIndex &gt; 0 &amp;&amp; heap.get(currentIndex) &lt; heap.get(parent(currentIndex))) {
+            swap(currentIndex, parent(currentIndex)); // Swap with parent if smaller
+            currentIndex = parent(currentIndex); // Update the index to the parent&#x27;s index
+        }
+    }
+
+    // Function to extract the minimum value (root) from the heap
+    public int extractMin() {
+        if (heap.isEmpty()) {
+            throw new IllegalStateException(&quot;Heap is empty!&quot;); // Handle empty heap case
+        }
+        if (heap.size() == 1) {
+            return heap.remove(0); // If only one element, remove and return it
+        }
+
+        int root = heap.get(0); // Minimum element (root of the heap)
+        heap.set(0, heap.remove(heap.size() - 1)); // Replace root with the last element
+        heapify(0); // Restore the heap property from the root
+        return root;
+    }
+
+    // Function to restore the heap property by &quot;heapifying&quot; the subtree
+    private void heapify(int index) {
+        int smallest = index; // Assume the current index is the smallest
+        int left = leftChild(index); // Left child index
+        int right = rightChild(index); // Right child index
+
+        // Check if the left child exists and is smaller than the current smallest
+        if (left &lt; heap.size() &amp;&amp; heap.get(left) &lt; heap.get(smallest)) {
+            smallest = left;
+        }
+        // Check if the right child exists and is smaller than the current smallest
+        if (right &lt; heap.size() &amp;&amp; heap.get(right) &lt; heap.get(smallest)) {
+            smallest = right;
+        }
+        // If the smallest is not the current index, swap and continue heapifying
+        if (smallest != index) {
+            swap(index, smallest);
+            heapify(smallest); // Recursively heapify the affected subtree
+        }
+    }
+
+    // Utility function to swap two elements in the heap
+    private void swap(int i, int j) {
+        int temp = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, temp);
+    }
+
+    // Function to print the current state of the heap
+    public void printHeap() {
+        System.out.println(heap);
+    }
+}
+
+// Main class to test the MinHeap implementation
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(&quot;Min Heap:&quot;);
+        MinHeap minHeap = new MinHeap(); // Create a MinHeap instance
+
+        // Insert elements into the heap
+        minHeap.insert(10);
+        minHeap.insert(20);
+        minHeap.insert(5);
+        minHeap.insert(7);
+        minHeap.insert(9);
+
+        // Print the heap after insertions
+        minHeap.printHeap();
+
+        // Extract the minimum element from the heap
+        System.out.println(&quot;Extracted Min: &quot; + minHeap.extractMin());
+
+        // Print the heap after extraction
+        minHeap.printHeap();
+    }
+}
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="179b255d-72ff-8083-a3c3-f15de311193e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class MaxHeap {
+    private ArrayList&lt;Integer&gt; heap; // Internal ArrayList to store heap elements
+
+    // Constructor to initialize the heap
+    public MaxHeap() {
+        heap = new ArrayList&lt;&gt;();
+    }
+
+    // Function to find the parent index of a given node
+    private int parent(int index) {
+        return (index - 1) / 2;
+    }
+
+    // Function to find the left child index of a given node
+    private int leftChild(int index) {
+        return 2 * index + 1;
+    }
+
+    // Function to find the right child index of a given node
+    private int rightChild(int index) {
+        return 2 * index + 2;
+    }
+
+    // Function to insert a new value into the heap
+    public void insert(int value) {
+        // Add the new value to the end of the heap
+        heap.add(value);
+        int currentIndex = heap.size() - 1; // Index of the newly added value
+
+        // Bubble up to maintain the heap property
+        while (currentIndex &gt; 0 &amp;&amp; heap.get(currentIndex) &gt; heap.get(parent(currentIndex))) {
+            swap(currentIndex, parent(currentIndex)); // Swap with parent if greater
+            currentIndex = parent(currentIndex); // Update the index to the parent&#x27;s index
+        }
+    }
+
+    // Function to extract the maximum value (root) from the heap
+    public int extractMax() {
+        if (heap.isEmpty()) {
+            throw new IllegalStateException(&quot;Heap is empty!&quot;); // Handle empty heap case
+        }
+        if (heap.size() == 1) {
+            return heap.remove(0); // If only one element, remove and return it
+        }
+
+        int root = heap.get(0); // Maximum element (root of the heap)
+        heap.set(0, heap.remove(heap.size() - 1)); // Replace root with the last element
+        heapify(0); // Restore the heap property from the root
+        return root;
+    }
+
+    // Function to restore the heap property by &quot;heapifying&quot; the subtree
+    private void heapify(int index) {
+        int largest = index; // Assume the current index is the largest
+        int left = leftChild(index); // Left child index
+        int right = rightChild(index); // Right child index
+
+        // Check if the left child exists and is greater than the current largest
+        if (left &lt; heap.size() &amp;&amp; heap.get(left) &gt; heap.get(largest)) {
+            largest = left;
+        }
+        // Check if the right child exists and is greater than the current largest
+        if (right &lt; heap.size() &amp;&amp; heap.get(right) &gt; heap.get(largest)) {
+            largest = right;
+        }
+        // If the largest is not the current index, swap and continue heapifying
+        if (largest != index) {
+            swap(index, largest);
+            heapify(largest); // Recursively heapify the affected subtree
+        }
+    }
+
+    // Utility function to swap two elements in the heap
+    private void swap(int i, int j) {
+        int temp = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, temp);
+    }
+
+    // Function to print the current state of the heap
+    public void printHeap() {
+        System.out.println(heap);
+    }
+}
+
+// Main class to test the MaxHeap implementation
+public class Solution {
+    public static void main(String[] args) {
+
+        System.out.println(&quot;\nMax Heap:&quot;);
+        MaxHeap maxHeap = new MaxHeap(); // Create a MaxHeap instance
+
+        // Insert elements into the heap
+        maxHeap.insert(10);
+        maxHeap.insert(20);
+        maxHeap.insert(5);
+        maxHeap.insert(7);
+        maxHeap.insert(9);
+
+        // Print the heap after insertions
+        maxHeap.printHeap();
+
+        // Extract the maximum element from the heap
+        System.out.println(&quot;Extracted Max: &quot; + maxHeap.extractMax());
+
+        // Print the heap after extraction
+        maxHeap.printHeap();
+    }
+}
+</code></pre></details></li></ul><ul id="186b255d-72ff-803f-8c8c-e6b10fa5d265" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa/heaps/theory-and-implementation/build-heap-from-a-given-array">Build Heap from an array</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="186b255d-72ff-806c-a6ac-c60c0648d10c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">//DSAStriver
+class Solution { //O(n)
+    public void buildMinHeap(int[] nums) {
+        int size = nums.length;
+        // Heapify all non-leaf nodes (bottom-up)
+        for (int i = (size / 2) - 1; i &gt;= 0; i--) {
+            heapify(nums, size, i);
+        }
+    }
+
+    // Maintains Min-Heap property for subtree rooted at index i
+    private void heapify(int[] heap, int size, int i) {
+        int smallest = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        // Check left child
+        if (left &lt; size &amp;&amp; heap[left] &lt; heap[smallest]) {
+            smallest = left;
+        }
+
+        // Check right child
+        if (right &lt; size &amp;&amp; heap[right] &lt; heap[smallest]) {
+            smallest = right;
+        }
+
+        // If a smaller child exists, swap and heapify recursively
+        if (smallest != i) {
+            swap(heap, i, smallest);
+            heapify(heap, size, smallest);
+        }
+    }
+
+    // Swaps two elements in the array
+    private void swap(int[] heap, int i, int j) {
+        int temp = heap[i];
+        heap[i] = heap[j];
+        heap[j] = temp;
+    }
+}
+</code></pre></details></li></ul><ul id="1cdb255d-72ff-8031-b960-fca232c42e4c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/heaps/theory-and-implementation/check-if-an-array-represents-a-min-heap-">Check if an array represents a min heap</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8054-88dc-fc2c292435e8" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+
+    // Function to check if the given array is a min-heap
+    public boolean isHeap(int[] nums) {
+        int n = nums.length; // Size of the array
+        
+        // Iterate on the non-leaf nodes from the back
+        for(int i = n/2 - 1; i &gt;= 0; i--) {
+            int leftChildInd = 2 * i + 1;
+            int rightChildInd = 2 * i + 2;
+            
+            // If left child has a smaller value than the parent
+            if(leftChildInd &lt; n &amp;&amp; nums[leftChildInd] &lt; nums[i])
+                return false;
+                
+            // If right child has a smaller value than parent
+            if(rightChildInd &lt; n &amp;&amp; nums[rightChildInd] &lt; nums[i])
+                return false;
+        }
+        
+        return true;
+    }
+}</code></pre></details></li></ul><ul id="1d3b255d-72ff-80bf-8a51-c4971d1243f4" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/heaps/theory-and-implementation/convert-min-heap-to-max-heap">Convert Min Heap to Max Heap</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d3b255d-72ff-80a5-b7c4-e8c82b76dda1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    
+    // Function to recursively heapify the array downwards
+    private void heapifyDown(int[] arr, int ind) {
+        int n = arr.length; // Size of the array
+
+        // To store the index of largest element
+        int largestInd = ind;
+
+        // Indices of the left and right children
+        int leftChildInd = 2*ind + 1;
+        int rightChildInd = 2*ind + 2;
+        
+        // If the left child holds larger value, update the largest index
+        if(leftChildInd &lt; n &amp;&amp; arr[leftChildInd] &gt; arr[largestInd]) {
+            largestInd = leftChildInd;
+        }
+
+        // If the right child holds larger value, update the largest index
+        if(rightChildInd &lt; n &amp;&amp; arr[rightChildInd] &gt; arr[largestInd]) {
+            largestInd = rightChildInd;
+        }
+
+        // If the largest element index is updated
+        if(largestInd != ind) {
+            // Swap the largest element with the current index
+            int temp = arr[largestInd];
+            arr[largestInd] = arr[ind];
+            arr[ind] = temp;
+
+            // Recursively heapify the lower subtree
+            heapifyDown(arr, largestInd);
+        }
+    }
+
+    // Function to convert a min-heap array to a max-heap array
+    public int[] minToMaxHeap(int[] nums) {
+        int n = nums.length;
+
+        // Iterate backwards on the non-leaf nodes
+        for(int i = n/2 - 1; i &gt;= 0; i--) {
+            // Heapify each node downwards to ensure max-heap property
+            heapifyDown(nums, i);
+        }
+        return nums;
+    }
+}</code></pre></details></li></ul><figure id="231b255d-72ff-8009-a7c8-e7ae9822dbd2" class="image"><a href="image%2011.png"><img style="width:710px" src="image%2011.png"/></a></figure><h2 id="22fb255d-72ff-809f-a1cc-c188df0bb16a" class="">Extras</h2><table id="22fb255d-72ff-807a-a991-f1fb36a14026" class="simple-table"><tbody><tr id="22fb255d-72ff-80e3-af36-e36d817b4e8c"><td id="fbBh" class="">Link</td><td id="B;X=" class="">Title</td><td id="d;`I" class="">Frequency</td><td id="mnmo" class="">Companies Count</td><td id="onY&gt;" class="">Topics</td></tr><tr id="22fb255d-72ff-80dc-af28-d5bb708c4ae8"><td id="fbBh" class="">https://leetcode.com/problems/top-k-frequent-elements</td><td id="B;X=" class="">Top K Frequent Elements</td><td id="d;`I" class="">100</td><td id="mnmo" class="">43</td><td id="onY&gt;" class="">Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect</td></tr><tr id="22fb255d-72ff-800a-877c-f9a3aaf8bc48"><td id="fbBh" class="">https://leetcode.com/problems/merge-k-sorted-lists</td><td id="B;X=" class="">Merge k Sorted Lists</td><td id="d;`I" class="">100</td><td id="mnmo" class="">42</td><td id="onY&gt;" class="">Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort</td></tr><tr id="22fb255d-72ff-8078-9f79-d8cbd654c35b"><td id="fbBh" class="">https://leetcode.com/problems/kth-largest-element-in-an-array</td><td id="B;X=" class="">Kth Largest Element in an Array</td><td id="d;`I" class="">100</td><td id="mnmo" class="">41</td><td id="onY&gt;" class="">Array, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect</td></tr><tr id="22fb255d-72ff-806b-a9e3-fff24ae22a65"><td id="fbBh" class="">https://leetcode.com/problems/meeting-rooms-ii</td><td id="B;X=" class="">Meeting Rooms II</td><td id="d;`I" class="">100</td><td id="mnmo" class="">41</td><td id="onY&gt;" class="">Array, Two Pointers, Greedy, Sorting, Heap (Priority Queue), Prefix Sum</td></tr><tr id="22fb255d-72ff-80ac-8e27-fb1c9dfefc7a"><td id="fbBh" class="">https://leetcode.com/problems/sliding-window-maximum</td><td id="B;X=" class="">Sliding Window Maximum</td><td id="d;`I" class="">100</td><td id="mnmo" class="">34</td><td id="onY&gt;" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Monotonic Queue</td></tr><tr id="22fb255d-72ff-80c5-a389-f7febe2b2d5c"><td id="fbBh" class="">https://leetcode.com/problems/find-median-from-data-stream</td><td id="B;X=" class="">Find Median from Data Stream</td><td id="d;`I" class="">100</td><td id="mnmo" class="">31</td><td id="onY&gt;" class="">Two Pointers, Design, Sorting, Heap (Priority Queue), Data Stream</td></tr><tr id="22fb255d-72ff-8075-a023-d1e3bd2a4e2a"><td id="fbBh" class="">https://leetcode.com/problems/search-suggestions-system</td><td id="B;X=" class="">Search Suggestions System</td><td id="d;`I" class="">100</td><td id="mnmo" class="">18</td><td id="onY&gt;" class="">Array, String, Binary Search, Trie, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80a6-b941-c3d3963aa268"><td id="fbBh" class="">https://leetcode.com/problems/task-scheduler</td><td id="B;X=" class="">Task Scheduler</td><td id="d;`I" class="">100</td><td id="mnmo" class="">15</td><td id="onY&gt;" class="">Array, Hash Table, Greedy, Sorting, Heap (Priority Queue), Counting</td></tr><tr id="22fb255d-72ff-80a8-be72-d886929c19c8"><td id="fbBh" class="">https://leetcode.com/problems/top-k-frequent-words</td><td id="B;X=" class="">Top K Frequent Words</td><td id="d;`I" class="">100</td><td id="mnmo" class="">14</td><td id="onY&gt;" class="">Array, Hash Table, String, Trie, Sorting, Heap (Priority Queue), Bucket Sort, Counting</td></tr><tr id="22fb255d-72ff-808d-a774-fc76be93fd1a"><td id="fbBh" class="">https://leetcode.com/problems/reorganize-string</td><td id="B;X=" class="">Reorganize String</td><td id="d;`I" class="">100</td><td id="mnmo" class="">13</td><td id="onY&gt;" class="">Hash Table, String, Greedy, Sorting, Heap (Priority Queue), Counting</td></tr><tr id="22fb255d-72ff-8027-bbac-de59aefcb87c"><td id="fbBh" class="">https://leetcode.com/problems/cheapest-flights-within-k-stops</td><td id="B;X=" class="">Cheapest Flights Within K Stops</td><td id="d;`I" class="">88.8</td><td id="mnmo" class="">9</td><td id="onY&gt;" class="">Dynamic Programming, Depth-First Search, Breadth-First Search, Graph, Heap (Priority Queue), Shortest Path</td></tr><tr id="22fb255d-72ff-8034-b96b-db9d002ca93d"><td id="fbBh" class="">https://leetcode.com/problems/k-closest-points-to-origin</td><td id="B;X=" class="">K Closest Points to Origin</td><td id="d;`I" class="">86.7</td><td id="mnmo" class="">9</td><td id="onY&gt;" class="">Array, Math, Divide and Conquer, Geometry, Sorting, Heap (Priority Queue), Quickselect</td></tr><tr id="22fb255d-72ff-80b3-9ea5-f1d4a91c1b5f"><td id="fbBh" class="">https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit</td><td id="B;X=" class="">Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit</td><td id="d;`I" class="">100</td><td id="mnmo" class="">8</td><td id="onY&gt;" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Ordered Set, Monotonic Queue</td></tr><tr id="22fb255d-72ff-80af-9828-fdf9ea8dc3d7"><td id="fbBh" class="">https://leetcode.com/problems/the-skyline-problem</td><td id="B;X=" class="">The Skyline Problem</td><td id="d;`I" class="">100</td><td id="mnmo" class="">8</td><td id="onY&gt;" class="">Array, Divide and Conquer, Binary Indexed Tree, Segment Tree, Line Sweep, Heap (Priority Queue), Ordered Set</td></tr><tr id="22fb255d-72ff-80e0-8a68-ed3e6180c3cb"><td id="fbBh" class="">https://leetcode.com/problems/find-k-closest-elements</td><td id="B;X=" class="">Find K Closest Elements</td><td id="d;`I" class="">100</td><td id="mnmo" class="">7</td><td id="onY&gt;" class="">Array, Two Pointers, Binary Search, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80bb-afb0-cd12522ac53b"><td id="fbBh" class="">https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix</td><td id="B;X=" class="">Kth Smallest Element in a Sorted Matrix</td><td id="d;`I" class="">100</td><td id="mnmo" class="">7</td><td id="onY&gt;" class="">Array, Binary Search, Sorting, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-80f8-adee-ff8320170b37"><td id="fbBh" class="">https://leetcode.com/problems/ipo</td><td id="B;X=" class="">IPO</td><td id="d;`I" class="">100</td><td id="mnmo" class="">7</td><td id="onY&gt;" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80f4-a925-ec4168dc967f"><td id="fbBh" class="">https://leetcode.com/problems/employee-free-time</td><td id="B;X=" class="">Employee Free Time</td><td id="d;`I" class="">74.3</td><td id="mnmo" class="">7</td><td id="onY&gt;" class="">Array, Line Sweep, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80c2-8081-d87e3e820ead"><td id="fbBh" class="">https://leetcode.com/problems/sliding-window-median</td><td id="B;X=" class="">Sliding Window Median</td><td id="d;`I" class="">68.7</td><td id="mnmo" class="">7</td><td id="onY&gt;" class="">Array, Hash Table, Sliding Window, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8050-8b34-ebda45309195"><td id="fbBh" class="">https://leetcode.com/problems/find-servers-that-handled-most-number-of-requests</td><td id="B;X=" class="">Find Servers That Handled Most Number of Requests</td><td id="d;`I" class="">100</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">Array, Greedy, Heap (Priority Queue), Ordered Set</td></tr><tr id="22fb255d-72ff-8010-aee7-c9f3fd90265a"><td id="fbBh" class="">https://leetcode.com/problems/minimum-number-of-refueling-stops</td><td id="B;X=" class="">Minimum Number of Refueling Stops</td><td id="d;`I" class="">100</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">Array, Dynamic Programming, Greedy, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8095-ade1-c4f2a0089b80"><td id="fbBh" class="">https://leetcode.com/problems/trapping-rain-water-ii</td><td id="B;X=" class="">Trapping Rain Water II</td><td id="d;`I" class="">100</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">Array, Breadth-First Search, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-80bf-b61f-d68ccc5c1b07"><td id="fbBh" class="">https://leetcode.com/problems/longest-happy-string</td><td id="B;X=" class="">Longest Happy String</td><td id="d;`I" class="">100</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">String, Greedy, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80fe-bc85-d0e1f89827ba"><td id="fbBh" class="">https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists</td><td id="B;X=" class="">Smallest Range Covering Elements from K Lists</td><td id="d;`I" class="">100</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">Array, Hash Table, Greedy, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8044-858e-d235b0645bf0"><td id="fbBh" class="">https://leetcode.com/problems/furthest-building-you-can-reach</td><td id="B;X=" class="">Furthest Building You Can Reach</td><td id="d;`I" class="">100</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">Array, Greedy, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80aa-856e-df07780e7172"><td id="fbBh" class="">https://leetcode.com/problems/car-pooling</td><td id="B;X=" class="">Car Pooling</td><td id="d;`I" class="">93.4</td><td id="mnmo" class="">6</td><td id="onY&gt;" class="">Array, Sorting, Heap (Priority Queue), Simulation, Prefix Sum</td></tr><tr id="22fb255d-72ff-8049-93e9-fa94969d179e"><td id="fbBh" class="">https://leetcode.com/problems/kth-largest-element-in-a-stream</td><td id="B;X=" class="">Kth Largest Element in a Stream</td><td id="d;`I" class="">100</td><td id="mnmo" class="">5</td><td id="onY&gt;" class="">Tree, Design, Binary Search Tree, Heap (Priority Queue), Binary Tree, Data Stream</td></tr><tr id="22fb255d-72ff-80ff-8195-eb0cdf09cc9f"><td id="fbBh" class="">https://leetcode.com/problems/maximum-performance-of-a-team</td><td id="B;X=" class="">Maximum Performance of a Team</td><td id="d;`I" class="">100</td><td id="mnmo" class="">5</td><td id="onY&gt;" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80b8-ac07-e08c5720f800"><td id="fbBh" class="">https://leetcode.com/problems/swim-in-rising-water</td><td id="B;X=" class="">Swim in Rising Water</td><td id="d;`I" class="">100</td><td id="mnmo" class="">5</td><td id="onY&gt;" class="">Array, Binary Search, Depth-First Search, Breadth-First Search, Union Find, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-8023-a631-f74ba2f8e9df"><td id="fbBh" class="">https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended</td><td id="B;X=" class="">Maximum Number of Events That Can Be Attended</td><td id="d;`I" class="">83.4</td><td id="mnmo" class="">5</td><td id="onY&gt;" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8065-922a-e422691e490a"><td id="fbBh" class="">https://leetcode.com/problems/meeting-rooms-iii</td><td id="B;X=" class="">Meeting Rooms III</td><td id="d;`I" class="">61.9</td><td id="mnmo" class="">5</td><td id="onY&gt;" class="">Array, Hash Table, Sorting, Heap (Priority Queue), Simulation</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

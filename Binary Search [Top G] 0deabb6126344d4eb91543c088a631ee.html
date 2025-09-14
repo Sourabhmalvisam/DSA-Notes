@@ -1,0 +1,1699 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Binary Search [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0deabb61-2634-4d4e-b915-43c088a631ee" class="page sans"><header><h1 class="page-title">Binary Search [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h2 id="07776f35-c090-4322-96ea-3a346c5260e2" class="">DSA Quick Revision</h2><ul id="8c69ba54-9f77-4d2f-b45d-a8975fccd655" class="block-color-default toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/search-in-rotated-sorted-array-2">Search in Rotated sorted Array 2 [Duplicates are Present]</a></strong></summary><figure id="8e783b04-0653-4635-b02c-72a184d97e73" class="image"><a href="Untitled%208.png"><img style="width:672px" src="Untitled%208.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="219a1400-284d-48a6-b2e3-e52ac0416a02" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public boolean search(int[] nums, int target) {
+        int n = nums.length;
+        int low = 0, high = n - 1;
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            // Check if mid points to the target
+            if (nums[mid] == target)
+                return true;
+
+            // Handle duplicates by adjusting boundaries
+            if (nums[low] == nums[mid] &amp;&amp; nums[mid] == nums[high]) {
+                low++;
+                high--;
+                continue;
+            }
+
+            // If left part is sorted
+            if (nums[low] &lt;= nums[mid]) {
+                if (nums[low] &lt;= target &amp;&amp; target &lt;= nums[mid]) {
+                    // Target is in the left sorted part
+                    high = mid - 1;
+                } else {
+                    // Target is not in the left sorted part
+                    low = mid + 1;
+                }
+            } else { 
+                // If right part is sorted
+                if (nums[mid] &lt;= target &amp;&amp; target &lt;= nums[high]) {
+                    // Target is in the right sorted part
+                    low = mid + 1;
+                } else {
+                    // Target is not in the right sorted part
+                    high = mid - 1;
+                }
+            }
+        }
+        return false;
+    }
+}
+</code></pre></details></li></ul><ul id="8063f8a4-bca6-45a7-b139-edf53d143feb" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/median-of-2-sorted-arrays">Median of Two Sorted Arrays</a></strong></summary><figure id="19fb255d-72ff-802d-9ad7-f54c0df9424e" class="image"><a href="image%203.png"><img style="width:681.9874877929688px" src="image%203.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e3825796-b54a-4bfa-932b-c86f90302eee" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {  // DSAQuickRevision
+    public double median(int[] nums1, int[] nums2) {
+        int n1 = nums1.length, n2 = nums2.length;
+
+        // Always binary search on smaller array for log(min(n1, n2)) complexity
+        if (n1 &gt; n2)
+            return median(nums2, nums1); // Ensure nums1 is smaller
+
+        int left = (n1 + n2 + 1) / 2; // Total elements in left half
+        int low = 0, high = n1;
+
+        while (low &lt;= high) {
+            int mid1 = (low + high) / 2;       // Partition in nums1
+            int mid2 = left - mid1;            // Remaining in nums2
+
+            // Edge values for comparison (handle out-of-bound with ±∞)
+            int l1 = (mid1 &gt; 0) ? nums1[mid1 - 1] : Integer.MIN_VALUE;
+            int l2 = (mid2 &gt; 0) ? nums2[mid2 - 1] : Integer.MIN_VALUE;
+            int r1 = (mid1 &lt; n1) ? nums1[mid1] : Integer.MAX_VALUE;
+            int r2 = (mid2 &lt; n2) ? nums2[mid2] : Integer.MAX_VALUE;
+
+            // Check if correct partition
+            if (l1 &lt;= r2 &amp;&amp; l2 &lt;= r1) {
+                // Odd total length → max of left parts
+                if ((n1 + n2) % 2 == 1) 
+                    return Math.max(l1, l2);
+                // Even total length → average of middle two
+                return (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0;
+            } 
+            else if (l1 &gt; r2) 
+                high = mid1 - 1; // Too many from nums1 → move left
+            else 
+                low = mid1 + 1;  // Too few from nums1 → move right
+        }
+        return 0; // Should never reach here (valid input assumed)
+    }
+}
+</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1ffb255d-72ff-8011-8ca9-fc75b025a09c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    //Function to find the median of two sorted arrays.
+    public double median(int[] arr1, int[] arr2) {
+        // Size of two given arrays
+        int n1 = arr1.length, n2 = arr2.length;
+
+        int[] merged = new int[n1 + n2];
+        // Apply the merge step
+        int i = 0, j = 0, k = 0;
+        while (i &lt; n1 &amp;&amp; j &lt; n2) {
+            if (arr1[i] &lt; arr2[j]) merged[k++] = arr1[i++];
+            else merged[k++] = arr2[j++];
+        }
+
+        // Copy the remaining elements
+        while (i &lt; n1) merged[k++] = arr1[i++];
+        while (j &lt; n2) merged[k++] = arr2[j++];
+
+        // Find the median
+        int n = n1 + n2;
+        if (n % 2 == 1) {
+            return (double) merged[n / 2];
+        }
+
+        double median = ((double) merged[n / 2] + (double) merged[(n / 2) - 1]) / 2.0;
+        return median;
+    }
+}</code></pre><figure id="1ffb255d-72ff-800b-ab6c-e5f44efb989b"><div class="source"><a href="https://www.youtube.com/watch?v=F9c7LpRZWVQ">https://www.youtube.com/watch?v=F9c7LpRZWVQ</a></div></figure></details></li></ul><ul id="1cdb255d-72ff-8045-b4af-c23c81f805f4" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/logic-building/first-and-last-occurrence">First and last occurrence</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8045-944d-dc07c6b753ef" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+    // Function to find the first occurrence of the target
+    private int firstOccurrence(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        int first = -1;
+
+        // Applying Binary Search Algorithm
+        while(low &lt;= high) {
+            int mid = low + (high - low) / 2;
+
+            /*  If the target element is found, we 
+                update the first variable to mid and
+                eliminate the right half to look for 
+                more smaller index where target is present */
+            if(nums[mid] == target) {
+                first = mid;
+                high = mid - 1;  
+            } 
+
+            /*  If middle element is smaller,
+                we eliminate the left half  */
+            else if(nums[mid] &lt; target) {
+                low = mid + 1;  
+            } 
+            
+            /*  If middle element is greater,
+                we eliminate the right half  */
+            else {
+                high = mid - 1;  
+            }
+        }
+        return first;
+    }
+
+    // Function to find the last occurrence of the target
+    private int lastOccurrence(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        int last = -1;
+
+        // Applying Binary Search Algorithm
+        while(low &lt;= high) {
+            int mid = low + (high - low) / 2;
+
+            /*  If the target element is found, we 
+                update the first variable to mid and
+                eliminate the right half to look for 
+                more greater index where target is present */
+            if(nums[mid] == target) {
+                last = mid;
+                low = mid + 1;
+            } 
+            
+            /*  If middle element is smaller,
+                we eliminate the left half  */
+            else if(nums[mid] &lt; target) {
+                low = mid + 1;  
+            } 
+            
+            /*  If middle element is greater,
+                we eliminate the right half  */
+            else {
+                high = mid - 1; 
+            }
+        }
+        return last;
+    }
+
+    // Function to find the first and last occurrences of the target
+    public int[] searchRange(int[] nums, int target) {
+
+        // Function call to find the first occurence of target
+        int first = firstOccurrence(nums, target); 
+        
+        // If the target is not present in the array
+        if(first == -1) return new int[]{-1, -1};  
+
+        // Function call to find the last occurence of target
+        int last = lastOccurrence(nums, target);  
+
+        return new int[]{first, last};  
+    }
+}</code></pre></details></li></ul><ul id="f2eae5b3-13e9-4b4f-be76-f16da8e15cbf" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/koko-eating-bananas">Koko Eating Bananas</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="52cc1a44-cd73-46ea-9de6-af0e86d72464" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Find the minimum eating speed to finish all piles within h hours
+    public int minimumRateToEatBananas(int[] piles, int h) {
+        int low = 1; // Lower bound for eating speed
+        int high = findMax(piles); // Upper bound for eating speed
+        int result = 0; // Final answer
+
+        // Binary search for optimal eating speed
+        while (low &lt;= high) {
+            int mid = low + (high - low) / 2;
+
+            // Check if it&#x27;s possible to finish all piles within h hours at the current eating speed
+            if (isPossible(piles, mid, h)) {
+                result = mid; // Update result with the current eating speed
+                high = mid - 1; // Adjust upper bound for potentially lower eating speed
+            } else {
+                low = mid + 1; // Adjust lower bound for potentially higher eating speed
+            }
+        }
+
+        return result; // Return minimum eating speed satisfying the condition
+    }
+
+    // Check if it&#x27;s possible to finish all piles within h hours at a given eating speed
+    public static boolean isPossible(int[] piles, int hourlyRate, int h) {
+        int timeTaken = 0;
+
+        // Calculate total time required to finish all piles at the given eating speed
+        for (int pile : piles) {
+            timeTaken += Math.ceil((double) pile / hourlyRate); //Imp: don&#x27;t forget &quot;double&quot;
+        }
+
+        return timeTaken &lt;= h; // Return true if possible within the given time constraint
+    }
+
+    // Find the maximum value in the array
+    public static int findMax(int[] piles) {
+        int max = Integer.MIN_VALUE;
+
+        // Iterate through the array to find the maximum value
+        for (int pile : piles) {
+            max = Math.max(pile, max);
+        }
+
+        return max; // Return the maximum value in the array
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-80f5-961b-d9bcb822eb63" class="toggle"><li><details open=""><summary><mark class="highlight-default">Time Based Key-Value Store</mark></summary></details></li></ul><ul id="55073d8d-3569-4cc6-8f5b-642ff2ce2ea5" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-iii/find-peak-element">Find Peak Element</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="65dadd60-101d-453b-b8c7-1a123610b823" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">public class Solution { //DSAConceptRevision
+    public static int findPeakElement(int[] arr) {
+        int n = arr.length; // Size of array
+
+        // Edge cases:
+        if (n == 1)
+            return 0;
+        if (arr[0] &gt; arr[1])
+            return 0;
+        if (arr[n - 1] &gt; arr[n - 2])
+            return n - 1;
+
+        int low = 1, high = n - 2;
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            // If arr[mid] is the peak:
+            if (arr[mid - 1] &lt; arr[mid] &amp;&amp; arr[mid] &gt; arr[mid + 1])
+                return mid;
+
+            // If we are in the left:
+            else if (arr[mid] &gt; arr[mid - 1])
+                low = mid + 1;
+
+            // If we are in the right:
+            else
+                high = mid - 1;
+        }
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="984c1a06-c43b-484b-a4b4-f9dfdf42fa51" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-iii/search-in-a-2d-matrix">Search in row-wise sorted matrix [1st ele of next row &gt; last ele of prev row]</a></mark></summary><figure id="1b0b255d-72ff-805c-a7b4-db9869c96bae" class="image"><a href="image%204.png"><img style="width:681.9750366210938px" src="image%204.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6f689f64-5aa4-4fa6-8f3d-ada65a40a4fd" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to search for a given target in matrix
+    public boolean searchMatrix(int[][] mat, int target) {
+        int n = mat.length;
+        int m = mat[0].length;
+
+        int low = 0, high = n * m - 1;
+        
+        // Perform binary search
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            
+            // Calculate the row and column
+            int row = mid / m;
+            int col = mid % m;
+            
+            // If target is found return true
+            if (mat[row][col] == target) return true;
+            else if (mat[row][col] &lt; target) low = mid + 1;
+            else high = mid - 1;
+        }
+        
+        // Return false if target is not found
+        return false; 
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8032-88e3-e08b4e995591" class="toggle"><li><details open=""><summary><mark class="highlight-default">Maximum Profit in Job Scheduling</mark></summary></details></li></ul><ul id="22fb255d-72ff-80b2-af87-e2311ec626df" class="toggle"><li><details open=""><summary><mark class="highlight-default">Random Pick with Weight</mark></summary></details></li></ul><ul id="1cdb255d-72ff-8083-8cfb-fe6b9e11ce41" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa/binary-search/on-answers/find-square-root-of-a-number">Find square root of a number [Sqrt(x) Leetcode]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80d0-835c-e46ebd3dfaae" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to compute the floor of
+       square root of a given integer */
+    public long floorSqrt(long n) {
+        long low = 1, high = n;
+        
+        // Binary search on the answer space
+        while (low &lt;= high) {
+            long mid = (long)(low + high) / 2;
+            long val = mid * mid;
+            
+            // Check if val is less than or equal to n
+            if (val &lt;= (long)(n)) {
+                // Move to the right part
+                low = (int)(mid + 1);
+            } else {
+                // Move to the left part
+                high = (int)(mid - 1);
+            }
+        }
+        
+        // Return the floor of square root
+        return high;
+    }
+}</code></pre></details></li></ul><ul id="81158b30-5662-4855-9d06-9d7c62507086" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-i/find-minimum-in-rotated-sorted-array">Find Minimum in Rotated sorted Array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b4e0edc1-47a3-44b6-9653-8743471fecff" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">public class Solution { //DSAConceptRevision
+    public int findMin(int[] arr) {
+        int low = 0, high = arr.length - 1;
+        int ans = Integer.MAX_VALUE;
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            // if left part is sorted:
+            if (arr[low] &lt;= arr[mid]) {
+                // keep the minimum:
+                ans = Math.min(ans, arr[low]);
+
+                // Eliminate left half:
+                low = mid + 1;
+
+            } else { // if right part is sorted:
+
+                // keep the minimum:
+                ans = Math.min(ans, arr[mid]);
+
+                // Eliminate right half:
+                high = mid - 1;
+            }
+        }
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-80cb-96ff-cd44345c9890" class="toggle"><li><details open=""><summary><mark class="highlight-default">Single Element in a Sorted Array</mark></summary></details></li></ul><ul id="1cdb255d-72ff-8089-8992-ffefa9617df9" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa/binary-search/faqs/split-array---largest-sum">Split Array Largest Sum</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80cb-bed2-e57b63f3c3fc" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">//DSAStriver
+Split Array Largest Sum == Painter&#x27;s Partition Problem == Allocate Minimum Pages</code></pre></details></li></ul><ul id="22fb255d-72ff-801c-866d-c16e9f3c11a9" class="toggle"><li><details open=""><summary><mark class="highlight-default">Search Insert Position</mark></summary></details></li></ul><ul id="fd52938c-f553-4a83-907e-8703d8bd2f2a" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-iii/search-in-2d-matrix-ii">Search in a row and column-wise sorted matrix</a></strong></mark></summary><figure id="1b0b255d-72ff-800a-8560-da615ea58923" class="image"><a href="image%205.png"><img style="width:681.9750366210938px" src="image%205.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="42223d8a-4cc2-4560-920f-dba6b123318f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to search for a given target in matrix
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        // Initialize the row and col
+        int row = 0, col = m - 1;
+
+        // Traverse the matrix from (0, m-1):
+        while (row &lt; n &amp;&amp; col &gt;= 0) {
+            
+            // Return true if target is found
+            if (matrix[row][col] == target) return true;
+            else if (matrix[row][col] &lt; target) row++;
+            else col--;
+        }
+        // Return false if target not found
+        return false;
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-80de-bb30-c604b79ec093" class="toggle"><li><details open=""><summary><mark class="highlight-default">Capacity To Ship Packages Within D Days</mark></summary><figure id="22fb255d-72ff-8024-ae97-cd7fd6d276a4"><div class="source"><a href="https://www.youtube.com/watch?v=MG-Ac4TAvTY">https://www.youtube.com/watch?v=MG-Ac4TAvTY</a></div></figure></details></li></ul><ul id="22fb255d-72ff-800a-8311-f1495d42c0f1" class="toggle"><li><details open=""><summary><mark class="highlight-default">Snapshot Array</mark></summary></details></li></ul><ul id="2815b47b-dcc4-4f6e-810c-94bbf2750292" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-i/find-the-smallest-divisor">Find the Smallest Divisor Given a Threshold</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2fe11a9f-cfb2-4a23-9984-ac850f79161b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    public int smallestDivisor(int[] arr, int k) {
+        int max = -1;
+
+        // Find the maximum value in the array
+        for (int val : arr) {
+            max = Math.max(val, max);
+        }
+
+        int low = 1;
+        int high = max;
+        int ans = -1;
+
+        // Binary search for the smallest possible divisor
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            if (isPossible(arr, mid, k)) {
+                ans = mid;
+                high = mid - 1; // Try smaller divisor
+            } else {
+                low = mid + 1;  // Try larger divisor
+            }
+        }
+
+        return ans;
+    }
+
+    // Helper function to check if current divisor is possible
+    public boolean isPossible(int[] arr, int divisor, int limit) {
+        int sum = 0;
+
+        for (int val : arr) {
+            sum += Math.ceil((double) val / divisor);
+        }
+
+        return sum &lt;= limit;
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-80be-81f9-cb97ff5f2ff5" class="toggle"><li><details open=""><summary><mark class="highlight-default">Kth Smallest Element in a Sorted Matrix</mark></summary></details></li></ul><ul id="22fb255d-72ff-809b-bba6-d1067b61a0b8" class="toggle"><li><details open=""><summary><mark class="highlight-default">Block Placement Queries</mark></summary></details></li></ul><ul id="22fb255d-72ff-802c-879b-d4abb0e752b3" class="toggle"><li><details open=""><summary><mark class="highlight-default">Heaters</mark></summary></details></li></ul><ul id="22fb255d-72ff-8006-813e-f327a03afdfa" class="toggle"><li><details open=""><summary><mark class="highlight-default">Split Message Based on Limit</mark></summary></details></li></ul><ul id="22fb255d-72ff-80b9-8643-cab47a4ded5d" class="toggle"><li><details open=""><summary><mark class="highlight-default">Number of Flowers in Full Bloom</mark></summary></details></li></ul><ul id="22fb255d-72ff-8006-bbf0-ffaf6254fb04" class="toggle"><li><details open=""><summary><mark class="highlight-default">Kth Missing Positive Number</mark></summary><figure id="22fb255d-72ff-8084-b055-ca8d5588e474"><div class="source"><a href="https://www.youtube.com/watch?v=uZ0N_hZpyps">https://www.youtube.com/watch?v=uZ0N_hZpyps</a></div></figure></details></li></ul><ul id="34906762-c892-4e39-b7d8-8be9ab7b74a4" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/aggressive-cows">Aggressive Cows</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="24630519-5314-44f6-86f7-a8f2419c535c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Find the maximum minimum distance between cows
+    public static int aggressiveCows(int[] stalls, int k) {
+        int n = stalls.length;
+        Arrays.sort(stalls);
+        int low = 1; // Minimum possible distance
+        int high = stalls[n - 1] - stalls[0]; // Maximum possible distance
+        int result = -1; // Variable to store the final answer
+
+        // Binary search to find the maximum minimum distance
+        while (low &lt;= high) {
+            int mid = low + (high - low) / 2;
+
+            // Check if we can place all cows with the current minimum distance
+            if (canWePlaceAll(stalls, mid, k)) {
+                low = mid + 1;
+                result = mid; // Update result with the current minimum distance
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return result;
+    }
+
+    // Check if we can place all cows with a given distance
+    public static boolean canWePlaceAll(int[] stalls, int distance, int k) {
+        int lastCowAt = stalls[0];
+        int count = 1;
+
+        // Iterate through stalls to check if we can place all cows
+        for (int i = 1; i &lt; stalls.length; i++) {
+            if (stalls[i] - lastCowAt &gt;= distance) {
+                count++;
+                lastCowAt = stalls[i];
+            }
+        }
+
+        return count &gt;= k; // Return true if we can place all cows
+    }
+}</code></pre></details></li></ul><h2 id="19eb255d-72ff-8080-b26f-fb63bc5f2f93" class=""><mark class="highlight-default">DSA Concept Revision</mark></h2><ul id="343507e2-2065-4f54-806e-9defb092b156" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-ii/book-allocation-problem">Allocate Minimum Number of Pages</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="968b062a-3bcd-4e77-b86a-cb6790d3034b" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to find the minimum maximum pages a student can read
+    public static int findPages(int[] arr, int M) {
+        int N = arr.length;
+        if (M &gt; N) return -1; // If students are more than books, return -1
+
+        int low = Arrays.stream(arr).max().getAsInt(); // Imp: why?
+				int high = Arrays.stream(arr).sum();
+        int ans = -1; // Variable to store the final answer
+
+        // Binary search to find the minimum maximum pages
+        while (low &lt;= high) {
+            int mid = low + (high - low) / 2;
+
+            // Check if it&#x27;s possible to allocate pages to students with the current maximum pages
+            if (isPossible(arr, mid, M)) {
+                ans = mid; // Update result with the current maximum pages
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    // Function to check if it&#x27;s possible to allocate pages to students with a given maximum pages
+    public static boolean isPossible(int[] arr, int pages, int M) {
+        int count = 1;
+        int pageStudent = 0;
+
+        // Iterate through books to check if pages can be allocated to students
+        for (int i = 0; i &lt; arr.length; i++) {
+            if (arr[i] + pageStudent &lt;= pages) {
+                pageStudent = arr[i] + pageStudent;
+            } else {
+                count++;
+                pageStudent = arr[i];
+            }
+        }
+
+        return count &lt;= M; // Return true if pages can be allocated to students
+    }
+}</code></pre></details></li></ul><ul id="27504d9c-7573-4eed-b882-16081aa0ab4c" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-i/lower-bound-">Implement Lower Bound</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9ea791e0-3281-4a20-a848-fbd39a9544a0" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // smallest index such that arr[ind]&gt;=x
+    public int lowerBound(int[] nums, int x) {
+        int low = 0, high = nums.length - 1;
+        int ans = nums.length; //imp
+
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            /* Check if mid element 
+               is a potential answer */
+            if (nums[mid] &gt;= x) {
+                ans = mid;
+
+                // Search left half
+                high = mid - 1;
+            } 
+            else {
+                // Search right half
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="cfb664a5-32b4-4a04-bb32-cf0316e87d32" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-i/upper-bound">Implement Upper Bound</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="86aa46ab-9d4a-4cd1-994e-b21871c07a69" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+// smallest index such that arr[ind]&gt;x
+public int upperBound(int[] nums, int x) {
+    int low = 0, high = nums.length - 1;
+    int ans = nums.length; //imp
+
+    // Binary search to find the upper bound
+    while (low &lt;= high) {
+        // Calculate mid index
+        int mid = (low + high) / 2;
+
+        /* Update ans if current
+           element is greater than x */
+        if (nums[mid] &gt; x) {
+            ans = mid;
+            high = mid - 1;
+        } 
+        // Otherwise, move to the right half
+        else {
+            low = mid + 1;
+        }
+    }
+    return ans;
+}
+}</code></pre></details></li></ul><ul id="03991bb7-3ec9-4f1a-b199-f1169d29bdd3" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-ii/minimum-days-to-make-m-bouquets">Minimum days to make M bouquets</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="be5f624b-fd4b-4393-b8e5-017bdeba0fda" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int minDaysBloom(int[] arr, int k, int m) {
+        if ((long) m * k &gt; arr.length) return -1; // Not enough flowers
+        
+        int low = Integer.MAX_VALUE, high = Integer.MIN_VALUE;
+        for (int day : arr) {
+            low = Math.min(low, day);
+            high = Math.max(high, day);
+        }
+
+        int ans = -1;
+        while (low &lt;= high) {
+            int mid = low + (high - low) / 2;
+            if (canMakeBouquets(arr, k, m, mid)) {
+                ans = mid;
+                high = mid - 1; // try smaller day
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    private boolean canMakeBouquets(int[] arr, int k, int m, int day) {
+        int flowers = 0;
+        int bouquets = 0;
+
+        for (int bloomDay : arr) {
+            if (bloomDay &lt;= day) {
+                flowers++;
+                if (flowers == k) {
+                    bouquets++;
+                    flowers = 0;
+                }
+            } else {
+                flowers = 0;
+            }
+            if (bouquets &gt;= m) return true;
+        }
+        return false;
+    }
+}
+</code></pre></details></li></ul><ul id="20a4d0b7-1f5a-46c6-92d1-42e49680dee5" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-iii/find-row-with-maximum-1&#x27;s">Find the row with maximum number of 1’s</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="714d23c5-1a97-4fb7-be9b-4643066426f7" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{  //DSAConceptRevision
+// Helper function to find the lower bound of 1.
+    private int lowerBound(int[] arr, int n, int x) {
+        int low = 0, high = n - 1;
+        int ans = n;
+
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            
+            /* If element at mid is greater than or equal 
+            to x then it counld be a possible answer.*/
+            if (arr[mid] &gt;= x) {
+                ans = mid;
+                
+                // Look for smaller index on the left
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        // Return the answer
+        return ans;
+    }
+
+    /* Function to find the row 
+    with the maximum number of 1&#x27;s*/
+    public int rowWithMax1s(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        
+        /* Variable to store the 
+        maximum count of 1&#x27;s found*/
+        int cnt_max = 0; 
+        
+        /* Variable to store the index
+        of the row with max 1&#x27;s*/
+        int index = -1;  
+
+        // Traverse each row of the matrix
+        for (int i = 0; i &lt; n; i++) {
+            // Get the number of 1&#x27;s
+            int cnt_ones = m - lowerBound(mat[i], m, 1);
+            
+            /* If the current count is greater than 
+            maximum, store the index of current row
+            and update the maximum count.*/
+            if (cnt_ones &gt; cnt_max) {
+                cnt_max = cnt_ones;
+                index = i;
+            }
+        }
+
+        /* Return the index of the row 
+        with the maximum number of 1&#x27;s*/
+        return index;
+    }
+}</code></pre></details></li></ul><ul id="b1959060-ee20-4c40-8fb1-f7e943c7c786" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/binary-search-iii/matrix-median">Median of Row Wise Sorted Matrix</a></strong></mark></summary><figure id="1b0b255d-72ff-8068-a702-e84b15b2b631" class="image"><a href="image%206.png"><img style="width:681.9874877929688px" src="image%206.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="101d25bb-1182-40f0-97e8-d17ba64a63d9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Function to find the upper bound of an element
+    private int upperBound(int[] arr, int x, int m) {
+        int low = 0, high = m - 1;
+        int ans = m;
+        
+        // Apply binary search
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            
+            // If arr[mid] &gt; x, it can be a possible answer
+            if (arr[mid] &gt; x) {
+                ans = mid;
+                // Look for smaller index on the left
+                high = mid - 1;
+            } else {
+                low = mid + 1; 
+            }
+        }
+        // Return the answer
+        return ans;
+    }
+    
+    // Function to find the count of elements smaller than or equal to x
+    private int countSmallEqual(int[][] matrix, int n, int m, int x) {
+        int cnt = 0;
+        for (int i = 0; i &lt; n; i++) {
+            cnt += upperBound(matrix[i], x, m);
+        }
+        // Return the count
+        return cnt;
+    }
+    
+    // Function to find the median in a matrix
+    public int findMedian(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        // Initialize low and high
+        int low = Integer.MAX_VALUE, high = Integer.MIN_VALUE;
+        
+        // Point low and high to right elements
+        for (int i = 0; i &lt; n; i++) {
+            low = Math.min(low, matrix[i][0]);
+            high = Math.max(high, matrix[i][m - 1]);
+        }
+        
+        int req = (n * m) / 2;
+        
+        // Perform binary search
+        while (low &lt;= high) {
+            int mid = low + (high - low) / 2;
+            
+            /* Store the count of elements
+            lesser than or equal to mid */
+            int smallEqual = countSmallEqual(matrix, n, m, mid);
+            if (smallEqual &lt;= req) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        // Return low as answer
+        return low;
+    }
+}</code></pre></details></li></ul><h2 id="1cdb255d-72ff-80a8-923a-d31feed0c9a7" class=""><mark class="highlight-default">DSA</mark></h2><ul id="1cdb255d-72ff-8061-8c1e-f32b1e019dfd" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/logic-building/floor-and-ceil-in-sorted-array">Floor and Ceil in Sorted Array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-800e-be22-f5ee5a72069d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+// Floor: largest number in a array &lt;= x
+private int findFloor(int[] nums, int n, int x) {
+        int low = 0, high = n - 1;
+
+        // Stores the floor value
+        int ans = -1;
+
+        // Perform binary search to find the floor value
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+             /*Check if mid element lesser than 
+			      or equal to x, if it is update ans 
+		        and eliminate the left half */
+            if (nums[mid] &lt;= x) {
+                ans = nums[mid];
+                low = mid + 1;
+            }
+            /*If mid element greater than x, 
+            then eliminate the right half */
+            else {
+                high = mid - 1;
+            }
+        }
+        return ans;
+    }
+    // Ceil: smallest number in array &gt;= x
+    private int findCeil(int[] nums, int n, int x) {
+        int low = 0, high = n - 1;
+        int ans = -1;
+
+        // Perform binary search to find ceil value
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            /*Check if mid element greater than 
+			      or equal to x, if it is update ans 
+		        and eliminate the left half */
+            if (nums[mid] &gt;= x) {
+                ans = nums[mid];
+                high = mid - 1;
+            }
+            /*If mid element lesser than x, 
+            then eliminate the left half */
+            else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    // Function to find both floor and ceil of x 
+    public int[] getFloorAndCeil(int[] nums, int x) {
+        int n = nums.length;
+
+        /*Function call to find the floor 
+        value using helper functions*/
+        int floor = findFloor(nums, n, x);
+
+        /* Function call to find the ceil 
+        value using helper functions*/
+        int ceil = findCeil(nums, n, x);
+
+        return new int[] {floor,ceil};
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-80b6-8ddd-e814a9ae7c44" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/logic-building/find-out-how-many-times-the-array-is-rotated">Find out how many times the array is rotated</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-805a-a393-edfce0f95cb3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to find the number of
+       rotations in a rotated sorted array */
+    public int findKRotation(ArrayList&lt;Integer&gt; nums) {
+        int low = 0, high = nums.size() - 1;
+        int ans = Integer.MAX_VALUE;
+        int index = -1;
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            
+            /* Search space is already sorted
+               then nums.get(low) will always be
+               the minimum in that search space */
+            if (nums.get(low) &lt;= nums.get(high)) {
+                if (nums.get(low) &lt; ans) {
+                    index = low;
+                    ans = nums.get(low);
+                }
+                break;
+            }
+            
+            // If left part is sorted update the ans
+            if (nums.get(low) &lt;= nums.get(mid)) {
+                if (nums.get(low) &lt; ans) {
+                    index = low;
+                    ans = nums.get(low);
+                }
+                // Eliminate left half
+                low = mid + 1;
+            } else {
+                /* update the ans if it 
+                   is less than nums.get(mid) */
+                if (nums.get(mid) &lt; ans) {
+                    index = mid;
+                    ans = nums.get(mid);
+                }
+                // Eliminate right half
+                high = mid - 1;
+            }
+        }
+        // Return the index as answer
+        return index;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8032-b1c6-c0bd32aa6154" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/logic-building/single-element-in-sorted-array">Single element in sorted array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8027-929e-e9cb646b49db" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to find the single non 
+       duplicate element in a sorted array */
+    public int singleNonDuplicate(int[] nums) {
+        int n = nums.length; // Size of the array.
+
+        // Edge cases:
+        if (n == 1) return nums[0];
+        if (nums[0] != nums[1]) return nums[0];
+        if (nums[n - 1] != nums[n - 2]) return nums[n - 1];
+
+        int low = 1, high = n - 2;
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+
+            // If nums[mid] is the single element:
+            if (nums[mid] != nums[mid + 1] &amp;&amp; nums[mid] != nums[mid - 1]) {
+                return nums[mid];
+            }
+
+            // We are in the left part:
+            if ((mid % 2 == 1 &amp;&amp; nums[mid] == nums[mid - 1])
+                || (mid % 2 == 0 &amp;&amp; nums[mid] == nums[mid + 1])) {
+                // Eliminate the left half:
+                low = mid + 1;
+            }
+            // We are in the right part:
+            else {
+                // Eliminate the right half:
+                high = mid - 1;
+            }
+        }
+
+        // Dummy return statement:
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="47ad9c12-a078-424d-8f4e-291d6dd60fb0" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/faqs/minimise-max-distance-to-gas-stations">Minimize Maximum Distance between Gas Stations</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="83a7b77d-67f4-4049-83d8-d12fb70c6b66" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public static double minimiseMaxDistance(int arr[], int k) {
+        int n = arr.length; // size of the array
+        double low = 0;
+        double high = arr[n - 1] - arr[0]; // Difference between the first and last positions
+
+        double diff = 1e-6; // Precision for binary search
+        double ans = -1; // Store the answer
+
+        while (high - low &gt; diff) {
+            double mid = (low + high) / 2.0;
+            int cnt = numberOfGasStationsRequired(mid, arr);
+            if (cnt &gt; k) {
+                low = mid; // Increase the minimum distance
+            } else {
+                ans = mid; // Update the answer
+                high = mid; // Decrease the maximum distance
+            }
+        }
+
+        return ans; // Return the smallest maximum distance
+    }
+
+    public static int numberOfGasStationsRequired(double dist, int[] arr) {
+        int n = arr.length; // Size of the array
+        int cnt = 0; // Count of gas stations required
+        for (int i = 1; i &lt; n; i++) {
+            cnt += (int) Math.ceil((arr[i] - arr[i - 1]) / dist) - 1;
+        }
+        return cnt;
+    }
+}
+</code></pre></details></li></ul><ul id="1cdb255d-72ff-80cb-98d3-d7e60d28117d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/on-answers/find-nth-root-of-a-number">Find Nth root of a number</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-807e-a47f-f7ab64549bc2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+    /* Helper function to check the power of mid
+    with respect to m Returns: 1 - if mid^n == m,
+    0 - if mid^n &lt; m and 2 - if mid^n &gt; m*/ 
+    private int func(int mid, int n, int m) {
+        long ans = 1;
+        for (int i = 1; i &lt;= n; i++) {
+            ans *= mid;
+            if (ans &gt; m) return 2;
+        }
+        if (ans == m) return 1;
+        return 0;
+    }
+
+    /* Function to find the nth root
+    of m using binary search*/
+    public int NthRoot(int N, int M) {
+        // Binary search on the answer space
+        int low = 1, high = M;
+
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            int midN = func(mid, N, M);
+            if (midN == 1) {
+                // Return mid if mid^N == M
+                return mid;
+            } else if (midN == 0) {
+                // Move to the right half if mid^N &lt; M
+                low = mid + 1;
+            } else {
+                // Move to the left half if mid^N &gt; M
+                high = mid - 1;
+            }
+        }
+        // Return -1 if no nth root found
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-809f-9f19-e9911fe121fe" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/faqs/kth-element-of-2-sorted-arrays">Kth element of 2 sorted arrays</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8023-af40-fc478c963397" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+public int kthElement(int[] a, int[] b, int k) {
+    int m = a.length;
+    int n = b.length;
+
+    // Ensure a is smaller array for optimization
+    if (m &gt; n) {
+        // Swap a and b
+        return kthElement(b, a, k); 
+    }
+    
+    // Length of the left half
+    int left = k; 
+
+    // Apply binary search
+    int low = Math.max(0, k - n), high = Math.min(k, m);
+    while (low &lt;= high) {
+        int mid1 = (low + high) &gt;&gt; 1;
+        int mid2 = left - mid1;
+
+        // Initialize l1, l2, r1, r2
+        int l1 = (mid1 &gt; 0) ? a[mid1 - 1] : Integer.MIN_VALUE;
+        int l2 = (mid2 &gt; 0) ? b[mid2 - 1] : Integer.MIN_VALUE;
+        int r1 = (mid1 &lt; m) ? a[mid1] : Integer.MAX_VALUE;
+        int r2 = (mid2 &lt; n) ? b[mid2] : Integer.MAX_VALUE;
+
+        // Check if we have found the answer
+        if (l1 &lt;= r2 &amp;&amp; l2 &lt;= r1) {
+            return Math.max(l1, l2);
+        } 
+        else if (l1 &gt; r2) {
+            // Eliminate the right half
+            high = mid1 - 1;
+        } 
+        else {
+            // Eliminate the left half
+            low = mid1 + 1;
+        }
+    }
+    
+     // Dummy return statement 
+    return -1;
+}
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8081-81db-f20e820127f8" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/binary-search/2d-arrays/find-peak-element-ii">Find Peak Element [2D Grid]</a></strong></mark></summary><figure id="1cdb255d-72ff-8070-aee2-f6de9f7634c4" class="image"><a href="image%207.png"><img style="width:681.9874877929688px" src="image%207.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8075-80c7-ce565875fe46" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+/* Helper function to find the index of the row
+    with the maximum element in a given column*/
+    public int maxElement(int[][] arr, int col) {
+        int n = arr.length;
+        int max = Integer.MIN_VALUE;
+        int index = -1;
+        
+        /* Iterate through each row to find the
+        maximum element in the specified column*/
+        for (int i = 0; i &lt; n; i++) {
+            if (arr[i][col] &gt; max) {
+                max = arr[i][col];
+                index = i;
+            }
+        }
+        //Return the index
+        return index; 
+    }
+    
+    /* Function to find a peak element in 
+    the 2D matrix using binary search */
+    public int[] findPeakGrid(int[][] arr) {
+        int n = arr.length;   
+        int m = arr[0].length; 
+        
+        /* Initialize the lower bound for 
+        and upper bound for binary search */
+        int low = 0;           
+        int high = m - 1;      
+        
+        // Perform binary search on columns
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;  
+            
+            /* Find the index of the row with the 
+            maximum element in the middle column*/
+            int row = maxElement(arr, mid);
+            
+            /* Determine the elements to left and 
+            right of middle element in the found row */
+            int left = mid - 1 &gt;= 0 ? arr[row][mid - 1] : Integer.MIN_VALUE;
+            int right = mid + 1 &lt; m ? arr[row][mid + 1] : Integer.MIN_VALUE;
+            
+            /* Check if the middle element 
+            is greater than its neighbors */
+            if (arr[row][mid] &gt; left &amp;&amp; arr[row][mid] &gt; right) {
+                return new int[]{row,mid};  
+            } 
+            else if (left &gt; arr[row][mid]) {
+                high = mid - 1;  
+            } 
+            else {
+                low = mid + 1;
+            }
+        }
+        
+        // Return -1 if no peak element is found
+        return new int[]{-1,-1};  
+    }
+}</code></pre><p id="1cdb255d-72ff-8094-a302-d4aa4f647979" class="">
+</p></details></li></ul><h2 id="22eb255d-72ff-807f-9be8-da4dbbe322f0" class="">Extras</h2><table id="22fb255d-72ff-809b-94f6-d48227bda4d0" class="simple-table"><tbody><tr id="22fb255d-72ff-80c7-bf1c-df7380c85bc2"><td id=";Ugp" class="">Link</td><td id="L?Wp" class="">Title</td><td id="O`jB" class="">Frequency</td><td id="~UWW" class="">Companies Count</td><td id="zL}?" class="">Topics</td></tr><tr id="22fb255d-72ff-808b-9aad-e559b280e6be"><td id=";Ugp" class="">https://leetcode.com/problems/search-in-rotated-sorted-array</td><td id="L?Wp" class="">Search in Rotated Sorted Array</td><td id="O`jB" class="">100</td><td id="~UWW" class="">51</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8072-a00d-d32d4e195692"><td id=";Ugp" class="">https://leetcode.com/problems/median-of-two-sorted-arrays</td><td id="L?Wp" class="">Median of Two Sorted Arrays</td><td id="O`jB" class="">100</td><td id="~UWW" class="">42</td><td id="zL}?" class="">Array, Binary Search, Divide and Conquer</td></tr><tr id="22fb255d-72ff-808e-a209-fd5d40543848"><td id=";Ugp" class="">https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array</td><td id="L?Wp" class="">Find First and Last Position of Element in Sorted Array</td><td id="O`jB" class="">100</td><td id="~UWW" class="">31</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-80c9-9355-e8feb1d5fab8"><td id=";Ugp" class="">https://leetcode.com/problems/koko-eating-bananas</td><td id="L?Wp" class="">Koko Eating Bananas</td><td id="O`jB" class="">100</td><td id="~UWW" class="">30</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8092-b9bb-ed9c3ff9fa7a"><td id=";Ugp" class="">https://leetcode.com/problems/time-based-key-value-store</td><td id="L?Wp" class="">Time Based Key-Value Store</td><td id="O`jB" class="">100</td><td id="~UWW" class="">24</td><td id="zL}?" class="">Hash Table, String, Binary Search, Design</td></tr><tr id="22fb255d-72ff-802d-a839-f561131d3d25"><td id=";Ugp" class="">https://leetcode.com/problems/find-peak-element</td><td id="L?Wp" class="">Find Peak Element</td><td id="O`jB" class="">85.8</td><td id="~UWW" class="">24</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8083-8a9c-e8d17f13b952"><td id=";Ugp" class="">https://leetcode.com/problems/longest-increasing-subsequence</td><td id="L?Wp" class="">Longest Increasing Subsequence</td><td id="O`jB" class="">100</td><td id="~UWW" class="">23</td><td id="zL}?" class="">Array, Binary Search, Dynamic Programming</td></tr><tr id="22fb255d-72ff-801c-8a28-f4c9a2f58017"><td id=";Ugp" class="">https://leetcode.com/problems/search-a-2d-matrix</td><td id="L?Wp" class="">Search a 2D Matrix</td><td id="O`jB" class="">87.2</td><td id="~UWW" class="">22</td><td id="zL}?" class="">Array, Binary Search, Matrix</td></tr><tr id="22fb255d-72ff-8062-a9ca-c4de1780a45b"><td id=";Ugp" class="">https://leetcode.com/problems/maximum-profit-in-job-scheduling</td><td id="L?Wp" class="">Maximum Profit in Job Scheduling</td><td id="O`jB" class="">100</td><td id="~UWW" class="">21</td><td id="zL}?" class="">Array, Binary Search, Dynamic Programming, Sorting</td></tr><tr id="22fb255d-72ff-8022-ad61-d04092c13c44"><td id=";Ugp" class="">https://leetcode.com/problems/random-pick-with-weight</td><td id="L?Wp" class="">Random Pick with Weight</td><td id="O`jB" class="">100</td><td id="~UWW" class="">21</td><td id="zL}?" class="">Array, Math, Binary Search, Prefix Sum, Randomized</td></tr><tr id="22fb255d-72ff-800e-a40b-f44ad4f4762f"><td id=";Ugp" class="">https://leetcode.com/problems/sqrtx</td><td id="L?Wp" class="">Sqrt(x)</td><td id="O`jB" class="">86.5</td><td id="~UWW" class="">21</td><td id="zL}?" class="">Math, Binary Search</td></tr><tr id="22fb255d-72ff-8020-857b-de47c82729cd"><td id=";Ugp" class="">https://leetcode.com/problems/find-minimum-in-rotated-sorted-array</td><td id="L?Wp" class="">Find Minimum in Rotated Sorted Array</td><td id="O`jB" class="">100</td><td id="~UWW" class="">19</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8047-9dfd-c33f7e29048b"><td id=";Ugp" class="">https://leetcode.com/problems/search-suggestions-system</td><td id="L?Wp" class="">Search Suggestions System</td><td id="O`jB" class="">100</td><td id="~UWW" class="">18</td><td id="zL}?" class="">Array, String, Binary Search, Trie, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-8059-82bf-ff597043fa91"><td id=";Ugp" class="">https://leetcode.com/problems/design-hit-counter</td><td id="L?Wp" class="">Design Hit Counter</td><td id="O`jB" class="">100</td><td id="~UWW" class="">16</td><td id="zL}?" class="">Array, Binary Search, Design, Queue, Data Stream</td></tr><tr id="22fb255d-72ff-80d5-8a4d-d0c23b4fc2f6"><td id=";Ugp" class="">https://leetcode.com/problems/missing-number</td><td id="L?Wp" class="">Missing Number</td><td id="O`jB" class="">89</td><td id="~UWW" class="">16</td><td id="zL}?" class="">Array, Hash Table, Math, Binary Search, Bit Manipulation, Sorting</td></tr><tr id="22fb255d-72ff-8097-89b4-dfe14f29c8d9"><td id=";Ugp" class="">https://leetcode.com/problems/intersection-of-two-arrays</td><td id="L?Wp" class="">Intersection of Two Arrays</td><td id="O`jB" class="">100</td><td id="~UWW" class="">15</td><td id="zL}?" class="">Array, Hash Table, Two Pointers, Binary Search, Sorting</td></tr><tr id="22fb255d-72ff-8005-bd01-fb9364616f17"><td id=";Ugp" class="">https://leetcode.com/problems/subarray-product-less-than-k</td><td id="L?Wp" class="">Subarray Product Less Than K</td><td id="O`jB" class="">100</td><td id="~UWW" class="">14</td><td id="zL}?" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="22fb255d-72ff-8085-819d-c640fe795729"><td id=";Ugp" class="">https://leetcode.com/problems/single-element-in-a-sorted-array</td><td id="L?Wp" class="">Single Element in a Sorted Array</td><td id="O`jB" class="">100</td><td id="~UWW" class="">13</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8072-aa8f-d92f50c1e8f8"><td id=";Ugp" class="">https://leetcode.com/problems/max-consecutive-ones-iii</td><td id="L?Wp" class="">Max Consecutive Ones III</td><td id="O`jB" class="">100</td><td id="~UWW" class="">13</td><td id="zL}?" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="22fb255d-72ff-8026-8cb8-ea245265f8b0"><td id=";Ugp" class="">https://leetcode.com/problems/split-array-largest-sum</td><td id="L?Wp" class="">Split Array Largest Sum</td><td id="O`jB" class="">100</td><td id="~UWW" class="">12</td><td id="zL}?" class="">Array, Binary Search, Dynamic Programming, Greedy, Prefix Sum</td></tr><tr id="22fb255d-72ff-80f4-af35-e5630b1d1d21"><td id=";Ugp" class="">https://leetcode.com/problems/find-the-duplicate-number</td><td id="L?Wp" class="">Find the Duplicate Number</td><td id="O`jB" class="">88.9</td><td id="~UWW" class="">12</td><td id="zL}?" class="">Array, Two Pointers, Binary Search, Bit Manipulation</td></tr><tr id="22fb255d-72ff-801e-8304-db796727e50f"><td id=";Ugp" class="">https://leetcode.com/problems/two-sum-ii-input-array-is-sorted</td><td id="L?Wp" class="">Two Sum II - Input Array Is Sorted</td><td id="O`jB" class="">73.2</td><td id="~UWW" class="">12</td><td id="zL}?" class="">Array, Two Pointers, Binary Search</td></tr><tr id="22fb255d-72ff-8087-939f-c695602934f3"><td id=";Ugp" class="">https://leetcode.com/problems/search-insert-position</td><td id="L?Wp" class="">Search Insert Position</td><td id="O`jB" class="">63.6</td><td id="~UWW" class="">12</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8005-9024-c873f39a1763"><td id=";Ugp" class="">https://leetcode.com/problems/minimum-size-subarray-sum</td><td id="L?Wp" class="">Minimum Size Subarray Sum</td><td id="O`jB" class="">59.7</td><td id="~UWW" class="">12</td><td id="zL}?" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="22fb255d-72ff-806f-a07e-f35bc4df6f6d"><td id=";Ugp" class="">https://leetcode.com/problems/search-a-2d-matrix-ii</td><td id="L?Wp" class="">Search a 2D Matrix II</td><td id="O`jB" class="">78.1</td><td id="~UWW" class="">11</td><td id="zL}?" class="">Array, Binary Search, Divide and Conquer, Matrix</td></tr><tr id="22fb255d-72ff-8010-9e35-c167e3d2c43e"><td id=";Ugp" class="">https://leetcode.com/problems/capacity-to-ship-packages-within-d-days</td><td id="L?Wp" class="">Capacity To Ship Packages Within D Days</td><td id="O`jB" class="">100</td><td id="~UWW" class="">10</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-800f-a90b-fee66f167626"><td id=";Ugp" class="">https://leetcode.com/problems/snapshot-array</td><td id="L?Wp" class="">Snapshot Array</td><td id="O`jB" class="">100</td><td id="~UWW" class="">10</td><td id="zL}?" class="">Array, Hash Table, Binary Search, Design</td></tr><tr id="22fb255d-72ff-8092-b5a9-df34e8d4c93c"><td id=";Ugp" class="">https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold</td><td id="L?Wp" class="">Find the Smallest Divisor Given a Threshold</td><td id="O`jB" class="">100</td><td id="~UWW" class="">8</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-806b-841c-ff2d35ba5ba1"><td id=";Ugp" class="">https://leetcode.com/problems/search-in-rotated-sorted-array-ii</td><td id="L?Wp" class="">Search in Rotated Sorted Array II</td><td id="O`jB" class="">41.9</td><td id="~UWW" class="">8</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-8067-acde-fbb67e40980f"><td id=";Ugp" class="">https://leetcode.com/problems/find-k-closest-elements</td><td id="L?Wp" class="">Find K Closest Elements</td><td id="O`jB" class="">100</td><td id="~UWW" class="">7</td><td id="zL}?" class="">Array, Two Pointers, Binary Search, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-805c-b9c8-fe322317253a"><td id=";Ugp" class="">https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix</td><td id="L?Wp" class="">Kth Smallest Element in a Sorted Matrix</td><td id="O`jB" class="">100</td><td id="~UWW" class="">7</td><td id="zL}?" class="">Array, Binary Search, Sorting, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-8073-980d-d2b9ff6fcf0f"><td id=";Ugp" class="">https://leetcode.com/problems/block-placement-queries</td><td id="L?Wp" class="">Block Placement Queries</td><td id="O`jB" class="">100</td><td id="~UWW" class="">7</td><td id="zL}?" class="">Array, Binary Search, Binary Indexed Tree, Segment Tree</td></tr><tr id="22fb255d-72ff-8041-b84e-d7d5568a880b"><td id=";Ugp" class="">https://leetcode.com/problems/frequency-of-the-most-frequent-element</td><td id="L?Wp" class="">Frequency of the Most Frequent Element</td><td id="O`jB" class="">100</td><td id="~UWW" class="">7</td><td id="zL}?" class="">Array, Binary Search, Greedy, Sliding Window, Sorting, Prefix Sum</td></tr><tr id="22fb255d-72ff-8037-875a-ef5d36678386"><td id=";Ugp" class="">https://leetcode.com/problems/heaters</td><td id="L?Wp" class="">Heaters</td><td id="O`jB" class="">92.8</td><td id="~UWW" class="">7</td><td id="zL}?" class="">Array, Two Pointers, Binary Search, Sorting</td></tr><tr id="22fb255d-72ff-80b5-a3a1-ec6dcb9cc6f1"><td id=";Ugp" class="">https://leetcode.com/problems/binary-search</td><td id="L?Wp" class="">Binary Search</td><td id="O`jB" class="">61.3</td><td id="~UWW" class="">7</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-809e-bb3f-cb818a3844a5"><td id=";Ugp" class="">https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference</td><td id="L?Wp" class="">Partition Array Into Two Arrays to Minimize Sum Difference</td><td id="O`jB" class="">100</td><td id="~UWW" class="">6</td><td id="zL}?" class="">Array, Two Pointers, Binary Search, Dynamic Programming, Bit Manipulation, Ordered Set, Bitmask</td></tr><tr id="22fb255d-72ff-8049-a9ca-fb0785ed4740"><td id=";Ugp" class="">https://leetcode.com/problems/split-message-based-on-limit</td><td id="L?Wp" class="">Split Message Based on Limit</td><td id="O`jB" class="">84.2</td><td id="~UWW" class="">6</td><td id="zL}?" class="">String, Binary Search, Enumeration</td></tr><tr id="22fb255d-72ff-8022-89dd-d922ed84cc36"><td id=";Ugp" class="">https://leetcode.com/problems/number-of-flowers-in-full-bloom</td><td id="L?Wp" class="">Number of Flowers in Full Bloom</td><td id="O`jB" class="">78.4</td><td id="~UWW" class="">6</td><td id="zL}?" class="">Array, Hash Table, Binary Search, Sorting, Prefix Sum, Ordered Set</td></tr><tr id="22fb255d-72ff-8031-8ddd-dc4347daf627"><td id=";Ugp" class="">https://leetcode.com/problems/peak-index-in-a-mountain-array</td><td id="L?Wp" class="">Peak Index in a Mountain Array</td><td id="O`jB" class="">49.4</td><td id="~UWW" class="">6</td><td id="zL}?" class="">Array, Binary Search</td></tr><tr id="22fb255d-72ff-80fa-855c-c55a4cde4221"><td id=";Ugp" class="">https://leetcode.com/problems/swim-in-rising-water</td><td id="L?Wp" class="">Swim in Rising Water</td><td id="O`jB" class="">100</td><td id="~UWW" class="">5</td><td id="zL}?" class="">Array, Binary Search, Depth-First Search, Breadth-First Search, Union Find, Heap (Priority Queue), Matrix</td></tr><tr id="22fb255d-72ff-8041-9c42-fafedc45d703"><td id=";Ugp" class="">https://leetcode.com/problems/kth-missing-positive-number</td><td id="L?Wp" class="">Kth Missing Positive Number</td><td id="O`jB" class="">74.9</td><td id="~UWW" class="">5</td><td id="zL}?" class="">Array, Binary Search</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

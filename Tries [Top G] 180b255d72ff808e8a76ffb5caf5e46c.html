@@ -1,0 +1,1230 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Tries [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="180b255d-72ff-808e-8a76-ffb5caf5e46c" class="page sans"><header><h1 class="page-title">Tries [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h2 id="1c7b255d-72ff-800e-917d-f1e8cb0e3cc5" class=""><strong>DSA Quick Revision</strong></h2><ul id="180b255d-72ff-8061-b94e-c8e3f5d206ce" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-10-lms/trie-implementation-and-operations">Implement Trie (Prefix Tree)</a></strong></mark><mark class="highlight-teal"><strong><a href="https://leetcode.com/problems/implement-trie-prefix-tree/description/"> </a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-802a-a65d-f650c9fc7344" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Trie Node definition
+class Node { //DSAQuickRevision
+    // Each node holds reference to 26 lowercase letters
+    Node[] links = new Node[26];
+    boolean isEnd = false;  // Marks end of a word
+
+    // Checks if current node has a link for the given character
+    boolean containsKey(char ch) {
+        return links[ch - &#x27;a&#x27;] != null;
+    }
+
+    // Retrieves the next node linked with character ch
+    Node get(char ch) {
+        return links[ch - &#x27;a&#x27;];
+    }
+
+    // Creates a link to the next node for character ch
+    void put(char ch, Node node) {
+        links[ch - &#x27;a&#x27;] = node;
+    }
+}
+
+// Trie (Prefix Tree) implementation
+class Trie {
+    private Node root;
+
+    // Constructor: initialize root node
+    Trie() {
+        root = new Node();
+    }
+
+    // Inserts a word into the Trie
+    void insert(String word) {
+        Node node = root;
+        for (int i = 0; i &lt; word.length(); i++) {
+            char ch = word.charAt(i);
+
+            // If path doesn&#x27;t exist, create it
+            if (!node.containsKey(ch)) {
+                node.put(ch, new Node());
+            }
+
+            // Move to the next node
+            node = node.get(ch);
+        }
+
+        // Mark the end of the word
+        node.isEnd = true;
+    }
+
+    // Searches for a full word in the Trie
+    boolean search(String word) {
+        Node node = root;
+        for (int i = 0; i &lt; word.length(); i++) {
+            char ch = word.charAt(i);
+
+            // If path breaks, word doesn&#x27;t exist
+            if (!node.containsKey(ch)) {
+                return false;
+            }
+
+            node = node.get(ch);
+        }
+
+        // Word exists only if it ends here
+        return node.isEnd;
+    }
+
+    // Checks if there&#x27;s any word that starts with the given prefix
+    boolean startsWith(String prefix) {
+        Node node = root;
+        for (int i = 0; i &lt; prefix.length(); i++) {
+            char ch = prefix.charAt(i);
+
+            // If path breaks, prefix doesn&#x27;t exist
+            if (!node.containsKey(ch)) {
+                return false;
+            }
+
+            node = node.get(ch);
+        }
+
+        return true; // Path exists → prefix exists
+    }
+}
+</code></pre></details></li></ul><ul id="180b255d-72ff-8066-8ccb-cb0b94f4b9c1" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-10-lms/trie-implementation-and-advanced-operations">Implement Trie ll</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-801b-9333-e239ad14ab5e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">// Trie Node with prefix and word count tracking
+class Node { //DSAQuickRevision
+    Node[] links = new Node[26];
+    int prefixCount = 0;  // How many words pass through this node
+    int wordCount = 0;    // How many words end at this node
+
+    void put(char ch, Node node) {
+        links[ch - &#x27;a&#x27;] = node;
+    }
+
+    Node get(char ch) {
+        return links[ch - &#x27;a&#x27;];
+    }
+
+    boolean containsKey(char ch) {
+        return links[ch - &#x27;a&#x27;] != null;
+    }
+}
+
+// Trie with word frequency and prefix tracking
+class Trie {
+    private Node root;
+
+    public Trie() {
+        root = new Node();
+    }
+
+    // Inserts a word and updates prefix &amp; word counts
+    public void insert(String word) {
+        Node node = root;
+
+        for (int i = 0; i &lt; word.length(); i++) {
+            char ch = word.charAt(i);
+
+            if (!node.containsKey(ch)) {
+                node.put(ch, new Node());
+            }
+
+            node = node.get(ch); // Imp: ye wali line uper likhna. why?
+            node.prefixCount++;  // This node is part of one more prefix
+        }
+
+        node.wordCount++;  // End of full word
+    }
+
+    // Counts how many times the exact word exists
+    public int countWordsEqualTo(String word) {
+        Node node = root;
+
+        for (int i = 0; i &lt; word.length(); i++) {
+            char ch = word.charAt(i);
+
+            if (!node.containsKey(ch)) return 0;
+
+            node = node.get(ch);
+        }
+
+        return node.wordCount;
+    }
+
+    // Counts how many words start with the given prefix
+    public int countWordsStartingWith(String prefix) {
+        Node node = root;
+
+        for (int i = 0; i &lt; prefix.length(); i++) {
+            char ch = prefix.charAt(i);
+
+            if (!node.containsKey(ch)) return 0;
+
+            node = node.get(ch);
+        }
+
+        return node.prefixCount;
+    }
+
+    // Deletes a word and updates prefix &amp; word counts
+    public void erase(String word) {
+        Node node = root;
+
+        for (int i = 0; i &lt; word.length(); i++) {
+            char ch = word.charAt(i);
+
+            if (!node.containsKey(ch)) return;  // Word doesn&#x27;t exist
+
+            node = node.get(ch);
+            node.prefixCount--;  // One less word goes through this node
+        }
+
+        node.wordCount--;  // One less word ends here
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-8063-a06c-f1428b478fd7" class="toggle"><li><details open=""><summary>Longest Common Prefix</summary></details></li></ul><ul id="22fb255d-72ff-808a-bc6d-f66531c8ddb6" class="toggle"><li><details open=""><summary>Search Suggestions System</summary></details></li></ul><ul id="22fb255d-72ff-80e3-950b-d6fef7df4dd4" class="toggle"><li><details open=""><summary>Design In-Memory File System</summary></details></li></ul><ul id="22fb255d-72ff-8099-be34-eb815d2c7b21" class="toggle"><li><details open=""><summary>Design Add and Search Words Data Structure</summary></details></li></ul><ul id="22fb255d-72ff-80e5-b7d9-facf4e51420e" class="toggle"><li><details open=""><summary>Find the Length of the Longest Common Prefix</summary></details></li></ul><ul id="22fb255d-72ff-8065-990f-e89a8234b5cd" class="toggle"><li><details open=""><summary>Design File System</summary></details></li></ul><ul id="180b255d-72ff-80b4-9def-e0750cdbcb31" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-10-lms/number-of-distinct-substrings-in-a-string">Count Distinct Substrings</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-80b8-99e7-ecd13934d10e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+	public static int countDistinctSubstring(String str) {
+		Node root = new Node(); // Create the root node
+		int count = 0; // Counter for distinct substrings
+		int n = str.length(); // Length of the input string
+
+		// Iterate over all substrings starting from each character
+		for (int i = 0; i &lt; n; i++) {
+			Node node = root; // Start at the root for each substring
+			for (int j = i; j &lt; n; j++) {
+				char ch = str.charAt(j);
+
+				// If the character is not already in the Trie, add it
+				if (!node.containsKey(ch)) {
+					node.put(ch, new Node());
+					count++; // Increment count for the new substring
+				}
+
+				// Move to the next node
+				node = node.get(ch);
+			}
+		}
+
+		return count + 1; // Add 1 for the empty substring
+	}
+
+	static class Node {
+		Node[] links = new Node[26]; // For &#x27;a&#x27; to &#x27;z&#x27;
+		boolean flag; // Marks the end of a substring
+
+		// Check if the current node contains a specific character
+		boolean containsKey(char ch) {
+			return links[ch - &#x27;a&#x27;] != null;
+		}
+
+		// Get the node corresponding to a character
+		Node get(char ch) {
+			return links[ch - &#x27;a&#x27;];
+		}
+
+		// Add a new node for a specific character
+		void put(char ch, Node node) {
+			links[ch - &#x27;a&#x27;] = node;
+		}
+}
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-80d1-af46-e42daa9d19bc" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-10-lms/longest-word-with-all-prefixes">Longest word with all prefixes</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8097-be0c-f50403b70314" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Node { //DSAQuickRevision
+    // To store references to child nodes
+    Node[] links = new Node[26];
+    // Flag to indicate end of a word
+    boolean flag = false;
+
+    // Checks if the current character link exists
+    boolean containsKey(char ch) {
+        return links[ch - &#x27;a&#x27;] != null;
+    }
+
+    // Returns the next node corresponding to the character
+    Node get(char ch) {
+        return links[ch - &#x27;a&#x27;];
+    }
+
+    // Creates a link to the next node for the current character
+    void put(char ch, Node node) {
+        links[ch - &#x27;a&#x27;] = node;
+    }
+
+    // Marks the end of a word
+    void setEnd() {
+        flag = true;
+    }
+
+    // Checks if the current node is the end of a word
+    boolean isEnd() {
+        return flag;
+    }
+}
+
+// Class representing the Trie (Prefix Tree) structure
+class Trie {
+    // Root node of the Trie
+    Node root;
+
+    // Initializes the Trie
+    public Trie() {
+        root = new Node();
+    }
+
+    // Inserts a word into the Trie
+    public void insert(String word) {
+        Node node = root;
+        for (int i = 0; i &lt; word.length(); i++) {
+            if (!node.containsKey(word.charAt(i))) {
+                node.put(word.charAt(i), new Node());
+            }
+            node = node.get(word.charAt(i));
+        }
+        // Marks the end of the inserted word
+        node.setEnd();
+    }
+
+    // Checks if all prefixes of the given word exist in the Trie
+    public boolean checkIfAllPrefixExists(String word) {
+        Node node = root;
+        for (int i = 0; i &lt; word.length(); i++) {
+            if (node.containsKey(word.charAt(i))) {
+                node = node.get(word.charAt(i));
+                if (!node.isEnd()) {
+                    // Prefix is incomplete, return false
+                    return false;
+                }
+            } else {
+                // Return false if a character link is missing
+                return false;
+            }
+        }
+        // All prefixes exist
+        return true;
+    }
+}
+
+// Solution class to find the longest word with all its prefixes present
+class Solution {
+    public String completeString(List&lt;String&gt; nums) {
+        Trie obj = new Trie();
+
+        // Insert all words into the Trie
+        for (String num : nums) {
+            obj.insert(num);
+        }
+
+        String longest = &quot;&quot;; // Stores the longest valid word
+
+        // Check each word to find the longest one where all prefixes exist
+        for (String num : nums) {
+            if (obj.checkIfAllPrefixExists(num)) {
+                if (num.length() &gt; longest.length()) {
+                    longest = num;
+                } else if (num.length() == longest.length() &amp;&amp; num.compareTo(longest) &lt; 0) {
+                    longest = num; // Lexicographically smaller word
+                }
+            }
+        }
+        return longest.isEmpty() ? &quot;None&quot; : longest; // Return result or &quot;None&quot;
+    }
+}</code></pre></details></li></ul><ul id="1c7b255d-72ff-80ad-9a8f-c599c2a2df44" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-10-lms/maximum-xor-of-two-numbers-in-an-array">Maximum XOR of two numbers in an array</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-8008-b633-f2959e41257d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Node { //DSAQuickRevision
+    Node[] links = new Node[2];
+
+    // To check if a specific bit key is present in the child nodes
+    boolean containsKey(int bit) {
+        return links[bit] != null;
+    }
+
+    // To get the child node corresponding to a specific bit
+    Node get(int bit) {
+        return links[bit];
+    }
+
+    // To set a child node at a specific index in the links array
+    void put(int bit, Node node) {
+        links[bit] = node;
+    }
+}
+
+// Trie class
+class Trie {
+    private Node root;
+
+    // Constructor
+    Trie() {
+        root = new Node();
+    }
+
+    // To insert number in Trie
+    void insert(int num) {
+        // Start from the root
+        Node node = root;
+        // Iterate each bit
+        for (int i = 31; i &gt;= 0; i--) {
+            // Extract i-th bit
+            int bit = (num &gt;&gt; i) &amp; 1;
+            /* If the current node doesn&#x27;t 
+           have a child node with the 
+           current bit */
+            if (!node.containsKey(bit)) {
+                node.put(bit, new Node());
+            }
+            node = node.get(bit);
+        }
+    }
+
+    // Method to find the maximum XOR 
+    int getMax(int num) {
+        // Start from root
+        Node node = root;
+        // Initialize maximum XOR value
+        int maxNum = 0;
+        // Iterate each bit
+        for (int i = 31; i &gt;= 0; i--) {
+            // Extract the i-th bit 
+            int bit = (num &gt;&gt; i) &amp; 1;
+            /*If the complement of the current bit 
+            exists in the Trie update the maximum 
+            XOR value with the current bit
+            move to the child node corresponding to 
+            the complement of the current bit
+            Else move to the child node 
+            corresponding to the current bit */
+            if (node.containsKey(1 - bit)) {
+                maxNum |= (1 &lt;&lt; i);
+                node = node.get(1 - bit);
+            } else {
+                node = node.get(bit);
+            }
+        }
+        // Return maximum XOR
+        return maxNum;
+    }
+}
+
+class Solution {
+    public int findMaximumXOR(int[] nums) {
+        // Create Trie
+        Trie trie = new Trie();
+        // Insert number
+        for (int num : nums) {
+            trie.insert(num);
+        }
+
+        // Maximum XOR value
+        int maxi = 0;
+
+        // Iterate each number
+        for (int num : nums) {
+            // Update the maximum XOR
+            maxi = Math.max(maxi, trie.getMax(num));
+        }
+
+        // Return maximum XOR value
+        return maxi;
+    }
+}</code></pre></details></li></ul><h2 id="213b255d-72ff-800c-95b7-ff13f3c2bb02" class="">DSA Concepts Revision</h2><ul id="1c6b255d-72ff-80e6-aba3-dcd7f877dba9" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/string-and-trie/maximum-xor-with-an-element-from-an-array">Maximum Xor with an element from an array</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80de-bcac-f03ffe8e3e94" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Node { //DSAConceptRevision
+    Node[] links = new Node[2];
+
+    boolean containsKey(int ind) {
+        return links[ind] != null;
+    }
+
+    Node get(int ind) {
+        return links[ind];
+    }
+
+    void put(int ind, Node node) {
+        links[ind] = node;
+    }
+}
+
+class Trie {
+    private Node root;
+
+    // Constructor
+    Trie() {
+        root = new Node();
+    }
+
+    // Function to insert a number into the trie
+    void insert(int num) {
+        // Start traversal
+        Node node = root;
+
+        /* Traverse each bit of the number 
+           from the most significant bit to the 
+           least significant bit */
+        for (int i = 31; i &gt;= 0; i--) {
+            int bit = (num &gt;&gt; i) &amp; 1;
+
+            /* If the current node doesn&#x27;t have 
+               a child node at the current bit, 
+               create one */
+            if (!node.containsKey(bit)) {
+                node.put(bit, new Node());
+            }
+
+            /* Move to the child node
+               corresponding to the 
+               current bit */
+            node = node.get(bit);
+        }
+    }
+
+    // Function to find maximum XOR
+    int findMax(int num) {
+        Node node = root;
+        int maxNum = 0;
+
+        /* Traverse each bit of the number from 
+           the most significant bit to the least 
+           significant bit extract the i-th 
+           bit of the number.
+           If there exists a different bit 
+           in the trie at the current 
+           position, choose it to maximize XOR */
+        for (int i = 31; i &gt;= 0; i--) {
+            int bit = (num &gt;&gt; i) &amp; 1;
+
+            if (node.containsKey(1 - bit)) {
+                maxNum = maxNum | (1 &lt;&lt; i);
+                node = node.get(1 - bit);
+            } else {
+                node = node.get(bit);
+            }
+        }
+
+        // Return maximum XOR value
+        return maxNum;
+    }
+}
+
+// Solution class to handle queries
+class Solution {
+    // Function to handle the maximize XOR queries
+    public List&lt;Integer&gt; maximizeXor(int[] nums, int[][] queries) {
+        // Initialize array to store results of queries
+        int[] ans = new int[queries.length];
+
+        // List to store offline queries
+        List&lt;int[]&gt; offlineQueries = new ArrayList&lt;&gt;();
+
+        // Sort the array of numbers
+        Arrays.sort(nums);
+
+        // Convert queries to offline queries and store them in a list
+        for (int i = 0; i &lt; queries.length; i++) {
+            offlineQueries.add(new int[]{queries[i][1], queries[i][0], i});
+        }
+
+        // Sort queries based on their end points
+        offlineQueries.sort(Comparator.comparingInt(a -&gt; a[0]));
+
+        int i = 0;
+        Trie trie = new Trie();
+
+        // Process each query
+        for (int[] query : offlineQueries) {
+            // Insert numbers 
+            while (i &lt; nums.length &amp;&amp; nums[i] &lt;= query[0]) {
+                trie.insert(nums[i]);
+                i++;
+            }
+
+            /* If there are numbers inserted into the trie, 
+               find the maximum XOR value for the query range */
+            if (i != 0)
+                ans[query[2]] = trie.findMax(query[1]);
+            else
+                ans[query[2]] = -1;
+        }
+
+        // Return results
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        for (int val : ans) {
+            result.add(val);
+        }
+        return result;
+    }
+}</code></pre></details></li></ul><h2 id="22eb255d-72ff-80b3-a375-fe8cd8e0bbd8" class="">Extras</h2><table id="22fb255d-72ff-8034-9c05-c78203ec38bf" class="simple-table"><tbody><tr id="22fb255d-72ff-8012-85f4-fe77b57031b3"><td id="ioIo" class="">Link</td><td id=":pZC" class="">Title</td><td id="ucN?" class="">Frequency</td><td id="XLlI" class="">Companies Count</td><td id="zHOT" class="">Topics</td></tr><tr id="22fb255d-72ff-8032-8f61-ebb08ad68217"><td id="ioIo" class="">https://leetcode.com/problems/longest-common-prefix</td><td id=":pZC" class="">Longest Common Prefix</td><td id="ucN?" class="">100</td><td id="XLlI" class="">49</td><td id="zHOT" class="">String, Trie</td></tr><tr id="22fb255d-72ff-8082-b5de-c75badd171a2"><td id="ioIo" class="">https://leetcode.com/problems/word-break</td><td id=":pZC" class="">Word Break</td><td id="ucN?" class="">100</td><td id="XLlI" class="">31</td><td id="zHOT" class="">Array, Hash Table, String, Dynamic Programming, Trie, Memoization</td></tr><tr id="22fb255d-72ff-80d5-9793-fe15eb3fc594"><td id="ioIo" class="">https://leetcode.com/problems/word-search-ii</td><td id=":pZC" class="">Word Search II</td><td id="ucN?" class="">100</td><td id="XLlI" class="">21</td><td id="zHOT" class="">Array, String, Backtracking, Trie, Matrix</td></tr><tr id="22fb255d-72ff-804c-acca-ee582308b98f"><td id="ioIo" class="">https://leetcode.com/problems/implement-trie-prefix-tree</td><td id=":pZC" class="">Implement Trie (Prefix Tree)</td><td id="ucN?" class="">100</td><td id="XLlI" class="">20</td><td id="zHOT" class="">Hash Table, String, Design, Trie</td></tr><tr id="22fb255d-72ff-8025-9aef-c05e4c3f85e2"><td id="ioIo" class="">https://leetcode.com/problems/search-suggestions-system</td><td id=":pZC" class="">Search Suggestions System</td><td id="ucN?" class="">100</td><td id="XLlI" class="">18</td><td id="zHOT" class="">Array, String, Binary Search, Trie, Sorting, Heap (Priority Queue)</td></tr><tr id="22fb255d-72ff-80d6-8324-e5869df92722"><td id="ioIo" class="">https://leetcode.com/problems/top-k-frequent-words</td><td id=":pZC" class="">Top K Frequent Words</td><td id="ucN?" class="">100</td><td id="XLlI" class="">14</td><td id="zHOT" class="">Array, Hash Table, String, Trie, Sorting, Heap (Priority Queue), Bucket Sort, Counting</td></tr><tr id="22fb255d-72ff-80e1-8f5b-e9f95e64148e"><td id="ioIo" class="">https://leetcode.com/problems/word-break-ii</td><td id=":pZC" class="">Word Break II</td><td id="ucN?" class="">90.4</td><td id="XLlI" class="">12</td><td id="zHOT" class="">Array, Hash Table, String, Dynamic Programming, Backtracking, Trie, Memoization</td></tr><tr id="22fb255d-72ff-809f-ab2c-e40f89e1fec6"><td id="ioIo" class="">https://leetcode.com/problems/design-in-memory-file-system</td><td id=":pZC" class="">Design In-Memory File System</td><td id="ucN?" class="">100</td><td id="XLlI" class="">11</td><td id="zHOT" class="">Hash Table, String, Design, Trie, Sorting</td></tr><tr id="22fb255d-72ff-804d-aa1f-d5aedc99d8fc"><td id="ioIo" class="">https://leetcode.com/problems/design-add-and-search-words-data-structure</td><td id=":pZC" class="">Design Add and Search Words Data Structure</td><td id="ucN?" class="">70.9</td><td id="XLlI" class="">8</td><td id="zHOT" class="">String, Depth-First Search, Design, Trie</td></tr><tr id="22fb255d-72ff-80dc-9fb7-c5a8c3504846"><td id="ioIo" class="">https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix</td><td id=":pZC" class="">Find the Length of the Longest Common Prefix</td><td id="ucN?" class="">100</td><td id="XLlI" class="">7</td><td id="zHOT" class="">Array, Hash Table, String, Trie</td></tr><tr id="22fb255d-72ff-80c1-aa3d-da500a3a752b"><td id="ioIo" class="">https://leetcode.com/problems/design-file-system</td><td id=":pZC" class="">Design File System</td><td id="ucN?" class="">86.7</td><td id="XLlI" class="">5</td><td id="zHOT" class="">Hash Table, String, Design, Trie</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,1131 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Strings [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9c1ef685-44a3-45e7-8063-1a2e687cc4a5" class="page sans"><header><h1 class="page-title">Strings [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h2 id="180b255d-72ff-8044-8f9a-f1fdfbdef7c1" class=""><strong>DSA Quick Revision</strong></h2><ul id="243b255d-72ff-8028-a4fb-d091c5570bab" class="toggle"><li><details open=""><summary>Group Anagrams</summary></details></li></ul><ul id="22fb255d-72ff-806d-bd51-d590f3e27a8c" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://leetcode.com/problems/longest-palindromic-substring/">Longest Palindromic Substring</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22fb255d-72ff-80aa-b9f3-f9584e1caac4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public String longestPalindrome(String s) {
+        int resLen = 0;     // Length of longest palindrome found
+        int resIdx = 0;     // Starting index of that palindrome
+
+        for (int i = 0; i &lt; s.length(); i++) {
+            // Odd length palindrome
+            int l = i, r = i;
+            while (l &gt;= 0 &amp;&amp; r &lt; s.length() &amp;&amp; s.charAt(l) == s.charAt(r)) {
+                if (r - l + 1 &gt; resLen) {
+                    resLen = r - l + 1;
+                    resIdx = l;
+                }
+                l--;
+                r++;
+            }
+
+            // Even length palindrome
+            l = i;
+            r = i + 1;
+            while (l &gt;= 0 &amp;&amp; r &lt; s.length() &amp;&amp; s.charAt(l) == s.charAt(r)) {
+                if (r - l + 1 &gt; resLen) {
+                    resLen = r - l + 1;
+                    resIdx = l;
+                }
+                l--;
+                r++;
+            }
+        }
+
+        // Return the longest palindrome substring
+        return s.substring(resIdx, resIdx + resLen);
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-80a5-8928-cf85e16a0d1e" class="toggle"><li><details open=""><summary>Roman to Integer</summary></details></li></ul><ul id="244b255d-72ff-8049-8723-f99f9a878cd2" class="toggle"><li><details open=""><summary>Integer to Roman</summary></details></li></ul><ul id="244b255d-72ff-8005-80b6-c1e282f9a402" class="toggle"><li><details open=""><summary>Text Justification</summary></details></li></ul><ul id="244b255d-72ff-80e0-99b2-c778bd2098c8" class="toggle"><li><details open=""><summary>Valid Anagram</summary></details></li></ul><ul id="244b255d-72ff-80d5-84db-cf1e3f669c12" class="toggle"><li><details open=""><summary>Valid Palindrome</summary></details></li></ul><ul id="244b255d-72ff-80e4-a688-fc9bd86cde23" class="toggle"><li><details open=""><summary>String Compression</summary></details></li></ul><ul id="1d5b255d-72ff-804c-8234-cbcdd72de5f1" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/strings--advanced-algo/medium-problems/reverse-every-word-in-a-string">Reverse every word in a string</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d5b255d-72ff-80fc-ba64-f192e19859f1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Helper function to reverse the string
+    private void reverseString(char[] s, int start, int end) {
+        
+        // Reversing the string character by character
+        while(start &lt; end) {
+            char temp = s[start];
+            s[start] = s[end];
+            s[end] = temp;
+            start++;
+            end--;
+        }
+    }
+    
+    // Function to reverse every word in the given string
+    public String reverseWords(String s) {
+        // Converting string to array because strings are immutable in Java
+        char[] arr = s.toCharArray(); 
+        
+        int n = arr.length; // Length of array
+
+        // Reverse the complete string
+        reverseString(arr, 0, n-1);
+        
+        int start = 0, end = 0;
+        int i = 0, j = 0;
+        
+        while(j &lt; n) {
+            // Skip any white spaces 
+            while(j &lt; n &amp;&amp; arr[j] == &#x27; &#x27;) j++;
+            
+            start = i; // Store the start of the word
+            
+            // Until the word ends
+            while(j &lt; n &amp;&amp; arr[j] != &#x27; &#x27;) {
+                arr[i] = arr[j]; // Shift the characters
+                i++;
+                j++;
+            }
+            
+            end = i-1; // Store the end of the word
+            
+            // Reverse the word found 
+            reverseString(arr, start, end);
+            
+            // Adding a space after every word
+            if(i &lt; n) arr[i++] = &#x27; &#x27;;
+        }
+        
+        // Return the result containing all words 
+        return new String(arr).substring(0, end + 1); // Using substring for slicing
+    } 
+}</code></pre></details></li></ul><ul id="244b255d-72ff-80b1-a77f-f39eb4e7f2d4" class="toggle"><li><details open=""><summary>Zigzag Conversion</summary></details></li></ul><ul id="244b255d-72ff-806a-996a-cc46f7506181" class="toggle"><li><details open=""><summary>Find the Index of the First Occurrence in a String</summary></details></li></ul><ul id="22fb255d-72ff-80c1-b5c6-f155de33a9cc" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/palindromic-substrings/description/">Palindromic Substrings</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22fb255d-72ff-80cd-aecf-dae38fac412d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int countSubstrings(String s) {
+        int count = 0;
+        int n = s.length();
+
+        // Iterate through each index as center
+        for (int center = 0; center &lt; n; center++) {
+            // Count odd-length palindromes (centered at one character)
+            count += expand(s, center, center);
+
+            // Count even-length palindromes (centered between two characters)
+            count += expand(s, center, center + 1);
+        }
+
+        return count;
+    }
+
+    // Helper function to expand around center and count palindromes
+    private int expand(String s, int left, int right) {
+        int cnt = 0;
+
+        // Expand while the substring is a valid palindrome
+        while (left &gt;= 0 &amp;&amp; right &lt; s.length() &amp;&amp; s.charAt(left) == s.charAt(right)) {
+            cnt++; // Count this valid palindrome
+            left--;  // Expand left
+            right++; // Expand right
+        }
+
+        return cnt;
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-800a-b740-f4a1ff07df13" class="toggle"><li><details open=""><summary>String to Integer (atoi)</summary></details></li></ul><ul id="244b255d-72ff-803d-8cc0-fa240cb0a982" class="toggle"><li><details open=""><summary>Isomorphic Strings</summary></details></li></ul><ul id="244b255d-72ff-80f9-b945-f759b9be52df" class="toggle"><li><details open=""><summary>First Unique Character in a String</summary></details></li></ul><ul id="1d5b255d-72ff-80c0-921d-eb94b3e048ea" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/strings--advanced-algo/medium-problems/count-and-say">Count and say</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d5b255d-72ff-8048-94fd-e0c4130a51fa" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Recursive function to return the nth 
+    term of the count-and-say sequence */
+    public String countAndSay(int n) {
+        if (n == 1) return &quot;1&quot;;
+        
+        // Recursive call
+        String prev = countAndSay(n - 1);
+        int len = prev.length();
+        
+        // To store the answer
+        String ans = &quot;&quot;; 
+        
+        // To count the frequency of identicals
+        int count = 1;  
+        
+        // Traverse the string 
+        for (int i = 1; i &lt; len; i++) {
+            // If identicals are found, increment the counter
+            if (prev.charAt(i) == prev.charAt(i - 1)) count++;
+            
+            // Otherwise
+            else {
+                ans += (char) (&#x27;0&#x27; + count); // Add frequency
+                ans += prev.charAt(i - 1); // Add the digit 
+                count = 1; // Reset counter to 1
+            }
+        }
+        
+        // Adding the frequency for the last digit and the last digit
+        ans += (char) (&#x27;0&#x27; + count);
+        ans += prev.charAt(len - 1); 
+        
+        return ans; // Return the result
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-8043-8264-ce95bf80d670" class="toggle"><li><details open=""><summary>Multiply Strings</summary></details></li></ul><ul id="244b255d-72ff-8045-9742-f5110c0302c9" class="toggle"><li><details open=""><summary>Fizz Buzz</summary></details></li></ul><ul id="22fb255d-72ff-808c-b479-fab47e3dac0a" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/is-subsequence/">Is Subsequence</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22fb255d-72ff-8062-a301-cf1e6970dacf" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">public class Solution {
+    public boolean isSubsequence(String s, String t) {
+        int i = 0, j = 0;
+        while (i &lt; s.length() &amp;&amp; j &lt; t.length()) {
+            if (s.charAt(i) == t.charAt(j)) {
+                i++;
+            }
+            j++;
+        }
+        return i == s.length();
+    }
+}
+</code></pre></details></li></ul><ul id="244b255d-72ff-80ad-9756-dec197d52b6d" class="toggle"><li><details open=""><summary>Add Strings</summary></details></li></ul><ul id="244b255d-72ff-8041-8150-d6acbedbc38e" class="toggle"><li><details open=""><summary>Length of Last Word</summary></details></li></ul><ul id="244b255d-72ff-8031-8be1-ed3c3f06adf8" class="toggle"><li><details open=""><summary>Validate IP Address</summary></details></li></ul><ul id="244b255d-72ff-806b-89a0-fb99e7284eeb" class="toggle"><li><details open=""><summary>Valid Number</summary></details></li></ul><ul id="244b255d-72ff-8041-947b-d4b93833a17b" class="toggle"><li><details open=""><summary>Merge Strings Alternately</summary></details></li></ul><ul id="244b255d-72ff-809e-b936-d4f2f6478eb9" class="toggle"><li><details open=""><summary>Robot Bounded In Circle</summary></details></li></ul><ul id="244b255d-72ff-80f2-b91a-c3ce9af835e5" class="toggle"><li><details open=""><summary>Rotate String</summary></details></li></ul><ul id="244b255d-72ff-8060-b6a7-c8163a633aeb" class="toggle"><li><details open=""><summary>Reverse Vowels of a String</summary></details></li></ul><ul id="244b255d-72ff-8028-baac-e34f282b4e29" class="toggle"><li><details open=""><summary>Compare Version Numbers</summary></details></li></ul><ul id="244b255d-72ff-8015-96bf-cdc7f212c6ff" class="toggle"><li><details open=""><summary>Reverse Words in a String III</summary></details></li></ul><ul id="244b255d-72ff-8027-a7ad-c40824887c68" class="toggle"><li><details open=""><summary>Fraction to Recurring Decimal</summary></details></li></ul><ul id="1d5b255d-72ff-8048-a04d-fad128e77f92" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/strings--advanced-algo/advanced-problems-(less-asked)/shortest-palindrome">Shortest Palindrome</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d5b255d-72ff-80ec-bef1-cfa8ad00845e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Compute the Longest prefix suffix array for the combined string
+    private int[] computeLPS(String s) {
+        int n = s.length(); // size of string
+        
+        // To store the longest prefix suffix
+        int[] LPS = new int[n];
+        
+        // Iterate on the string
+        for (int i = 1; i &lt; n; i++) {
+            
+            // For all possible lengths
+            for (int len = 1; len &lt; i; len++) {
+                if (s.substring(0, len).equals(s.substring(i - len + 1, i + 1))) {
+                    LPS[i] = len;
+                }
+            }
+        }
+        
+        return LPS; // Return the computed LPS array
+    }
+    
+    /* Function to find the shortest palindrome by inserting
+    characters at the beginning of given string */
+    public String shortestPalindrome(String s) {
+        
+        // To store the reverse string
+        StringBuilder revs = new StringBuilder(s);
+        revs.reverse();
+        
+        // Forming the combined string
+        String str = s + &quot;$&quot; + revs;
+        
+        // Computing the LPS array
+        int[] lps = computeLPS(str);
+        
+        // Calculating the answer
+        int ans = s.length() - lps[lps.length - 1];
+        
+        /* Finding the smallest string to be
+        added in front of the given string */
+        String toAdd = revs.substring(0, ans);
+        
+        // Return the result
+        return toAdd + s;
+    }
+};
+</code></pre></details></li></ul><ul id="244b255d-72ff-8099-9b4f-fc61dd066194" class="toggle"><li><details open=""><summary>Count Vowel Substrings of a String</summary></details></li></ul><ul id="244b255d-72ff-80c1-b2ac-fcd0ec65ecea" class="toggle"><li><details open=""><summary>Reformat Date</summary></details></li></ul><ul id="244b255d-72ff-80a5-a4f0-f45ffe65f544" class="toggle"><li><details open=""><summary>Ransom Note</summary></details></li></ul><ul id="244b255d-72ff-807d-a311-dca7d1778708" class="toggle"><li><details open=""><summary>Valid Word Abbreviation</summary></details></li></ul><ul id="244b255d-72ff-8028-be07-eeec88e21b47" class="toggle"><li><details open=""><summary>Excel Sheet Column Title</summary></details></li></ul><ul id="244b255d-72ff-8069-92f3-d337ce076469" class="toggle"><li><details open=""><summary>Guess the Word</summary></details></li></ul><ul id="244b255d-72ff-80ca-bd32-d43495b525ec" class="toggle"><li><details open=""><summary>Count Binary Substrings</summary></details></li></ul><ul id="180b255d-72ff-8079-a22c-e9dab1401531" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/rabin-karp-algorithm">Search Pattern (Rabin-Karp Algorithm)</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-804e-93e2-c49c7dfb000d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Constants for hashing
+    private static final int BASE = 256;
+    private static final int PRIME = 101;
+
+    // Function to compute hash of a string of length &#x27;len&#x27;
+    private int computeHash(String str, int len) {
+        int hash = 0;
+        for (int i = 0; i &lt; len; i++) {
+            hash = (hash * BASE + str.charAt(i)) % PRIME;
+        }
+        return hash;
+    }
+
+    // Rabin-Karp string matching
+    ArrayList&lt;Integer&gt; search(String pattern, String text) {
+        ArrayList&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        int patLen = pattern.length();
+        int txtLen = text.length();
+
+        if (patLen &gt; txtLen) return result;
+
+        int patternHash = computeHash(pattern, patLen);
+        int windowHash = computeHash(text, patLen);
+
+        // Precompute BASE^(patLen-1) % PRIME for rolling hash
+        int power = 1;
+        for (int i = 0; i &lt; patLen - 1; i++) {
+            power = (power * BASE) % PRIME;
+        }
+
+        for (int i = 0; i &lt;= txtLen - patLen; i++) { //Imp: yaha = ayega
+            // If hashes match, compare the actual substring
+            if (patternHash == windowHash) {
+                if (text.substring(i, i + patLen).equals(pattern)) {
+                    result.add(i); 
+                }
+            }
+
+            // Slide the window and update the hash
+            if (i &lt; txtLen - patLen) { // Imp: yaha = nahi ayega
+                windowHash = (BASE * (windowHash - text.charAt(i) * power) + text.charAt(i + patLen)) % PRIME;
+                if (windowHash &lt; 0) windowHash += PRIME;
+            }
+        }
+
+        return result;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8048-ac9c-db9e29c8e8da" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/z-function">Z function</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-8075-9b4b-d15a29d586e2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+    // Compute the Z array for the combined string
+    private int[] computeZarray(String s) {
+        int n = s.length(); // size of string
+
+        int[] Z = new int[n]; // Z-array
+
+        // Pointers to mark the window
+        int left = 0, right = 0;
+
+        // For every character
+        for(int i = 1; i &lt; n; i++) {
+
+            // Out of window
+            if(i &gt; right) {
+                while(i + Z[i] &lt; n &amp;&amp; s.charAt(i + Z[i]) == s.charAt(Z[i])) {
+                    Z[i]++;
+                }
+            }
+
+            // Else (Inside the window)
+            else {
+                // Check for inside
+                if(i + Z[i - left] &lt;= right) {
+                    Z[i] = Z[i - left];
+                }
+
+                // Else compute again using brute force method
+                else {
+                    Z[i] = right - i + 1; // Take the answer till boundary
+
+                    // Start matching beyond boundary using brute force
+                    while(i + Z[i] &lt; n &amp;&amp; s.charAt(i + Z[i]) == s.charAt(Z[i])) {
+                        Z[i]++;
+                    }
+                }
+            }
+
+            left = i;
+            right = i + Z[i] - 1; // Update the window
+        }
+
+        return Z; // Return the computed Z-array
+    }
+
+    // Function to find all indices of pattern in text
+    public List&lt;Integer&gt; search(String text, String pattern) {
+        String s = pattern + &#x27;$&#x27; + text; // Combined string
+
+        // Function call to find the Z array for the combined string
+        int[] Z = computeZarray(s);
+
+        // Length of pattern and text
+        int n = text.length(), m = pattern.length();
+
+        // To store the result
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+        // Iterate on the combined string after the delimiter
+        for(int i = m+1; i &lt; s.length(); i++) {
+            if(Z[i] == m) {
+                ans.add(i - (m + 1));
+            }
+        }
+
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="1c6b255d-72ff-8015-8a42-cc972cca80a8" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/kmp-algorithm-or-lps-array">KMP Algorithm or LPS array</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c6b255d-72ff-80f8-9668-ffd6bfff7aa2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Compute the Longest prefix suffix array for the combined string
+    private int[] computeLPS(String s) {
+        int n = s.length(); // size of string
+
+        // To store the longest prefix suffix
+        int[] LPS = new int[n];
+
+        int i = 1, j = 0;
+
+        // Iterate on the string
+        while (i &lt; n) {
+            // If the character matches
+            if (s.charAt(i) == s.charAt(j)) {
+                LPS[i] = j + 1;
+                i++;
+                j++;
+            }
+
+            // Otherwise
+            else {
+                // Trace back j pointer till it does not match
+                while (j &gt; 0 &amp;&amp; s.charAt(i) != s.charAt(j)) {
+                    j = LPS[j - 1];
+                }
+
+                // If a match is found
+                if (s.charAt(i) == s.charAt(j)) {
+                    LPS[i] = j + 1;
+                    j++;
+                }
+                i += 1;
+            }
+        }
+
+        return LPS; // Return the computed LPS array
+    }
+
+    // Function to find all indices of pattern in text
+    public List&lt;Integer&gt; search(String pattern, String text) {
+        String s = pattern + &#x27;$&#x27; + text; // Combined string
+
+        // Function call to find the LPS array for the combined string
+        int[] LPS = computeLPS(s);
+
+        // Length of pattern and text
+        int n = text.length(), m = pattern.length();
+
+        // To store the result
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+
+        // Iterate on the combined string after the delimiter
+        for (int i = m + 1; i &lt; s.length(); i++) {
+            if (LPS[i] == m) ans.add(i - 2 * m);
+        }
+
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="1c7b255d-72ff-808d-94ea-d2ffb9c37aaf" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-7-lms/longest-happy-prefix">Longest Happy Prefix</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1c7b255d-72ff-8062-8476-c39786ebb38d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public String lps(String s) {
+        int n = s.length();
+        int[] lps = new int[n];
+
+        int len = 0;  // Length of the previous longest prefix suffix
+        int i = 1;
+
+        while (i &lt; n) {
+            if (s.charAt(i) == s.charAt(len)) {
+                len++;
+                lps[i] = len;
+                i++;
+            } else {
+                if (len != 0) {
+                    len = lps[len - 1];
+                } else {
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+
+        return s.substring(0, lps[n - 1]);
+    }
+}
+</code></pre></details></li></ul><h2 id="1d5b255d-72ff-80d5-8f5c-de3922fd5f01" class=""><strong>DSA Striver</strong></h2><ul id="1d5b255d-72ff-800c-a8e1-d9b2d8bdd2e1" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/strings--advanced-algo/medium-problems/minimum-number-of-bracket-reversals-to-make-an-expression-balanced">Minimum number of bracket reversals to make an expression balanced</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d5b255d-72ff-800d-a359-f319c187c653" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to find the minimum number of reversals required
+    to convert the string into a balanced expression. */
+    public int countRev(String s) {
+        int n = s.length(); // Size of string
+        
+        /* If string is of odd length, it is not 
+        possible to balance the paranthesis */
+        if(n % 2 != 0) return -1;
+        
+        // To store the count of opening and closing brackets
+        int open = 0, close = 0;
+        
+        for(int i=0; i &lt; n; i++) {
+            // Increment open count if opening bracket is found
+            if(s.charAt(i) == &#x27;(&#x27;) open++;
+            
+            // Else (closing bracket is found)
+            else {
+                /* If a opening bracket is there, a pair
+                of balanced paranthesis is formed */
+                if(open &gt; 0) open--;
+                
+                // Otherwise the closing bracket remain unbalanced
+                else close++;
+            }
+        }
+        
+        // Computing the result
+        int ans = (open / 2) + (open % 2) + (close / 2) + (close % 2);
+        
+        return ans; // Return the result
+    }
+}</code></pre></details></li></ul><h2 id="244b255d-72ff-807a-a272-c4a7c78c9a04" class="">Extras</h2><table id="244b255d-72ff-800a-a5b6-dc6106d6c1b3" class="simple-table"><tbody><tr id="244b255d-72ff-8009-a1a2-ddead0aae7ab"><td id="`jC|" class="">Link</td><td id="GZIZ" class="">Title</td><td id="IPmS" class="">Frequency</td><td id="|?k~" class="">Companies Count</td><td id=":kjE" class="">Topics</td></tr><tr id="244b255d-72ff-807f-97d0-dcfe95fb508d"><td id="`jC|" class="">https://leetcode.com/problems/valid-parentheses</td><td id="GZIZ" class="">Valid Parentheses</td><td id="IPmS" class="">100</td><td id="|?k~" class="">94</td><td id=":kjE" class="">String, Stack</td></tr><tr id="244b255d-72ff-8075-92a4-fa6b6da0a1c0"><td id="`jC|" class="">https://leetcode.com/problems/longest-substring-without-repeating-characters</td><td id="GZIZ" class="">Longest Substring Without Repeating Characters</td><td id="IPmS" class="">100</td><td id="|?k~" class="">92</td><td id=":kjE" class="">Hash Table, String, Sliding Window</td></tr><tr id="244b255d-72ff-802d-a3da-f5116fe9a661"><td id="`jC|" class="">https://leetcode.com/problems/group-anagrams</td><td id="GZIZ" class="">Group Anagrams</td><td id="IPmS" class="">100</td><td id="|?k~" class="">80</td><td id=":kjE" class="">Array, Hash Table, String, Sorting</td></tr><tr id="244b255d-72ff-804b-afd5-df5158a49bef"><td id="`jC|" class="">https://leetcode.com/problems/longest-palindromic-substring</td><td id="GZIZ" class="">Longest Palindromic Substring</td><td id="IPmS" class="">100</td><td id="|?k~" class="">74</td><td id=":kjE" class="">Two Pointers, String, Dynamic Programming</td></tr><tr id="244b255d-72ff-801f-bb68-f6ecadbf4cce"><td id="`jC|" class="">https://leetcode.com/problems/longest-common-prefix</td><td id="GZIZ" class="">Longest Common Prefix</td><td id="IPmS" class="">100</td><td id="|?k~" class="">49</td><td id=":kjE" class="">String, Trie</td></tr><tr id="244b255d-72ff-80d0-b349-cc8926fb8c01"><td id="`jC|" class="">https://leetcode.com/problems/generate-parentheses</td><td id="GZIZ" class="">Generate Parentheses</td><td id="IPmS" class="">100</td><td id="|?k~" class="">40</td><td id=":kjE" class="">String, Dynamic Programming, Backtracking</td></tr><tr id="244b255d-72ff-80f8-a52c-f9275ac33aa0"><td id="`jC|" class="">https://leetcode.com/problems/letter-combinations-of-a-phone-number</td><td id="GZIZ" class="">Letter Combinations of a Phone Number</td><td id="IPmS" class="">100</td><td id="|?k~" class="">37</td><td id=":kjE" class="">Hash Table, String, Backtracking</td></tr><tr id="244b255d-72ff-8042-82f7-d2b0e0da2885"><td id="`jC|" class="">https://leetcode.com/problems/roman-to-integer</td><td id="GZIZ" class="">Roman to Integer</td><td id="IPmS" class="">100</td><td id="|?k~" class="">36</td><td id=":kjE" class="">Hash Table, Math, String</td></tr><tr id="244b255d-72ff-800e-ab7b-f8d0895f3fcd"><td id="`jC|" class="">https://leetcode.com/problems/integer-to-roman</td><td id="GZIZ" class="">Integer to Roman</td><td id="IPmS" class="">100</td><td id="|?k~" class="">36</td><td id=":kjE" class="">Hash Table, Math, String</td></tr><tr id="244b255d-72ff-80a9-ba26-efbe37a859d2"><td id="`jC|" class="">https://leetcode.com/problems/decode-string</td><td id="GZIZ" class="">Decode String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">36</td><td id=":kjE" class="">String, Stack, Recursion</td></tr><tr id="244b255d-72ff-8056-bf02-e3b9656483de"><td id="`jC|" class="">https://leetcode.com/problems/word-search</td><td id="GZIZ" class="">Word Search</td><td id="IPmS" class="">100</td><td id="|?k~" class="">35</td><td id=":kjE" class="">Array, String, Backtracking, Depth-First Search, Matrix</td></tr><tr id="244b255d-72ff-803b-b0e8-e44ae7a6aa3f"><td id="`jC|" class="">https://leetcode.com/problems/text-justification</td><td id="GZIZ" class="">Text Justification</td><td id="IPmS" class="">100</td><td id="|?k~" class="">34</td><td id=":kjE" class="">Array, String, Simulation</td></tr><tr id="244b255d-72ff-8062-a3eb-ef4369f533b6"><td id="`jC|" class="">https://leetcode.com/problems/valid-anagram</td><td id="GZIZ" class="">Valid Anagram</td><td id="IPmS" class="">100</td><td id="|?k~" class="">33</td><td id=":kjE" class="">Hash Table, String, Sorting</td></tr><tr id="244b255d-72ff-80a6-b24a-d635fd1d358a"><td id="`jC|" class="">https://leetcode.com/problems/valid-palindrome</td><td id="GZIZ" class="">Valid Palindrome</td><td id="IPmS" class="">100</td><td id="|?k~" class="">32</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-8059-8bed-eca5ee57cf9c"><td id="`jC|" class="">https://leetcode.com/problems/minimum-window-substring</td><td id="GZIZ" class="">Minimum Window Substring</td><td id="IPmS" class="">100</td><td id="|?k~" class="">31</td><td id=":kjE" class="">Hash Table, String, Sliding Window</td></tr><tr id="244b255d-72ff-802d-b8c7-e3eeee668115"><td id="`jC|" class="">https://leetcode.com/problems/word-break</td><td id="GZIZ" class="">Word Break</td><td id="IPmS" class="">100</td><td id="|?k~" class="">31</td><td id=":kjE" class="">Array, Hash Table, String, Dynamic Programming, Trie, Memoization</td></tr><tr id="244b255d-72ff-8036-a4b8-c75a6ee9ba49"><td id="`jC|" class="">https://leetcode.com/problems/basic-calculator-ii</td><td id="GZIZ" class="">Basic Calculator II</td><td id="IPmS" class="">100</td><td id="|?k~" class="">27</td><td id=":kjE" class="">Math, String, Stack</td></tr><tr id="244b255d-72ff-80c7-9d67-fe65effe8e69"><td id="`jC|" class="">https://leetcode.com/problems/edit-distance</td><td id="GZIZ" class="">Edit Distance</td><td id="IPmS" class="">100</td><td id="|?k~" class="">26</td><td id=":kjE" class="">String, Dynamic Programming</td></tr><tr id="244b255d-72ff-8030-a9f2-fac8ab7880ce"><td id="`jC|" class="">https://leetcode.com/problems/word-ladder</td><td id="GZIZ" class="">Word Ladder</td><td id="IPmS" class="">100</td><td id="|?k~" class="">25</td><td id=":kjE" class="">Hash Table, String, Breadth-First Search</td></tr><tr id="244b255d-72ff-8010-96b4-eb29e04058fc"><td id="`jC|" class="">https://leetcode.com/problems/string-compression</td><td id="GZIZ" class="">String Compression</td><td id="IPmS" class="">100</td><td id="|?k~" class="">25</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-803b-be5d-c30d83fa063b"><td id="`jC|" class="">https://leetcode.com/problems/reverse-words-in-a-string</td><td id="GZIZ" class="">Reverse Words in a String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">24</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-8014-a4b1-ebea2647b5bb"><td id="`jC|" class="">https://leetcode.com/problems/zigzag-conversion</td><td id="GZIZ" class="">Zigzag Conversion</td><td id="IPmS" class="">100</td><td id="|?k~" class="">24</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-80ce-b771-c63d8a61e292"><td id="`jC|" class="">https://leetcode.com/problems/time-based-key-value-store</td><td id="GZIZ" class="">Time Based Key-Value Store</td><td id="IPmS" class="">100</td><td id="|?k~" class="">24</td><td id=":kjE" class="">Hash Table, String, Binary Search, Design</td></tr><tr id="244b255d-72ff-8014-bee4-cfc97440cda0"><td id="`jC|" class="">https://leetcode.com/problems/simplify-path</td><td id="GZIZ" class="">Simplify Path</td><td id="IPmS" class="">100</td><td id="|?k~" class="">23</td><td id=":kjE" class="">String, Stack</td></tr><tr id="244b255d-72ff-804e-95a0-c27bed3a4687"><td id="`jC|" class="">https://leetcode.com/problems/regular-expression-matching</td><td id="GZIZ" class="">Regular Expression Matching</td><td id="IPmS" class="">100</td><td id="|?k~" class="">23</td><td id=":kjE" class="">String, Dynamic Programming, Recursion</td></tr><tr id="244b255d-72ff-80d4-91f9-fcdac39d43b8"><td id="`jC|" class="">https://leetcode.com/problems/decode-ways</td><td id="GZIZ" class="">Decode Ways</td><td id="IPmS" class="">100</td><td id="|?k~" class="">21</td><td id=":kjE" class="">String, Dynamic Programming</td></tr><tr id="244b255d-72ff-80cb-b0c4-f9f117b57958"><td id="`jC|" class="">https://leetcode.com/problems/longest-valid-parentheses</td><td id="GZIZ" class="">Longest Valid Parentheses</td><td id="IPmS" class="">100</td><td id="|?k~" class="">21</td><td id=":kjE" class="">String, Dynamic Programming, Stack</td></tr><tr id="244b255d-72ff-8032-8fed-d74123c7cd03"><td id="`jC|" class="">https://leetcode.com/problems/word-search-ii</td><td id="GZIZ" class="">Word Search II</td><td id="IPmS" class="">100</td><td id="|?k~" class="">21</td><td id=":kjE" class="">Array, String, Backtracking, Trie, Matrix</td></tr><tr id="244b255d-72ff-80f5-a88b-ea0574099d40"><td id="`jC|" class="">https://leetcode.com/problems/largest-number</td><td id="GZIZ" class="">Largest Number</td><td id="IPmS" class="">100</td><td id="|?k~" class="">20</td><td id=":kjE" class="">Array, String, Greedy, Sorting</td></tr><tr id="244b255d-72ff-80cf-ba59-fa68f0bd1706"><td id="`jC|" class="">https://leetcode.com/problems/implement-trie-prefix-tree</td><td id="GZIZ" class="">Implement Trie (Prefix Tree)</td><td id="IPmS" class="">100</td><td id="|?k~" class="">20</td><td id=":kjE" class="">Hash Table, String, Design, Trie</td></tr><tr id="244b255d-72ff-8036-9c23-f291958b7f04"><td id="`jC|" class="">https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string</td><td id="GZIZ" class="">Find the Index of the First Occurrence in a String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">19</td><td id=":kjE" class="">Two Pointers, String, String Matching</td></tr><tr id="244b255d-72ff-8003-a791-cee701fc9986"><td id="`jC|" class="">https://leetcode.com/problems/wildcard-matching</td><td id="GZIZ" class="">Wildcard Matching</td><td id="IPmS" class="">93.8</td><td id="|?k~" class="">19</td><td id=":kjE" class="">String, Dynamic Programming, Greedy, Recursion</td></tr><tr id="244b255d-72ff-803b-86fd-f037770e3014"><td id="`jC|" class="">https://leetcode.com/problems/palindromic-substrings</td><td id="GZIZ" class="">Palindromic Substrings</td><td id="IPmS" class="">100</td><td id="|?k~" class="">18</td><td id=":kjE" class="">Two Pointers, String, Dynamic Programming</td></tr><tr id="244b255d-72ff-80f6-84b7-e0870041dd23"><td id="`jC|" class="">https://leetcode.com/problems/integer-to-english-words</td><td id="GZIZ" class="">Integer to English Words</td><td id="IPmS" class="">100</td><td id="|?k~" class="">18</td><td id=":kjE" class="">Math, String, Recursion</td></tr><tr id="244b255d-72ff-8027-a177-c3170c0f5f79"><td id="`jC|" class="">https://leetcode.com/problems/search-suggestions-system</td><td id="GZIZ" class="">Search Suggestions System</td><td id="IPmS" class="">100</td><td id="|?k~" class="">18</td><td id=":kjE" class="">Array, String, Binary Search, Trie, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-808e-a29e-cee094f85897"><td id="`jC|" class="">https://leetcode.com/problems/basic-calculator</td><td id="GZIZ" class="">Basic Calculator</td><td id="IPmS" class="">100</td><td id="|?k~" class="">17</td><td id=":kjE" class="">Math, String, Stack, Recursion</td></tr><tr id="244b255d-72ff-80ad-a286-e5761149bf90"><td id="`jC|" class="">https://leetcode.com/problems/evaluate-division</td><td id="GZIZ" class="">Evaluate Division</td><td id="IPmS" class="">100</td><td id="|?k~" class="">17</td><td id=":kjE" class="">Array, String, Depth-First Search, Breadth-First Search, Union Find, Graph, Shortest Path</td></tr><tr id="244b255d-72ff-80ea-9fde-c0a823169cf0"><td id="`jC|" class="">https://leetcode.com/problems/longest-repeating-character-replacement</td><td id="GZIZ" class="">Longest Repeating Character Replacement</td><td id="IPmS" class="">100</td><td id="|?k~" class="">16</td><td id=":kjE" class="">Hash Table, String, Sliding Window</td></tr><tr id="244b255d-72ff-8019-b093-e3931d900711"><td id="`jC|" class="">https://leetcode.com/problems/string-to-integer-atoi</td><td id="GZIZ" class="">String to Integer (atoi)</td><td id="IPmS" class="">100</td><td id="|?k~" class="">16</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-802b-a0d8-c0137dfaea04"><td id="`jC|" class="">https://leetcode.com/problems/restore-ip-addresses</td><td id="GZIZ" class="">Restore IP Addresses</td><td id="IPmS" class="">100</td><td id="|?k~" class="">15</td><td id=":kjE" class="">String, Backtracking</td></tr><tr id="244b255d-72ff-8030-accf-e43b9762f44e"><td id="`jC|" class="">https://leetcode.com/problems/isomorphic-strings</td><td id="GZIZ" class="">Isomorphic Strings</td><td id="IPmS" class="">100</td><td id="|?k~" class="">15</td><td id=":kjE" class="">Hash Table, String</td></tr><tr id="244b255d-72ff-8067-bd80-f1beed469754"><td id="`jC|" class="">https://leetcode.com/problems/first-unique-character-in-a-string</td><td id="GZIZ" class="">First Unique Character in a String</td><td id="IPmS" class="">78.1</td><td id="|?k~" class="">15</td><td id=":kjE" class="">Hash Table, String, Queue, Counting</td></tr><tr id="244b255d-72ff-80a6-979d-fe2809936c7f"><td id="`jC|" class="">https://leetcode.com/problems/top-k-frequent-words</td><td id="GZIZ" class="">Top K Frequent Words</td><td id="IPmS" class="">100</td><td id="|?k~" class="">14</td><td id=":kjE" class="">Array, Hash Table, String, Trie, Sorting, Heap (Priority Queue), Bucket Sort, Counting</td></tr><tr id="244b255d-72ff-806a-8fc2-d3a9b740f4e3"><td id="`jC|" class="">https://leetcode.com/problems/count-and-say</td><td id="GZIZ" class="">Count and Say</td><td id="IPmS" class="">100</td><td id="|?k~" class="">14</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-80bf-b295-c198b465ee5c"><td id="`jC|" class="">https://leetcode.com/problems/multiply-strings</td><td id="GZIZ" class="">Multiply Strings</td><td id="IPmS" class="">93.8</td><td id="|?k~" class="">14</td><td id=":kjE" class="">Math, String, Simulation</td></tr><tr id="244b255d-72ff-8032-bf2f-c2e1d3ec2812"><td id="`jC|" class="">https://leetcode.com/problems/alien-dictionary</td><td id="GZIZ" class="">Alien Dictionary</td><td id="IPmS" class="">100</td><td id="|?k~" class="">13</td><td id=":kjE" class="">Array, String, Depth-First Search, Breadth-First Search, Graph, Topological Sort</td></tr><tr id="244b255d-72ff-8007-88ed-c0f37879cb01"><td id="`jC|" class="">https://leetcode.com/problems/reorganize-string</td><td id="GZIZ" class="">Reorganize String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">13</td><td id=":kjE" class="">Hash Table, String, Greedy, Sorting, Heap (Priority Queue), Counting</td></tr><tr id="244b255d-72ff-8071-848a-fcdc4a6ca3df"><td id="`jC|" class="">https://leetcode.com/problems/serialize-and-deserialize-binary-tree</td><td id="GZIZ" class="">Serialize and Deserialize Binary Tree</td><td id="IPmS" class="">100</td><td id="|?k~" class="">13</td><td id=":kjE" class="">String, Tree, Depth-First Search, Breadth-First Search, Design, Binary Tree</td></tr><tr id="244b255d-72ff-80c3-bd1e-e0960e4ecef5"><td id="`jC|" class="">https://leetcode.com/problems/fizz-buzz</td><td id="GZIZ" class="">Fizz Buzz</td><td id="IPmS" class="">89.9</td><td id="|?k~" class="">13</td><td id=":kjE" class="">Math, String, Simulation</td></tr><tr id="244b255d-72ff-808b-b87f-ed83c7841f9a"><td id="`jC|" class="">https://leetcode.com/problems/interleaving-string</td><td id="GZIZ" class="">Interleaving String</td><td id="IPmS" class="">87.1</td><td id="|?k~" class="">13</td><td id=":kjE" class="">String, Dynamic Programming</td></tr><tr id="244b255d-72ff-805c-b3a2-fc584cf30aeb"><td id="`jC|" class="">https://leetcode.com/problems/is-subsequence</td><td id="GZIZ" class="">Is Subsequence</td><td id="IPmS" class="">100</td><td id="|?k~" class="">12</td><td id=":kjE" class="">Two Pointers, String, Dynamic Programming</td></tr><tr id="244b255d-72ff-8093-92ba-eb5f26439cf4"><td id="`jC|" class="">https://leetcode.com/problems/longest-common-subsequence</td><td id="GZIZ" class="">Longest Common Subsequence</td><td id="IPmS" class="">100</td><td id="|?k~" class="">12</td><td id=":kjE" class="">String, Dynamic Programming</td></tr><tr id="244b255d-72ff-8025-b7bb-ff4d3dfbfb22"><td id="`jC|" class="">https://leetcode.com/problems/backspace-string-compare</td><td id="GZIZ" class="">Backspace String Compare</td><td id="IPmS" class="">100</td><td id="|?k~" class="">12</td><td id=":kjE" class="">Two Pointers, String, Stack, Simulation</td></tr><tr id="244b255d-72ff-80bf-8438-cb8634e73aef"><td id="`jC|" class="">https://leetcode.com/problems/word-break-ii</td><td id="GZIZ" class="">Word Break II</td><td id="IPmS" class="">90.4</td><td id="|?k~" class="">12</td><td id=":kjE" class="">Array, Hash Table, String, Dynamic Programming, Backtracking, Trie, Memoization</td></tr><tr id="244b255d-72ff-80ba-8768-d1ee0c274538"><td id="`jC|" class="">https://leetcode.com/problems/reverse-string</td><td id="GZIZ" class="">Reverse String</td><td id="IPmS" class="">89.7</td><td id="|?k~" class="">12</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-807a-b8f1-e49831d3ca96"><td id="`jC|" class="">https://leetcode.com/problems/design-in-memory-file-system</td><td id="GZIZ" class="">Design In-Memory File System</td><td id="IPmS" class="">100</td><td id="|?k~" class="">11</td><td id=":kjE" class="">Hash Table, String, Design, Trie, Sorting</td></tr><tr id="244b255d-72ff-8036-9f4e-d9d2b61d7c51"><td id="`jC|" class="">https://leetcode.com/problems/add-binary</td><td id="GZIZ" class="">Add Binary</td><td id="IPmS" class="">71.9</td><td id="|?k~" class="">11</td><td id=":kjE" class="">Math, String, Bit Manipulation, Simulation</td></tr><tr id="244b255d-72ff-8025-bfbc-c6756bd970fa"><td id="`jC|" class="">https://leetcode.com/problems/substring-with-concatenation-of-all-words</td><td id="GZIZ" class="">Substring with Concatenation of All Words</td><td id="IPmS" class="">100</td><td id="|?k~" class="">10</td><td id=":kjE" class="">Hash Table, String, Sliding Window</td></tr><tr id="244b255d-72ff-80af-b9b7-cefe0080e4c1"><td id="`jC|" class="">https://leetcode.com/problems/add-strings</td><td id="GZIZ" class="">Add Strings</td><td id="IPmS" class="">100</td><td id="|?k~" class="">10</td><td id=":kjE" class="">Math, String, Simulation</td></tr><tr id="244b255d-72ff-809d-88c4-d40b83ac5098"><td id="`jC|" class="">https://leetcode.com/problems/basic-calculator-iii</td><td id="GZIZ" class="">Basic Calculator III</td><td id="IPmS" class="">100</td><td id="|?k~" class="">10</td><td id=":kjE" class="">Math, String, Stack, Recursion</td></tr><tr id="244b255d-72ff-8034-a320-df3fdfaab10d"><td id="`jC|" class="">https://leetcode.com/problems/open-the-lock</td><td id="GZIZ" class="">Open the Lock</td><td id="IPmS" class="">100</td><td id="|?k~" class="">10</td><td id=":kjE" class="">Array, Hash Table, String, Breadth-First Search</td></tr><tr id="244b255d-72ff-80cd-9fcb-e65ebefeaeb9"><td id="`jC|" class="">https://leetcode.com/problems/remove-k-digits</td><td id="GZIZ" class="">Remove K Digits</td><td id="IPmS" class="">94</td><td id="|?k~" class="">10</td><td id=":kjE" class="">String, Stack, Greedy, Monotonic Stack</td></tr><tr id="244b255d-72ff-800a-990a-caec2d39b012"><td id="`jC|" class="">https://leetcode.com/problems/length-of-last-word</td><td id="GZIZ" class="">Length of Last Word</td><td id="IPmS" class="">73</td><td id="|?k~" class="">10</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-8048-8966-e14416cd92d3"><td id="`jC|" class="">https://leetcode.com/problems/longest-string-chain</td><td id="GZIZ" class="">Longest String Chain</td><td id="IPmS" class="">100</td><td id="|?k~" class="">9</td><td id=":kjE" class="">Array, Hash Table, Two Pointers, String, Dynamic Programming, Sorting</td></tr><tr id="244b255d-72ff-8094-83d1-f3e78968e00d"><td id="`jC|" class="">https://leetcode.com/problems/validate-ip-address</td><td id="GZIZ" class="">Validate IP Address</td><td id="IPmS" class="">89.4</td><td id="|?k~" class="">9</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-8056-894b-e6e39828531f"><td id="`jC|" class="">https://leetcode.com/problems/valid-number</td><td id="GZIZ" class="">Valid Number</td><td id="IPmS" class="">100</td><td id="|?k~" class="">8</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-8031-80d6-c47e1d626195"><td id="`jC|" class="">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii</td><td id="GZIZ" class="">Remove All Adjacent Duplicates in String II</td><td id="IPmS" class="">100</td><td id="|?k~" class="">8</td><td id=":kjE" class="">String, Stack</td></tr><tr id="244b255d-72ff-80e1-9756-da4caa77cf72"><td id="`jC|" class="">https://leetcode.com/problems/valid-palindrome-ii</td><td id="GZIZ" class="">Valid Palindrome II</td><td id="IPmS" class="">100</td><td id="|?k~" class="">8</td><td id=":kjE" class="">Two Pointers, String, Greedy</td></tr><tr id="244b255d-72ff-8055-b0d5-ebde0da2b7f1"><td id="`jC|" class="">https://leetcode.com/problems/design-a-text-editor</td><td id="GZIZ" class="">Design a Text Editor</td><td id="IPmS" class="">100</td><td id="|?k~" class="">8</td><td id=":kjE" class="">Linked List, String, Stack, Design, Simulation, Doubly-Linked List</td></tr><tr id="244b255d-72ff-80bf-b03e-ce32c3623339"><td id="`jC|" class="">https://leetcode.com/problems/find-all-anagrams-in-a-string</td><td id="GZIZ" class="">Find All Anagrams in a String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">8</td><td id=":kjE" class="">Hash Table, String, Sliding Window</td></tr><tr id="244b255d-72ff-804b-9886-cbd352ba3b1a"><td id="`jC|" class="">https://leetcode.com/problems/merge-strings-alternately</td><td id="GZIZ" class="">Merge Strings Alternately</td><td id="IPmS" class="">75</td><td id="|?k~" class="">8</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-808e-a647-f773cf66f338"><td id="`jC|" class="">https://leetcode.com/problems/design-add-and-search-words-data-structure</td><td id="GZIZ" class="">Design Add and Search Words Data Structure</td><td id="IPmS" class="">70.9</td><td id="|?k~" class="">8</td><td id=":kjE" class="">String, Depth-First Search, Design, Trie</td></tr><tr id="244b255d-72ff-8027-865c-d6162e3298b7"><td id="`jC|" class="">https://leetcode.com/problems/accounts-merge</td><td id="GZIZ" class="">Accounts Merge</td><td id="IPmS" class="">69.1</td><td id="|?k~" class="">8</td><td id=":kjE" class="">Array, Hash Table, String, Depth-First Search, Breadth-First Search, Union Find, Sorting</td></tr><tr id="244b255d-72ff-8000-86c0-feaa18790fa1"><td id="`jC|" class="">https://leetcode.com/problems/robot-bounded-in-circle</td><td id="GZIZ" class="">Robot Bounded In Circle</td><td id="IPmS" class="">100</td><td id="|?k~" class="">7</td><td id=":kjE" class="">Math, String, Simulation</td></tr><tr id="244b255d-72ff-80a4-bc57-ed20bcbbc6db"><td id="`jC|" class="">https://leetcode.com/problems/valid-parenthesis-string</td><td id="GZIZ" class="">Valid Parenthesis String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">7</td><td id=":kjE" class="">String, Dynamic Programming, Stack, Greedy</td></tr><tr id="244b255d-72ff-8015-8602-ea918d74180f"><td id="`jC|" class="">https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses</td><td id="GZIZ" class="">Minimum Remove to Make Valid Parentheses</td><td id="IPmS" class="">100</td><td id="|?k~" class="">7</td><td id=":kjE" class="">String, Stack</td></tr><tr id="244b255d-72ff-805c-977c-febe80f01080"><td id="`jC|" class="">https://leetcode.com/problems/remove-duplicate-letters</td><td id="GZIZ" class="">Remove Duplicate Letters</td><td id="IPmS" class="">100</td><td id="|?k~" class="">7</td><td id=":kjE" class="">String, Stack, Greedy, Monotonic Stack</td></tr><tr id="244b255d-72ff-800e-bfd3-d287b91765b0"><td id="`jC|" class="">https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix</td><td id="GZIZ" class="">Find the Length of the Longest Common Prefix</td><td id="IPmS" class="">100</td><td id="|?k~" class="">7</td><td id=":kjE" class="">Array, Hash Table, String, Trie</td></tr><tr id="244b255d-72ff-80c4-ac7b-c8dc733f6797"><td id="`jC|" class="">https://leetcode.com/problems/rotate-string</td><td id="GZIZ" class="">Rotate String</td><td id="IPmS" class="">88.3</td><td id="|?k~" class="">7</td><td id=":kjE" class="">String, String Matching</td></tr><tr id="244b255d-72ff-802b-8d30-e9ff18fd4b98"><td id="`jC|" class="">https://leetcode.com/problems/permutation-in-string</td><td id="GZIZ" class="">Permutation in String</td><td id="IPmS" class="">84.8</td><td id="|?k~" class="">7</td><td id=":kjE" class="">Hash Table, Two Pointers, String, Sliding Window</td></tr><tr id="244b255d-72ff-8051-8cfb-d98b976a17c9"><td id="`jC|" class="">https://leetcode.com/problems/palindrome-partitioning</td><td id="GZIZ" class="">Palindrome Partitioning</td><td id="IPmS" class="">61.5</td><td id="|?k~" class="">7</td><td id=":kjE" class="">String, Dynamic Programming, Backtracking</td></tr><tr id="244b255d-72ff-803d-9576-fc3ccfe47e09"><td id="`jC|" class="">https://leetcode.com/problems/reverse-vowels-of-a-string</td><td id="GZIZ" class="">Reverse Vowels of a String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-80ec-bbbb-c7ffd224a1ad"><td id="`jC|" class="">https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters</td><td id="GZIZ" class="">Longest Substring with At Most K Distinct Characters</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">Hash Table, String, Sliding Window</td></tr><tr id="244b255d-72ff-80e9-ac22-f5f384943960"><td id="`jC|" class="">https://leetcode.com/problems/compare-version-numbers</td><td id="GZIZ" class="">Compare Version Numbers</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-8084-8dd1-fc9d49ff351f"><td id="`jC|" class="">https://leetcode.com/problems/reverse-words-in-a-string-iii</td><td id="GZIZ" class="">Reverse Words in a String III</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-802d-9f13-c4361d9b6a50"><td id="`jC|" class="">https://leetcode.com/problems/longest-happy-string</td><td id="GZIZ" class="">Longest Happy String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">String, Greedy, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-8050-800b-f189e9e5fbef"><td id="`jC|" class="">https://leetcode.com/problems/distinct-subsequences</td><td id="GZIZ" class="">Distinct Subsequences</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">String, Dynamic Programming</td></tr><tr id="244b255d-72ff-80d0-b1e0-dc0dd599a22d"><td id="`jC|" class="">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string</td><td id="GZIZ" class="">Remove All Adjacent Duplicates In String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">6</td><td id=":kjE" class="">String, Stack</td></tr><tr id="244b255d-72ff-80aa-991d-d9c4ef1c142a"><td id="`jC|" class="">https://leetcode.com/problems/fraction-to-recurring-decimal</td><td id="GZIZ" class="">Fraction to Recurring Decimal</td><td id="IPmS" class="">86.4</td><td id="|?k~" class="">6</td><td id=":kjE" class="">Hash Table, Math, String</td></tr><tr id="244b255d-72ff-8057-b09a-ea16133be9d2"><td id="`jC|" class="">https://leetcode.com/problems/split-message-based-on-limit</td><td id="GZIZ" class="">Split Message Based on Limit</td><td id="IPmS" class="">84.2</td><td id="|?k~" class="">6</td><td id=":kjE" class="">String, Binary Search, Enumeration</td></tr><tr id="244b255d-72ff-80b5-bba4-e48bef891173"><td id="`jC|" class="">https://leetcode.com/problems/shortest-palindrome</td><td id="GZIZ" class="">Shortest Palindrome</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">String, Rolling Hash, String Matching, Hash Function</td></tr><tr id="244b255d-72ff-8009-8564-eb787f904e4b"><td id="`jC|" class="">https://leetcode.com/problems/design-excel-sum-formula</td><td id="GZIZ" class="">Design Excel Sum Formula</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Array, Hash Table, String, Graph, Design, Topological Sort, Matrix</td></tr><tr id="244b255d-72ff-80d6-9656-f7b445cd42d9"><td id="`jC|" class="">https://leetcode.com/problems/scramble-string</td><td id="GZIZ" class="">Scramble String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">String, Dynamic Programming</td></tr><tr id="244b255d-72ff-806a-8c3d-e322e2d8082e"><td id="`jC|" class="">https://leetcode.com/problems/partition-labels</td><td id="GZIZ" class="">Partition Labels</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Hash Table, Two Pointers, String, Greedy</td></tr><tr id="244b255d-72ff-802e-8453-f38469478520"><td id="`jC|" class="">https://leetcode.com/problems/count-vowel-substrings-of-a-string</td><td id="GZIZ" class="">Count Vowel Substrings of a String</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Hash Table, String</td></tr><tr id="244b255d-72ff-80b6-9fc7-f3b902e18cd1"><td id="`jC|" class="">https://leetcode.com/problems/reformat-date</td><td id="GZIZ" class="">Reformat Date</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">String</td></tr><tr id="244b255d-72ff-800b-b2cb-e322c6b22bae"><td id="`jC|" class="">https://leetcode.com/problems/ransom-note</td><td id="GZIZ" class="">Ransom Note</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Hash Table, String, Counting</td></tr><tr id="244b255d-72ff-801a-ab2a-dfbd8b6ea94d"><td id="`jC|" class="">https://leetcode.com/problems/valid-word-abbreviation</td><td id="GZIZ" class="">Valid Word Abbreviation</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Two Pointers, String</td></tr><tr id="244b255d-72ff-80cd-8a8b-dcc42fb2e1ee"><td id="`jC|" class="">https://leetcode.com/problems/break-a-palindrome</td><td id="GZIZ" class="">Break a Palindrome</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">String, Greedy</td></tr><tr id="244b255d-72ff-8060-94d8-e0059ffbcf5e"><td id="`jC|" class="">https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color</td><td id="GZIZ" class="">Remove Colored Pieces if Both Neighbors are the Same Color</td><td id="IPmS" class="">100</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Math, String, Greedy, Game Theory</td></tr><tr id="244b255d-72ff-80c8-b049-df20fda32003"><td id="`jC|" class="">https://leetcode.com/problems/excel-sheet-column-title</td><td id="GZIZ" class="">Excel Sheet Column Title</td><td id="IPmS" class="">97.6</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Math, String</td></tr><tr id="244b255d-72ff-803b-adfe-c8bfa3fd5772"><td id="`jC|" class="">https://leetcode.com/problems/word-ladder-ii</td><td id="GZIZ" class="">Word Ladder II</td><td id="IPmS" class="">97.5</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Hash Table, String, Backtracking, Breadth-First Search</td></tr><tr id="244b255d-72ff-80f3-b8a7-fa6c634f04cb"><td id="`jC|" class="">https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced</td><td id="GZIZ" class="">Minimum Number of Swaps to Make the String Balanced</td><td id="IPmS" class="">93.2</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Two Pointers, String, Stack, Greedy</td></tr><tr id="244b255d-72ff-80d0-81c5-d0172977ee89"><td id="`jC|" class="">https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies</td><td id="GZIZ" class="">Find All Possible Recipes from Given Supplies</td><td id="IPmS" class="">92.4</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Array, Hash Table, String, Graph, Topological Sort</td></tr><tr id="244b255d-72ff-801a-b40c-ef30599c01da"><td id="`jC|" class="">https://leetcode.com/problems/guess-the-word</td><td id="GZIZ" class="">Guess the Word</td><td id="IPmS" class="">92.4</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Array, Math, String, Interactive, Game Theory</td></tr><tr id="244b255d-72ff-8009-82ac-f21c6a426a4d"><td id="`jC|" class="">https://leetcode.com/problems/design-file-system</td><td id="GZIZ" class="">Design File System</td><td id="IPmS" class="">86.7</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Hash Table, String, Design, Trie</td></tr><tr id="244b255d-72ff-80cd-aca4-e0cf3e6e1364"><td id="`jC|" class="">https://leetcode.com/problems/remove-invalid-parentheses</td><td id="GZIZ" class="">Remove Invalid Parentheses</td><td id="IPmS" class="">78.3</td><td id="|?k~" class="">5</td><td id=":kjE" class="">String, Backtracking, Breadth-First Search</td></tr><tr id="244b255d-72ff-80f3-9f88-f75d9a969c3e"><td id="`jC|" class="">https://leetcode.com/problems/count-binary-substrings</td><td id="GZIZ" class="">Count Binary Substrings</td><td id="IPmS" class="">66.5</td><td id="|?k~" class="">5</td><td id=":kjE" class="">Two Pointers, String</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

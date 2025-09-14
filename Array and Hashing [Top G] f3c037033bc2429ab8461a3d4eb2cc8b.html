@@ -1,0 +1,2000 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Array and Hashing [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="f3c03703-3bc2-429a-b846-1a3d4eb2cc8b" class="page sans"><header><h1 class="page-title"><strong>Array and Hashing [Top G]</strong></h1><p class="page-description"></p></header><div class="page-body"><h2 id="195b255d-72ff-80bb-a822-d26eac0d2c70" class=""><strong>DSA Quick Revision</strong></h2><ul id="449da3d6-15de-48e5-898a-8d64a2208e39" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://leetcode.com/problems/two-sum/">2 Sum: Check if a pair with given sum exists in Array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22eb255d-72ff-80c1-8a1b-c8d68cf71088" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // Main function
+    public int[] twoSum(int[] nums, int target) {
+        // Step 1: Store value and index pairs
+        List&lt;int[]&gt; list = new ArrayList&lt;&gt;();
+        int n = nums.length;
+        for(int i = 0; i &lt; n; i++) {
+            list.add(new int[]{nums[i], i}); // [value, index]
+        }
+
+        // Step 2: Sort by value
+        Collections.sort(list, (a, b) -&gt; a[0] - b[0]);
+
+        // Step 3: Two pointers to find the pair
+        int i = 0, j = n - 1;
+        while(i &lt; j) {
+            int sum = list.get(i)[0] + list.get(j)[0];
+            if(sum &gt; target) j--;        // Too high, move right pointer left
+            else if(sum &lt; target) i++;   // Too low, move left pointer right
+            else {
+                // Found! Return original indices
+                return new int[]{list.get(i)[1], list.get(j)[1]};
+            }
+        }
+        // No solution found (should not reach for valid input)
+        return new int[]{};
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="aaf44237-32ab-4488-baf1-d3f8839c0d1d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        // Step 1: Create a map to store value -&gt; index
+        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+        
+        // Step 2: Traverse array
+        for(int i = 0; i &lt; nums.length; i++) {
+            int complement = target - nums[i];
+            
+            // Step 3: Check if complement already exists
+            if(map.containsKey(complement)) {
+                // Found the pair, return indices
+                return new int[]{map.get(complement), i};
+            }
+            
+            // Step 4: Store value and its index
+            map.put(nums[i], i);
+        }
+        // No solution found
+        return new int[]{};
+    }
+}
+</code></pre></details></li></ul><ul id="243b255d-72ff-80c1-8be3-d970c0b6f6d2" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><a href="https://leetcode.com/problems/merge-intervals/description/">Merge Intervals</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="245b255d-72ff-803e-903e-ea66548122b4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int[][] merge(int[][] intervals) {
+
+        // Step 1: Sort intervals by start time to simplify overlap detection
+        Arrays.sort(intervals, (a, b) -&gt; a[0] - b[0]);
+
+        List&lt;int[]&gt; list = new ArrayList&lt;&gt;();
+
+        for (int i = 0; i &lt; intervals.length; i++) {
+            int[] curr = intervals[i];
+
+            // If list is empty OR no overlap with last interval, simply add
+            if (list.isEmpty() || list.get(list.size() - 1)[1] &lt; curr[0]) {
+                list.add(curr);
+            } else {
+                // Overlap case: merge current with last by updating end time
+                list.get(list.size() - 1)[1] = Math.max(list.get(list.size() - 1)[1], curr[1]);
+            }
+        }
+
+        // Convert list to array and return
+        int[][] ans = new int[list.size()][2];
+        for (int i = 0; i &lt; ans.length; i++) {
+            ans[i] = list.get(i);
+        }
+        return ans;
+    }
+}
+</code></pre></details></li></ul><ul id="fd7ddf6e-37f9-4a7c-8880-e19247c67ea0" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://leetcode.com/problems/3sum/">3 Sum : Find triplets that add up to a zero</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="196b255d-72ff-80bc-aaa0-c7e704b9fb3e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Function to find triplets having sum equals to target
+    public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) {
+        
+        // List to store the triplets that sum up to target
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        
+        int n = nums.length;
+        
+        // Sort the input array nums
+        Arrays.sort(nums);
+        
+        // Iterate through the array to find triplets
+        for (int i = 0; i &lt; n; i++) {
+            // Skip duplicates
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1]) continue;
+            
+            // Two pointers approach
+            int j = i + 1;
+            int k = n - 1;
+            
+            while (j &lt; k) {
+                int sum = nums[i] + nums[j] + nums[k];
+                
+                if (sum &lt; 0) {
+                    j++;
+                } else if (sum &gt; 0) {
+                    k--;
+                } else {
+                    // Found a triplet that sums up to target
+                    List&lt;Integer&gt; temp = new ArrayList&lt;&gt;();
+                    temp.add(nums[i]);
+                    temp.add(nums[j]);
+                    temp.add(nums[k]);
+                    ans.add(temp);
+                    
+                    // Skip duplicates
+                    j++;
+                    k--;
+                    while (j &lt; k &amp;&amp; nums[j] == nums[j - 1]) j++;
+                    while (j &lt; k &amp;&amp; nums[k] == nums[k + 1]) k--;
+                }
+            }
+        }
+        
+        return ans;
+    }
+}
+
+</code></pre><figure id="228b255d-72ff-8068-a1ac-e8e9ff652993"><div class="source"><a href="https://www.youtube.com/watch?v=DhFh8Kw7ymk&amp;t=597s">https://www.youtube.com/watch?v=DhFh8Kw7ymk&amp;t=597s</a></div></figure></details></li></ul><ul id="063982da-f8c7-4da7-aefd-1a68624922fb" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://leetcode.com/problems/maximum-subarray/">Kadane’s Algorithm : Maximum Subarray Sum in an Array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="867197c7-6908-4e98-91fa-807502ba56ca" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {  //DSAQuickRevision
+    public int maxSubArray(int[] arr) { //Kadane&#x27;s Algorithm 
+        int n = arr.length;
+        int maxi = Integer.MIN_VALUE;  // Initialize the maximum subarray sum to a very small value
+        int sum = 0;  // Initialize the current sum of the subarray
+
+        for (int i = 0; i &lt; n; i++) {
+            sum += arr[i];  // Add the current element to the current sum
+
+            if (sum &gt; maxi) { //Isko sum &lt; 0 wali condition ke pehle likhna.
+                maxi = sum;  // Update the maximum subarray sum if the current sum is greater
+            }
+
+            // If the current sum is negative, reset it to 0
+            if (sum &lt; 0) {
+                sum = 0;
+            }
+        }
+
+        return maxi;  // Return the maximum subarray sum
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="2d7aa1a1-edf4-467e-92c3-78e372a4e688" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //Follow Up: Print the Answer Subarray Also.
+	public int maxSubArray(int[] arr) {
+		int n = arr.length;
+		int maxi = Integer.MIN_VALUE;
+		int sum = 0;
+
+		int start = 0;
+		int ansStart = -1, ansEnd = -1;
+
+		for (int i = 0; i &lt; n; i++) {
+
+			if (sum == 0) start = i; // Starting index.
+			sum += arr[i];
+
+			if (sum &gt; maxi) {
+				maxi = sum;
+
+				ansStart = start;
+				ansEnd = i;
+			}
+
+			// If sum &lt; 0: discard the sum calculated
+			if (sum &lt; 0) {
+				sum = 0;
+			}
+		}
+
+		//printing the subarray:
+		System.out.print(&quot;The subarray is: [&quot;);
+
+		for (int i = ansStart; i &lt;= ansEnd; i++) {
+			System.out.print(arr[i] + &quot; &quot;);
+		}
+
+		System.out.print(&quot;]&quot;);
+
+		return maxi;
+	}
+}</code></pre><figure id="228b255d-72ff-80ab-abd3-f3b2d533c112"><div class="source"><a href="https://www.youtube.com/watch?v=AHZpyENo7k4">https://www.youtube.com/watch?v=AHZpyENo7k4</a></div></figure></details></li></ul><ul id="1a6b255d-72ff-8035-9850-d9e263a15182" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/arrays-iv-and-hashing/merge-two-sorted-arrays-without-extra-space">Merge two sorted arrays without extra space</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a6b255d-72ff-8046-b9e8-ee471b9ad7b3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+    // Function to merge two sorted arrays nums1 and nums2
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        // Pointer for nums1 (end of valid elements)
+        int left = m - 1;
+        
+        // Pointer for nums2 (beginning of valid elements)
+        int right = 0;
+        
+        /* Swap the elements until nums1[left]
+        is smaller than nums2[right]*/
+        while (left &gt;= 0 &amp;&amp; right &lt; n) {
+            if (nums1[left] &gt; nums2[right]) {
+                int temp = nums1[left];
+                nums1[left] = nums2[right];
+                nums2[right] = temp;
+                left--;
+                right++;
+            } 
+            //break out of loop if nums1[left] &gt; nums2[right] 
+            else break;
+        }
+        
+        // Sort nums1 from index 0 to m-1
+        Arrays.sort(nums1, 0, m);
+        
+        // Sort nums2 from start to end
+        Arrays.sort(nums2);
+        
+        // Put the elements of nums2 in nums1
+        for (int i = m; i &lt; m + n; i++) {
+            nums1[i] = nums2[i - m];
+        }
+    }
+}</code></pre></details></li></ul><ul id="180b255d-72ff-8098-a481-eff8f0da27cc" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sorting-and-arrays-i/print-the-matrix-in-spiral-manner">Spiral Matrix</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-80f7-ba63-db609c95530b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    //Function to print matrix in spiral manner
+    public List&lt;Integer&gt; spiralOrder(int[][] matrix) {
+        List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+        
+        // Number of rows
+        int n = matrix.length;
+
+        // Number of columns
+        int m = matrix[0].length;
+        
+        // Initialize pointers for traversal
+        int top = 0, left = 0;      
+        int bottom = n - 1, right = m - 1;
+        
+        // Traverse the matrix in spiral order
+        while (top &lt;= bottom &amp;&amp; left &lt;= right) {
+            // Traverse from left to right
+            for (int i = left; i &lt;= right; ++i) {
+                ans.add(matrix[top][i]);
+            }
+            top++;
+            
+            // Traverse from top to bottom
+            for (int i = top; i &lt;= bottom; ++i) {
+                ans.add(matrix[i][right]);
+            }
+            right--;
+            
+            // Traverse from right to left
+            if (top &lt;= bottom) {
+                for (int i = right; i &gt;= left; --i) {
+                    ans.add(matrix[bottom][i]);
+                }
+                bottom--;
+            }
+            
+            // Traverse from bottom to top
+            if (left &lt;= right) {
+                for (int i = bottom; i &gt;= top; --i) {
+                    ans.add(matrix[i][left]);
+                }
+                left++;
+            }
+        }
+        
+        //Return the ans
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-8070-8dbc-f7ad4e580424" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/insert-delete-getrandom-o1/description/">Insert Delete GetRandom O(1)</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="245b255d-72ff-8023-9a5b-e69d5d72dd69" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">import java.util.*;
+
+class RandomizedSet {
+
+    List&lt;Integer&gt; list;
+    Map&lt;Integer, Integer&gt; map;
+    Random rand;
+
+    public RandomizedSet() {
+        list = new ArrayList&lt;&gt;();
+        map = new HashMap&lt;&gt;();
+        rand = new Random();
+    }
+
+    public boolean insert(int val) {
+        if (map.containsKey(val)) return false;
+
+        list.add(val); // Add to end of list
+        map.put(val, list.size() - 1); // Map value to index
+        return true;
+    }
+
+    public boolean remove(int val) {
+        if (!map.containsKey(val)) return false;
+
+        int index = map.get(val);             // index of val in list
+        int lastElement = list.get(list.size() - 1); // last element
+
+        // Swap val with last element
+        list.set(index, lastElement);
+        map.put(lastElement, index);
+
+        // Remove last element
+        list.remove(list.size() - 1);
+        map.remove(val);
+
+        return true;
+    }
+
+    public int getRandom() {
+        int randomIndex = rand.nextInt(list.size());
+        return list.get(randomIndex);
+    }
+}
+</code></pre></details></li></ul><ul id="244b255d-72ff-80df-8335-db1ad0284186" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/product-of-array-except-self/description/">Product of Array Except Self</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="245b255d-72ff-80ef-bc84-f4272b7ebcbc" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] res = new int[n];
+
+        // Step 1: Prefix product — res[i] = product of all elements before i
+        res[0] = 1;  // Nothing on the left of index 0
+        for (int i = 1; i &lt; n; i++) {
+            res[i] = res[i - 1] * nums[i - 1];
+        }
+
+        // Step 2: Suffix product — multiply from the right
+        int suffix = 1;  // Nothing on the right of last element
+        for (int i = n - 1; i &gt;= 0; i--) {
+            res[i] *= suffix;
+            suffix *= nums[i];
+        }
+
+        return res;
+    }
+}
+</code></pre></details></li></ul><ul id="244b255d-72ff-8061-9ec2-ecfc706c8287" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/first-missing-positive/description/">First Missing Positive</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="245b255d-72ff-80a0-93f7-c7c599193dbb" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+
+        // Step 1: Place each number at its correct index (i.e., nums[i] → index nums[i] - 1)
+        for (int i = 0; i &lt; n; i++) {
+            while (
+                nums[i] &gt; 0 &amp;&amp; nums[i] &lt;= n &amp;&amp;
+                nums[nums[i] - 1] != nums[i]
+            ) {
+                // Swap nums[i] with nums[nums[i] - 1]
+                int correctIndex = nums[i] - 1;
+                int temp = nums[i];
+                nums[i] = nums[correctIndex];
+                nums[correctIndex] = temp;
+            }
+        }
+
+        // Step 2: Find the first index where nums[i] != i + 1
+        for (int i = 0; i &lt; n; i++) {
+            if (nums[i] != i + 1) return i + 1;
+        }
+
+        // All positions filled correctly, so answer is n + 1
+        return n + 1;
+    }
+}
+</code></pre></details></li></ul><ul id="f18bac78-0133-4ed5-892f-696c10312e53" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sorting-and-arrays-i/longest-consecutive-sequence-in-an-array">Longest Consecutive Sequence</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e288c619-9865-4d2c-8275-f377b67fcca7" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {  //DSAConceptRevision
+    public int longestConsecutive(int[] nums) {
+        if (nums.length == 0)
+            return 0;
+        HashSet&lt;Integer&gt; hs = new HashSet&lt;&gt;();
+        for (int num : nums)
+            hs.add(num);
+        int longest = 1;
+        for (int num : nums) {
+            // check if the num is the start of a sequence by checking if left exists
+            if (!hs.contains(num - 1)) { // start of a sequence
+                int count = 1;
+                while (hs.contains(num + 1)) { // check if hs contains next no.
+                    num++;
+                    count++;
+                }
+                longest = Math.max(longest, count);
+
+            }
+
+        }
+        return longest;
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-8089-b0f4-d8b567c2daa5" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/logic-building/move-zeros-to-end">Move Zeros to End</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8035-8936-d464c6482934" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver //GFG160
+    public void moveZeroes(int[] nums) {
+        int j = 0; // Initialize j to 0
+
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (nums[i] != 0) {
+                nums[j++] = nums[i];
+            }
+        }
+
+        // Fill the remaining elements with zeros
+        while (j &lt; nums.length) {
+            nums[j++] = 0;
+        }
+    }
+}</code></pre></details></li></ul><ul id="961c726d-b330-40e5-9c8f-d9e4dddb4f2e" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/array-ii/rotate-matrix-by-90-degrees">Rotate matrix by 90 degrees</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b5fa1ac3-d080-4c5b-a6b0-3e4711934382" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public void rotateMatrix(int[][] matrix) {
+        int n = matrix.length;
+        // Step 1: Swap elements along the main diagonal.
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = i; j &lt; n; j++) { //Imp: why not j = 0
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        // Step 2: Reverse each row.
+        for (int[] row : matrix) {
+            reverse(row);
+        }
+    }
+
+    private void reverse(int[] arr) {
+        int left = 0;
+        int right = arr.length - 1;
+        while (left &lt; right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}</code></pre></details></li></ul><ul id="3f877dee-390c-4edf-aa67-d6e89c30c79d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/arrays-iv-and-hashing/count-subarrays-with-given-sum">Count Subarrays with given sum [Negative Values also Present]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="d5180bc4-b169-4c5a-9139-ab25351ea211" class="code code-wrap"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">public class Solution {
+
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        int prefixSum = 0;
+
+        // Map to store frequency of prefix sums
+        Map&lt;Integer, Integer&gt; sumFreq = new HashMap&lt;&gt;();
+        sumFreq.put(0, 1); // Base case: one subarray with sum = 0
+
+        for (int num : nums) {
+            prefixSum += num;
+
+            // Check if there&#x27;s a prefix sum that makes the current sum - k
+            if (sumFreq.containsKey(prefixSum - k)) {
+                count += sumFreq.get(prefixSum - k);
+            }
+
+            // Update the frequency map
+            sumFreq.put(prefixSum, sumFreq.getOrDefault(prefixSum, 0) + 1);
+        }
+
+        return count;
+    }
+}
+</code></pre><figure id="1a6b255d-72ff-800f-9120-ebcd053646d7" class="image"><a href="image.png"><img style="width:681.9625244140625px" src="image.png"/></a></figure><figure id="228b255d-72ff-8064-b46e-cc03171281f0"><div class="source"><a href="https://www.youtube.com/watch?v=xvNwoz-ufXA">https://www.youtube.com/watch?v=xvNwoz-ufXA</a></div></figure></details></li></ul><ul id="225b255d-72ff-8060-a337-cfa08eb44462" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/faqs-medium/next-permutation">Next Permutation</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="225b255d-72ff-8002-8d26-c191425a619b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to get the next permutation of given array
+    public void nextPermutation(int[] nums) {
+        int n = nums.length; // Size of the given array
+        
+        // To store the index of the first smaller element from right
+        int ind = -1; 
+        
+        // Find the first index from the end where nums[i] &lt; nums[i+1]
+        for(int i = n - 2; i &gt;= 0; i--) {
+            if(nums[i] &lt; nums[i + 1]) {
+                ind = i;
+                break;
+            }
+        }
+        
+        /* If no such index exists, array is in descending order
+           So, reverse it to get the smallest permutation */
+        if(ind == -1) {
+            reverse(nums, 0, n - 1);
+            return;
+        }
+        
+        // Find the element just greater than nums[ind] from the end
+        for(int i = n - 1; i &gt; ind; i--) {
+            if(nums[i] &gt; nums[ind]) {
+                swap(nums, i, ind); // Swap with nums[ind]
+                break;
+            }
+        }
+        
+        // Reverse the right half to get the next smallest permutation
+        reverse(nums, ind + 1, n - 1);
+        return;
+    }
+    
+    // Helper Function to swap two numbers in an array
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    // Helper function to reverse the array
+    private void reverse(int[] nums, int start, int end) {
+        while(start &lt; end) {
+            swap(nums, start, end);
+            start++;
+            end--;
+        }
+    }
+}</code></pre></details></li></ul><ul id="c2a760c4-d46c-4924-b453-c1da355c11e1" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-1-lms/sort-an-array-of-0&#x27;s-1&#x27;s-and-2&#x27;s">Sort an array of 0&#x27;s 1&#x27;s and 2&#x27;s</a></strong></mark></summary><figure id="207b255d-72ff-806c-831a-df9c20a7c3b3" class="image"><a href="image%201.png"><img style="width:2453px" src="image%201.png"/></a></figure><p id="207b255d-72ff-8001-a683-da07c7fe3628" class="">This algorithm contains 3 pointers i.e. low, mid, and high, and 3 main rules.</p><ul id="207b255d-72ff-802e-a5f1-ea122d6ce70e" class="bulleted-list"><li style="list-style-type:disc"><em>Index 0 to low -1 contains 0</em></li></ul><ul id="207b255d-72ff-80c6-b220-e5b0639d9136" class="bulleted-list"><li style="list-style-type:disc"><em>Index low to mid - 1 contains 1</em></li></ul><ul id="207b255d-72ff-801e-b617-d3f2dee7dd4c" class="bulleted-list"><li style="list-style-type:disc">mid to high —&gt; unsorted.</li></ul><ul id="207b255d-72ff-80ce-b59b-d02d2987166d" class="bulleted-list"><li style="list-style-type:disc"><em>Index high +1 to sizeOfArray - 1 contains 2.</em></li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6d58b18c-cd2e-4af6-9f4e-285eb0bbfa45" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public void sortZeroOneTwo(int[] nums) {
+        // Dutch national flag algorithm
+        int mid = 0;
+        int low = 0;
+        int high = nums.length - 1;
+        while (mid &lt;= high) { // don&#x27;t froget the equal sign. it is important.
+            if (nums[mid] == 0)
+                swap(nums, low++, mid++); // swap low and mid and do low++ and mid++
+            else if (nums[mid] == 1)
+                mid++; // just do mid++
+            else if (nums[mid] == 2)
+                swap(nums, mid, high--); // swap mid and high and do high-- Note : only high--
+        }
+
+    }
+
+    public static void swap(int[] a, int i, int j) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+}</code></pre><figure id="228b255d-72ff-80c5-8ec2-f3f0ad82e21c"><div class="source"><a href="https://www.youtube.com/watch?v=tp8JIuCXBaU">https://www.youtube.com/watch?v=tp8JIuCXBaU</a></div></figure></details></li></ul><ul id="244b255d-72ff-8036-a3c1-dcd3bd9a208d" class="toggle"><li><details open=""><summary><a href="https://leetcode.com/problems/valid-sudoku/description/">Valid Sudoku</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="262b255d-72ff-80aa-86c2-eb8c40486d7c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        // 9 rows, 9 cols, 9 boxes
+        HashSet&lt;Character&gt;[] rows = new HashSet[9];
+        HashSet&lt;Character&gt;[] cols = new HashSet[9];
+        HashSet&lt;Character&gt;[] boxes = new HashSet[9];
+        
+        // initialize sets
+        for (int i = 0; i &lt; 9; i++) {
+            rows[i] = new HashSet&lt;&gt;();
+            cols[i] = new HashSet&lt;&gt;();
+            boxes[i] = new HashSet&lt;&gt;();
+        }
+        
+        // traverse board
+        for (int i = 0; i &lt; 9; i++) {
+            for (int j = 0; j &lt; 9; j++) {
+                char c = board[i][j];
+                
+                if (c == &#x27;.&#x27;) continue; // skip empty cells
+                
+                int boxIndex = (i / 3) * 3 + (j / 3); // box number (0-8)
+                
+                // if duplicate found in row, col, or box → invalid
+                if (rows[i].contains(c) || cols[j].contains(c) || boxes[boxIndex].contains(c)) {
+                    return false;
+                }
+                
+                // otherwise add to sets
+                rows[i].add(c);
+                cols[j].add(c);
+                boxes[boxIndex].add(c);
+            }
+        }
+        
+        return true; // sab valid hai
+    }
+}
+</code></pre></details></li></ul><ul id="1d6b255d-72ff-80a4-b1d8-dc0da3c427f3" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa/arrays/fundamentals/left-rotate-array">Left/Right Rotate Array by K Places</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-803b-9b7b-e68471fa5414" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to rotate the array to the left by k positions
+    public void rotate(int[] nums, int k) {
+        int n = nums.length; // Size of array
+        k = k % n; // To avoid unnecessary rotations
+
+        k = n - k; // Imp: for right rotate replace k with n - k
+        
+        // Reverse the first k elements
+        reverseArray(nums, 0, k - 1);
+
+        // Reverse the last n-k elements
+        reverseArray(nums, k, n - 1);
+
+        // Reverse the entire array
+        reverseArray(nums, 0, n - 1);
+    }
+
+    // Function to reverse the array between start and end
+    private void reverseArray(int[] nums, int start, int end) {
+        while (start &lt; end) {
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}</code></pre></details></li></ul><ul id="318e6eff-11de-4d05-a0cb-72ee5b055659" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/array-iii/majority-element-i">Majority Element 1</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c0bee14f-5594-4cc8-8055-d38958cc1023" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {  //DSAConceptRevision
+    public int majorityElement(int[] nums) { //Moore’s Voting Algorithm
+        // Get the size of the given array.
+        int n = nums.length;
+        int cnt = 0; // Initialize a counter for the majority element.
+        int el = 0; // Initialize a variable to store the majority element.
+
+        // Applying the Boyer-Moore majority vote algorithm:
+        for (int i = 0; i &lt; n; i++) {
+            if (cnt == 0) {
+                // If the counter is zero, set the current element as the potential majority element.
+                cnt = 1;
+                el = nums[i];
+            } else if (el == nums[i]) {
+                // If the current element matches the potential majority element, increment the counter.
+                cnt++;
+            } else {
+                // If the current element is different, decrement the counter.
+                cnt--;
+            }
+        }
+
+        // Checking if the stored element is the majority element:
+        int cnt1 = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (nums[i] == el) {
+                cnt1++;
+            }
+        }
+
+        // If the potential majority element appears more than n/2 times, return it as the majority element.
+        if (cnt1 &gt; (n / 2)) {
+            return el;
+        }
+
+        // If no majority element is found, return -1.
+        return -1;
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-8089-b7eb-d8fe6a7edcee" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/logic-building/remove-duplicates-from-sorted-array">Remove duplicates from sorted array</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8099-9c56-d9a2007d9155" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to remove duplicates from the array
+    public int removeDuplicates(int[] nums) {
+        // Edge case: if array is empty
+        if (nums.length == 0) {
+            return 0;
+        }
+        
+        // Initialize pointer for unique elements
+        int i = 0;
+        
+        // Iterate through the array
+        for (int j = 1; j &lt; nums.length; j++) {
+            /*If current element is different 
+            from the previous unique element*/
+            if (nums[i] != nums[j]) {
+                /* Move to the next position in 
+                the array for the unique element*/
+                i++;
+                /* Update the current position 
+                   with the unique element*/
+                nums[i] = nums[j];
+            }
+        }
+        
+        // Return the number of unique elements
+        return i + 1;
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-80f4-b6f0-f11414f5f631" class="toggle"><li><details open=""><summary><strong><a href="https://leetcode.com/problems/reverse-integer/description/">Reverse Integer</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="262b255d-72ff-8023-82de-e992f6ff9bcb" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public int reverse(int x) {
+        int rev = 0;
+        while (x != 0) {
+            int digit = x % 10;   // last digit nikalo
+            x = x / 10;           // x shrink karo
+
+            // overflow check (32-bit range ke liye)
+            if (rev &gt; Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 &amp;&amp; digit &gt; 7)) {
+                return 0; // overflow
+            }
+            if (rev &lt; Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 &amp;&amp; digit &lt; -8)) {
+                return 0; // underflow
+            }
+
+            rev = rev * 10 + digit; // digit add karo
+        }
+        return rev;
+    }
+}
+</code></pre><h2 id="262b255d-72ff-80b6-8ce2-e55ec7860d88" class="">🔍 Overflow Check (Positive side)</h2><p id="262b255d-72ff-80c5-98de-ea44b94f34c1" class="">Suppose <code>rev</code> abhi 214748364 (ye <code>MAX_VALUE / 10</code> hai).</p><ul id="262b255d-72ff-805a-97bb-ca0b82882411" class="bulleted-list"><li style="list-style-type:disc">Agar next digit <code>7</code> ya usse chhoti hai → safe.<ul id="262b255d-72ff-803c-9d1a-d5236fc4c52c" class="bulleted-list"><li style="list-style-type:circle">Example: <code>214748364 * 10 + 7 = 2147483647</code> ✅ (still in range).</li></ul></li></ul><ul id="262b255d-72ff-8046-80c3-f1a0cb05d456" class="bulleted-list"><li style="list-style-type:disc">Agar next digit <code>8</code> ho → <code>2147483648</code> ho jayega jo <code>MAX_VALUE</code> se bada hai ❌.</li></ul><p id="262b255d-72ff-80f4-93e1-d37461be1949" class=""><strong>Rule:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="262b255d-72ff-808b-87e3-cad74fc2f931" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">if rev &gt; MAX/10 → overflow hoga
+if rev == MAX/10 &amp;&amp; digit &gt; 7 → overflow hoga</code></pre><hr id="262b255d-72ff-808b-a591-cfcb87265f49"/><h2 id="262b255d-72ff-80af-8a1d-f6e61ea5893d" class="">🔍 Underflow Check (Negative side)</h2><p id="262b255d-72ff-8006-869d-ff07fd458428" class="">Suppose <code>rev</code> abhi -214748364 (ye <code>MIN_VALUE / 10</code> hai).</p><ul id="262b255d-72ff-802f-ab31-db6bd71a4079" class="bulleted-list"><li style="list-style-type:disc">Agar next digit <code>8</code> ya usse bada hai → safe.<ul id="262b255d-72ff-8003-ba6e-ef97c64db0fc" class="bulleted-list"><li style="list-style-type:circle">Example: <code>214748364 * 10 + (-8) = -2147483648</code> ✅ (still in range).</li></ul></li></ul><ul id="262b255d-72ff-8059-9a61-cbc69ea884f1" class="bulleted-list"><li style="list-style-type:disc">Agar next digit <code>9</code> ho → <code>2147483649</code> ho jayega jo <code>MIN_VALUE</code> se chhota hai ❌.</li></ul><p id="262b255d-72ff-8075-81e2-ebed743dd70e" class=""><strong>Rule:</strong></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="262b255d-72ff-80db-842e-df9e053ec9e5" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">if rev &lt; MIN/10 → underflow hoga
+if rev == MIN/10 &amp;&amp; digit &lt; -8 → underflow hoga</code></pre></details></li></ul><ul id="244b255d-72ff-80ac-9f45-e095f9177c59" class="toggle"><li><details open=""><summary>Set Matrix Zeroes</summary></details></li></ul><ul id="244b255d-72ff-80e4-97f1-eb83bb273391" class="toggle"><li><details open=""><summary>Happy Number</summary></details></li></ul><ul id="0c69802e-4a2d-4665-8a6b-bd07cc75adfd" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/array-ii/4-sum">4 Sum</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bbc5aee9-6c78-4f79-b574-fc4f8cb39ee9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAConceptRevision
+public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] nums, int target) {
+    List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+    int n = nums.length;
+    
+    // Sort the input array nums
+    Arrays.sort(nums);
+    
+    // Iterate through the array to find quadruplets
+    for (int i = 0; i &lt; n; i++) {
+        // Skip duplicates for i
+        if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1])
+            continue;
+        
+        for (int j = i + 1; j &lt; n; j++) {
+            // Skip duplicates for j
+            if (j &gt; i + 1 &amp;&amp; nums[j] == nums[j - 1])
+                continue;
+            
+            // Two pointers approach
+            int k = j + 1;
+            int l = n - 1;
+            
+            while (k &lt; l) {
+                long sum = nums[i] + nums[j] + nums[k] + nums[l];
+                
+                if (sum == target) {
+                    // Found a quadruplet that sums up to target
+                    List&lt;Integer&gt; temp = Arrays.asList(nums[i], nums[j], nums[k], nums[l]);
+                    ans.add(temp);
+                    
+                    // Skip duplicates for k and l
+                    k++;
+                    l--;
+                    while (k &lt; l &amp;&amp; nums[k] == nums[k - 1]) k++;
+                    while (k &lt; l &amp;&amp; nums[l] == nums[l + 1]) l--;
+                } else if (sum &lt; target) {
+                    k++;
+                } else {
+                    l--;
+                }
+            }
+        }
+    }
+    
+    return ans;
+}
+}</code></pre><figure id="1f0b255d-72ff-8009-b9b7-d347234b73d1"><div class="source"><a href="https://youtu.be/eD95WRfh81c">https://youtu.be/eD95WRfh81c</a></div></figure></details></li></ul><ul id="6367d3c9-a0fb-4a4f-ba5a-8a77cadbf626" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/array-ii/pascals-triangle-iii">Pascal&#x27;s Triangle III</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="54893d79-a63f-48c3-8221-6ec0a4502d04" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {  //DSAConceptRevision
+    public static List&lt;List&lt;Integer&gt;&gt; pascalTriangleIII(int n) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+
+        // Store the entire Pascal&#x27;s triangle:
+        for (int row = 1; row &lt;= n; row++) {
+            List&lt;Integer&gt; tempLst = new ArrayList&lt;&gt;(); // temporary list
+            for (int col = 1; col &lt;= row; col++) {
+                tempLst.add(nCr(row - 1, col - 1));
+            }
+            ans.add(tempLst);
+        }
+        return ans;
+    }
+
+    public static int nCr(int n, int r) {
+        long res = 1;
+        // calculating nCr:
+        for (int i = 0; i &lt; r; i++) {
+            res = res * (n - i);
+            res = res / (i + 1);
+        }
+        return (int) res;
+    }
+
+}</code></pre><figure id="1f0b255d-72ff-8080-b82e-e3cc565649b8"><div class="source"><a href="https://youtu.be/bR7mQgwQ_o8">https://youtu.be/bR7mQgwQ_o8</a></div></figure></details></li></ul><ul id="027382e3-abc3-4b6d-8a8e-efc2f4ff5753" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-1-lms/maximum-product-subarray-in-an-array">Maximum Product Subarray in an Array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="4785fecc-5e3e-4f44-84f0-7b33fcfc347c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        
+        int ans = Integer.MIN_VALUE; // to store the answer
+        
+        // Indices to store the prefix and suffix multiplication
+        int prefix = 1, suffix = 1;
+        
+        // Iterate on the elements of the given array
+        for (int i = 0; i &lt; n; i++) {
+            
+            /* Resetting the prefix and suffix
+            multiplication if they turn out to be zero */
+            if (prefix == 0) prefix = 1;
+            if (suffix == 0) suffix = 1;
+            
+            // update the prefix and suffix multiplication
+            prefix *= nums[i];
+            suffix *= nums[n - i - 1];
+            
+            // store the maximum as the answer
+            ans = Math.max(ans, Math.max(prefix, suffix));
+        }
+        
+        // return the result
+        return ans;
+    }
+}</code></pre><figure id="228b255d-72ff-800c-9bec-c73cfca6cbfa"><div class="source"><a href="https://www.youtube.com/watch?v=hnswaLJvr6g">https://www.youtube.com/watch?v=hnswaLJvr6g</a></div></figure></details></li></ul><ul id="244b255d-72ff-80fe-b379-f8e9030b9a5b" class="toggle"><li><details open=""><summary>Contains Duplicate</summary></details></li></ul><ul id="1d6b255d-72ff-8027-b087-df5df30a1392" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/logic-building/intersection-of-two-sorted-arrays">Intersection of two sorted arrays</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-805b-a57b-fe009d8d24f1" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to find intersection of two sorted arrays
+    public int[] intersectionArray(int[] nums1, int[] nums2) {
+        List&lt;Integer&gt; tempList = new ArrayList&lt;&gt;();
+        int i = 0, j = 0;
+
+        // Traverse both arrays using two pointers approach
+        while (i &lt; nums1.length &amp;&amp; j &lt; nums2.length) {
+            if (nums1[i] &lt; nums2[j]) {
+                i++;
+            } else if (nums2[j] &lt; nums1[i]) {
+                j++;
+            } 
+            // nums1[i] == nums2[j]
+            else {
+                tempList.add(nums1[i]);
+                i++;
+                j++;
+            }
+        }
+
+        // Convert the list to an integer array
+        int[] ans = new int[tempList.size()];
+        for (int k = 0; k &lt; tempList.size(); k++) {
+            ans[k] = tempList.get(k);
+        }
+
+        // Return the intersection of two arrays
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-8010-b22a-e06de4902844" class="toggle"><li><details open=""><summary>Plus One</summary></details></li></ul><ul id="244b255d-72ff-804b-8e39-c06febebea4b" class="toggle"><li><details open=""><summary><a href="https://www.geeksforgeeks.org/problems/insert-interval-1666733333/1">Insert Interval</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="250b255d-72ff-80b6-a286-f49b62b54f42" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public ArrayList&lt;int[]&gt; insertInterval(int[][] intervals, int[] newInterval) {
+        
+        ArrayList&lt;int[]&gt; result = new ArrayList&lt;&gt;();
+        int i = 0;
+        int n = intervals.length;
+
+        // Step 1: Add all intervals ending before newInterval starts
+        while (i &lt; n &amp;&amp; intervals[i][1] &lt; newInterval[0]) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        // Step 2: Merge overlapping intervals
+        while (i &lt; n &amp;&amp; intervals[i][0] &lt;= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        result.add(newInterval);
+
+        // Step 3: Add remaining intervals
+        while (i &lt; n) {
+            result.add(intervals[i]);
+            i++;
+        }
+        
+        return result;
+        
+    }
+}</code></pre></details></li></ul><ul id="244b255d-72ff-8053-9306-fd599f280756" class="toggle"><li><details open=""><summary>Degree of an Array</summary></details></li></ul><ul id="244b255d-72ff-802e-89e2-efaaa1278c07" class="toggle"><li><details open=""><summary>Remove Duplicates from Sorted Array II</summary></details></li></ul><ul id="244b255d-72ff-800d-8542-d3aaf13d767d" class="toggle"><li><details open=""><summary>Squares of a Sorted Array</summary></details></li></ul><ul id="244b255d-72ff-804a-8dcc-f8bf564a3052" class="toggle"><li><details open=""><summary>Design Tic-Tac-Toe</summary></details></li></ul><ul id="244b255d-72ff-80b5-aaeb-cfd5b9bc6ede" class="toggle"><li><details open=""><summary>Remove Element</summary></details></li></ul><ul id="244b255d-72ff-8018-8ca6-d415596c5781" class="toggle"><li><details open=""><summary>3Sum Closest</summary></details></li></ul><ul id="244b255d-72ff-80f2-919a-c8f6212ee533" class="toggle"><li><details open=""><summary>Max Points on a Line</summary></details></li></ul><ul id="244b255d-72ff-80d3-bea1-ef7bd7bacf83" class="toggle"><li><details open=""><summary>Spiral Matrix II</summary></details></li></ul><ul id="244b255d-72ff-8033-8e18-ce5e747feae0" class="toggle"><li><details open=""><summary>Snapshot Array</summary></details></li></ul><ul id="244b255d-72ff-802c-99ad-ce687a447d26" class="toggle"><li><details open=""><summary>Count Primes</summary></details></li></ul><ul id="244b255d-72ff-8016-b3f0-e1b323bbb2f8" class="toggle"><li><details open=""><summary>Logger Rate Limiter</summary></details></li></ul><ul id="244b255d-72ff-8068-a557-faf3c8e98795" class="toggle"><li><details open=""><summary>Find Pivot Index</summary></details></li></ul><ul id="244b255d-72ff-80d0-b920-fe2c897f1220" class="toggle"><li><details open=""><summary>Pairs of Songs With Total Durations Divisible by 60</summary></details></li></ul><ul id="244b255d-72ff-8037-b463-d422a789697b" class="toggle"><li><details open=""><summary>Game of Life</summary></details></li></ul><ul id="244b255d-72ff-80b5-9ce7-f4dfae5fe1f3" class="toggle"><li><details open=""><summary><strong>Reaching Points</strong></summary></details></li></ul><ul id="244b255d-72ff-80a1-b6ca-f6cbe8b32ba6" class="toggle"><li><details open=""><summary>Maximize Distance to Closest Person</summary></details></li></ul><ul id="244b255d-72ff-80ee-9e14-d5389f455798" class="toggle"><li><details open=""><summary>Insert Delete GetRandom O(1) - Duplicates allowed</summary></details></li></ul><ul id="244b255d-72ff-8027-acee-c80c582ecd3b" class="toggle"><li><details open=""><summary>Minimum Absolute Difference</summary></details></li></ul><ul id="244b255d-72ff-804e-ae8d-fc332c68c231" class="toggle"><li><details open=""><summary>Diagonal Traverse</summary></details></li></ul><ul id="244b255d-72ff-80a2-a226-eca2fa9133b6" class="toggle"><li><details open=""><summary>Maximum Product of Three Numbers</summary></details></li></ul><ul id="244b255d-72ff-8022-a9f1-c9b649315e7e" class="toggle"><li><details open=""><summary>Number of Divisible Triplet Sums</summary></details></li></ul><ul id="244b255d-72ff-80aa-994b-c42080ec8ae0" class="toggle"><li><details open=""><summary>Simple Bank System</summary></details></li></ul><ul id="244b255d-72ff-8013-ba99-e8d7cc290cb0" class="toggle"><li><details open=""><summary>Number of Black Blocks</summary></details></li></ul><ul id="244b255d-72ff-80db-9fc6-cd4cfecb04ec" class="toggle"><li><details open=""><summary>Rotating the Box</summary></details></li></ul><ul id="244b255d-72ff-80c2-9ac4-fd3b9151030f" class="toggle"><li><details open=""><summary>Interval List Intersections</summary></details></li></ul><ul id="244b255d-72ff-8024-9912-c99ac74188ba" class="toggle"><li><details open=""><summary>Candy Crush</summary></details></li></ul><ul id="244b255d-72ff-8091-859e-ea425eddda91" class="toggle"><li><details open=""><summary>Range Sum Query 2D - Immutable</summary></details></li></ul><ul id="244b255d-72ff-8067-a89c-fad6f3f2626b" class="toggle"><li><details open=""><summary>Design Memory Allocator</summary></details></li></ul><ul id="244b255d-72ff-8076-bf87-dc900bdee2b6" class="toggle"><li><details open=""><summary>Sort Array by Increasing Frequency</summary></details></li></ul><ul id="244b255d-72ff-80c3-92ee-e5fed215ec98" class="toggle"><li><details open=""><summary>Max Consecutive Ones</summary></details></li></ul><ul id="244b255d-72ff-8005-9014-d9d8fd87b87b" class="toggle"><li><details open=""><summary>Summary Ranges</summary></details></li></ul><ul id="244b255d-72ff-80cf-bf0a-f77b7d2de20f" class="toggle"><li><details open=""><summary>Minimum Area Rectangle</summary></details></li></ul><ul id="244b255d-72ff-800d-8075-d0af8f040513" class="toggle"><li><details open=""><summary>Minimum Operations to Write the Letter Y on a Grid</summary></details></li></ul><ul id="244b255d-72ff-804a-bfe5-d231f88381d8" class="toggle"><li><details open=""><summary>Design a Stack With Increment Operation</summary></details></li></ul><ul id="244b255d-72ff-8064-8c14-ea561bd46f44" class="toggle"><li><details open=""><summary>Ways to Make a Fair Array</summary></details></li></ul><ul id="244b255d-72ff-80c5-9eff-fe27e6c43c1e" class="toggle"><li><details open=""><summary>Brightest Position on Street</summary></details></li></ul><ul id="cb5fb044-3c46-4802-98f6-8ee7a7c31059" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-1-lms/majority-element-ii">Majority Element 2</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="62d6bab6-e9cf-4e18-a07e-438c47e468c8" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public List&lt;Integer&gt; majorityElementTwo(int[] nums) {
+        int n = nums.length; // Get the size of the array
+
+        int cnt1 = 0, cnt2 = 0; // Initialize counters for two potential majority elements.
+        int el1 = Integer.MIN_VALUE; // Initialize the first potential majority element.
+        int el2 = Integer.MIN_VALUE; // Initialize the second potential majority element.
+
+        // Apply the Extended Boyer-Moore&#x27;s Voting Algorithm:
+        for (int i = 0; i &lt; n; i++) {
+            if (cnt1 == 0 &amp;&amp; el2 != nums[i]) {
+                cnt1 = 1;
+                el1 = nums[i];
+            } else if (cnt2 == 0 &amp;&amp; el1 != nums[i]) {
+                cnt2 = 1;
+                el2 = nums[i];
+            } else if (nums[i] == el1) {
+                cnt1++;
+            } else if (nums[i] == el2) {
+                cnt2++;
+            } else {
+                cnt1--;
+                cnt2--;
+            }
+        }
+
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;(); // Create a list to store the majority elements.
+
+        // Manually check if the stored elements in el1 and el2 are the majority elements:
+        cnt1 = 0;
+        cnt2 = 0;
+        for (int i = 0; i &lt; n; i++) {
+            if (nums[i] == el1) {
+                cnt1++;
+            }
+            if (nums[i] == el2) {
+                cnt2++;
+            }
+        }
+
+        int minCount = (int)(n / 3) + 1; // Determine the minimum count required for a majority element.
+
+        // If el1 appears more than the minimum count, add it to the result list.
+        if (cnt1 &gt;= minCount) {
+            result.add(el1);
+        }
+
+        // If el2 appears more than the minimum count, add it to the result list.
+        if (cnt2 &gt;= minCount) {
+            result.add(el2);
+        }
+
+        return result;
+    }
+}</code></pre><figure id="1f0b255d-72ff-808a-81d2-f0c77c23cfe5"><div class="source"><a href="https://youtu.be/vwZj1K0e9U8">https://youtu.be/vwZj1K0e9U8</a></div></figure></details></li></ul><ul id="244b255d-72ff-806b-acd9-cbfcac9cb168" class="toggle"><li><details open=""><summary>Guess the Word</summary></details></li></ul><ul id="244b255d-72ff-8060-a2bf-c95aac2d76cd" class="toggle"><li><details open=""><summary><a href="https://neetcode.io/problems/meeting-schedule">Meeting Rooms</a></summary></details></li></ul><ul id="244b255d-72ff-8067-b17c-e6b324bc7564" class="toggle"><li><details open=""><summary>Dot Product of Two Sparse Vectors</summary></details></li></ul><ul id="23bb255d-72ff-800e-ba1f-de8ff28c6eb1" class="toggle"><li><details open=""><summary>Brightest Position on Street</summary></details></li></ul><ul id="a29c112e-aed9-4bd4-b129-a5f1d405c008" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-1-lms/find-the-repeating-and-missing-number">Find the repeating and missing numbers</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="ad9547d7-88b9-46c4-b2a9-5dad19fadf07" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Function to find repeating and missing numbers
+    public int[] findMissingRepeatingNumbers(int[] nums) {
+        
+        // Size of the array
+        long n = nums.length;
+
+        // Sum of first n natural numbers
+        long SN = (n * (n + 1)) / 2;
+
+        // Sum of squares of first n natural numbers
+        long S2N = (n * (n + 1) * (2 * n + 1)) / 6;
+
+        /* Calculate actual sum (S) and sum 
+           of squares (S2) of array elements */
+        long S = 0, S2 = 0;
+        for (int i = 0; i &lt; n; i++) {
+            S += nums[i];
+            S2 += (long) nums[i] * (long) nums[i]; //Imp: don&#x27;t remove this long
+        }
+
+        // Compute the difference values
+        long val1 = S - SN;
+
+        // S2 - S2n = X^2 - Y^2
+        long val2 = S2 - S2N;
+
+        // Calculate X + Y using X + Y = (X^2 - Y^2) / (X - Y)
+        val2 = val2 / val1;
+
+        /* Calculate X and Y from X + Y and X - Y
+           X = ((X + Y) + (X - Y)) / 2
+           Y = X - (X - Y) */
+        long x = (val1 + val2) / 2;
+        long y = x - val1;
+
+        // Return the results as [repeating, missing]
+        return new int[]{(int) x, (int) y};
+    }
+
+}
+</code></pre><figure id="228b255d-72ff-80c5-ba33-db3790a20f57"><div class="source"><a href="https://www.youtube.com/watch?v=2D0D8HE6uak">https://www.youtube.com/watch?v=2D0D8HE6uak</a></div></figure></details></li></ul><ul id="f57609c9-c014-4991-8492-244b79b343c9" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-1-lms/reverse-pairs">Reverse Pairs</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="42d4beb1-4512-48e3-9c32-f9c855c684ed" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    static int reversePairs(int[] nums) {
+        return mergeSort(nums, 0, nums.length - 1);
+    }
+
+    static int mergeSort(int[] nums, int low, int high) {
+        if (low &gt;= high)
+            return 0;
+        int mid = (low + high) / 2;
+        int inv = mergeSort(nums, low, mid);
+        inv += mergeSort(nums, mid + 1, high);
+        inv += merge(nums, low, mid, high);
+        return inv;
+    }
+
+    static int merge(int[] nums, int low, int mid, int high) {
+        int cnt = 0;
+        int j = mid + 1;
+        for (int i = low; i &lt;= mid; i++) {
+            while (j &lt;= high &amp;&amp; nums[i] &gt; (2 * (long) nums[j])) {
+                j++;
+            }
+            cnt += (j - (mid + 1));
+        }
+
+        ArrayList&lt;Integer&gt; temp = new ArrayList&lt;&gt;();
+        int left = low, right = mid + 1;
+        while (left &lt;= mid &amp;&amp; right &lt;= high) {
+            if (nums[left] &lt;= nums[right]) {
+                temp.add(nums[left++]);
+            } else {
+                temp.add(nums[right++]);
+            }
+        }
+
+        while (left &lt;= mid) {
+            temp.add(nums[left++]);
+        }
+        while (right &lt;= high) {
+            temp.add(nums[right++]);
+        }
+
+        for (int i = low; i &lt;= high; i++) {
+            nums[i] = temp.get(i - low);
+        }
+        return cnt;
+    }
+
+}</code></pre><figure id="228b255d-72ff-80f5-bc35-da1e6b49bf42"><div class="source"><a href="https://www.youtube.com/watch?v=0e4bZaP3MDI">https://www.youtube.com/watch?v=0e4bZaP3MDI</a></div></figure></details></li></ul><ul id="a4e8629d-af74-4ab8-a2dd-7eb4d323db66" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/count-subarrays-with-given-xor-k">Count the number of subarrays with given xor K</a></strong></mark></summary><figure id="984267fb-091b-492e-8b4e-398b049fd3dd" class="image"><a href="Untitled%207.png"><img style="width:651.9874877929688px" src="Untitled%207.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="88e6390e-dbf3-489c-8eb0-f76a1a7a16db" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int subarraysWithXorK(int[] nums, int k) {
+        int n = nums.length;
+        int xr = 0;
+        Map&lt;Integer, Integer&gt; mpp = new HashMap&lt;&gt;();
+        // setting the value of 0.
+        mpp.put(xr, mpp.getOrDefault(xr, 0) + 1);
+        int cnt = 0;
+
+        for (int i = 0; i &lt; n; i++) {
+            // prefix XOR till index i:
+            xr = xr ^ nums[i];
+
+            // By formula: x = xr ^ k:
+            int x = xr ^ k;
+
+            // add the occurrence of xr ^ k to the count:
+            cnt += mpp.getOrDefault(x, 0);
+
+            // Insert the prefix xor till index i into the map:
+            mpp.put(xr, mpp.getOrDefault(xr, 0) + 1);
+        }
+        return cnt;
+    }
+}
+</code></pre><figure id="228b255d-72ff-805d-949f-e12e03ff3448"><div class="source"><a href="https://www.youtube.com/watch?v=eZr-6p0B7ME">https://www.youtube.com/watch?v=eZr-6p0B7ME</a></div></figure></details></li></ul><h2 id="190b255d-72ff-80fe-8776-db1aae1e627d" class=""><mark class="highlight-default"><strong>DSA Concept Revision</strong></mark></h2><ul id="56d10c90-55ce-46a4-9a07-f8666eeb39d4" class="toggle"><li><details open=""><summary><mark class="highlight-teal"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sorting-and-arrays-i/merge-sorting">Merge Sort Algorithm</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="92a4d659-9cc9-453a-b571-a03d153ef800" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {  //DSAConceptRevision
+
+    public int[] mergeSort(int[] nums) {
+        mergeSort(nums, 0, nums.length - 1);
+        return nums;
+    }
+
+    void mergeSort(int[] arr, int low, int high) {
+        if (low &gt;= high) // Imp: don&#x27;t forget that equal sign.
+            return;
+        int mid = (low + high) / 2;
+        mergeSort(arr, low, mid); 
+        mergeSort(arr, mid + 1, high);
+        merge(arr, low, mid, high); // Merge two sorted lists
+    }
+
+    void merge(int[] arr, int low, int mid, int high) {
+        List&lt;Integer&gt; temp = new ArrayList&lt;&gt;(); // Using ArrayList instead of array
+        int left = low;  // starting index of left half
+        int right = mid + 1;  // starting index of right half
+
+        // Merging both halves in sorted order
+        while (left &lt;= mid &amp;&amp; right &lt;= high) {
+            if (arr[left] &lt;= arr[right]) {
+                temp.add(arr[left++]); // Imp: don&#x27;t forget ++
+            } else {
+                temp.add(arr[right++]);
+            }
+        }
+
+        // If elements on the left half are still left
+        while (left &lt;= mid) {
+            temp.add(arr[left++]);
+        }
+
+        // If elements on the right half are still left
+        while (right &lt;= high) {
+            temp.add(arr[right++]);
+        }
+
+        // Copying merged elements back to the original array
+        for (int i = low; i &lt;= high; i++) {
+            arr[i] = temp.get(i - low); // `i - low` is used to map `i` to `temp`&#x27;s index
+        }
+    }
+}
+</code></pre></details></li></ul><ul id="190b255d-72ff-80b4-b272-e07eb3c828d6" class="toggle"><li><details open=""><summary><mark class="highlight-red"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/sorting-and-arrays-i/quick-sorting">Quick Sort Algorithm</a></strong></mark></summary><figure id="243b255d-72ff-803e-8c09-c0a35a25648e" class="image"><a href="image%202.png"><img style="width:1299.175048828125px" src="image%202.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="190b255d-72ff-8060-9d22-f7eb54716401" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+
+    // Partition the array and return pivot&#x27;s correct index
+    private int partition(int[] arr, int low, int high) {
+        int pivot = arr[low];  // Choose first element as pivot (Hoare&#x27;s partition)
+        int i = low;
+        int j = high;
+
+        while (i &lt; j) {
+            // Move i forward until element &gt; pivot
+            while (i &lt;= high - 1 &amp;&amp; arr[i] &lt;= pivot) i++; //Imp: place this = here only, else error.
+            // Move j backward until element &lt;= pivot
+            while (j &gt;= low + 1 &amp;&amp; arr[j] &gt; pivot) j--;
+
+            // Swap out-of-place elements
+            if (i &lt; j) swap(arr, i, j);
+        }
+
+        // Place pivot in its correct sorted position
+        swap(arr, low, j);
+        return j;
+    }
+
+    // Recursive Quick Sort on subarrays
+    private void quickSort(int[] arr, int low, int high) {
+        if (low &lt; high) {
+            int pivotIndex = partition(arr, low, high); // Partition index
+            quickSort(arr, low, pivotIndex - 1);        // Sort left of pivot
+            quickSort(arr, pivotIndex + 1, high);       // Sort right of pivot
+        }
+    }
+
+    // Swap utility for in-place sorting
+    private void swap(int[] arr, int i, int j) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+    }
+
+    // Entry point to sort the array
+    public int[] quickSort(int[] nums) {
+        quickSort(nums, 0, nums.length - 1);
+        return nums;
+    }
+}
+</code></pre></details></li></ul><ul id="cf3a4747-012a-4f2d-ab73-db1e68962c63" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/array-iii/count-inversions">Count inversions in an array</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="19fb255d-72ff-8008-b904-cf06a4637507" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    static int count;
+    
+    static int numberOfInversions(int arr[]) {
+        count = 0; // Initilization is Imp, lol.
+        mergeSort(arr, 0, arr.length - 1);
+        return count;
+    }
+
+    public static void mergeSort(int[] arr, int low, int high) {
+        if (low &gt;= high) return;
+        int mid = (low + high) / 2;
+        mergeSort(arr, low, mid);
+        mergeSort(arr, mid + 1, high);
+        merge(arr, low, mid, high);
+    }
+
+    private static void merge(int[] arr, int low, int mid, int high) {
+        List&lt;Integer&gt; temp = new ArrayList&lt;&gt;(); // ArrayList instead of array
+        int left = low, right = mid + 1;
+
+        while (left &lt;= mid &amp;&amp; right &lt;= high) {
+            if (arr[left] &lt;= arr[right]) {
+                temp.add(arr[left++]);
+            } else { // Since we want left &gt; right count only.
+                temp.add(arr[right++]);
+
+                // Count inversions: All remaining elements in left subarray are greater
+                count += mid - left + 1; // Only one line, lol.
+            }
+        }
+
+        // Copy remaining elements from left subarray
+        while (left &lt;= mid) {
+            temp.add(arr[left++]);
+        }
+
+        // Copy remaining elements from right subarray
+        while (right &lt;= high) {
+            temp.add(arr[right++]);
+        }
+
+        // Copy back to the original array
+        for (int i = low; i &lt;= high; i++) {
+            arr[i] = temp.get(i - low); 
+        }
+    }
+}
+</code></pre></details></li></ul><ul id="1a6b255d-72ff-8048-9c44-f045ff8aeebf" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa-concept-revision/arrays-iv-and-hashing/longest-subarray-with-sum-k">Longest subarray with sum K [Negative Values also Present]</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1a6b255d-72ff-80e3-8ddc-c4ff9c96b6ea" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int longestSubarray(int[] nums, int k) {
+        int n = nums.length;
+
+        Map&lt;Integer, Integer&gt; preSumMap = new HashMap&lt;&gt;();
+        int sum = 0;
+        int maxLen = 0;
+        for (int i = 0; i &lt; n; i++) {
+            // calculate the prefix sum till index i
+            sum += nums[i];
+
+            // if the sum equals k, update maxLen
+            if (sum == k) {
+                maxLen = Math.max(maxLen, i + 1);
+            }
+
+            // calculate the sum of remaining part i.e., sum - k
+            int rem = sum - k;
+
+            // calculate the length and update maxLen
+            if (preSumMap.containsKey(rem)) {
+                int len = i - preSumMap.get(rem);
+                maxLen = Math.max(maxLen, len);
+            }
+
+            // update the map if sum is not already present
+            if (!preSumMap.containsKey(sum)) {
+                preSumMap.put(sum, i);
+            }
+        }
+
+        return maxLen;
+    }
+}</code></pre></details></li></ul><h2 id="1d6b255d-72ff-805a-b8c7-dbef4dae2ce2" class=""><strong>DSA Striver</strong></h2><ul id="1d6b255d-72ff-80d6-b595-e15a0839ca94" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/fundamentals/left-rotate-array-by-one">Left Rotate Array by One</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-803e-8050-ed1865f5f750" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public void rotateArrayByOne(int[] nums) {
+        // Store the first element in a temporary variable
+        int temp = nums[0];
+        
+        // Shift elements to the left
+        for (int i = 1; i &lt; nums.length; i++) {
+            nums[i - 1] = nums[i];
+        }
+
+        // Place the first element at the end
+        nums[nums.length - 1] = temp;
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-8024-99c5-f521f262c809" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/logic-building/union-of-two-sorted-arrays">Union of two sorted arrays</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-807e-8e35-ff1a84e45263" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int[] unionArray(int[] nums1, int[] nums2) {
+        List&lt;Integer&gt; UnionList = new ArrayList&lt;&gt;();
+        int i = 0, j = 0;
+        int n = nums1.length;
+        int m = nums2.length;
+
+        while (i &lt; n &amp;&amp; j &lt; m) {
+            // Case 1 and 2
+            if (nums1[i] &lt;= nums2[j]) {
+                if (UnionList.isEmpty() || UnionList.get(UnionList.size() - 1) != nums1[i]) {
+                    UnionList.add(nums1[i]);
+                }
+                i++;
+            } 
+            // Case 3
+            else {
+                if (UnionList.isEmpty() || UnionList.get(UnionList.size() - 1) != nums2[j]) {
+                    UnionList.add(nums2[j]);
+                }
+                j++;
+            }
+        }
+
+        // Add remaining elements of nums1, if any
+        while (i &lt; n) {
+            if (UnionList.isEmpty() || UnionList.get(UnionList.size() - 1) != nums1[i]) {
+                UnionList.add(nums1[i]);
+            }
+            i++;
+        }
+
+        // Add remaining elements of nums2, if any
+        while (j &lt; m) {
+            if (UnionList.isEmpty() || UnionList.get(UnionList.size() - 1) != nums2[j]) {
+                UnionList.add(nums2[j]);
+            }
+            j++;
+        }
+
+        // Convert List&lt;Integer&gt; to int[]
+        int[] Union = new int[UnionList.size()];
+        for (int k = 0; k &lt; UnionList.size(); k++) {
+            Union[k] = UnionList.get(k);
+        }
+
+        return Union;
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-8072-b83e-d8096d769bb6" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/faqs-medium/rearrange-array-elements-by-sign">Rearrange array elements by sign</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80a4-a2d7-de088e0cf1e6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    //Function to rearrange elements by their sign
+    public int[] rearrangeArray(int[] nums) {
+        int n = nums.length;
+        
+        // Initialize a result vector of size n
+        int[] ans = new int[n]; 
+        
+         /* Initialize indices for positive
+         and negative elements*/
+        int posIndex = 0, negIndex = 1;
+        
+        // Traverse through each element in nums
+        for (int i = 0; i &lt; n; i++) {
+            if (nums[i] &lt; 0) {
+                
+                /* If current element is negative, place
+                it at the next odd index in ans*/
+                ans[negIndex] = nums[i];
+                // Move to the next odd index
+                negIndex += 2;
+                
+            } else {
+                ans[posIndex] = nums[i];
+
+                // Move to the next even index
+                posIndex += 2;
+                
+            }
+        }
+        
+        // Return the rearranged array
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-8045-a6c6-d2f004e442d5" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/faqs-medium/pascals-triangle-i">Pascal&#x27;s Triangle I</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8046-b6ae-f3672557307d" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to print the element in rth row and cth column 
+    public static int pascalTriangleI(int r, int c) {
+        return nCr(r-1, c-1);
+    }
+    
+    // Function to calculate nCr
+    private static int nCr(int n, int r)  {
+        // Choose the smaller value for lesser iterations
+        if(r &gt; n-r) r = n-r;
+        
+        // base case
+        if(r == 1) return n;
+        
+        int res = 1; // to store the result 
+        
+        // Calculate nCr using iterative method avoiding overflow 
+        for (int i = 0; i &lt; r; i++) {
+            res = res * (n - i);
+            res = res / (i + 1);
+        }
+        
+        return res; // return the result 
+    }
+};</code></pre></details></li></ul><ul id="1d6b255d-72ff-80bb-af9d-dfd6fdd5a55b" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/arrays/faqs-medium/pascals-triangle-ii">Pascal&#x27;s Triangle II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80aa-8f25-d04f23aa6c21" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to return the rth row of Pascal&#x27;s triangle
+    public int[] pascalTriangleII(int r) {
+        int[] ans = new int[r]; // to store the answer
+        
+        // Set the first element of the row as 1
+        ans[0] = 1; 
+        
+        // Compute each element in the rth row
+        for(int i = 1; i &lt; r; i++) {
+            ans[i] = (ans[i-1] * (r - i)) / i;
+        }
+        
+        return ans; // return the result
+    }
+}</code></pre></details></li></ul><h2 id="244b255d-72ff-80e8-958a-f0e15a938d77" class="">Extras</h2><table id="244b255d-72ff-8086-92c8-e35d94b6324a" class="simple-table"><tbody><tr id="244b255d-72ff-8049-9607-db64c23eaf71"><td id="vAkf" class="">Link</td><td id="biur" class="">Title</td><td id="MKTs" class="">Frequency</td><td id="ONCs" class="">Companies Count</td><td id="FD}O" class="">Topics</td></tr><tr id="244b255d-72ff-803b-8e63-e63daedc1ae9"><td id="vAkf" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock</td><td id="biur" class="">Best Time to Buy and Sell Stock</td><td id="MKTs" class="">100</td><td id="ONCs" class="">120</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-8092-904c-ca5fea65658e"><td id="vAkf" class="">https://leetcode.com/problems/two-sum</td><td id="biur" class="">Two Sum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">115</td><td id="FD}O" class="">Array, Hash Table</td></tr><tr id="244b255d-72ff-80c7-a603-cb6af6f5dbaa"><td id="vAkf" class="">https://leetcode.com/problems/merge-intervals</td><td id="biur" class="">Merge Intervals</td><td id="MKTs" class="">100</td><td id="ONCs" class="">89</td><td id="FD}O" class="">Array, Sorting</td></tr><tr id="244b255d-72ff-8041-82cc-f048713c0548"><td id="vAkf" class="">https://leetcode.com/problems/number-of-islands</td><td id="biur" class="">Number of Islands</td><td id="MKTs" class="">100</td><td id="ONCs" class="">86</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="244b255d-72ff-80b0-a002-fd2911cc0c5b"><td id="vAkf" class="">https://leetcode.com/problems/trapping-rain-water</td><td id="biur" class="">Trapping Rain Water</td><td id="MKTs" class="">100</td><td id="ONCs" class="">81</td><td id="FD}O" class="">Array, Two Pointers, Dynamic Programming, Stack, Monotonic Stack</td></tr><tr id="244b255d-72ff-8038-aa25-daf469559ab3"><td id="vAkf" class="">https://leetcode.com/problems/group-anagrams</td><td id="biur" class="">Group Anagrams</td><td id="MKTs" class="">100</td><td id="ONCs" class="">80</td><td id="FD}O" class="">Array, Hash Table, String, Sorting</td></tr><tr id="244b255d-72ff-80d8-bc74-c3f730b8cf19"><td id="vAkf" class="">https://leetcode.com/problems/3sum</td><td id="biur" class="">3Sum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">66</td><td id="FD}O" class="">Array, Two Pointers, Sorting</td></tr><tr id="244b255d-72ff-8006-ba63-db45f544fc85"><td id="vAkf" class="">https://leetcode.com/problems/maximum-subarray</td><td id="biur" class="">Maximum Subarray</td><td id="MKTs" class="">100</td><td id="ONCs" class="">55</td><td id="FD}O" class="">Array, Divide and Conquer, Dynamic Programming</td></tr><tr id="244b255d-72ff-8089-a14b-c1270bede0af"><td id="vAkf" class="">https://leetcode.com/problems/container-with-most-water</td><td id="biur" class="">Container With Most Water</td><td id="MKTs" class="">100</td><td id="ONCs" class="">52</td><td id="FD}O" class="">Array, Two Pointers, Greedy</td></tr><tr id="244b255d-72ff-8052-9fed-fa709bb4861a"><td id="vAkf" class="">https://leetcode.com/problems/search-in-rotated-sorted-array</td><td id="biur" class="">Search in Rotated Sorted Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">51</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-8043-88d1-e60a668888b0"><td id="vAkf" class="">https://leetcode.com/problems/merge-sorted-array</td><td id="biur" class="">Merge Sorted Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">47</td><td id="FD}O" class="">Array, Two Pointers, Sorting</td></tr><tr id="244b255d-72ff-8002-b146-c1c690e798ff"><td id="vAkf" class="">https://leetcode.com/problems/spiral-matrix</td><td id="biur" class="">Spiral Matrix</td><td id="MKTs" class="">100</td><td id="ONCs" class="">46</td><td id="FD}O" class="">Array, Matrix, Simulation</td></tr><tr id="244b255d-72ff-80c0-a001-d8226e6ae12f"><td id="vAkf" class="">https://leetcode.com/problems/insert-delete-getrandom-o1</td><td id="biur" class="">Insert Delete GetRandom O(1)</td><td id="MKTs" class="">100</td><td id="ONCs" class="">46</td><td id="FD}O" class="">Array, Hash Table, Math, Design, Randomized</td></tr><tr id="244b255d-72ff-8085-a828-ef0e18d5615f"><td id="vAkf" class="">https://leetcode.com/problems/top-k-frequent-elements</td><td id="biur" class="">Top K Frequent Elements</td><td id="MKTs" class="">100</td><td id="ONCs" class="">43</td><td id="FD}O" class="">Array, Hash Table, Divide and Conquer, Sorting, Heap (Priority Queue), Bucket Sort, Counting, Quickselect</td></tr><tr id="244b255d-72ff-8006-820c-fa2684f1c8ee"><td id="vAkf" class="">https://leetcode.com/problems/product-of-array-except-self</td><td id="biur" class="">Product of Array Except Self</td><td id="MKTs" class="">100</td><td id="ONCs" class="">42</td><td id="FD}O" class="">Array, Prefix Sum</td></tr><tr id="244b255d-72ff-80c4-b8fd-ec785490705b"><td id="vAkf" class="">https://leetcode.com/problems/median-of-two-sorted-arrays</td><td id="biur" class="">Median of Two Sorted Arrays</td><td id="MKTs" class="">100</td><td id="ONCs" class="">42</td><td id="FD}O" class="">Array, Binary Search, Divide and Conquer</td></tr><tr id="244b255d-72ff-80f1-b254-cd29b28c5ea7"><td id="vAkf" class="">https://leetcode.com/problems/kth-largest-element-in-an-array</td><td id="biur" class="">Kth Largest Element in an Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">41</td><td id="FD}O" class="">Array, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect</td></tr><tr id="244b255d-72ff-80df-85e0-d1d7e82894b7"><td id="vAkf" class="">https://leetcode.com/problems/meeting-rooms-ii</td><td id="biur" class="">Meeting Rooms II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">41</td><td id="FD}O" class="">Array, Two Pointers, Greedy, Sorting, Heap (Priority Queue), Prefix Sum</td></tr><tr id="244b255d-72ff-80e6-bf6a-c277816034e0"><td id="vAkf" class="">https://leetcode.com/problems/first-missing-positive</td><td id="biur" class="">First Missing Positive</td><td id="MKTs" class="">100</td><td id="ONCs" class="">40</td><td id="FD}O" class="">Array, Hash Table</td></tr><tr id="244b255d-72ff-80ff-8aef-c5e3d939afe2"><td id="vAkf" class="">https://leetcode.com/problems/house-robber</td><td id="biur" class="">House Robber</td><td id="MKTs" class="">100</td><td id="ONCs" class="">37</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-8014-bc2d-f864e1907d2e"><td id="vAkf" class="">https://leetcode.com/problems/coin-change</td><td id="biur" class="">Coin Change</td><td id="MKTs" class="">100</td><td id="ONCs" class="">37</td><td id="FD}O" class="">Array, Dynamic Programming, Breadth-First Search</td></tr><tr id="244b255d-72ff-8077-ab2b-eb0941949a51"><td id="vAkf" class="">https://leetcode.com/problems/longest-consecutive-sequence</td><td id="biur" class="">Longest Consecutive Sequence</td><td id="MKTs" class="">100</td><td id="ONCs" class="">36</td><td id="FD}O" class="">Array, Hash Table, Union Find</td></tr><tr id="244b255d-72ff-804d-967c-dd881bfbc20a"><td id="vAkf" class="">https://leetcode.com/problems/move-zeroes</td><td id="biur" class="">Move Zeroes</td><td id="MKTs" class="">100</td><td id="ONCs" class="">35</td><td id="FD}O" class="">Array, Two Pointers</td></tr><tr id="244b255d-72ff-8090-9884-ea77a3933208"><td id="vAkf" class="">https://leetcode.com/problems/rotate-image</td><td id="biur" class="">Rotate Image</td><td id="MKTs" class="">100</td><td id="ONCs" class="">35</td><td id="FD}O" class="">Array, Math, Matrix</td></tr><tr id="244b255d-72ff-800d-8629-d8b591361bc5"><td id="vAkf" class="">https://leetcode.com/problems/jump-game</td><td id="biur" class="">Jump Game</td><td id="MKTs" class="">100</td><td id="ONCs" class="">35</td><td id="FD}O" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="244b255d-72ff-80a3-8cf4-ff25283c7614"><td id="vAkf" class="">https://leetcode.com/problems/word-search</td><td id="biur" class="">Word Search</td><td id="MKTs" class="">100</td><td id="ONCs" class="">35</td><td id="FD}O" class="">Array, String, Backtracking, Depth-First Search, Matrix</td></tr><tr id="244b255d-72ff-8037-a93a-d4a0767fff4c"><td id="vAkf" class="">https://leetcode.com/problems/rotting-oranges</td><td id="biur" class="">Rotting Oranges</td><td id="MKTs" class="">100</td><td id="ONCs" class="">34</td><td id="FD}O" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-80b3-a826-e5ca73597464"><td id="vAkf" class="">https://leetcode.com/problems/text-justification</td><td id="biur" class="">Text Justification</td><td id="MKTs" class="">100</td><td id="ONCs" class="">34</td><td id="FD}O" class="">Array, String, Simulation</td></tr><tr id="244b255d-72ff-8094-8367-d6a16ac2a9ae"><td id="vAkf" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii</td><td id="biur" class="">Best Time to Buy and Sell Stock II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">34</td><td id="FD}O" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="244b255d-72ff-8014-beb8-e5024ee0e7cb"><td id="vAkf" class="">https://leetcode.com/problems/sliding-window-maximum</td><td id="biur" class="">Sliding Window Maximum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">34</td><td id="FD}O" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Monotonic Queue</td></tr><tr id="244b255d-72ff-80ee-8f03-cad4c2e6a268"><td id="vAkf" class="">https://leetcode.com/problems/subarray-sum-equals-k</td><td id="biur" class="">Subarray Sum Equals K</td><td id="MKTs" class="">100</td><td id="ONCs" class="">34</td><td id="FD}O" class="">Array, Hash Table, Prefix Sum</td></tr><tr id="244b255d-72ff-8041-a2b7-d71d326622fc"><td id="vAkf" class="">https://leetcode.com/problems/next-permutation</td><td id="biur" class="">Next Permutation</td><td id="MKTs" class="">100</td><td id="ONCs" class="">33</td><td id="FD}O" class="">Array, Two Pointers</td></tr><tr id="244b255d-72ff-80a8-bd36-e4411e5dd4f6"><td id="vAkf" class="">https://leetcode.com/problems/sort-colors</td><td id="biur" class="">Sort Colors</td><td id="MKTs" class="">100</td><td id="ONCs" class="">33</td><td id="FD}O" class="">Array, Two Pointers, Sorting</td></tr><tr id="244b255d-72ff-807f-bdbf-dc58a3b78833"><td id="vAkf" class="">https://leetcode.com/problems/valid-sudoku</td><td id="biur" class="">Valid Sudoku</td><td id="MKTs" class="">100</td><td id="ONCs" class="">32</td><td id="FD}O" class="">Array, Hash Table, Matrix</td></tr><tr id="244b255d-72ff-801f-a351-d78a1053565e"><td id="vAkf" class="">https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array</td><td id="biur" class="">Find First and Last Position of Element in Sorted Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">31</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-801d-8ebe-d7eedaae54e1"><td id="vAkf" class="">https://leetcode.com/problems/jump-game-ii</td><td id="biur" class="">Jump Game II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">31</td><td id="FD}O" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="244b255d-72ff-8062-871d-d7b82f38f067"><td id="vAkf" class="">https://leetcode.com/problems/word-break</td><td id="biur" class="">Word Break</td><td id="MKTs" class="">100</td><td id="ONCs" class="">31</td><td id="FD}O" class="">Array, Hash Table, String, Dynamic Programming, Trie, Memoization</td></tr><tr id="244b255d-72ff-8089-8676-de1bf77c9155"><td id="vAkf" class="">https://leetcode.com/problems/koko-eating-bananas</td><td id="biur" class="">Koko Eating Bananas</td><td id="MKTs" class="">100</td><td id="ONCs" class="">30</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-8083-88c2-c0587b0ef634"><td id="vAkf" class="">https://leetcode.com/problems/rotate-array</td><td id="biur" class="">Rotate Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">29</td><td id="FD}O" class="">Array, Math, Two Pointers</td></tr><tr id="244b255d-72ff-803b-ab34-de0b77ec8179"><td id="vAkf" class="">https://leetcode.com/problems/combination-sum</td><td id="biur" class="">Combination Sum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">28</td><td id="FD}O" class="">Array, Backtracking</td></tr><tr id="244b255d-72ff-80e1-919f-ee6d9dfb01be"><td id="vAkf" class="">https://leetcode.com/problems/majority-element</td><td id="biur" class="">Majority Element</td><td id="MKTs" class="">100</td><td id="ONCs" class="">27</td><td id="FD}O" class="">Array, Hash Table, Divide and Conquer, Sorting, Counting</td></tr><tr id="244b255d-72ff-801d-a908-cd824d36b748"><td id="vAkf" class="">https://leetcode.com/problems/daily-temperatures</td><td id="biur" class="">Daily Temperatures</td><td id="MKTs" class="">100</td><td id="ONCs" class="">27</td><td id="FD}O" class="">Array, Stack, Monotonic Stack</td></tr><tr id="244b255d-72ff-80f7-b536-c8afc5f320cb"><td id="vAkf" class="">https://leetcode.com/problems/largest-rectangle-in-histogram</td><td id="biur" class="">Largest Rectangle in Histogram</td><td id="MKTs" class="">100</td><td id="ONCs" class="">26</td><td id="FD}O" class="">Array, Stack, Monotonic Stack</td></tr><tr id="244b255d-72ff-802b-9e98-fc7c41b09eb9"><td id="vAkf" class="">https://leetcode.com/problems/permutations</td><td id="biur" class="">Permutations</td><td id="MKTs" class="">89.5</td><td id="ONCs" class="">26</td><td id="FD}O" class="">Array, Backtracking</td></tr><tr id="244b255d-72ff-80a8-a685-f2957d03a00f"><td id="vAkf" class="">https://leetcode.com/problems/remove-duplicates-from-sorted-array</td><td id="biur" class="">Remove Duplicates from Sorted Array</td><td id="MKTs" class="">86.9</td><td id="ONCs" class="">26</td><td id="FD}O" class="">Array, Two Pointers</td></tr><tr id="244b255d-72ff-80ba-bd38-cee7900510b8"><td id="vAkf" class="">https://leetcode.com/problems/asteroid-collision</td><td id="biur" class="">Asteroid Collision</td><td id="MKTs" class="">100</td><td id="ONCs" class="">24</td><td id="FD}O" class="">Array, Stack, Simulation</td></tr><tr id="244b255d-72ff-80e7-a2a7-decc493d4b70"><td id="vAkf" class="">https://leetcode.com/problems/set-matrix-zeroes</td><td id="biur" class="">Set Matrix Zeroes</td><td id="MKTs" class="">100</td><td id="ONCs" class="">24</td><td id="FD}O" class="">Array, Hash Table, Matrix</td></tr><tr id="244b255d-72ff-8043-b17c-e28c387b790c"><td id="vAkf" class="">https://leetcode.com/problems/find-peak-element</td><td id="biur" class="">Find Peak Element</td><td id="MKTs" class="">85.8</td><td id="ONCs" class="">24</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-80d2-a114-fb5cf04b5da6"><td id="vAkf" class="">https://leetcode.com/problems/longest-increasing-subsequence</td><td id="biur" class="">Longest Increasing Subsequence</td><td id="MKTs" class="">100</td><td id="ONCs" class="">23</td><td id="FD}O" class="">Array, Binary Search, Dynamic Programming</td></tr><tr id="244b255d-72ff-8060-824a-d3b802a6d76d"><td id="vAkf" class="">https://leetcode.com/problems/maximal-square</td><td id="biur" class="">Maximal Square</td><td id="MKTs" class="">100</td><td id="ONCs" class="">22</td><td id="FD}O" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="244b255d-72ff-802b-a237-e0dcaeb919c3"><td id="vAkf" class="">https://leetcode.com/problems/search-a-2d-matrix</td><td id="biur" class="">Search a 2D Matrix</td><td id="MKTs" class="">87.2</td><td id="ONCs" class="">22</td><td id="FD}O" class="">Array, Binary Search, Matrix</td></tr><tr id="244b255d-72ff-804a-a1ae-fb35f5e439c6"><td id="vAkf" class="">https://leetcode.com/problems/subsets</td><td id="biur" class="">Subsets</td><td id="MKTs" class="">100</td><td id="ONCs" class="">21</td><td id="FD}O" class="">Array, Backtracking, Bit Manipulation</td></tr><tr id="244b255d-72ff-80d0-8800-cd564f0cbd6e"><td id="vAkf" class="">https://leetcode.com/problems/4sum</td><td id="biur" class="">4Sum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">21</td><td id="FD}O" class="">Array, Two Pointers, Sorting</td></tr><tr id="244b255d-72ff-8013-ab4e-e05780d87639"><td id="vAkf" class="">https://leetcode.com/problems/maximum-profit-in-job-scheduling</td><td id="biur" class="">Maximum Profit in Job Scheduling</td><td id="MKTs" class="">100</td><td id="ONCs" class="">21</td><td id="FD}O" class="">Array, Binary Search, Dynamic Programming, Sorting</td></tr><tr id="244b255d-72ff-80d5-852b-c155acea4bf0"><td id="vAkf" class="">https://leetcode.com/problems/word-search-ii</td><td id="biur" class="">Word Search II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">21</td><td id="FD}O" class="">Array, String, Backtracking, Trie, Matrix</td></tr><tr id="244b255d-72ff-8090-8f52-de2a34e90f32"><td id="vAkf" class="">https://leetcode.com/problems/random-pick-with-weight</td><td id="biur" class="">Random Pick with Weight</td><td id="MKTs" class="">100</td><td id="ONCs" class="">21</td><td id="FD}O" class="">Array, Math, Binary Search, Prefix Sum, Randomized</td></tr><tr id="244b255d-72ff-8038-b698-f9d0a6443c8b"><td id="vAkf" class="">https://leetcode.com/problems/gas-station</td><td id="biur" class="">Gas Station</td><td id="MKTs" class="">100</td><td id="ONCs" class="">21</td><td id="FD}O" class="">Array, Greedy</td></tr><tr id="244b255d-72ff-802a-9250-ebc4d242b4fd"><td id="vAkf" class="">https://leetcode.com/problems/largest-number</td><td id="biur" class="">Largest Number</td><td id="MKTs" class="">100</td><td id="ONCs" class="">20</td><td id="FD}O" class="">Array, String, Greedy, Sorting</td></tr><tr id="244b255d-72ff-801a-89b0-f27820f2dca3"><td id="vAkf" class="">https://leetcode.com/problems/pascals-triangle</td><td id="biur" class="">Pascal&#x27;s Triangle</td><td id="MKTs" class="">100</td><td id="ONCs" class="">20</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-809d-8b43-ddbb087f0426"><td id="vAkf" class="">https://leetcode.com/problems/unique-paths-ii</td><td id="biur" class="">Unique Paths II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">20</td><td id="FD}O" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="244b255d-72ff-8045-9235-fb9e9cbbc9f9"><td id="vAkf" class="">https://leetcode.com/problems/maximum-product-subarray</td><td id="biur" class="">Maximum Product Subarray</td><td id="MKTs" class="">100</td><td id="ONCs" class="">19</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-8095-956d-e4580f20fc52"><td id="vAkf" class="">https://leetcode.com/problems/sudoku-solver</td><td id="biur" class="">Sudoku Solver</td><td id="MKTs" class="">100</td><td id="ONCs" class="">19</td><td id="FD}O" class="">Array, Hash Table, Backtracking, Matrix</td></tr><tr id="244b255d-72ff-80b1-b7e9-eca9d36da9c4"><td id="vAkf" class="">https://leetcode.com/problems/n-queens</td><td id="biur" class="">N-Queens</td><td id="MKTs" class="">100</td><td id="ONCs" class="">19</td><td id="FD}O" class="">Array, Backtracking</td></tr><tr id="244b255d-72ff-808b-a534-d271f2927466"><td id="vAkf" class="">https://leetcode.com/problems/find-minimum-in-rotated-sorted-array</td><td id="biur" class="">Find Minimum in Rotated Sorted Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">19</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-8076-b34b-e0b3e66de602"><td id="vAkf" class="">https://leetcode.com/problems/contains-duplicate</td><td id="biur" class="">Contains Duplicate</td><td id="MKTs" class="">89.8</td><td id="ONCs" class="">19</td><td id="FD}O" class="">Array, Hash Table, Sorting</td></tr><tr id="244b255d-72ff-80f2-84e3-f031b5e32329"><td id="vAkf" class="">https://leetcode.com/problems/search-suggestions-system</td><td id="biur" class="">Search Suggestions System</td><td id="MKTs" class="">100</td><td id="ONCs" class="">18</td><td id="FD}O" class="">Array, String, Binary Search, Trie, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-8042-bae3-f0749d35e673"><td id="vAkf" class="">https://leetcode.com/problems/evaluate-division</td><td id="biur" class="">Evaluate Division</td><td id="MKTs" class="">100</td><td id="ONCs" class="">17</td><td id="FD}O" class="">Array, String, Depth-First Search, Breadth-First Search, Union Find, Graph, Shortest Path</td></tr><tr id="244b255d-72ff-8057-9ddc-deb075fd845d"><td id="vAkf" class="">https://leetcode.com/problems/design-hit-counter</td><td id="biur" class="">Design Hit Counter</td><td id="MKTs" class="">100</td><td id="ONCs" class="">16</td><td id="FD}O" class="">Array, Binary Search, Design, Queue, Data Stream</td></tr><tr id="244b255d-72ff-8016-98a8-ccd8590448aa"><td id="vAkf" class="">https://leetcode.com/problems/missing-number</td><td id="biur" class="">Missing Number</td><td id="MKTs" class="">89</td><td id="ONCs" class="">16</td><td id="FD}O" class="">Array, Hash Table, Math, Binary Search, Bit Manipulation, Sorting</td></tr><tr id="244b255d-72ff-8069-99b7-dc4ce47ba9ee"><td id="vAkf" class="">https://leetcode.com/problems/intersection-of-two-arrays</td><td id="biur" class="">Intersection of Two Arrays</td><td id="MKTs" class="">100</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array, Hash Table, Two Pointers, Binary Search, Sorting</td></tr><tr id="244b255d-72ff-805b-ba13-c4d4ce9d5c33"><td id="vAkf" class="">https://leetcode.com/problems/plus-one</td><td id="biur" class="">Plus One</td><td id="MKTs" class="">100</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array, Math</td></tr><tr id="244b255d-72ff-80a7-9952-e352db374bcb"><td id="vAkf" class="">https://leetcode.com/problems/candy</td><td id="biur" class="">Candy</td><td id="MKTs" class="">100</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array, Greedy</td></tr><tr id="244b255d-72ff-80c0-894e-dbe4ea35ca83"><td id="vAkf" class="">https://leetcode.com/problems/insert-interval</td><td id="biur" class="">Insert Interval</td><td id="MKTs" class="">100</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array</td></tr><tr id="244b255d-72ff-80d9-9f0e-d4d47c37e1e0"><td id="vAkf" class="">https://leetcode.com/problems/task-scheduler</td><td id="biur" class="">Task Scheduler</td><td id="MKTs" class="">100</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array, Hash Table, Greedy, Sorting, Heap (Priority Queue), Counting</td></tr><tr id="244b255d-72ff-80d3-9add-d3ac597fafc1"><td id="vAkf" class="">https://leetcode.com/problems/minimum-path-sum</td><td id="biur" class="">Minimum Path Sum</td><td id="MKTs" class="">74.8</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="244b255d-72ff-808d-837f-c890f303479b"><td id="vAkf" class="">https://leetcode.com/problems/maximal-rectangle</td><td id="biur" class="">Maximal Rectangle</td><td id="MKTs" class="">61.3</td><td id="ONCs" class="">15</td><td id="FD}O" class="">Array, Dynamic Programming, Stack, Matrix, Monotonic Stack</td></tr><tr id="244b255d-72ff-8003-8185-c579104f2b1a"><td id="vAkf" class="">https://leetcode.com/problems/top-k-frequent-words</td><td id="biur" class="">Top K Frequent Words</td><td id="MKTs" class="">100</td><td id="ONCs" class="">14</td><td id="FD}O" class="">Array, Hash Table, String, Trie, Sorting, Heap (Priority Queue), Bucket Sort, Counting</td></tr><tr id="244b255d-72ff-808f-9f6b-fa8bd6fdd27a"><td id="vAkf" class="">https://leetcode.com/problems/subarray-product-less-than-k</td><td id="biur" class="">Subarray Product Less Than K</td><td id="MKTs" class="">100</td><td id="ONCs" class="">14</td><td id="FD}O" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="244b255d-72ff-80cb-8a4a-c351bf4e62ee"><td id="vAkf" class="">https://leetcode.com/problems/max-area-of-island</td><td id="biur" class="">Max Area of Island</td><td id="MKTs" class="">100</td><td id="ONCs" class="">14</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="244b255d-72ff-8007-9da0-d95d53aa5911"><td id="vAkf" class="">https://leetcode.com/problems/degree-of-an-array</td><td id="biur" class="">Degree of an Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">14</td><td id="FD}O" class="">Array, Hash Table</td></tr><tr id="244b255d-72ff-8046-9d0e-d3c455b4425d"><td id="vAkf" class="">https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii</td><td id="biur" class="">Remove Duplicates from Sorted Array II</td><td id="MKTs" class="">88.7</td><td id="ONCs" class="">14</td><td id="FD}O" class="">Array, Two Pointers</td></tr><tr id="244b255d-72ff-80a0-bc09-d7e99fa4a3eb"><td id="vAkf" class="">https://leetcode.com/problems/squares-of-a-sorted-array</td><td id="biur" class="">Squares of a Sorted Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Two Pointers, Sorting</td></tr><tr id="244b255d-72ff-8011-acd4-dd6f48aaa0f9"><td id="vAkf" class="">https://leetcode.com/problems/design-tic-tac-toe</td><td id="biur" class="">Design Tic-Tac-Toe</td><td id="MKTs" class="">100</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Hash Table, Design, Matrix, Simulation</td></tr><tr id="244b255d-72ff-8062-8a65-dce83601c8d8"><td id="vAkf" class="">https://leetcode.com/problems/alien-dictionary</td><td id="biur" class="">Alien Dictionary</td><td id="MKTs" class="">100</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, String, Depth-First Search, Breadth-First Search, Graph, Topological Sort</td></tr><tr id="244b255d-72ff-8026-913c-f4cf898edd17"><td id="vAkf" class="">https://leetcode.com/problems/evaluate-reverse-polish-notation</td><td id="biur" class="">Evaluate Reverse Polish Notation</td><td id="MKTs" class="">100</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Math, Stack</td></tr><tr id="244b255d-72ff-8090-af7d-d78605ea9d03"><td id="vAkf" class="">https://leetcode.com/problems/single-element-in-a-sorted-array</td><td id="biur" class="">Single Element in a Sorted Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-808e-a0a8-c9d9bea16cc3"><td id="vAkf" class="">https://leetcode.com/problems/max-consecutive-ones-iii</td><td id="biur" class="">Max Consecutive Ones III</td><td id="MKTs" class="">100</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="244b255d-72ff-8099-886c-c7f0ee2b03b4"><td id="vAkf" class="">https://leetcode.com/problems/combination-sum-ii</td><td id="biur" class="">Combination Sum II</td><td id="MKTs" class="">82.5</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Backtracking</td></tr><tr id="244b255d-72ff-80fa-92b5-e344bce13347"><td id="vAkf" class="">https://leetcode.com/problems/single-number</td><td id="biur" class="">Single Number</td><td id="MKTs" class="">82</td><td id="ONCs" class="">13</td><td id="FD}O" class="">Array, Bit Manipulation</td></tr><tr id="244b255d-72ff-802f-baef-e22d7f0775fb"><td id="vAkf" class="">https://leetcode.com/problems/split-array-largest-sum</td><td id="biur" class="">Split Array Largest Sum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Binary Search, Dynamic Programming, Greedy, Prefix Sum</td></tr><tr id="244b255d-72ff-8078-8ba7-e2c5a7fc2114"><td id="vAkf" class="">https://leetcode.com/problems/partition-equal-subset-sum</td><td id="biur" class="">Partition Equal Subset Sum</td><td id="MKTs" class="">100</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-807b-8515-cce8df130951"><td id="vAkf" class="">https://leetcode.com/problems/word-break-ii</td><td id="biur" class="">Word Break II</td><td id="MKTs" class="">90.4</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Hash Table, String, Dynamic Programming, Backtracking, Trie, Memoization</td></tr><tr id="244b255d-72ff-801c-bb73-fe33e985799d"><td id="vAkf" class="">https://leetcode.com/problems/find-the-duplicate-number</td><td id="biur" class="">Find the Duplicate Number</td><td id="MKTs" class="">88.9</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Two Pointers, Binary Search, Bit Manipulation</td></tr><tr id="244b255d-72ff-8036-a6dd-d3ef5cf78bdf"><td id="vAkf" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii</td><td id="biur" class="">Best Time to Buy and Sell Stock III</td><td id="MKTs" class="">76</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-80ad-9b17-d55dd3edab14"><td id="vAkf" class="">https://leetcode.com/problems/two-sum-ii-input-array-is-sorted</td><td id="biur" class="">Two Sum II - Input Array Is Sorted</td><td id="MKTs" class="">73.2</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Two Pointers, Binary Search</td></tr><tr id="244b255d-72ff-80ea-ab0a-f29fc54eae65"><td id="vAkf" class="">https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal</td><td id="biur" class="">Construct Binary Tree from Preorder and Inorder Traversal</td><td id="MKTs" class="">72.8</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Hash Table, Divide and Conquer, Tree, Binary Tree</td></tr><tr id="244b255d-72ff-8046-827a-f45e7beb82f9"><td id="vAkf" class="">https://leetcode.com/problems/remove-element</td><td id="biur" class="">Remove Element</td><td id="MKTs" class="">64.4</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Two Pointers</td></tr><tr id="244b255d-72ff-8056-8007-ec5783caae58"><td id="vAkf" class="">https://leetcode.com/problems/search-insert-position</td><td id="biur" class="">Search Insert Position</td><td id="MKTs" class="">63.6</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-80b2-930e-f1ca7f6d5a51"><td id="vAkf" class="">https://leetcode.com/problems/3sum-closest</td><td id="biur" class="">3Sum Closest</td><td id="MKTs" class="">61.9</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Two Pointers, Sorting</td></tr><tr id="244b255d-72ff-8018-84fe-eb45590e67ff"><td id="vAkf" class="">https://leetcode.com/problems/minimum-size-subarray-sum</td><td id="biur" class="">Minimum Size Subarray Sum</td><td id="MKTs" class="">59.7</td><td id="ONCs" class="">12</td><td id="FD}O" class="">Array, Binary Search, Sliding Window, Prefix Sum</td></tr><tr id="244b255d-72ff-8067-87ef-c3c6f9ab70d9"><td id="vAkf" class="">https://leetcode.com/problems/making-a-large-island</td><td id="biur" class="">Making A Large Island</td><td id="MKTs" class="">100</td><td id="ONCs" class="">11</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="244b255d-72ff-80f0-89f6-f535f352dc3f"><td id="vAkf" class="">https://leetcode.com/problems/max-points-on-a-line</td><td id="biur" class="">Max Points on a Line</td><td id="MKTs" class="">100</td><td id="ONCs" class="">11</td><td id="FD}O" class="">Array, Hash Table, Math, Geometry</td></tr><tr id="244b255d-72ff-807d-8e4b-e30c63b8567b"><td id="vAkf" class="">https://leetcode.com/problems/search-a-2d-matrix-ii</td><td id="biur" class="">Search a 2D Matrix II</td><td id="MKTs" class="">78.1</td><td id="ONCs" class="">11</td><td id="FD}O" class="">Array, Binary Search, Divide and Conquer, Matrix</td></tr><tr id="244b255d-72ff-809f-aac6-da8833d949fc"><td id="vAkf" class="">https://leetcode.com/problems/spiral-matrix-ii</td><td id="biur" class="">Spiral Matrix II</td><td id="MKTs" class="">54.7</td><td id="ONCs" class="">11</td><td id="FD}O" class="">Array, Matrix, Simulation</td></tr><tr id="244b255d-72ff-80c4-863e-fa25049a70bb"><td id="vAkf" class="">https://leetcode.com/problems/next-greater-element-i</td><td id="biur" class="">Next Greater Element I</td><td id="MKTs" class="">100</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Hash Table, Stack, Monotonic Stack</td></tr><tr id="244b255d-72ff-8035-b0c6-f7b9dc32d2fe"><td id="vAkf" class="">https://leetcode.com/problems/capacity-to-ship-packages-within-d-days</td><td id="biur" class="">Capacity To Ship Packages Within D Days</td><td id="MKTs" class="">100</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-807a-a55e-f2ae797f1f58"><td id="vAkf" class="">https://leetcode.com/problems/shortest-distance-from-all-buildings</td><td id="biur" class="">Shortest Distance from All Buildings</td><td id="MKTs" class="">100</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-8078-8181-e93eef5c1a97"><td id="vAkf" class="">https://leetcode.com/problems/house-robber-ii</td><td id="biur" class="">House Robber II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-8057-8048-f581eb30d3df"><td id="vAkf" class="">https://leetcode.com/problems/open-the-lock</td><td id="biur" class="">Open the Lock</td><td id="MKTs" class="">100</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Hash Table, String, Breadth-First Search</td></tr><tr id="244b255d-72ff-808c-a4c2-e4043a6fa3c6"><td id="vAkf" class="">https://leetcode.com/problems/snapshot-array</td><td id="biur" class="">Snapshot Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Hash Table, Binary Search, Design</td></tr><tr id="244b255d-72ff-8000-a53c-dcfcf6bacfe6"><td id="vAkf" class="">https://leetcode.com/problems/count-primes</td><td id="biur" class="">Count Primes</td><td id="MKTs" class="">88.9</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Math, Enumeration, Number Theory</td></tr><tr id="244b255d-72ff-8072-a908-f89adab67fd0"><td id="vAkf" class="">https://leetcode.com/problems/design-hashmap</td><td id="biur" class="">Design HashMap</td><td id="MKTs" class="">79.4</td><td id="ONCs" class="">10</td><td id="FD}O" class="">Array, Hash Table, Linked List, Design, Hash Function</td></tr><tr id="244b255d-72ff-8029-a3e4-d134751c18b4"><td id="vAkf" class="">https://leetcode.com/problems/find-pivot-index</td><td id="biur" class="">Find Pivot Index</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Prefix Sum</td></tr><tr id="244b255d-72ff-8008-9e93-ea6cb9b4b991"><td id="vAkf" class="">https://leetcode.com/problems/can-place-flowers</td><td id="biur" class="">Can Place Flowers</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Greedy</td></tr><tr id="244b255d-72ff-8043-be56-e721594ce6ff"><td id="vAkf" class="">https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60</td><td id="biur" class="">Pairs of Songs With Total Durations Divisible by 60</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Hash Table, Counting</td></tr><tr id="244b255d-72ff-805e-9c24-cfb9bbdd2c46"><td id="vAkf" class="">https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden</td><td id="biur" class="">Minimum Number of Taps to Open to Water a Garden</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="244b255d-72ff-8024-9bfd-edb73cd750ba"><td id="vAkf" class="">https://leetcode.com/problems/game-of-life</td><td id="biur" class="">Game of Life</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Matrix, Simulation</td></tr><tr id="244b255d-72ff-80b9-8796-fe5d062030bd"><td id="vAkf" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv</td><td id="biur" class="">Best Time to Buy and Sell Stock IV</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-80da-976f-cded1277c631"><td id="vAkf" class="">https://leetcode.com/problems/design-circular-queue</td><td id="biur" class="">Design Circular Queue</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Linked List, Design, Queue</td></tr><tr id="244b255d-72ff-8095-9a45-f6135a2f38b1"><td id="vAkf" class="">https://leetcode.com/problems/moving-average-from-data-stream</td><td id="biur" class="">Moving Average from Data Stream</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Design, Queue, Data Stream</td></tr><tr id="244b255d-72ff-80cf-bb9c-f2a50f7196dc"><td id="vAkf" class="">https://leetcode.com/problems/longest-string-chain</td><td id="biur" class="">Longest String Chain</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Hash Table, Two Pointers, String, Dynamic Programming, Sorting</td></tr><tr id="244b255d-72ff-80b5-95ce-d9c8b629e6e4"><td id="vAkf" class="">https://leetcode.com/problems/bus-routes</td><td id="biur" class="">Bus Routes</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Hash Table, Breadth-First Search</td></tr><tr id="244b255d-72ff-8078-968c-e9c20095ebae"><td id="vAkf" class="">https://leetcode.com/problems/number-of-visible-people-in-a-queue</td><td id="biur" class="">Number of Visible People in a Queue</td><td id="MKTs" class="">100</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Stack, Monotonic Stack</td></tr><tr id="244b255d-72ff-801c-a3f6-d6a4cfb6b9d0"><td id="vAkf" class="">https://leetcode.com/problems/contains-duplicate-ii</td><td id="biur" class="">Contains Duplicate II</td><td id="MKTs" class="">89.2</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Hash Table, Sliding Window</td></tr><tr id="244b255d-72ff-8098-9f66-e4c47b640b10"><td id="vAkf" class="">https://leetcode.com/problems/k-closest-points-to-origin</td><td id="biur" class="">K Closest Points to Origin</td><td id="MKTs" class="">86.7</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Math, Divide and Conquer, Geometry, Sorting, Heap (Priority Queue), Quickselect</td></tr><tr id="244b255d-72ff-8034-855d-f6bf457a2cf8"><td id="vAkf" class="">https://leetcode.com/problems/subsets-ii</td><td id="biur" class="">Subsets II</td><td id="MKTs" class="">79.2</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Backtracking, Bit Manipulation</td></tr><tr id="244b255d-72ff-8006-b992-e1902f4e060a"><td id="vAkf" class="">https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree</td><td id="biur" class="">Convert Sorted Array to Binary Search Tree</td><td id="MKTs" class="">70.4</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Divide and Conquer, Tree, Binary Search Tree, Binary Tree</td></tr><tr id="244b255d-72ff-808e-b42d-e86f9d1859c2"><td id="vAkf" class="">https://leetcode.com/problems/permutations-ii</td><td id="biur" class="">Permutations II</td><td id="MKTs" class="">54.9</td><td id="ONCs" class="">9</td><td id="FD}O" class="">Array, Backtracking, Sorting</td></tr><tr id="244b255d-72ff-8096-9869-d6722c7ca00b"><td id="vAkf" class="">https://leetcode.com/problems/longest-increasing-path-in-a-matrix</td><td id="biur" class="">Longest Increasing Path in a Matrix</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Dynamic Programming, Depth-First Search, Breadth-First Search, Graph, Topological Sort, Memoization, Matrix</td></tr><tr id="244b255d-72ff-806b-9c94-d9e41ba9c95a"><td id="vAkf" class="">https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold</td><td id="biur" class="">Find the Smallest Divisor Given a Threshold</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-801b-bcb1-fa34612a17f1"><td id="vAkf" class="">https://leetcode.com/problems/maximize-distance-to-closest-person</td><td id="biur" class="">Maximize Distance to Closest Person</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array</td></tr><tr id="244b255d-72ff-80f2-9381-f53ab37d702c"><td id="vAkf" class="">https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit</td><td id="biur" class="">Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Ordered Set, Monotonic Queue</td></tr><tr id="244b255d-72ff-80ed-8fba-e9565dbd40dc"><td id="vAkf" class="">https://leetcode.com/problems/non-overlapping-intervals</td><td id="biur" class="">Non-overlapping Intervals</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Dynamic Programming, Greedy, Sorting</td></tr><tr id="244b255d-72ff-8049-81c1-c9157079f7c3"><td id="vAkf" class="">https://leetcode.com/problems/the-skyline-problem</td><td id="biur" class="">The Skyline Problem</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Divide and Conquer, Binary Indexed Tree, Segment Tree, Line Sweep, Heap (Priority Queue), Ordered Set</td></tr><tr id="244b255d-72ff-80aa-92d3-f24f1ca32bbb"><td id="vAkf" class="">https://leetcode.com/problems/walls-and-gates</td><td id="biur" class="">Walls and Gates</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-804d-958e-c39a36466c57"><td id="vAkf" class="">https://leetcode.com/problems/optimal-account-balancing</td><td id="biur" class="">Optimal Account Balancing</td><td id="MKTs" class="">100</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="244b255d-72ff-801e-a882-eeefef32aa73"><td id="vAkf" class="">https://leetcode.com/problems/accounts-merge</td><td id="biur" class="">Accounts Merge</td><td id="MKTs" class="">69.1</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Hash Table, String, Depth-First Search, Breadth-First Search, Union Find, Sorting</td></tr><tr id="244b255d-72ff-8034-bb70-f6d04ecf81fe"><td id="vAkf" class="">https://leetcode.com/problems/search-in-rotated-sorted-array-ii</td><td id="biur" class="">Search in Rotated Sorted Array II</td><td id="MKTs" class="">41.9</td><td id="ONCs" class="">8</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-8030-b5b7-ef6b5838360f"><td id="vAkf" class="">https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed</td><td id="biur" class="">Insert Delete GetRandom O(1) - Duplicates allowed</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Hash Table, Math, Design, Randomized</td></tr><tr id="244b255d-72ff-80b7-94a6-ee22a428c22a"><td id="vAkf" class="">https://leetcode.com/problems/minimum-absolute-difference</td><td id="biur" class="">Minimum Absolute Difference</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Sorting</td></tr><tr id="244b255d-72ff-80f4-a0b8-cdfd93e819fd"><td id="vAkf" class="">https://leetcode.com/problems/flood-fill</td><td id="biur" class="">Flood Fill</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-801f-854e-e02d0426777e"><td id="vAkf" class="">https://leetcode.com/problems/shortest-path-in-a-grid-with-obstacles-elimination</td><td id="biur" class="">Shortest Path in a Grid with Obstacles Elimination</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-8079-8412-c9b0c81549e8"><td id="vAkf" class="">https://leetcode.com/problems/find-k-closest-elements</td><td id="biur" class="">Find K Closest Elements</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Two Pointers, Binary Search, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-80b0-a9e0-f8ca28a785b3"><td id="vAkf" class="">https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix</td><td id="biur" class="">Kth Smallest Element in a Sorted Matrix</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Binary Search, Sorting, Heap (Priority Queue), Matrix</td></tr><tr id="244b255d-72ff-8035-b0d0-ff0246d8a710"><td id="vAkf" class="">https://leetcode.com/problems/block-placement-queries</td><td id="biur" class="">Block Placement Queries</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Binary Search, Binary Indexed Tree, Segment Tree</td></tr><tr id="244b255d-72ff-801d-bebb-ce5c1ac9ed19"><td id="vAkf" class="">https://leetcode.com/problems/sum-of-subarray-minimums</td><td id="biur" class="">Sum of Subarray Minimums</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Dynamic Programming, Stack, Monotonic Stack</td></tr><tr id="244b255d-72ff-80d5-a19f-ce9ca27566fa"><td id="vAkf" class="">https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix</td><td id="biur" class="">Find the Length of the Longest Common Prefix</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Hash Table, String, Trie</td></tr><tr id="244b255d-72ff-80b5-bf4d-d8e28368b7de"><td id="vAkf" class="">https://leetcode.com/problems/shortest-bridge</td><td id="biur" class="">Shortest Bridge</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-809b-b97f-c598270f9267"><td id="vAkf" class="">https://leetcode.com/problems/frequency-of-the-most-frequent-element</td><td id="biur" class="">Frequency of the Most Frequent Element</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Binary Search, Greedy, Sliding Window, Sorting, Prefix Sum</td></tr><tr id="244b255d-72ff-8025-a524-ca272b33c199"><td id="vAkf" class="">https://leetcode.com/problems/ipo</td><td id="biur" class="">IPO</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-800e-8208-c26ff65cf0dd"><td id="vAkf" class="">https://leetcode.com/problems/burst-balloons</td><td id="biur" class="">Burst Balloons</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-8058-af66-d2328fad1db3"><td id="vAkf" class="">https://leetcode.com/problems/minimum-cost-for-tickets</td><td id="biur" class="">Minimum Cost For Tickets</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-80a5-8227-d68d5edaa3a7"><td id="vAkf" class="">https://leetcode.com/problems/diagonal-traverse</td><td id="biur" class="">Diagonal Traverse</td><td id="MKTs" class="">100</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Matrix, Simulation</td></tr><tr id="244b255d-72ff-8008-ab52-e4ed275df084"><td id="vAkf" class="">https://leetcode.com/problems/cherry-pickup</td><td id="biur" class="">Cherry Pickup</td><td id="MKTs" class="">97.6</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Dynamic Programming, Matrix</td></tr><tr id="244b255d-72ff-804d-abca-ec80bca974fe"><td id="vAkf" class="">https://leetcode.com/problems/heaters</td><td id="biur" class="">Heaters</td><td id="MKTs" class="">92.8</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Two Pointers, Binary Search, Sorting</td></tr><tr id="244b255d-72ff-8003-bc6e-d39d89101a06"><td id="vAkf" class="">https://leetcode.com/problems/maximum-product-of-three-numbers</td><td id="biur" class="">Maximum Product of Three Numbers</td><td id="MKTs" class="">91.3</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Math, Sorting</td></tr><tr id="244b255d-72ff-8082-9f59-eca6e8045aba"><td id="vAkf" class="">https://leetcode.com/problems/parallel-courses-iii</td><td id="biur" class="">Parallel Courses III</td><td id="MKTs" class="">89.6</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Dynamic Programming, Graph, Topological Sort</td></tr><tr id="244b255d-72ff-8044-883f-d7fb9a653de9"><td id="vAkf" class="">https://leetcode.com/problems/snakes-and-ladders</td><td id="biur" class="">Snakes and Ladders</td><td id="MKTs" class="">83.5</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-8051-ab0d-c647aff25fbe"><td id="vAkf" class="">https://leetcode.com/problems/employee-free-time</td><td id="biur" class="">Employee Free Time</td><td id="MKTs" class="">74.3</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Line Sweep, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-80f7-a5e7-dcff14c3c87c"><td id="vAkf" class="">https://leetcode.com/problems/sliding-window-median</td><td id="biur" class="">Sliding Window Median</td><td id="MKTs" class="">68.7</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Hash Table, Sliding Window, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-803d-a15d-e2947211a633"><td id="vAkf" class="">https://leetcode.com/problems/binary-search</td><td id="biur" class="">Binary Search</td><td id="MKTs" class="">61.3</td><td id="ONCs" class="">7</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-80d3-a90f-e469bf1f934e"><td id="vAkf" class="">https://leetcode.com/problems/find-the-winner-of-the-circular-game</td><td id="biur" class="">Find the Winner of the Circular Game</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Math, Recursion, Queue, Simulation</td></tr><tr id="244b255d-72ff-8043-9aab-d752b5b675f7"><td id="vAkf" class="">https://leetcode.com/problems/number-of-divisible-triplet-sums</td><td id="biur" class="">Number of Divisible Triplet Sums</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table</td></tr><tr id="244b255d-72ff-8001-b19c-ed28879a8ef1"><td id="vAkf" class="">https://leetcode.com/problems/simple-bank-system</td><td id="biur" class="">Simple Bank System</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Design, Simulation</td></tr><tr id="244b255d-72ff-80ab-9a25-e8c855add425"><td id="vAkf" class="">https://leetcode.com/problems/pacific-atlantic-water-flow</td><td id="biur" class="">Pacific Atlantic Water Flow</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-80c0-a4b0-d1d137a85385"><td id="vAkf" class="">https://leetcode.com/problems/count-zero-request-servers</td><td id="biur" class="">Count Zero Request Servers</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Sliding Window, Sorting</td></tr><tr id="244b255d-72ff-807f-836c-d2e0a1ebe503"><td id="vAkf" class="">https://leetcode.com/problems/find-servers-that-handled-most-number-of-requests</td><td id="biur" class="">Find Servers That Handled Most Number of Requests</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Greedy, Heap (Priority Queue), Ordered Set</td></tr><tr id="244b255d-72ff-80cd-816e-d174a7bd62c8"><td id="vAkf" class="">https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference</td><td id="biur" class="">Partition Array Into Two Arrays to Minimize Sum Difference</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Two Pointers, Binary Search, Dynamic Programming, Bit Manipulation, Ordered Set, Bitmask</td></tr><tr id="244b255d-72ff-809b-9cbf-de548633b424"><td id="vAkf" class="">https://leetcode.com/problems/boats-to-save-people</td><td id="biur" class="">Boats to Save People</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Two Pointers, Greedy, Sorting</td></tr><tr id="244b255d-72ff-8092-976b-c5d26fb60cd1"><td id="vAkf" class="">https://leetcode.com/problems/minimum-number-of-refueling-stops</td><td id="biur" class="">Minimum Number of Refueling Stops</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Dynamic Programming, Greedy, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-8057-84b6-fa01183b4308"><td id="vAkf" class="">https://leetcode.com/problems/car-fleet</td><td id="biur" class="">Car Fleet</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Stack, Sorting, Monotonic Stack</td></tr><tr id="244b255d-72ff-80ca-9bd4-d05c7b73b85b"><td id="vAkf" class="">https://leetcode.com/problems/number-of-black-blocks</td><td id="biur" class="">Number of Black Blocks</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Enumeration</td></tr><tr id="244b255d-72ff-8096-aadb-e7856d010483"><td id="vAkf" class="">https://leetcode.com/problems/rotating-the-box</td><td id="biur" class="">Rotating the Box</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Two Pointers, Matrix</td></tr><tr id="244b255d-72ff-8092-8736-e9da52d8a78a"><td id="vAkf" class="">https://leetcode.com/problems/trapping-rain-water-ii</td><td id="biur" class="">Trapping Rain Water II</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Breadth-First Search, Heap (Priority Queue), Matrix</td></tr><tr id="244b255d-72ff-80d1-aec1-e9772f242b42"><td id="vAkf" class="">https://leetcode.com/problems/increasing-triplet-subsequence</td><td id="biur" class="">Increasing Triplet Subsequence</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Greedy</td></tr><tr id="244b255d-72ff-80d4-ba73-ddeccc198d3d"><td id="vAkf" class="">https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists</td><td id="biur" class="">Smallest Range Covering Elements from K Lists</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Greedy, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-8042-b359-ffaa2edbcabf"><td id="vAkf" class="">https://leetcode.com/problems/furthest-building-you-can-reach</td><td id="biur" class="">Furthest Building You Can Reach</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Greedy, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-80fd-b8b8-f255ab7e7d27"><td id="vAkf" class="">https://leetcode.com/problems/interval-list-intersections</td><td id="biur" class="">Interval List Intersections</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Two Pointers, Line Sweep</td></tr><tr id="244b255d-72ff-80ba-956c-fa2a19b67f2e"><td id="vAkf" class="">https://leetcode.com/problems/frog-jump</td><td id="biur" class="">Frog Jump</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-80cb-a0b9-d75967f2e835"><td id="vAkf" class="">https://leetcode.com/problems/count-subarrays-with-fixed-bounds</td><td id="biur" class="">Count Subarrays With Fixed Bounds</td><td id="MKTs" class="">100</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Queue, Sliding Window, Monotonic Queue</td></tr><tr id="244b255d-72ff-802e-81b3-d7b80edcef96"><td id="vAkf" class="">https://leetcode.com/problems/car-pooling</td><td id="biur" class="">Car Pooling</td><td id="MKTs" class="">93.4</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Sorting, Heap (Priority Queue), Simulation, Prefix Sum</td></tr><tr id="244b255d-72ff-80bc-88b4-cb0cecabd2a3"><td id="vAkf" class="">https://leetcode.com/problems/surrounded-regions</td><td id="biur" class="">Surrounded Regions</td><td id="MKTs" class="">92.3</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Union Find, Matrix</td></tr><tr id="244b255d-72ff-8075-9a91-f4111b53677f"><td id="vAkf" class="">https://leetcode.com/problems/candy-crush</td><td id="biur" class="">Candy Crush</td><td id="MKTs" class="">90.3</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Two Pointers, Matrix, Simulation</td></tr><tr id="244b255d-72ff-8086-b1fd-dfc358df6129"><td id="vAkf" class="">https://leetcode.com/problems/range-sum-query-2d-immutable</td><td id="biur" class="">Range Sum Query 2D - Immutable</td><td id="MKTs" class="">80.4</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Design, Matrix, Prefix Sum</td></tr><tr id="244b255d-72ff-80ab-a59c-cd8d99fbb2e0"><td id="vAkf" class="">https://leetcode.com/problems/number-of-flowers-in-full-bloom</td><td id="biur" class="">Number of Flowers in Full Bloom</td><td id="MKTs" class="">78.4</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Binary Search, Sorting, Prefix Sum, Ordered Set</td></tr><tr id="244b255d-72ff-8023-819a-ed9708070b78"><td id="vAkf" class="">https://leetcode.com/problems/design-memory-allocator</td><td id="biur" class="">Design Memory Allocator</td><td id="MKTs" class="">73</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Design, Simulation</td></tr><tr id="244b255d-72ff-8062-ae5e-f4b595b1ceb7"><td id="vAkf" class="">https://leetcode.com/problems/triangle</td><td id="biur" class="">Triangle</td><td id="MKTs" class="">70</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-807a-a2d6-edd67fa4430c"><td id="vAkf" class="">https://leetcode.com/problems/sort-array-by-increasing-frequency</td><td id="biur" class="">Sort Array by Increasing Frequency</td><td id="MKTs" class="">69</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Hash Table, Sorting</td></tr><tr id="244b255d-72ff-80b2-a04a-f0749832a670"><td id="vAkf" class="">https://leetcode.com/problems/beautiful-arrangement</td><td id="biur" class="">Beautiful Arrangement</td><td id="MKTs" class="">65.5</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="244b255d-72ff-8087-b7eb-f0f4b982e903"><td id="vAkf" class="">https://leetcode.com/problems/max-consecutive-ones</td><td id="biur" class="">Max Consecutive Ones</td><td id="MKTs" class="">61.5</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array</td></tr><tr id="244b255d-72ff-8070-8895-d8f5c1e965be"><td id="vAkf" class="">https://leetcode.com/problems/peak-index-in-a-mountain-array</td><td id="biur" class="">Peak Index in a Mountain Array</td><td id="MKTs" class="">49.4</td><td id="ONCs" class="">6</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-8029-924d-eebe2afe9685"><td id="vAkf" class="">https://leetcode.com/problems/01-matrix</td><td id="biur" class="">01 Matrix</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Dynamic Programming, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-80d3-b2e5-f94a7deca899"><td id="vAkf" class="">https://leetcode.com/problems/design-excel-sum-formula</td><td id="biur" class="">Design Excel Sum Formula</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, String, Graph, Design, Topological Sort, Matrix</td></tr><tr id="244b255d-72ff-8013-b6be-d0d7217d27fb"><td id="vAkf" class="">https://leetcode.com/problems/exclusive-time-of-functions</td><td id="biur" class="">Exclusive Time of Functions</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Stack</td></tr><tr id="244b255d-72ff-800c-abf9-e61249971402"><td id="vAkf" class="">https://leetcode.com/problems/maximize-greatness-of-an-array</td><td id="biur" class="">Maximize Greatness of an Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Two Pointers, Greedy, Sorting</td></tr><tr id="244b255d-72ff-80d1-b897-fe7dc65d1b8c"><td id="vAkf" class="">https://leetcode.com/problems/summary-ranges</td><td id="biur" class="">Summary Ranges</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array</td></tr><tr id="244b255d-72ff-801a-9974-d97e901da8ca"><td id="vAkf" class="">https://leetcode.com/problems/minimum-area-rectangle</td><td id="biur" class="">Minimum Area Rectangle</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, Math, Geometry, Sorting</td></tr><tr id="244b255d-72ff-8019-815e-d3728c705b3c"><td id="vAkf" class="">https://leetcode.com/problems/minimum-operations-to-write-the-letter-y-on-a-grid</td><td id="biur" class="">Minimum Operations to Write the Letter Y on a Grid</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, Matrix, Counting</td></tr><tr id="244b255d-72ff-80ab-af33-c1220d0c8aa0"><td id="vAkf" class="">https://leetcode.com/problems/paint-house</td><td id="biur" class="">Paint House</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Dynamic Programming</td></tr><tr id="244b255d-72ff-8081-8773-df120305d920"><td id="vAkf" class="">https://leetcode.com/problems/maximum-performance-of-a-team</td><td id="biur" class="">Maximum Performance of a Team</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-804a-8626-fc41679f744e"><td id="vAkf" class="">https://leetcode.com/problems/design-a-stack-with-increment-operation</td><td id="biur" class="">Design a Stack With Increment Operation</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Stack, Design</td></tr><tr id="244b255d-72ff-803b-bb7e-fb8f8d869f29"><td id="vAkf" class="">https://leetcode.com/problems/min-cost-to-connect-all-points</td><td id="biur" class="">Min Cost to Connect All Points</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Union Find, Graph, Minimum Spanning Tree</td></tr><tr id="244b255d-72ff-80ef-a252-f97e82e6e981"><td id="vAkf" class="">https://leetcode.com/problems/swim-in-rising-water</td><td id="biur" class="">Swim in Rising Water</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Binary Search, Depth-First Search, Breadth-First Search, Union Find, Heap (Priority Queue), Matrix</td></tr><tr id="244b255d-72ff-8091-9825-f7b066983cf2"><td id="vAkf" class="">https://leetcode.com/problems/ways-to-make-a-fair-array</td><td id="biur" class="">Ways to Make a Fair Array</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Prefix Sum</td></tr><tr id="244b255d-72ff-8029-9d38-f57e3bd05700"><td id="vAkf" class="">https://leetcode.com/problems/brightest-position-on-street</td><td id="biur" class="">Brightest Position on Street</td><td id="MKTs" class="">100</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Sorting, Prefix Sum, Ordered Set</td></tr><tr id="244b255d-72ff-80c8-9a67-fdf0a33ffdd1"><td id="vAkf" class="">https://leetcode.com/problems/majority-element-ii</td><td id="biur" class="">Majority Element II</td><td id="MKTs" class="">97.6</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, Sorting, Counting</td></tr><tr id="244b255d-72ff-80cb-b64b-caedff55c11e"><td id="vAkf" class="">https://leetcode.com/problems/design-browser-history</td><td id="biur" class="">Design Browser History</td><td id="MKTs" class="">95.2</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Linked List, Stack, Design, Doubly-Linked List, Data Stream</td></tr><tr id="244b255d-72ff-8055-87cd-e63096c1c732"><td id="vAkf" class="">https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies</td><td id="biur" class="">Find All Possible Recipes from Given Supplies</td><td id="MKTs" class="">92.4</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, String, Graph, Topological Sort</td></tr><tr id="244b255d-72ff-80d9-a437-c59248038f9d"><td id="vAkf" class="">https://leetcode.com/problems/guess-the-word</td><td id="biur" class="">Guess the Word</td><td id="MKTs" class="">92.4</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Math, String, Interactive, Game Theory</td></tr><tr id="244b255d-72ff-80f3-a83f-d95fedb5f942"><td id="vAkf" class="">https://leetcode.com/problems/the-maze</td><td id="biur" class="">The Maze</td><td id="MKTs" class="">91.1</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Depth-First Search, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-80c4-82da-d2d4da6b8a91"><td id="vAkf" class="">https://leetcode.com/problems/meeting-rooms</td><td id="biur" class="">Meeting Rooms</td><td id="MKTs" class="">88.1</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Sorting</td></tr><tr id="244b255d-72ff-804f-86db-f21a6a34d96e"><td id="vAkf" class="">https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended</td><td id="biur" class="">Maximum Number of Events That Can Be Attended</td><td id="MKTs" class="">83.4</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="244b255d-72ff-80e7-953d-e702ea9e65d1"><td id="vAkf" class="">https://leetcode.com/problems/shortest-path-in-binary-matrix</td><td id="biur" class="">Shortest Path in Binary Matrix</td><td id="MKTs" class="">79.1</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Breadth-First Search, Matrix</td></tr><tr id="244b255d-72ff-80e6-8de7-da56ee175c0e"><td id="vAkf" class="">https://leetcode.com/problems/number-of-islands-ii</td><td id="biur" class="">Number of Islands II</td><td id="MKTs" class="">78.5</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, Union Find</td></tr><tr id="244b255d-72ff-8095-818f-cc4a9de3ecfc"><td id="vAkf" class="">https://leetcode.com/problems/kth-missing-positive-number</td><td id="biur" class="">Kth Missing Positive Number</td><td id="MKTs" class="">74.9</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Binary Search</td></tr><tr id="244b255d-72ff-80a8-b538-c933f9a2b839"><td id="vAkf" class="">https://leetcode.com/problems/dot-product-of-two-sparse-vectors</td><td id="biur" class="">Dot Product of Two Sparse Vectors</td><td id="MKTs" class="">70.9</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, Two Pointers, Design</td></tr><tr id="244b255d-72ff-8055-b745-f842ce41c7e0"><td id="vAkf" class="">https://leetcode.com/problems/target-sum</td><td id="biur" class="">Target Sum</td><td id="MKTs" class="">69.8</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Dynamic Programming, Backtracking</td></tr><tr id="244b255d-72ff-804b-b593-d996b587f811"><td id="vAkf" class="">https://leetcode.com/problems/meeting-rooms-iii</td><td id="biur" class="">Meeting Rooms III</td><td id="MKTs" class="">61.9</td><td id="ONCs" class="">5</td><td id="FD}O" class="">Array, Hash Table, Sorting, Heap (Priority Queue), Simulation</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,1064 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Greedy [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8f90453c-e667-4e4d-8ec9-7638b3a4e8ec" class="page sans"><header><h1 class="page-title">Greedy [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h2 id="1c7b255d-72ff-808c-aff5-cdeaa145f135" class=""><strong>DSA Quick Revision</strong></h2><ul id="239b255d-72ff-80ed-a725-ff83faedd6a0" class="toggle"><li><details open=""><summary>Container With Most Water</summary></details></li></ul><ul id="239b255d-72ff-80ab-aa68-e3699e6390f5" class="toggle"><li><details open=""><summary>Meeting Rooms II</summary></details></li></ul><ul id="078fcc46-b461-491c-836a-3b0407a6ff18" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/greedy-algorithms/easy/jump-game---i">Jump Game 1</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6d923f07-49ea-433b-acd7-d289a7cb68f3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public boolean canJump(int[] nums) {
+        int maxReach = 0; // Maximum index we can reach so far
+
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (i &gt; maxReach) return false; // If current index is not reachable
+
+            // Update maxReach based on jump from current index
+            maxReach = Math.max(maxReach, i + nums[i]);
+        }
+
+        return true; // If loop completes, last index is reachable
+    }
+}
+</code></pre></details></li></ul><ul id="21bb255d-72ff-8095-a01e-e7e378f2e419" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/jump-game-ii/description/">Jump Game 2</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="21bb255d-72ff-806d-adfe-dcf0c85bf64e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int jump(int[] nums) {
+        int jumps = 0;
+        int l = 0, r = 0;
+
+        while (r &lt; nums.length - 1) {
+            int farthest = 0;
+
+            // Explore all positions in current jump range
+            for (int i = l; i &lt;= r; i++) {
+                farthest = Math.max(farthest, i + nums[i]);
+            }
+
+            // Move to next jump window
+            l = r + 1;
+            r = farthest;
+            jumps++; // One jump taken
+        }
+
+        return jumps;
+    }
+}
+</code></pre></details></li></ul><ul id="239b255d-72ff-80f0-895f-d3c3a5ddc927" class="toggle"><li><details open=""><summary>Gas Station</summary></details></li></ul><ul id="239b255d-72ff-8002-8e97-c7822850028e" class="toggle"><li><details open=""><summary>Largest Number</summary></details></li></ul><ul id="1b5b255d-72ff-80b4-8616-ec086642cbe2" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/greedy-algorithms/candy">Candy</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80f9-94e1-de547d0d942f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+
+        int[] candies = new int[n];
+        Arrays.fill(candies, 1); // Each child gets at least 1 candy
+
+        // 🔼 Left to Right: if right child &gt; left child → give more candy
+        for (int i = 1; i &lt; n; i++) {
+            if (ratings[i] &gt; ratings[i - 1])
+                candies[i] = candies[i - 1] + 1;
+        }
+
+        // 🔽 Right to Left: if left child &gt; right child → ensure more candy
+        for (int i = n - 2; i &gt;= 0; i--) {
+            if (ratings[i] &gt; ratings[i + 1])
+                candies[i] = Math.max(candies[i], candies[i + 1] + 1);
+        }
+
+        // 🔢 Total candies required
+        int total = 0;
+        for (int c : candies) total += c;
+
+        return total;
+    }
+}
+</code></pre></details></li></ul><ul id="239b255d-72ff-8061-98af-ea7d9c534c08" class="toggle"><li><details open=""><summary>Can Place Flowers</summary></details></li></ul><ul id="239b255d-72ff-8060-85e9-e91a88b5903a" class="toggle"><li><details open=""><summary>Valid Palindrome II</summary></details></li></ul><ul id="180b255d-72ff-801a-ab72-e8e8449db35f" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/greedy-algorithms/non-overlapping-intervals">Non-overlapping Intervals</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-8004-be97-c26c533624b3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int MaximumNonOverlappingIntervals(int[][] intervals) {
+        // Sort by end time to maximize non-overlapping intervals
+        Arrays.sort(intervals, (a, b) -&gt; Integer.compare(a[1], b[1]));
+
+        int count = 1;  // First interval is always selected
+        int lastEndTime = intervals[0][1];
+
+        for (int i = 1; i &lt; intervals.length; i++) {
+            // If current interval doesn&#x27;t overlap, select it
+            if (intervals[i][0] &gt;= lastEndTime) {
+                count++;
+                lastEndTime = intervals[i][1];
+            }
+        }
+
+        // Minimum to remove = total - non-overlapping count
+        return intervals.length - count;
+    }
+}
+</code></pre></details></li></ul><ul id="1b5b255d-72ff-8085-b01b-cf5ee9a9cd86" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa-concept-revision/greedy-algorithms/valid-paranthesis-checker">Valid Parenthesis String</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-8002-9354-e864ae2468e2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public boolean isValid(String s) {
+        int minOpen = 0, maxOpen = 0;
+
+        for (char c : s.toCharArray()) {
+            if (c == &#x27;(&#x27;) {
+                // Must be treated as open bracket
+                minOpen++;  // Minimum opens needed
+                maxOpen++;  // Maximum opens possible
+            } else if (c == &#x27;)&#x27;) {
+                // Must be treated as close bracket
+                minOpen--;  // Reduce min open (close one)
+                maxOpen--;  // Reduce max open (close one)
+            } else if (c == &#x27;*&#x27;) {
+                // &#x27;*&#x27; can be &#x27;(&#x27;, &#x27;)&#x27; or &#x27;&#x27;
+                minOpen--;  // If &#x27;*&#x27; = &#x27;)&#x27;
+                maxOpen++;  // If &#x27;*&#x27; = &#x27;(&#x27;
+            }
+
+            // If at any point, more &#x27;)&#x27; than &#x27;(&#x27; possible → invalid
+            if (maxOpen &lt; 0) return false;
+
+            // minOpen should not be negative
+            if (minOpen &lt; 0) minOpen = 0;
+        }
+
+        // minOpen == 0 means we found a valid configuration
+        return minOpen == 0;
+    }
+}
+</code></pre></details></li></ul><ul id="239b255d-72ff-80ca-ad0a-fc47ec011457" class="toggle"><li><details open=""><summary>Find Servers That Handled Most Number of Requests</summary></details></li></ul><ul id="239b255d-72ff-80ad-beea-c5b0c770fe2b" class="toggle"><li><details open=""><summary>Boats to Save People</summary></details></li></ul><ul id="239b255d-72ff-8042-8d13-da80ba2b85c1" class="toggle"><li><details open=""><summary>Minimum Number of Refueling Stops</summary></details></li></ul><ul id="239b255d-72ff-80ad-b578-fe8be58baafd" class="toggle"><li><details open=""><summary>Increasing Triplet Subsequence</summary></details></li></ul><ul id="239b255d-72ff-804e-a642-f6ca433d7e2c" class="toggle"><li><details open=""><summary>Maximize Greatness of an Array</summary></details></li></ul><ul id="239b255d-72ff-8007-a78e-f2cbd86d9bf6" class="toggle"><li><details open=""><summary>Partition Labels</summary></details></li></ul><ul id="239b255d-72ff-8084-9819-dc8d750c9c81" class="toggle"><li><details open=""><summary>Break a Palindrome</summary></details></li></ul><ul id="239b255d-72ff-80d0-8316-cf7b4f0dc933" class="toggle"><li><details open=""><summary>Remove Colored Pieces if Both Neighbors are the Same Color</summary></details></li></ul><ul id="1b5b255d-72ff-80fe-a9cf-de10cfe43ab9" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/n-meetings-in-one-room">N meetings in one room</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-8038-b897-e00144acc7b9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { // DSAQuickRevision
+
+    // Sort meetings by end time (ascending)
+    static class MeetingComparator implements Comparator&lt;int[]&gt; {
+        public int compare(int[] a, int[] b) {
+            return Integer.compare(a[1], b[1]);
+        }
+    }
+
+    public int maxMeetings(int[] start, int[] end) {
+        int n = start.length;
+        List&lt;int[]&gt; meetings = new ArrayList&lt;&gt;();
+
+        // Create (start, end) meeting pairs
+        for (int i = 0; i &lt; n; i++) {
+            meetings.add(new int[]{start[i], end[i]});
+        }
+
+        // Sort meetings by end time
+        Collections.sort(meetings, new MeetingComparator());
+
+        int lastEndTime = meetings.get(0)[1];
+        int maxMeetingsCount = 1;
+
+        // Select non-overlapping meetings
+        for (int i = 1; i &lt; n; i++) {
+            int currStart = meetings.get(i)[0];
+            int currEnd = meetings.get(i)[1];
+            
+            if (currStart &gt; lastEndTime) {
+                lastEndTime = currEnd;
+                maxMeetingsCount++;
+            }
+        }
+
+        return maxMeetingsCount;
+    }
+}
+</code></pre></details></li></ul><ul id="1b5b255d-72ff-8056-8b5c-ed98bb6ff20f" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/minimum-number-of-platforms-required-for-a-railway">Minimum number of platforms required for a railway</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80bb-bd29-e9b3900a41a7" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+//  To find number of platforms
+public int findPlatform(int[] Arrival, int[] Departure) {
+    int n = Arrival.length;
+
+    // Sort both arrival and departure arrays
+    Arrays.sort(Arrival);
+    Arrays.sort(Departure);
+
+    int ans = 1;
+    int count = 1;
+    int i = 1, j = 0;
+
+    // Iterate through the arrays
+    while (i &lt; n &amp;&amp; j &lt; n) {
+        if (Arrival[i] &lt;= Departure[j]) {
+            // Increment count
+            count++;
+            i++;
+        } else {
+            // Decrement count
+            count--;
+            j++;
+        }
+        // Find maximum
+        ans = Math.max(ans, count);
+    }
+    return ans;
+}
+}
+</code></pre></details></li></ul><ul id="18ab255d-72ff-807a-9033-cfc7694f7634" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/job-sequencing-problem">Job Sequencing problem</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="18ab255d-72ff-806c-8791-e2ee1eebd4a9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    // Function to calculate maximum profit
+    public int[] JobScheduling(int[][] Jobs) {
+        // Sort jobs based on profit in descending order
+        Arrays.sort(Jobs, (a, b) -&gt; b[2] - a[2]);
+
+        // Total number of jobs
+        int n = Jobs.length;
+
+        /*Initialize a hash table 
+        to store selected jobs.
+        each element represents a 
+        deadline slot, 
+        initially unoccupied.*/
+        int[] hash = new int[n];
+        Arrays.fill(hash, -1);
+
+        // Initialize count
+        int cnt = 0;
+
+        // Initialize the total profit earned
+        int totalProfit = 0;
+
+        // Iterate over each job
+        for (int i = 0; i &lt; n; i++) {
+            /*Iterate over each deadline slot starting 
+            from the job&#x27;s deadline*/
+            for (int j = Jobs[i][1] - 1; j &gt;= 0; j--) {
+                /*If the current deadline 
+                slot is available 
+                (not occupied)*/
+                if (hash[j] == -1) {
+                    // Count of selected jobs
+                    cnt++;
+                    // Mark the job as selected
+                    hash[j] = Jobs[i][0];
+                    // Update the total profit
+                    totalProfit += Jobs[i][2];
+                    // Move to the next job
+                    break;
+                }
+            }
+        }
+
+        // Return the array
+        return new int[]{cnt,totalProfit};
+    }
+}</code></pre></details></li></ul><h2 id="1c7b255d-72ff-8027-ade9-dde97968d4f3" class=""><strong>DSA Concepts Revision</strong></h2><ul id="21bb255d-72ff-80a6-a703-d478fe10d7da" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://www.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1">Fractional Knapsack</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="21bb255d-72ff-80cc-8d1d-ee3fde2b80ce" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    double fractionalKnapsack(int[] values, int[] weights, int W) {
+        int n = values.length;
+        List&lt;int[]&gt; list = new ArrayList&lt;&gt;();
+
+        // Combine value and weight into one object
+        for (int i = 0; i &lt; n; i++) {
+            list.add(new int[]{values[i], weights[i]});
+        }
+
+        // Sort by value/weight ratio in descending order
+        Collections.sort(list, (a, b) -&gt; Double.compare((double)b[0]/b[1], (double)a[0]/a[1]));
+
+        double ans = 0;
+
+        // Pick items greedily
+        for (int i = 0; i &lt; n; i++) {
+            int val = list.get(i)[0];
+            int wei = list.get(i)[1];
+
+            if (wei &lt;= W) {
+                ans += val;
+                W -= wei;
+            } else {
+                ans += ((double) val / wei) * W; // Take fraction
+                break;
+            }
+        }
+
+        return ans;
+    }
+}
+</code></pre></details></li></ul><h2 id="1c7b255d-72ff-80db-ada8-e4713bc0143d" class=""><strong>DSA Striver</strong></h2><ul id="69dcfac2-0032-4a98-a5bd-7e135cc9efb5" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/greedy-algorithms/easy/assign-cookies">Assign Cookies</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="af58982b-c0fb-432d-8851-55708d406ba5" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int findMaximumCookieStudents(int[] Student, int[] Cookie) {
+        int n = Student.length;
+        int m = Cookie.length;
+        int count = 0;
+        int l = 0, r = 0;
+        // Sorting of arrays
+        Arrays.sort(Student);
+        Arrays.sort(Cookie);
+
+        // Traverse through both arrays
+        while (l &lt; n &amp;&amp; r &lt; m) {
+            /*If the current cookie can satisfy 
+            the current student, move to the 
+            next student*/
+            if (Cookie[r] &gt;= Student[l]) {
+                l++;
+                count++;
+            }
+            // Move to next cookie
+            r++;
+        }
+        
+        return count; 
+    }
+}</code></pre></details></li></ul><ul id="180b255d-72ff-800d-9653-e157bb575a83" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/greedy-algorithms/scheduling-and-interval-problems/insert-interval">Insert Interval</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-80d2-92fc-e9d6131f4567" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public int[][] insert(int[][] intervals, int[] newInterval) {
+        List&lt;int[]&gt; result = new ArrayList&lt;&gt;();
+
+        int i = 0;
+        int n = intervals.length;
+
+        // Step 1: Add all intervals before newInterval (no overlap)
+        while (i &lt; n &amp;&amp; intervals[i][1] &lt; newInterval[0]) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        // Step 2: Merge all overlapping intervals with newInterval
+        while (i &lt; n &amp;&amp; intervals[i][0] &lt;= newInterval[1]) {
+            newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
+            newInterval[1] = Math.max(newInterval[1], intervals[i][1]);
+            i++;
+        }
+        result.add(newInterval); // Add the merged interval
+
+        // Step 3: Add all intervals after newInterval (no overlap)
+        while (i &lt; n) {
+            result.add(intervals[i]);
+            i++;
+        }
+
+        // Step 4: Convert List to int[][]
+        int[][] ans = new int[result.size()][2];
+        for (int j = 0; j &lt; result.size(); j++) {
+            ans[j][0] = result.get(j)[0];
+            ans[j][1] = result.get(j)[1];
+        }
+
+        return ans;
+    }
+}
+</code></pre></details></li></ul><ul id="0474e5d3-57cc-4de4-85d8-eaac9c2bc035" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/greedy-algorithms/easy/lemonade-change">Lemonade Change</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3d1d499c-5b22-4fd0-b5f9-de0a2deeff8e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public boolean lemonadeChange(int[] bills) {
+        int five = 0, ten = 0;
+
+        for (int bill : bills) {
+            if (bill == 5) {
+                five++;
+            } else if (bill == 10) {
+                if (five == 0) {
+                    return false; // Can&#x27;t give change for $10
+                }
+                five--;
+                ten++;
+            } else { // bill == 20
+                // Important: Prioritize using one $10 bill and one $5 bill for $20 change
+                if (ten &gt; 0 &amp;&amp; five &gt; 0) {
+                    ten--;
+                    five--;
+                } 
+                // If no $10 bill, then use three $5 bills for $20 change
+                else if (five &gt;= 3) {
+                    five -= 3;
+                } 
+                // If neither option is available, return false
+                else {
+                    return false; // Can&#x27;t give change for $20
+                }
+            }
+        }
+        return true;
+    }
+}</code></pre></details></li></ul><ul id="e6c1abef-e5e9-4f54-b822-3d7161707058" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/greedy-algorithms/scheduling-and-interval-problems/shortest-job-first">Shortest Job first</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="49e3fb63-a781-45f7-bf1a-8e964ce38080" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to calculate total waiting 
+       time using Shortest Job First algorithm */
+    public long solve(int[] jobs) {
+        // Sort jobs in ascending order
+        Arrays.sort(jobs);
+
+        // Initialize total waiting time
+        long waitTime = 0;
+        // Initialize total time taken
+        long totalTime = 0;
+        // Get number of jobs
+        int n = jobs.length;
+
+        // Iterate to calculate waiting time
+        for (int i = 0; i &lt; n; ++i) {
+            waitTime += totalTime;
+            totalTime += jobs[i];
+        }
+
+        // Return average waiting time
+        return waitTime / n;
+    }
+}</code></pre></details></li></ul><h2 id="22eb255d-72ff-80ff-820c-fb7f0f1021b8" class="">Extras</h2><table id="239b255d-72ff-8062-9bd6-c68c5192ce75" class="simple-table"><tbody><tr id="239b255d-72ff-8019-adc0-e0c805faf13a"><td id="gdH&lt;" class="">Link</td><td id="yLGB" class="">Title</td><td id="rVkw" class="">Frequency</td><td id="fUuu" class="">Companies Count</td><td id="deyb" class="">Topics</td></tr><tr id="239b255d-72ff-801a-910b-c7d2d556898e"><td id="gdH&lt;" class="">https://leetcode.com/problems/container-with-most-water</td><td id="yLGB" class="">Container With Most Water</td><td id="rVkw" class="">100</td><td id="fUuu" class="">52</td><td id="deyb" class="">Array, Two Pointers, Greedy</td></tr><tr id="239b255d-72ff-8096-be33-e7a6d049260a"><td id="gdH&lt;" class="">https://leetcode.com/problems/meeting-rooms-ii</td><td id="yLGB" class="">Meeting Rooms II</td><td id="rVkw" class="">100</td><td id="fUuu" class="">41</td><td id="deyb" class="">Array, Two Pointers, Greedy, Sorting, Heap (Priority Queue), Prefix Sum</td></tr><tr id="239b255d-72ff-8001-92f6-da42a54735ca"><td id="gdH&lt;" class="">https://leetcode.com/problems/jump-game</td><td id="yLGB" class="">Jump Game</td><td id="rVkw" class="">100</td><td id="fUuu" class="">35</td><td id="deyb" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="239b255d-72ff-80fb-9d71-ee6418f65052"><td id="gdH&lt;" class="">https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii</td><td id="yLGB" class="">Best Time to Buy and Sell Stock II</td><td id="rVkw" class="">100</td><td id="fUuu" class="">34</td><td id="deyb" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="239b255d-72ff-8013-86e4-e5840ce8e658"><td id="gdH&lt;" class="">https://leetcode.com/problems/jump-game-ii</td><td id="yLGB" class="">Jump Game II</td><td id="rVkw" class="">100</td><td id="fUuu" class="">31</td><td id="deyb" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="239b255d-72ff-80e7-80f1-cca353aecd4d"><td id="gdH&lt;" class="">https://leetcode.com/problems/gas-station</td><td id="yLGB" class="">Gas Station</td><td id="rVkw" class="">100</td><td id="fUuu" class="">21</td><td id="deyb" class="">Array, Greedy</td></tr><tr id="239b255d-72ff-80d1-852e-c642ba3ae8b2"><td id="gdH&lt;" class="">https://leetcode.com/problems/largest-number</td><td id="yLGB" class="">Largest Number</td><td id="rVkw" class="">100</td><td id="fUuu" class="">20</td><td id="deyb" class="">Array, String, Greedy, Sorting</td></tr><tr id="239b255d-72ff-8057-a07a-e75f0e4fddc7"><td id="gdH&lt;" class="">https://leetcode.com/problems/wildcard-matching</td><td id="yLGB" class="">Wildcard Matching</td><td id="rVkw" class="">93.8</td><td id="fUuu" class="">19</td><td id="deyb" class="">String, Dynamic Programming, Greedy, Recursion</td></tr><tr id="239b255d-72ff-8062-b323-c0abc73a08dd"><td id="gdH&lt;" class="">https://leetcode.com/problems/candy</td><td id="yLGB" class="">Candy</td><td id="rVkw" class="">100</td><td id="fUuu" class="">15</td><td id="deyb" class="">Array, Greedy</td></tr><tr id="239b255d-72ff-806c-8e1a-f18a5c9d5c70"><td id="gdH&lt;" class="">https://leetcode.com/problems/task-scheduler</td><td id="yLGB" class="">Task Scheduler</td><td id="rVkw" class="">100</td><td id="fUuu" class="">15</td><td id="deyb" class="">Array, Hash Table, Greedy, Sorting, Heap (Priority Queue), Counting</td></tr><tr id="239b255d-72ff-802d-a63e-df876913e72d"><td id="gdH&lt;" class="">https://leetcode.com/problems/reorganize-string</td><td id="yLGB" class="">Reorganize String</td><td id="rVkw" class="">100</td><td id="fUuu" class="">13</td><td id="deyb" class="">Hash Table, String, Greedy, Sorting, Heap (Priority Queue), Counting</td></tr><tr id="239b255d-72ff-80da-a20e-e3778f3435c3"><td id="gdH&lt;" class="">https://leetcode.com/problems/split-array-largest-sum</td><td id="yLGB" class="">Split Array Largest Sum</td><td id="rVkw" class="">100</td><td id="fUuu" class="">12</td><td id="deyb" class="">Array, Binary Search, Dynamic Programming, Greedy, Prefix Sum</td></tr><tr id="239b255d-72ff-80ae-95c8-e6652259a8f4"><td id="gdH&lt;" class="">https://leetcode.com/problems/remove-k-digits</td><td id="yLGB" class="">Remove K Digits</td><td id="rVkw" class="">94</td><td id="fUuu" class="">10</td><td id="deyb" class="">String, Stack, Greedy, Monotonic Stack</td></tr><tr id="239b255d-72ff-8062-aa2b-f3e41236c6d8"><td id="gdH&lt;" class="">https://leetcode.com/problems/can-place-flowers</td><td id="yLGB" class="">Can Place Flowers</td><td id="rVkw" class="">100</td><td id="fUuu" class="">9</td><td id="deyb" class="">Array, Greedy</td></tr><tr id="239b255d-72ff-8037-a155-fe8596ef4969"><td id="gdH&lt;" class="">https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden</td><td id="yLGB" class="">Minimum Number of Taps to Open to Water a Garden</td><td id="rVkw" class="">100</td><td id="fUuu" class="">9</td><td id="deyb" class="">Array, Dynamic Programming, Greedy</td></tr><tr id="239b255d-72ff-8045-9e42-f2d3a7279bf7"><td id="gdH&lt;" class="">https://leetcode.com/problems/valid-palindrome-ii</td><td id="yLGB" class="">Valid Palindrome II</td><td id="rVkw" class="">100</td><td id="fUuu" class="">8</td><td id="deyb" class="">Two Pointers, String, Greedy</td></tr><tr id="239b255d-72ff-806f-bb34-d23dc8913fab"><td id="gdH&lt;" class="">https://leetcode.com/problems/non-overlapping-intervals</td><td id="yLGB" class="">Non-overlapping Intervals</td><td id="rVkw" class="">100</td><td id="fUuu" class="">8</td><td id="deyb" class="">Array, Dynamic Programming, Greedy, Sorting</td></tr><tr id="239b255d-72ff-80e5-a932-da6e45314fde"><td id="gdH&lt;" class="">https://leetcode.com/problems/valid-parenthesis-string</td><td id="yLGB" class="">Valid Parenthesis String</td><td id="rVkw" class="">100</td><td id="fUuu" class="">7</td><td id="deyb" class="">String, Dynamic Programming, Stack, Greedy</td></tr><tr id="239b255d-72ff-80d9-a66e-fe619ea6fc22"><td id="gdH&lt;" class="">https://leetcode.com/problems/remove-duplicate-letters</td><td id="yLGB" class="">Remove Duplicate Letters</td><td id="rVkw" class="">100</td><td id="fUuu" class="">7</td><td id="deyb" class="">String, Stack, Greedy, Monotonic Stack</td></tr><tr id="239b255d-72ff-805c-81ec-d86df0304b29"><td id="gdH&lt;" class="">https://leetcode.com/problems/frequency-of-the-most-frequent-element</td><td id="yLGB" class="">Frequency of the Most Frequent Element</td><td id="rVkw" class="">100</td><td id="fUuu" class="">7</td><td id="deyb" class="">Array, Binary Search, Greedy, Sliding Window, Sorting, Prefix Sum</td></tr><tr id="239b255d-72ff-8082-a560-e68854f033d9"><td id="gdH&lt;" class="">https://leetcode.com/problems/ipo</td><td id="yLGB" class="">IPO</td><td id="rVkw" class="">100</td><td id="fUuu" class="">7</td><td id="deyb" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="239b255d-72ff-8054-9c7d-d9fb88457147"><td id="gdH&lt;" class="">https://leetcode.com/problems/find-servers-that-handled-most-number-of-requests</td><td id="yLGB" class="">Find Servers That Handled Most Number of Requests</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">Array, Greedy, Heap (Priority Queue), Ordered Set</td></tr><tr id="239b255d-72ff-80cb-8981-ddff604fde4f"><td id="gdH&lt;" class="">https://leetcode.com/problems/boats-to-save-people</td><td id="yLGB" class="">Boats to Save People</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">Array, Two Pointers, Greedy, Sorting</td></tr><tr id="239b255d-72ff-80b5-963a-dd66346db2d5"><td id="gdH&lt;" class="">https://leetcode.com/problems/minimum-number-of-refueling-stops</td><td id="yLGB" class="">Minimum Number of Refueling Stops</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">Array, Dynamic Programming, Greedy, Heap (Priority Queue)</td></tr><tr id="239b255d-72ff-805c-84c2-df6c828385f5"><td id="gdH&lt;" class="">https://leetcode.com/problems/longest-happy-string</td><td id="yLGB" class="">Longest Happy String</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">String, Greedy, Heap (Priority Queue)</td></tr><tr id="239b255d-72ff-809d-be45-c455ab43e21c"><td id="gdH&lt;" class="">https://leetcode.com/problems/increasing-triplet-subsequence</td><td id="yLGB" class="">Increasing Triplet Subsequence</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">Array, Greedy</td></tr><tr id="239b255d-72ff-80a4-a2e5-f1241a39744c"><td id="gdH&lt;" class="">https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists</td><td id="yLGB" class="">Smallest Range Covering Elements from K Lists</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">Array, Hash Table, Greedy, Sliding Window, Sorting, Heap (Priority Queue)</td></tr><tr id="239b255d-72ff-8095-a346-dbcf74b1b3ff"><td id="gdH&lt;" class="">https://leetcode.com/problems/furthest-building-you-can-reach</td><td id="yLGB" class="">Furthest Building You Can Reach</td><td id="rVkw" class="">100</td><td id="fUuu" class="">6</td><td id="deyb" class="">Array, Greedy, Heap (Priority Queue)</td></tr><tr id="239b255d-72ff-807b-93b9-f44003685c98"><td id="gdH&lt;" class="">https://leetcode.com/problems/maximize-greatness-of-an-array</td><td id="yLGB" class="">Maximize Greatness of an Array</td><td id="rVkw" class="">100</td><td id="fUuu" class="">5</td><td id="deyb" class="">Array, Two Pointers, Greedy, Sorting</td></tr><tr id="239b255d-72ff-800f-8e6c-d1990e55c5c1"><td id="gdH&lt;" class="">https://leetcode.com/problems/partition-labels</td><td id="yLGB" class="">Partition Labels</td><td id="rVkw" class="">100</td><td id="fUuu" class="">5</td><td id="deyb" class="">Hash Table, Two Pointers, String, Greedy</td></tr><tr id="239b255d-72ff-80a6-83e4-fc9fb5ebb1c5"><td id="gdH&lt;" class="">https://leetcode.com/problems/maximum-performance-of-a-team</td><td id="yLGB" class="">Maximum Performance of a Team</td><td id="rVkw" class="">100</td><td id="fUuu" class="">5</td><td id="deyb" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr><tr id="239b255d-72ff-80cd-b356-e7889a1eef23"><td id="gdH&lt;" class="">https://leetcode.com/problems/break-a-palindrome</td><td id="yLGB" class="">Break a Palindrome</td><td id="rVkw" class="">100</td><td id="fUuu" class="">5</td><td id="deyb" class="">String, Greedy</td></tr><tr id="239b255d-72ff-8089-a4a4-e01110a73fe3"><td id="gdH&lt;" class="">https://leetcode.com/problems/minimum-operations-to-reduce-an-integer-to-0</td><td id="yLGB" class="">Minimum Operations to Reduce an Integer to 0</td><td id="rVkw" class="">100</td><td id="fUuu" class="">5</td><td id="deyb" class="">Dynamic Programming, Greedy, Bit Manipulation</td></tr><tr id="239b255d-72ff-80b9-a915-ccbb0b756934"><td id="gdH&lt;" class="">https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color</td><td id="yLGB" class="">Remove Colored Pieces if Both Neighbors are the Same Color</td><td id="rVkw" class="">100</td><td id="fUuu" class="">5</td><td id="deyb" class="">Math, String, Greedy, Game Theory</td></tr><tr id="239b255d-72ff-8015-a13c-c6c3e6aea299"><td id="gdH&lt;" class="">https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced</td><td id="yLGB" class="">Minimum Number of Swaps to Make the String Balanced</td><td id="rVkw" class="">93.2</td><td id="fUuu" class="">5</td><td id="deyb" class="">Two Pointers, String, Stack, Greedy</td></tr><tr id="239b255d-72ff-8045-98d3-fdddc469f863"><td id="gdH&lt;" class="">https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended</td><td id="yLGB" class="">Maximum Number of Events That Can Be Attended</td><td id="rVkw" class="">83.4</td><td id="fUuu" class="">5</td><td id="deyb" class="">Array, Greedy, Sorting, Heap (Priority Queue)</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

@@ -1,0 +1,689 @@
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><title>Data Structures &amp; Algorithms</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: nowrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: nowrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: nowrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><h1><a href="https://www.youtube.com/watch?v=LAnEeffb5zI">Leetcode Pattern Recognition Cheat Sheet</a></h1><h2 class="" id="236b255d-72ff-808a-8a18-f8686b85a351">🔹 <strong>Step 1: Check The Constraints</strong></h2><h3 class="" id="236b255d-72ff-80db-870a-ed2d95f97328">🔸 Small <code>n</code> (≤ 20)</h3><ul class="bulleted-list" id="236b255d-72ff-8064-947c-c5056a033e67"><li style="list-style-type:disc">✅ Brute force approaches are viable</li></ul><ul class="bulleted-list" id="236b255d-72ff-80ee-915a-c64f19e05a93"><li style="list-style-type:disc">✅ Backtracking and recursion</li></ul><ul class="bulleted-list" id="236b255d-72ff-8052-b467-fc8cd65fc5f9"><li style="list-style-type:disc">✅ Exponential time complexity (2ⁿ, n!) is acceptable</li></ul><ul class="bulleted-list" id="236b255d-72ff-80d9-bc14-c20cf918c7cd"><li style="list-style-type:disc">✅ Try all possible combinations/permutations</li></ul><hr id="236b255d-72ff-80e3-a9f7-c9fc71995ebb"/><h3 class="" id="236b255d-72ff-809f-8d01-e54458560c2d">🔸 Medium <code>n</code> (10³ to 10⁶)</h3><ul class="bulleted-list" id="236b255d-72ff-8024-a5ce-c28150d9a3e1"><li style="list-style-type:disc">❌ No brute force solutions</li></ul><ul class="bulleted-list" id="236b255d-72ff-80fb-b2c5-dbd843a62c4b"><li style="list-style-type:disc">✅ Linear time <code>O(n)</code> or <code>O(n log n)</code> required</li></ul><ul class="bulleted-list" id="236b255d-72ff-8087-be1d-fdb112d58c86"><li style="list-style-type:disc">✅ Greedy algorithms</li></ul><ul class="bulleted-list" id="236b255d-72ff-80fb-915b-c43d05f59b1c"><li style="list-style-type:disc">✅ Two pointers technique</li></ul><ul class="bulleted-list" id="236b255d-72ff-80c9-93f6-e68f0757ac83"><li style="list-style-type:disc">✅ Heap-based solutions</li></ul><ul class="bulleted-list" id="236b255d-72ff-8076-aa18-f982df59b3ef"><li style="list-style-type:disc">✅ Dynamic programming</li></ul><hr id="236b255d-72ff-800e-ad4e-eee69538c25d"/><h3 class="" id="236b255d-72ff-80a5-beac-e854931cac7b">🔸 Large <code>n</code> (≥ 10⁷)</h3><ul class="bulleted-list" id="236b255d-72ff-805a-a410-e30915989b76"><li style="list-style-type:disc">❌ Even linear time <code>O(n)</code> won’t work</li></ul><ul class="bulleted-list" id="236b255d-72ff-802d-944f-eda84cb81d51"><li style="list-style-type:disc">✅ Only <code>O(log n)</code> or <code>O(1)</code></li></ul><ul class="bulleted-list" id="236b255d-72ff-8057-a522-fedf1d5b6a97"><li style="list-style-type:disc">✅ Binary search</li></ul><ul class="bulleted-list" id="236b255d-72ff-8025-ab3a-e1d2adbe339e"><li style="list-style-type:disc">✅ Mathematical formulas</li></ul><ul class="bulleted-list" id="236b255d-72ff-8094-9ad2-c7f4c49368bf"><li style="list-style-type:disc">✅ Constant-time approaches</li></ul><hr id="236b255d-72ff-80d5-ae19-e6008bda0e14"/><h2 class="" id="236b255d-72ff-80ae-9279-c5c66e1d833e">🔹 <strong>Step 2: Analyze Input Format</strong></h2><h3 class="" id="236b255d-72ff-8059-9af8-fcaeb391bc43">🌳 <strong>Tree / Binary Tree / BST</strong></h3><ul class="bulleted-list" id="236b255d-72ff-80ce-876e-e9bdd24f541b"><li style="list-style-type:disc">DFS for: all paths, recursive exploration, preorder/inorder/postorder</li></ul><ul class="bulleted-list" id="236b255d-72ff-80fb-a1c5-de95338e0801"><li style="list-style-type:disc">BFS for: level-by-level, shortest path in unweighted tree</li></ul><ul class="bulleted-list" id="236b255d-72ff-8041-ac6c-e50694661be4"><li style="list-style-type:disc">Consider: tree properties, parent-child relationships</li></ul><hr id="236b255d-72ff-80d9-9589-c6a1598b2622"/><h3 class="" id="236b255d-72ff-80e2-a52c-c028a8b829a0">🔗 <strong>Graph (Nodes + Edges)</strong></h3><ul class="bulleted-list" id="236b255d-72ff-8059-8435-c955bc3e55a0"><li style="list-style-type:disc">BFS for shortest path</li></ul><ul class="bulleted-list" id="236b255d-72ff-801c-9da1-fabd7c537368"><li style="list-style-type:disc">DFS for connected components</li></ul><ul class="bulleted-list" id="236b255d-72ff-8031-b617-f5ca03c2c5a5"><li style="list-style-type:disc">Union Find for "connected components" / "number of groups"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8098-8725-f968bf437d71"><li style="list-style-type:disc">Topological Sort for dependencies</li></ul><hr id="236b255d-72ff-80b7-8d7e-dfd282e6e05a"/><h3 class="" id="236b255d-72ff-80b2-a752-e6918ec606ad">🧱 <strong>2D Grid / Matrix</strong></h3><ul class="bulleted-list" id="236b255d-72ff-8072-b151-d75641daef21"><li style="list-style-type:disc">DFS/BFS for “islands” problems</li></ul><ul class="bulleted-list" id="236b255d-72ff-801f-97a3-e61fb82e4b0a"><li style="list-style-type:disc">Union Find for connected regions</li></ul><ul class="bulleted-list" id="236b255d-72ff-80ef-b1cb-d52c2407dd5a"><li style="list-style-type:disc">Dynamic Programming for path problems</li></ul><ul class="bulleted-list" id="236b255d-72ff-80e2-b986-c258a7873e54"><li style="list-style-type:disc">Consider: 4-directional or 8-directional movement</li></ul><hr id="236b255d-72ff-80d4-843b-f5e603109885"/><h3 class="" id="236b255d-72ff-80ea-8cba-d74e13cdf82e">📶 <strong>Sorted Array</strong></h3><ul class="bulleted-list" id="236b255d-72ff-80db-a517-c8281ec1b350"><li style="list-style-type:disc">Two Pointers technique</li></ul><ul class="bulleted-list" id="236b255d-72ff-8046-af01-fab78388613f"><li style="list-style-type:disc">Binary Search</li></ul><ul class="bulleted-list" id="236b255d-72ff-809d-ac6c-c7744219ac1a"><li style="list-style-type:disc">Greedy approach</li></ul><hr id="236b255d-72ff-80ae-af17-dc48950244f5"/><h3 class="" id="236b255d-72ff-8071-9fdd-df9f9547bdd9">🔤 <strong>String</strong></h3><ul class="bulleted-list" id="236b255d-72ff-8050-8acb-eef9d9b18032"><li style="list-style-type:disc">Two Pointers for palindromes</li></ul><ul class="bulleted-list" id="236b255d-72ff-80ff-9d73-e6ef7febec2a"><li style="list-style-type:disc">Sliding Window for substrings</li></ul><ul class="bulleted-list" id="236b255d-72ff-804d-9f13-eb12b0ad540d"><li style="list-style-type:disc">Trie for word problems</li></ul><ul class="bulleted-list" id="236b255d-72ff-807e-aa74-f07b530c0732"><li style="list-style-type:disc">Stack for parentheses/brackets</li></ul><hr id="236b255d-72ff-80ee-8fa2-f7e831c60565"/><h3 class="" id="236b255d-72ff-8071-afc9-cb39d020bb10">🔗 <strong>Linked List</strong></h3><ul class="bulleted-list" id="236b255d-72ff-80c2-acde-c182a215686d"><li style="list-style-type:disc">Two Pointers (fast/slow)</li></ul><ul class="bulleted-list" id="236b255d-72ff-80d0-93b2-d0780385ebbb"><li style="list-style-type:disc">Dummy node techniques</li></ul><ul class="bulleted-list" id="236b255d-72ff-8038-8e65-dcedb739ddfd"><li style="list-style-type:disc">Cycle detection</li></ul><hr id="236b255d-72ff-80ff-995b-fc0221a4c22c"/><h2 class="" id="236b255d-72ff-80ec-b094-d5fe8431ea39">🔹 <strong>Step 3: Analyze Output Format</strong></h2><h3 class="" id="236b255d-72ff-804a-8dd0-f853855f2139">📃 List of Lists (combinations, subsets, paths)</h3><ul class="bulleted-list" id="236b255d-72ff-80bd-9451-e62cf0a6ceb9"><li style="list-style-type:disc">Backtracking is almost always the answer</li></ul><ul class="bulleted-list" id="236b255d-72ff-801f-b1a4-d57b3f01b652"><li style="list-style-type:disc">Generate all possibilities</li></ul><ul class="bulleted-list" id="236b255d-72ff-804e-9b79-f70cb22dd2ff"><li style="list-style-type:disc">Use recursion with choice/no-choice pattern</li></ul><hr id="236b255d-72ff-80f6-baa5-f2b6292ed9b3"/><h3 class="" id="236b255d-72ff-80e9-8820-e01077c96cb1">🔢 Single Number (max/min profit, cost, ways, jumps)</h3><ul class="bulleted-list" id="236b255d-72ff-80c0-85ca-e799f08783e2"><li style="list-style-type:disc">Dynamic Programming for optimization</li></ul><ul class="bulleted-list" id="236b255d-72ff-8029-ad07-fed0d5993d54"><li style="list-style-type:disc">Greedy for local optimal choices</li></ul><ul class="bulleted-list" id="236b255d-72ff-805a-b9b5-c914575c2f60"><li style="list-style-type:disc">Mathematical approach for counting</li></ul><hr id="236b255d-72ff-8016-960a-c1f7195cd28b"/><h3 class="" id="236b255d-72ff-8074-bc2f-d9a38ac7b179">📝 Modified Array / String (in-place operations)</h3><ul class="bulleted-list" id="236b255d-72ff-8018-ae5d-d10e4e3ec94d"><li style="list-style-type:disc">Two Pointers for in-place modifications</li></ul><hr id="236b255d-72ff-803d-a7d0-f425c80e7d2c"/><h3 class="" id="236b255d-72ff-8086-9adc-d06ad6613e9c">📑 Ordered List (sorted sequence, valid task order)</h3><ul class="bulleted-list" id="236b255d-72ff-8060-83f0-c77c1252d107"><li style="list-style-type:disc">Sorting with custom comparators</li></ul><ul class="bulleted-list" id="236b255d-72ff-802d-9a42-cf4daeae96d0"><li style="list-style-type:disc">Topological Sort for dependencies</li></ul><ul class="bulleted-list" id="236b255d-72ff-805f-8b7b-c17728466900"><li style="list-style-type:disc">Heap for maintaining order</li></ul><hr id="236b255d-72ff-8062-b07c-f4e9abb3b8bc"/><h2 class="" id="236b255d-72ff-80bf-ae91-fcf5fd6d8277">🔹 <strong>Step 4: Keyword Pattern Recognition</strong></h2><h3 class="" id="236b255d-72ff-802f-98ab-eba0f02e996a">🧠 Dynamic Programming Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-80a0-b35a-c3782530c9de"><li style="list-style-type:disc">"Number of ways"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8000-9d5d-cf48a76cc92c"><li style="list-style-type:disc">"Maximum/minimum" + "sum/profit/cost"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8025-925d-c174a7a91b77"><li style="list-style-type:disc">"Can you reach"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8057-bfe1-f8934569d8ea"><li style="list-style-type:disc">"Longest/shortest subsequence"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80a2-8270-c1be9450a37b"><li style="list-style-type:disc">"Optimal" or "best"</li></ul><hr id="236b255d-72ff-808c-bf76-ecf99ebedfae"/><h3 class="" id="236b255d-72ff-80db-8eaa-cdb20aafe5d0">👣 Two Pointers Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-805a-b640-fa6769ac6648"><li style="list-style-type:disc">"Palindrome"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80d4-ba0a-cac2a49585ae"><li style="list-style-type:disc">"Sorted array"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8030-9b32-e946686c7ebe"><li style="list-style-type:disc">"Target sum"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80fd-95dd-f4c1062c3987"><li style="list-style-type:disc">"Remove duplicates"</li></ul><hr id="236b255d-72ff-803e-a635-dffedb35904a"/><h3 class="" id="236b255d-72ff-8031-9929-d4d73de9ede6">⏫ Heap Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-80b5-917d-dd00bd758985"><li style="list-style-type:disc">"K largest" or "K smallest"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8001-a710-d7090a26e749"><li style="list-style-type:disc">"Top K elements"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8028-8c9e-d2d4d5de0d98"><li style="list-style-type:disc">"Median"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80e9-8f55-dd228e2cbb97"><li style="list-style-type:disc">"Priority"</li></ul><hr id="236b255d-72ff-8090-9726-eab3e34676e0"/><h3 class="" id="236b255d-72ff-80cf-8562-d40bc1736a70">🧱 Stack Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-80fa-9ad8-ce81bb77cf31"><li style="list-style-type:disc">"Parentheses" or "brackets"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80ba-87a2-ff3b30319b8f"><li style="list-style-type:disc">"Valid expression"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8012-9ad4-f05f95275041"><li style="list-style-type:disc">"Nested structure"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8019-afd0-cf8ab8fa29a3"><li style="list-style-type:disc">"Undo operations"</li></ul><hr id="236b255d-72ff-809f-81c3-c05d27f0ccff"/><h3 class="" id="236b255d-72ff-8049-be99-dbacb4c96981">📉 Monotonic Stack Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-8066-8b41-d73dc55e6939"><li style="list-style-type:disc">"Next greater element"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80c0-8e7f-d25c062237ae"><li style="list-style-type:disc">"Next smaller element"</li></ul><hr id="236b255d-72ff-8015-8003-d02f09d212b1"/><h3 class="" id="236b255d-72ff-80cc-9b84-cc8ca0dcf725">🧮 HashMap Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-8084-9e1a-d7f536592a42"><li style="list-style-type:disc">"Count frequency"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80bf-9eca-d09098b657f2"><li style="list-style-type:disc">"Find duplicates"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8034-9e6d-f0b67b3fa1f6"><li style="list-style-type:disc">"Anagram"</li></ul><hr id="236b255d-72ff-80dd-8dde-c73a0f9669fc"/><h3 class="" id="236b255d-72ff-8037-a0e4-c5e180628dbb">🌲 Trie Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-80cf-9e57-c82eccb91ac0"><li style="list-style-type:disc">"Word search"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80d8-ae3f-d17e5f269ab0"><li style="list-style-type:disc">"Word prefixes"</li></ul><hr id="236b255d-72ff-808b-8616-e7080afc57af"/><h3 class="" id="236b255d-72ff-8055-b6e0-d5a43ea8f434">⚡ Greedy Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-8085-9fec-f7c02a436954"><li style="list-style-type:disc">"Minimum operations"</li></ul><hr id="236b255d-72ff-8019-959c-dd5c0b84a405"/><h3 class="" id="236b255d-72ff-80dc-81a7-f9c4a4fa04f2">🔗 Union Find Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-8076-babd-caee281611b5"><li style="list-style-type:disc">"Connected components"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80d8-83be-f30c7ca00392"><li style="list-style-type:disc">"Number of groups"</li></ul><hr id="236b255d-72ff-80c4-bf3b-e58d89218c52"/><h3 class="" id="236b255d-72ff-801c-b9b2-fa702c3541c6">🔍 Binary Search Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-807e-bdbe-cfabf74dd7d4"><li style="list-style-type:disc">"Kth element"</li></ul><ul class="bulleted-list" id="236b255d-72ff-808b-aed9-def7e86bff0a"><li style="list-style-type:disc">"Search in sorted"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80ee-9612-f95ce8f5ac9c"><li style="list-style-type:disc">"Minimize maximum"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80a8-ba24-f7c431402f23"><li style="list-style-type:disc">"First/last occurrence"</li></ul><hr id="236b255d-72ff-80c5-a667-eaa33ab908d9"/><h3 class="" id="236b255d-72ff-8013-a358-e22fc1e83b49">🔀 Bit Manipulation Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-80df-bc84-e719fca94c40"><li style="list-style-type:disc">"XOR" operations</li></ul><ul class="bulleted-list" id="236b255d-72ff-80ff-8c8c-da30ed955321"><li style="list-style-type:disc">"Single number" problems</li></ul><ul class="bulleted-list" id="236b255d-72ff-80e4-b9fa-c3d8a1009bc9"><li style="list-style-type:disc">"Power of 2"</li></ul><hr id="236b255d-72ff-8044-ae91-dc4df3316c0b"/><h3 class="" id="236b255d-72ff-80f9-bbbd-d112399d8189">📐 Math / Geometry Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-8033-846a-f2952faa853e"><li style="list-style-type:disc">"Greatest/Least Common Denominator"</li></ul><ul class="bulleted-list" id="236b255d-72ff-803d-9bbf-dff5cd124c31"><li style="list-style-type:disc">"Prime numbers"</li></ul><ul class="bulleted-list" id="236b255d-72ff-80a7-b344-e44e5dd2fb78"><li style="list-style-type:disc">"Angle calculations"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8009-aa65-fcf79255af9c"><li style="list-style-type:disc">"Coordinate"</li></ul><hr id="236b255d-72ff-80cc-bf8d-e42b44317603"/><h3 class="" id="236b255d-72ff-802e-94f3-eb0be2b7dd1b">🎮 Game Theory Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-8016-9b14-f139d7d75eb7"><li style="list-style-type:disc">"Optimal strategy"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8050-bac5-e2641320da16"><li style="list-style-type:disc">"Win/lose scenarios"</li></ul><ul class="bulleted-list" id="236b255d-72ff-803f-903a-e0f06c9e46cd"><li style="list-style-type:disc">"Minimax"</li></ul><hr id="236b255d-72ff-8029-84b1-dea87a2adc5a"/><h3 class="" id="236b255d-72ff-80ae-a5dc-cb68cb2fdab3">🎯 Sliding Window Keywords</h3><ul class="bulleted-list" id="236b255d-72ff-800a-b57c-ed5f4ec95f1c"><li style="list-style-type:disc">"Substring" with conditions</li></ul><ul class="bulleted-list" id="236b255d-72ff-8069-8ab6-ff0f28ca878e"><li style="list-style-type:disc">"Subarray" with fixed/variable size</li></ul><ul class="bulleted-list" id="236b255d-72ff-80c3-abdd-d75ae3eb074c"><li style="list-style-type:disc">"Maximum/minimum window"</li></ul><ul class="bulleted-list" id="236b255d-72ff-8009-b011-d4e2e7d4cbd3"><li style="list-style-type:disc">"Contains all"</li></ul></body></html>

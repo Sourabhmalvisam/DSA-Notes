@@ -1,0 +1,1294 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Recursion and Backtracking [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c522cb5a-3b54-43f7-a02a-22111bc18064" class="page sans"><header><h1 class="page-title"><strong>Recursion and Backtracking [Top G]</strong></h1><p class="page-description"></p></header><div class="page-body"><p id="220b255d-72ff-8041-a6df-fc86ad2360de" class="">Backtracking: Controlled Recursion + Pass by reference<br/>                                                                                      ~Aditya Verma</p><h2 id="19fb255d-72ff-8056-b7bb-d2d98c11ae1e" class=""><strong>DSA Quick Revision</strong></h2><ul id="1cdb255d-72ff-80b1-ba45-d9ed3eb0b0c2" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/recursion/implementation-problems/generate-parentheses">Generate Parenthesis</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80ac-b41e-de489ac002f2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+public List&lt;String&gt; generateParenthesis(int n) {
+
+    List&lt;String&gt; result = new ArrayList&lt;&gt;();
+    // Start the recursive generation with initial values
+    generate(0, 0, n, &quot;&quot;, result);
+    return result;
+}
+
+private void generate(int open, int close, int n, String current, List&lt;String&gt; result) {
+    // Base case: if the number of open and close parentheses used
+    // is equal to the total number of pairs, add the string to the result.
+    if (open == close &amp;&amp; open + close == 2 * n) {
+        result.add(current);
+        return;
+    }
+
+    // If the number of open parentheses used is less than the total
+    // number of pairs, add an open parenthesis and call the function recursively.
+    if (open &lt; n) {
+        generate(open + 1, close, n, current + &#x27;(&#x27;, result);
+    }
+
+    // If the number of close parentheses used is less than the number
+    // of open parentheses, add a close parenthesis and call the function recursively.
+    if (close &lt; open) {
+        generate(open, close + 1, n, current + &#x27;)&#x27;, result);
+    }
+}
+};
+</code></pre></details></li></ul><ul id="1cdb255d-72ff-804e-bb8b-df50b948c842" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/recursion/hard/letter-combinations-of-a-phone-number">Letter Combinations of a Phone Number</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-802e-af5e-e4d63ed7ffed" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    private final String[] map;
+
+    public Solution() {
+        // Mapping digits to corresponding characters
+        map = new String[]{&quot;&quot;, &quot;&quot;, &quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;, &quot;jkl&quot;, &quot;mno&quot;, &quot;pqrs&quot;, &quot;tuv&quot;, &quot;wxyz&quot;};
+    }
+
+    // Recursive helper function to generate combinations
+    private void helper(String digits, List&lt;String&gt; ans, int index, String current) {
+        // Base case: if index reaches the end of digits
+        if (index == digits.length()) {
+            // Add the current combination to the answer
+            ans.add(current);
+            return;
+        }
+        // Get characters corresponding to the current digit
+        String s = map[digits.charAt(index) - &#x27;0&#x27;];
+        // Loop through the corresponding characters
+        for (int i = 0; i &lt; s.length(); i++) {
+            // Recursively call function with next index
+            // Add current character to the string
+            helper(digits, ans, index + 1, current + s.charAt(i));
+        }
+    }
+
+    // Function to get all letter combinations for a given digit string
+    public List&lt;String&gt; letterCombinations(String digits) {
+        List&lt;String&gt; ans = new ArrayList&lt;&gt;(); // List to store results
+        // Return empty list if digits string is empty
+        if (digits.length() == 0) return ans;
+        // Initiate recursive function
+        helper(digits, ans, 0, &quot;&quot;);
+        return ans; // Return the result
+    }
+}</code></pre></details></li></ul><ul id="a45a0e0f-39c1-4094-807f-0223ede829e2" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/recursion/faqs-hard/word-search">Word Search</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6a78fd77-bcfb-462e-ba14-6a506c41be86" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public boolean exist(char[][] board, String word) {
+        int ROWS = board.length;
+        int COLS = board[0].length;
+        boolean[][] visited = new boolean[ROWS][COLS];
+
+        for (int r = 0; r &lt; ROWS; r++) {
+            for (int c = 0; c &lt; COLS; c++) {
+                if (dfs(r, c, 0, board, word, visited)) {
+                    return true; // Return true if the word is found.
+                }
+            }
+        }
+        return false; // Return false if the word is not found.
+    }
+
+    private boolean dfs(int r, int c, int i, char[][] board, String word, boolean[][] visited) {
+        if (i == word.length()) {
+            return true; // If the entire word is found, return true.
+        }
+        int ROWS = board.length;
+        int COLS = board[0].length;
+
+        if (r &lt; 0 || c &lt; 0 || r &gt;= ROWS || c &gt;= COLS ||
+                word.charAt(i) != board[r][c] || visited[r][c]) {
+            return false; // Return false for out of bounds, mismatch, or visited cell.
+        }
+
+        visited[r][c] = true; // Mark the current cell as visited.
+        boolean res = (dfs(r + 1, c, i + 1, board, word, visited) ||
+                dfs(r - 1, c, i + 1, board, word, visited) ||
+                dfs(r, c + 1, i + 1, board, word, visited) ||
+                dfs(r, c - 1, i + 1, board, word, visited)); // Explore adjacent cells.
+        visited[r][c] = false; // Backtrack by marking the current cell as not visited.
+        return res;
+    }
+}</code></pre></details></li></ul><ul id="abff1b5e-ed28-48ed-867a-5979a3a0e825" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/combination-sum-ii">Combination Sum 2 (can&#x27;t reuse same element)</a></strong></mark></summary><figure id="19fb255d-72ff-80e3-86cf-ef35ba70f0af" class="image"><a href="image%209.png"><img style="width:681.9874877929688px" src="image%209.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="3ef002a6-9be0-4e8e-9a60-0c8db586269c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum2(int[] nums, int target) {
+        List&lt;List&lt;Integer&gt;&gt; list = new ArrayList&lt;&gt;();
+        Arrays.sort(nums);
+        backtrack(list, new ArrayList&lt;&gt;(), nums, target, 0);
+        return list;
+
+    }
+
+    private void backtrack(List&lt;List&lt;Integer&gt;&gt; list, List&lt;Integer&gt; tempList, int[] nums, int remain, int start) {
+        if (remain &lt; 0)
+            return;
+        else if (remain == 0)
+            list.add(new ArrayList&lt;&gt;(tempList));
+        else {
+            for (int i = start; i &lt; nums.length; i++) {
+                if (i &gt; start &amp;&amp; nums[i] == nums[i - 1])
+                    continue; // skip duplicates
+                tempList.add(nums[i]);
+                backtrack(list, tempList, nums, remain - nums[i], i + 1);
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+}</code></pre></details></li></ul><ul id="328b7f68-e03e-4c96-a8b1-101e3e580efc" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/permutations-ii/">Permutations 2 (contains duplicates)</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="9865fb00-aca0-4667-bd90-f9a823aa94dc" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public List&lt;List&lt;Integer&gt;&gt; permuteUnique(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        Arrays.sort(nums); // Important: duplicates ko handle karne ke liye sort karna zaruri hai
+        boolean[] used = new boolean[nums.length]; // kis element ko use kiya hai, ye track karega
+        backtrack(nums, new ArrayList&lt;&gt;(), used, ans);
+        return ans;
+    }
+
+    private void backtrack(int[] nums, List&lt;Integer&gt; tempList, boolean[] used, List&lt;List&lt;Integer&gt;&gt; ans) {
+        // Base case: agar tempList ki length nums ke barabar ho gayi toh ek permutation ready hai
+        if (tempList.size() == nums.length) {
+            ans.add(new ArrayList&lt;&gt;(tempList));
+            return;
+        }
+
+        // Har index ke liye dekho
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (used[i]) continue; // agar already used hai toh skip karo
+
+            // 👉 Duplicates skip karne ka trick:
+            // Agar current num same hai previous ke aur previous abhi use nahi hua, toh skip karo
+            if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1] &amp;&amp; !used[i - 1]) continue;
+
+            used[i] = true;               // mark karo ki ye index use ho gaya
+            tempList.add(nums[i]);        // element add karo
+
+            backtrack(nums, tempList, used, ans); // next element ke liye backtrack
+
+            used[i] = false;              // backtrack: wapas mark karo unused
+            tempList.remove(tempList.size() - 1); // aur element hata do
+        }
+    }
+}
+</code></pre></details></li></ul><ul id="22beb0de-220d-4e88-8c2b-b70681c1a7fa" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/recursion/faqs-medium/subsets-ii">Subsets 2 (contains duplicates)</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="0368487e-56c8-4372-9b90-77f00a02d9dc" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+
+    public List&lt;List&lt;Integer&gt;&gt; subsetsWithDup(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; list = new ArrayList&lt;&gt;();
+        Arrays.sort(nums);
+        backtrack(0, list, new ArrayList&lt;&gt;(), nums);
+        return list;
+    }
+
+    private void backtrack(int start, List&lt;List&lt;Integer&gt;&gt; list, List&lt;Integer&gt; tempList, int[] nums) {
+        list.add(new ArrayList&lt;&gt;(tempList));
+        for (int i = start; i &lt; nums.length; i++) {
+            if (i &gt; start &amp;&amp; nums[i] == nums[i - 1]) //Imp: why not i &gt; 0
+                continue; // skip duplicates
+            tempList.add(nums[i]);
+            backtrack(i+1, list, tempList, nums);
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8041-9b0c-f88062d20d4d" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/recursion/implementation-problems/pow(x,n)">Pow(x,n)</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-803b-a91a-f150c635cc63" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    private double power(double x, long n) {
+        // Base case: anything raised to 0 is 1
+        if (n == 0) return 1.0;
+        
+        // Base case: anything raised to 1 is itself
+        if (n == 1) return x;
+        
+        // If &#x27;n&#x27; is even
+        if (n % 2 == 0) {
+            // Recursive call: x * x, n / 2
+            return power(x * x, n / 2);
+        }
+        
+        // If &#x27;n&#x27; is odd
+        // Recursive call: x * power(x, n - 1)
+        return x * power(x, n - 1);
+    }
+    
+    public double myPow(double x, int n) {
+        // If &#x27;n&#x27; is negative
+        if (n &lt; 0) {
+            // Calculate the power of -n and take reciprocal
+            return 1.0 / power(x, -n);
+        }
+        
+        // If &#x27;n&#x27; is non-negative
+        return power(x, n);
+    }
+}</code></pre></details></li></ul><ul id="22fb255d-72ff-8097-a012-ee804896f393" class="toggle"><li><details open=""><summary><mark class="highlight-default">Word Search II</mark></summary></details></li></ul><ul id="7ca5a589-1941-46a9-a838-1a4a077b9898" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-2-lms/n-queen">N Queen</a></strong></mark></summary><figure id="19fb255d-72ff-80a8-9315-d91d03cce480" class="image"><a href="image%2010.png"><img style="width:681.9874877929688px" src="image%2010.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="63f68458-fd93-4d9d-b37b-d59ec05eae1c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public static List&lt;List&lt;String&gt;&gt; solveNQueens(int n) {
+        // Initialize the board with &#x27;.&#x27; indicating empty spaces
+        char[][] board = new char[n][n];
+        for (int i = 0; i &lt; n; i++)
+            for (int j = 0; j &lt; n; j++)
+                board[i][j] = &#x27;.&#x27;;
+        
+        List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;();
+        // Start the depth-first search from column 0
+        dfs(0, board, res);
+        return res;
+    }
+
+    // Validate if placing a queen at board[row][col] is safe
+    static boolean validate(char[][] board, int row, int col) {
+        int duprow = row, dupcol = col;
+        
+        // Check upper-left diagonal
+        while (row &gt;= 0 &amp;&amp; col &gt;= 0)
+            if (board[row--][col--] == &#x27;Q&#x27;) return false;
+        
+        row = duprow;
+        col = dupcol;
+        
+        // Check left side
+        while (col &gt;= 0)
+            if (board[row][col--] == &#x27;Q&#x27;) return false;
+        
+        row = duprow;
+        col = dupcol;
+        
+        // Check lower-left diagonal
+        while (col &gt;= 0 &amp;&amp; row &lt; board.length)
+            if (board[row++][col--] == &#x27;Q&#x27;) return false;
+        
+        return true;
+    }
+
+    // DFS to explore all valid queen placements column by column
+    static void dfs(int col, char[][] board, List&lt;List&lt;String&gt;&gt; res) {
+        if (col == board.length) {
+            // Add the current board configuration to the result
+            res.add(construct(board));
+            return;
+        }
+
+        for (int row = 0; row &lt; board.length; row++) {
+            if (validate(board, row, col)) { // Check if the position is valid
+                board[row][col] = &#x27;Q&#x27;;      // Place the queen
+                dfs(col + 1, board, res);   // Recurse for the next column
+                board[row][col] = &#x27;.&#x27;;      // Backtrack
+            }
+        }
+    }
+
+    // Convert the board to a list of strings for the result
+    static List&lt;String&gt; construct(char[][] board) {
+        List&lt;String&gt; res = new LinkedList&lt;&gt;();
+        for (int i = 0; i &lt; board.length; i++)
+            res.add(new String(board[i]));
+        return res;
+    }
+}
+</code></pre></details></li></ul><ul id="0a84fe0d-5358-4f30-9af7-eccf42ff5f88" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/recursion-ii/sudoko-solver">Sudoku Solver</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="a7f200e5-ae58-45f5-bbf5-f92f446d9827" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+public void solveSudoku(char[][] board) {
+        solve(board);
+    }
+
+    // Recursive method to solve the Sudoku
+    private boolean solve(char[][] board) {
+        int n = 9;  // Size of the board
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                // Empty cell found
+                if (board[i][j] == &#x27;.&#x27;) {  
+                    for (char digit = &#x27;1&#x27;; digit &lt;= &#x27;9&#x27;; digit++) {
+                        // Check if digit can be placed
+                        if (areRulesMet(board, i, j, digit)) {  
+                            // Place digit
+                            board[i][j] = digit;  
+                            // Recur to place next digits
+                            if (solve(board)) {  
+                                return true;
+                            } else {
+                                // Reset if placing digit doesn&#x27;t solve Sudoku
+                                board[i][j] = &#x27;.&#x27;;  
+                            }
+                        }
+                    }
+                    // If no digit can be placed, return false
+                    return false;  
+                }
+            }
+        }
+        // Sudoku solved
+        return true;  
+    }
+
+    // Method to check if placing a digit follows Sudoku rules
+    private boolean areRulesMet(char[][] board, int row, int col, char digit) {
+        for (int i = 0; i &lt; 9; i++) {
+            if (board[row][i] == digit || board[i][col] == digit) {
+                // Digit already in row or column
+                return false;  
+            }
+        }
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+        for (int i = startRow; i &lt; startRow + 3; i++) {
+            for (int j = startCol; j &lt; startCol + 3; j++) {
+                if (board[i][j] == digit) {
+                    // Digit already in 3x3 sub-box
+                    return false;  
+                }
+            }
+        }
+        // Digit can be placed
+        return true;  
+    }
+};
+</code></pre></details></li></ul><ul id="22fb255d-72ff-8043-b368-f9d4cb745879" class="toggle"><li><details open=""><summary><mark class="highlight-default">Integer to English Words</mark></summary></details></li></ul><ul id="22fb255d-72ff-8027-86f4-d27e7189e20b" class="toggle"><li><details open=""><summary><mark class="highlight-default">Restore IP Addresses</mark></summary></details></li></ul><ul id="22fb255d-72ff-8063-8b8c-cacdef93c414" class="toggle"><li><details open=""><summary><mark class="highlight-default">Optimal Account Balancing</mark></summary></details></li></ul><ul id="22fb255d-72ff-8098-83b0-ed47a9ec47d6" class="toggle"><li><details open=""><summary><mark class="highlight-default">N-Queens II</mark></summary></details></li></ul><ul id="9f2278d7-10f2-460a-b4e3-128c98d9cd9e" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/recursion-ii/palindrome-partitioning">Palindrome Partitioning</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="bc374175-837c-4778-8943-c2c28968e644" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public List&lt;List&lt;String&gt;&gt; partition(String s) {
+        List&lt;List&lt;String&gt;&gt; list = new ArrayList&lt;&gt;();
+        backtrack(list, new ArrayList&lt;&gt;(), s, 0);
+        return list;
+    }
+
+    public void backtrack(List&lt;List&lt;String&gt;&gt; list, List&lt;String&gt; tempList, String s, int start) {
+        if (start == s.length())
+            list.add(new ArrayList&lt;&gt;(tempList));
+        else {
+            for (int i = start; i &lt; s.length(); i++) {
+                if (isPalindrome(s, start, i)) {
+                    tempList.add(s.substring(start, i + 1));
+                    backtrack(list, tempList, s, i + 1);
+                    tempList.remove(tempList.size() - 1);
+                }
+            }
+        }
+    }
+
+    public boolean isPalindrome(String s, int low, int high) {
+        while (low &lt; high)
+            if (s.charAt(low++) != s.charAt(high--))
+                return false;
+        return true;
+    }
+}</code></pre></details></li></ul><ul id="22db255d-72ff-80a7-b71b-d099e1b29dcc" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/combinations/description/">Combinations</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="22db255d-72ff-806e-9205-fb1ba455a68e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+    public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+
+        // 1 se shuru karo kyunki 1..n tak numbers hain
+        helper(1, ans, new ArrayList&lt;&gt;(), n, k);
+        return ans;
+    }
+
+    void helper(int start, List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; temp, int n, int k) {
+
+        // ✅ Base case: agar temp list ka size k ke barabar ho gaya toh ek valid combination mil gaya
+        if (temp.size() == k) {
+            ans.add(new ArrayList&lt;&gt;(temp)); // copy karke ans mein daal do
+            return;
+        }
+
+        // ✅ For loop: har index se start karke aage ke elements pick karo
+        for (int i = start; i &lt;= n; i++) {
+
+            temp.add(i); // current element ko combination mein daal do
+
+            helper(i + 1, ans, temp, n, k); // recursion: agla number i+1 se pick karna
+
+            temp.remove(temp.size() - 1); // backtrack: last element hata do
+        }
+    }
+}
+</code></pre></details></li></ul><ul id="22fb255d-72ff-803d-a99e-fe917c40857c" class="toggle"><li><details open=""><summary><mark class="highlight-default">Robot Room Cleaner</mark></summary></details></li></ul><ul id="22fb255d-72ff-80ba-adcb-fa05c473861d" class="toggle"><li><details open=""><summary><mark class="highlight-default">Find the Winner of the Circular Game [Josephus]</mark></summary></details></li></ul><ul id="22fb255d-72ff-80b6-9f5f-d6f7b4fb5c08" class="toggle"><li><details open=""><summary><mark class="highlight-default">Beautiful Arrangement</mark></summary></details></li></ul><ul id="22fb255d-72ff-80ae-87a1-c7693f3c4cab" class="toggle"><li><details open=""><summary><mark class="highlight-default">Permutation Sequence</mark></summary></details></li></ul><ul id="22fb255d-72ff-80b0-9bd0-d557f60a9409" class="toggle"><li><details open=""><summary><mark class="highlight-default">Power of Two</mark></summary></details></li></ul><ul id="22fb255d-72ff-802e-b099-eabb4db68eb2" class="toggle"><li><details open=""><summary><mark class="highlight-default">Remove Invalid Parentheses</mark></summary></details></li></ul><h2 id="e4e5b354-4629-4337-b2c7-2bf224723a40" class=""><mark class="highlight-default"><strong>DSA Concept Revision</strong></mark></h2><ul id="1b2b255d-72ff-80a3-a14f-fbb4705153ac" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/recursion-ii/rat-in-a-maze">Rat in a maze</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b2b255d-72ff-80c4-8926-c827bb2f1a1b" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    // List to store the resulting paths
+    List&lt;String&gt; result = new ArrayList&lt;&gt;();
+
+    // Recursive function to find paths
+    private void path(int[][] m, int x, int y, String dir, int n) {
+        // If destination is reached, add path to result
+        if (x == n - 1 &amp;&amp; y == n - 1) {
+            result.add(dir);
+            return;
+        }
+
+        // If cell is blocked, return
+        if (m[x][y] == 0) return;
+
+        // Mark cell as visited by setting it to 0
+        m[x][y] = 0;
+
+        // Move up if possible
+        if (x &gt; 0) path(m, x - 1, y, dir + &#x27;U&#x27;, n);
+        // Move left if possible
+        if (y &gt; 0) path(m, x, y - 1, dir + &#x27;L&#x27;, n);
+        // Move down if possible
+        if (x &lt; n - 1) path(m, x + 1, y, dir + &#x27;D&#x27;, n);
+        // Move right if possible
+        if (y &lt; n - 1) path(m, x, y + 1, dir + &#x27;R&#x27;, n);
+
+        // Unmark cell as visited by setting it to 1
+        m[x][y] = 1;
+    }
+
+    public List&lt;String&gt; findPath(int[][] grid) {
+        int n = grid.length;
+
+        // Clear previous results
+        result.clear();
+
+        // If starting or ending cell is blocked, return empty result
+        if (grid[0][0] == 0 || grid[n - 1][n - 1] == 0) return result;
+
+        // Start finding paths from (0, 0)
+        path(grid, 0, 0, &quot;&quot;, n);
+
+        // Sort the result paths
+        Collections.sort(result);
+
+        return result;
+    }
+};</code></pre></details></li></ul><ul id="d11f1347-a396-47da-b924-fa6f937867ed" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/recursion-ii/m-coloring-problem">M – Coloring Problem</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="46882b0a-ffce-40be-847d-ffe831138777" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all"> class Solution { //DSAConceptRevision
+
+   // Function to check if it&#x27;s safe to color the node with a given color
+    private boolean isSafe(int col, int node, int[] colors, List&lt;List&lt;Integer&gt;&gt; adj) {
+        // Check adjacent nodes
+        for (int neighbor : adj.get(node)) {
+            // If an adjacent node has the same color
+            if (colors[neighbor] == col) return false;
+        }
+        return true; // Safe to color
+    }
+
+    // Recursive function to solve graph coloring problem
+    private boolean solve(int node, int m, int n, int[] colors, List&lt;List&lt;Integer&gt;&gt; adj) {
+        // If all nodes are colored
+        if (n == node) return true;
+        // Try all colors from 1 to m
+        for (int i = 1; i &lt;= m; i++) {
+            // Check if it is safe to color the node with color i
+            if (isSafe(i, node, colors, adj)) {
+                colors[node] = i; // Assign color i to node
+                // Recursively try to color the next node
+                if (solve(node + 1, m, n, colors, adj)) return true;
+                colors[node] = 0; // Reset color if it doesn&#x27;t lead to a solution
+            }
+        }
+        return false; // No color can be assigned
+    }
+
+    // Function to check if the graph can be colored with m colors
+    public boolean graphColoring(int[][] edges, int m, int n) {
+        // Create adjacency list representation of the graph
+        List&lt;List&lt;Integer&gt;&gt; adj = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; n; i++) {
+            adj.add(new ArrayList&lt;&gt;());
+        }
+        // Build the graph from edges
+        for (int[] edge : edges) {
+            adj.get(edge[0]).add(edge[1]);
+            adj.get(edge[1]).add(edge[0]);
+        }
+        
+        int[] colors = new int[n]; // Initialize all colors to 0 (uncolored)
+        // Start solving from the first node
+        return solve(0, m, n, colors, adj);
+    }
+};</code></pre></details></li></ul><h2 id="1c7b255d-72ff-80da-9d78-eda3d3fcd39d" class=""><mark class="highlight-default">DSA</mark></h2><ul id="1cdb255d-72ff-804a-91b0-d0a911dc290e" class="toggle"><li><details open=""><summary><mark class="highlight-default"><a href="https://takeuforward.org/plus/dsa/recursion/faqs-medium/subsets-i">Sum of all subsets of the array</a></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80ef-a5d1-c6326dfdc937" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+  public List&lt;Integer&gt; subsetSums(int[] nums) {
+    List&lt;Integer&gt; ans = new ArrayList&lt;&gt;();
+    helper(nums, ans, 0, 0);
+    return ans;
+  }
+
+  // Generate all subset sums starting from &#x27;start&#x27; index
+  void helper(int[] nums, List&lt;Integer&gt; ans, int start, int sum) {
+    ans.add(sum); // Add current subset sum
+
+    // Try including each element from &#x27;start&#x27; onwards
+    for (int i = start; i &lt; nums.length; i++) {
+      helper(nums, ans, i + 1, sum + nums[i]); // Include nums[i] and recur
+    }
+  }
+}
+</code></pre></details></li></ul><ul id="1b0b255d-72ff-80be-860f-f321b153ec29" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/recursion-i/combination-sum-iii">Combination Sum 3</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b0b255d-72ff-803d-8442-ceeb6e024190" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    private void func(int sum, int last, List&lt;Integer&gt; nums, int k, List&lt;List&lt;Integer&gt;&gt; ans) {
+        // If the sum is zero and the number of elements is k
+        if (sum == 0 &amp;&amp; nums.size() == k) {
+            // Add the current combination to the answer
+            ans.add(new ArrayList&lt;&gt;(nums));
+            return;
+        }
+        // If the sum is less than or equal to zero or the number of elements exceeds k
+        if (sum &lt;= 0 || nums.size() &gt; k) return;
+
+        // Iterate from the last number to 9
+        for (int i = last; i &lt;= 9; i++) {
+            // If the current number is less than or equal to the sum
+            if (i &lt;= sum) {
+                // Add the number to the current combination
+                nums.add(i);
+                // Recursive call with updated sum and next number
+                func(sum - i, i + 1, nums, k, ans);
+                // Remove the last number to backtrack
+                nums.remove(nums.size() - 1);
+            } else {
+                // If the number is greater than the sum, break the loop
+                break;
+            }
+        }
+    }
+
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum3(int k, int n) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();
+        // Call the recursive function with initial parameters
+        func(n, 1, nums, k, ans);
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="e99695cb-8a6c-4f18-b105-a7ebcd09a7b2" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/recursion-i/combination-sum">Combination Sum 1</a></strong></mark></summary><figure id="333ac70f-59c5-486b-8e5c-47478940e186" class="image"><a href="Untitled%209.png"><img style="width:679.9750366210938px" src="Untitled%209.png"/></a></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b190f8a6-7514-4fc6-8d05-b0a7c36a9db7" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] nums, int target) {
+        List&lt;List&lt;Integer&gt;&gt; list = new ArrayList&lt;&gt;();
+        backtrack(list, new ArrayList&lt;&gt;(), nums, target, 0);
+        return list;
+    }
+
+    private void backtrack(List&lt;List&lt;Integer&gt;&gt; list, List&lt;Integer&gt; tempList, int[] nums, int remain, int start) {
+        if (remain &lt; 0)
+            return;
+        else if (remain == 0)
+            list.add(new ArrayList&lt;&gt;(tempList));
+        else {
+            for (int i = start; i &lt; nums.length; i++) {
+                tempList.add(nums[i]);
+                backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+                tempList.remove(tempList.size() - 1);
+            }
+        }
+    }
+}</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e77a0867-b4b0-41e2-a256-ebd7903bbde2" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution {
+
+    public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        findCombinations(0, candidates, target, ans, new ArrayList&lt;&gt;());
+        return ans;
+    }
+
+    private void findCombinations(int ind, int[] arr, int target, List&lt;List&lt;Integer&gt;&gt; ans, List&lt;Integer&gt; ds) {
+        if (ind == arr.length) {
+            if (target == 0) {
+                ans.add(new ArrayList&lt;&gt;(ds));
+            }
+            return;
+        }
+
+        if (arr[ind] &lt;= target) { //Pick
+            ds.add(arr[ind]);
+            findCombinations(ind, arr, target - arr[ind], ans, ds);
+            ds.remove(ds.size() - 1);
+        }
+        findCombinations(ind + 1, arr, target, ans, ds); //Not Pick
+    }
+}</code></pre></details></li></ul><ul id="b9116a1f-bdc7-4c0b-9047-541915e4e0ce" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://leetcode.com/problems/permutations/">Permutations 1</a></strong></mark></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="6511c20e-b1e5-44d7-a4ca-45a4e67ac1ac" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    public List&lt;List&lt;Integer&gt;&gt; permute(int[] nums) {
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        boolean[] used = new boolean[nums.length]; // ye batata hai kaun sa element use ho chuka hai
+        backtrack(nums, new ArrayList&lt;&gt;(), used, ans); //No need to pass &quot;start&quot;
+        return ans;
+    }
+
+    private void backtrack(int[] nums, List&lt;Integer&gt; tempList, boolean[] used, List&lt;List&lt;Integer&gt;&gt; ans) {
+        // Base case: agar tempList ki length nums ke barabar hai toh ek permutation ready hai
+        if (tempList.size() == nums.length) {
+            ans.add(new ArrayList&lt;&gt;(tempList)); // tempList ka copy banao aur ans mein add karo
+            return;
+        }
+
+        // Har index check karo
+        for (int i = 0; i &lt; nums.length; i++) {
+            if (used[i]) continue; // agar use ho chuka hai toh skip karo
+
+            // element ko tempList mein add karo aur use[] mein mark karo
+            used[i] = true;
+            tempList.add(nums[i]);
+
+            backtrack(nums, tempList, used, ans); // recursion se next element banao
+
+            // Backtrack: last element hatao aur used[] wapas false karo
+            used[i] = false;
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+</code></pre></details></li></ul><h2 id="22eb255d-72ff-801f-b4e0-f8b317cec9ca" class="">Extras (Backtracking)</h2><table id="22fb255d-72ff-80a8-94c8-d4bc6695edc3" class="simple-table"><tbody><tr id="22fb255d-72ff-80d8-995b-c36cef6533e7"><td id="kq{x" class="">Link</td><td id="G`xk" class="">Title</td><td id="lbyF" class="">Frequency</td><td id="QKC`" class="">Companies Count</td><td id="R?fd" class="">Topics</td></tr><tr id="22fb255d-72ff-8049-b7f5-c4f0dd8ae7d4"><td id="kq{x" class="">https://leetcode.com/problems/generate-parentheses</td><td id="G`xk" class="">Generate Parentheses</td><td id="lbyF" class="">100</td><td id="QKC`" class="">40</td><td id="R?fd" class="">String, Dynamic Programming, Backtracking</td></tr><tr id="22fb255d-72ff-80e1-8d05-fbd78ca83881"><td id="kq{x" class="">https://leetcode.com/problems/letter-combinations-of-a-phone-number</td><td id="G`xk" class="">Letter Combinations of a Phone Number</td><td id="lbyF" class="">100</td><td id="QKC`" class="">37</td><td id="R?fd" class="">Hash Table, String, Backtracking</td></tr><tr id="22fb255d-72ff-808f-b83a-d268fd446f88"><td id="kq{x" class="">https://leetcode.com/problems/word-search</td><td id="G`xk" class="">Word Search</td><td id="lbyF" class="">100</td><td id="QKC`" class="">35</td><td id="R?fd" class="">Array, String, Backtracking, Depth-First Search, Matrix</td></tr><tr id="22fb255d-72ff-8035-8598-f40bc9259cdd"><td id="kq{x" class="">https://leetcode.com/problems/combination-sum</td><td id="G`xk" class="">Combination Sum</td><td id="lbyF" class="">100</td><td id="QKC`" class="">28</td><td id="R?fd" class="">Array, Backtracking</td></tr><tr id="22fb255d-72ff-80bc-a874-cf531c4710ea"><td id="kq{x" class="">https://leetcode.com/problems/permutations</td><td id="G`xk" class="">Permutations</td><td id="lbyF" class="">89.5</td><td id="QKC`" class="">26</td><td id="R?fd" class="">Array, Backtracking</td></tr><tr id="22fb255d-72ff-8056-abb1-f5138a871863"><td id="kq{x" class="">https://leetcode.com/problems/subsets</td><td id="G`xk" class="">Subsets</td><td id="lbyF" class="">100</td><td id="QKC`" class="">21</td><td id="R?fd" class="">Array, Backtracking, Bit Manipulation</td></tr><tr id="22fb255d-72ff-809a-94d3-e88933f33771"><td id="kq{x" class="">https://leetcode.com/problems/word-search-ii</td><td id="G`xk" class="">Word Search II</td><td id="lbyF" class="">100</td><td id="QKC`" class="">21</td><td id="R?fd" class="">Array, String, Backtracking, Trie, Matrix</td></tr><tr id="22fb255d-72ff-8031-9f6c-fb387d2c3fc2"><td id="kq{x" class="">https://leetcode.com/problems/sudoku-solver</td><td id="G`xk" class="">Sudoku Solver</td><td id="lbyF" class="">100</td><td id="QKC`" class="">19</td><td id="R?fd" class="">Array, Hash Table, Backtracking, Matrix</td></tr><tr id="22fb255d-72ff-8043-b9f1-fa411ef1f037"><td id="kq{x" class="">https://leetcode.com/problems/n-queens</td><td id="G`xk" class="">N-Queens</td><td id="lbyF" class="">100</td><td id="QKC`" class="">19</td><td id="R?fd" class="">Array, Backtracking</td></tr><tr id="22fb255d-72ff-802b-a041-e808a9e6bb1b"><td id="kq{x" class="">https://leetcode.com/problems/restore-ip-addresses</td><td id="G`xk" class="">Restore IP Addresses</td><td id="lbyF" class="">100</td><td id="QKC`" class="">15</td><td id="R?fd" class="">String, Backtracking</td></tr><tr id="22fb255d-72ff-8036-a453-f65f66ac3e94"><td id="kq{x" class="">https://leetcode.com/problems/combination-sum-ii</td><td id="G`xk" class="">Combination Sum II</td><td id="lbyF" class="">82.5</td><td id="QKC`" class="">13</td><td id="R?fd" class="">Array, Backtracking</td></tr><tr id="22fb255d-72ff-802a-8536-f39519a22de5"><td id="kq{x" class="">https://leetcode.com/problems/word-break-ii</td><td id="G`xk" class="">Word Break II</td><td id="lbyF" class="">90.4</td><td id="QKC`" class="">12</td><td id="R?fd" class="">Array, Hash Table, String, Dynamic Programming, Backtracking, Trie, Memoization</td></tr><tr id="22fb255d-72ff-80ec-9fdf-ed6c823fcc80"><td id="kq{x" class="">https://leetcode.com/problems/subsets-ii</td><td id="G`xk" class="">Subsets II</td><td id="lbyF" class="">79.2</td><td id="QKC`" class="">9</td><td id="R?fd" class="">Array, Backtracking, Bit Manipulation</td></tr><tr id="22fb255d-72ff-80bc-a4a8-d543a84e3699"><td id="kq{x" class="">https://leetcode.com/problems/permutations-ii</td><td id="G`xk" class="">Permutations II</td><td id="lbyF" class="">54.9</td><td id="QKC`" class="">9</td><td id="R?fd" class="">Array, Backtracking, Sorting</td></tr><tr id="22fb255d-72ff-807a-8a97-c5038eab1ba3"><td id="kq{x" class="">https://leetcode.com/problems/optimal-account-balancing</td><td id="G`xk" class="">Optimal Account Balancing</td><td id="lbyF" class="">100</td><td id="QKC`" class="">8</td><td id="R?fd" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="22fb255d-72ff-80a0-873b-e4e900a3746d"><td id="kq{x" class="">https://leetcode.com/problems/path-sum-ii</td><td id="G`xk" class="">Path Sum II</td><td id="lbyF" class="">60.3</td><td id="QKC`" class="">8</td><td id="R?fd" class="">Backtracking, Tree, Depth-First Search, Binary Tree</td></tr><tr id="22fb255d-72ff-80d0-ab4a-dd36fb7b6520"><td id="kq{x" class="">https://leetcode.com/problems/n-queens-ii</td><td id="G`xk" class="">N-Queens II</td><td id="lbyF" class="">100</td><td id="QKC`" class="">7</td><td id="R?fd" class="">Backtracking</td></tr><tr id="22fb255d-72ff-8088-83f6-f38a77d26c55"><td id="kq{x" class="">https://leetcode.com/problems/palindrome-partitioning</td><td id="G`xk" class="">Palindrome Partitioning</td><td id="lbyF" class="">61.5</td><td id="QKC`" class="">7</td><td id="R?fd" class="">String, Dynamic Programming, Backtracking</td></tr><tr id="22fb255d-72ff-8006-bd96-f84a8e480686"><td id="kq{x" class="">https://leetcode.com/problems/combinations</td><td id="G`xk" class="">Combinations</td><td id="lbyF" class="">40.6</td><td id="QKC`" class="">7</td><td id="R?fd" class="">Backtracking</td></tr><tr id="22fb255d-72ff-8098-8690-dee7fb265039"><td id="kq{x" class="">https://leetcode.com/problems/unique-binary-search-trees-ii</td><td id="G`xk" class="">Unique Binary Search Trees II</td><td id="lbyF" class="">37</td><td id="QKC`" class="">7</td><td id="R?fd" class="">Dynamic Programming, Backtracking, Tree, Binary Search Tree, Binary Tree</td></tr><tr id="22fb255d-72ff-80f6-a6c8-cbf50341bd23"><td id="kq{x" class="">https://leetcode.com/problems/robot-room-cleaner</td><td id="G`xk" class="">Robot Room Cleaner</td><td id="lbyF" class="">82.1</td><td id="QKC`" class="">6</td><td id="R?fd" class="">Backtracking, Interactive</td></tr><tr id="22fb255d-72ff-80a4-b078-f721180f4886"><td id="kq{x" class="">https://leetcode.com/problems/beautiful-arrangement</td><td id="G`xk" class="">Beautiful Arrangement</td><td id="lbyF" class="">65.5</td><td id="QKC`" class="">6</td><td id="R?fd" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="22fb255d-72ff-80f6-9548-f8da999fc2e6"><td id="kq{x" class="">https://leetcode.com/problems/word-ladder-ii</td><td id="G`xk" class="">Word Ladder II</td><td id="lbyF" class="">97.5</td><td id="QKC`" class="">5</td><td id="R?fd" class="">Hash Table, String, Backtracking, Breadth-First Search</td></tr><tr id="22fb255d-72ff-80ee-a89e-ed87a0fe5148"><td id="kq{x" class="">https://leetcode.com/problems/remove-invalid-parentheses</td><td id="G`xk" class="">Remove Invalid Parentheses</td><td id="lbyF" class="">78.3</td><td id="QKC`" class="">5</td><td id="R?fd" class="">String, Backtracking, Breadth-First Search</td></tr><tr id="22fb255d-72ff-80f3-9941-c38a96b870ee"><td id="kq{x" class="">https://leetcode.com/problems/target-sum</td><td id="G`xk" class="">Target Sum</td><td id="lbyF" class="">69.8</td><td id="QKC`" class="">5</td><td id="R?fd" class="">Array, Dynamic Programming, Backtracking</td></tr></tbody></table><h2 id="22eb255d-72ff-802b-af4e-d4a304a9364a" class="">Extras (Recursion)</h2><table id="22fb255d-72ff-80bb-9261-e99095f68221" class="simple-table"><tbody><tr id="22fb255d-72ff-80c9-8f91-f2c6032ae5c7"><td id="irti" class="">Link</td><td id="{hI\" class="">Title</td><td id="~&lt;qo" class="">Frequency</td><td id="dd=A" class="">Companies Count</td><td id="}xDe" class="">Topics</td></tr><tr id="22fb255d-72ff-80ab-bdc9-c8da274ba682"><td id="irti" class="">https://leetcode.com/problems/merge-two-sorted-lists</td><td id="{hI\" class="">Merge Two Sorted Lists</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">42</td><td id="}xDe" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-80ad-80ba-e908a0480348"><td id="irti" class="">https://leetcode.com/problems/add-two-numbers</td><td id="{hI\" class="">Add Two Numbers</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">36</td><td id="}xDe" class="">Linked List, Math, Recursion</td></tr><tr id="22fb255d-72ff-80a9-a763-c9e3ca5633a5"><td id="irti" class="">https://leetcode.com/problems/decode-string</td><td id="{hI\" class="">Decode String</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">36</td><td id="}xDe" class="">String, Stack, Recursion</td></tr><tr id="22fb255d-72ff-80f8-9dd0-d8dad539d1d3"><td id="irti" class="">https://leetcode.com/problems/reverse-linked-list</td><td id="{hI\" class="">Reverse Linked List</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">35</td><td id="}xDe" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-808a-af86-eac5371b8652"><td id="irti" class="">https://leetcode.com/problems/reverse-nodes-in-k-group</td><td id="{hI\" class="">Reverse Nodes in k-Group</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">30</td><td id="}xDe" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-8036-826e-ca3d5966ce68"><td id="irti" class="">https://leetcode.com/problems/powx-n</td><td id="{hI\" class="">Pow(x, n)</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">27</td><td id="}xDe" class="">Math, Recursion</td></tr><tr id="22fb255d-72ff-80c9-a0ae-c94d4192f49c"><td id="irti" class="">https://leetcode.com/problems/regular-expression-matching</td><td id="{hI\" class="">Regular Expression Matching</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">23</td><td id="}xDe" class="">String, Dynamic Programming, Recursion</td></tr><tr id="22fb255d-72ff-8099-bf7c-dbc740b41544"><td id="irti" class="">https://leetcode.com/problems/wildcard-matching</td><td id="{hI\" class="">Wildcard Matching</td><td id="~&lt;qo" class="">93.8</td><td id="dd=A" class="">19</td><td id="}xDe" class="">String, Dynamic Programming, Greedy, Recursion</td></tr><tr id="22fb255d-72ff-8012-8ae9-c26dce90a44f"><td id="irti" class="">https://leetcode.com/problems/integer-to-english-words</td><td id="{hI\" class="">Integer to English Words</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">18</td><td id="}xDe" class="">Math, String, Recursion</td></tr><tr id="22fb255d-72ff-804c-abeb-ee7278c52e36"><td id="irti" class="">https://leetcode.com/problems/basic-calculator</td><td id="{hI\" class="">Basic Calculator</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">17</td><td id="}xDe" class="">Math, String, Stack, Recursion</td></tr><tr id="22fb255d-72ff-8084-aa5d-f4d4efe34f4f"><td id="irti" class="">https://leetcode.com/problems/swap-nodes-in-pairs</td><td id="{hI\" class="">Swap Nodes in Pairs</td><td id="~&lt;qo" class="">84.9</td><td id="dd=A" class="">14</td><td id="}xDe" class="">Linked List, Recursion</td></tr><tr id="22fb255d-72ff-8007-87da-fdec5363a5d9"><td id="irti" class="">https://leetcode.com/problems/fibonacci-number</td><td id="{hI\" class="">Fibonacci Number</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">13</td><td id="}xDe" class="">Math, Dynamic Programming, Recursion, Memoization</td></tr><tr id="22fb255d-72ff-803b-9a0d-c92c7145c872"><td id="irti" class="">https://leetcode.com/problems/palindrome-linked-list</td><td id="{hI\" class="">Palindrome Linked List</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">13</td><td id="}xDe" class="">Linked List, Two Pointers, Stack, Recursion</td></tr><tr id="22fb255d-72ff-80c3-8ccb-db2671766560"><td id="irti" class="">https://leetcode.com/problems/basic-calculator-iii</td><td id="{hI\" class="">Basic Calculator III</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">10</td><td id="}xDe" class="">Math, String, Stack, Recursion</td></tr><tr id="22fb255d-72ff-80b3-86b9-eb927dbd3a61"><td id="irti" class="">https://leetcode.com/problems/reorder-list</td><td id="{hI\" class="">Reorder List</td><td id="~&lt;qo" class="">88.6</td><td id="dd=A" class="">9</td><td id="}xDe" class="">Linked List, Two Pointers, Stack, Recursion</td></tr><tr id="22fb255d-72ff-809c-a35c-df8ba9b09ff2"><td id="irti" class="">https://leetcode.com/problems/find-the-winner-of-the-circular-game</td><td id="{hI\" class="">Find the Winner of the Circular Game</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">6</td><td id="}xDe" class="">Array, Math, Recursion, Queue, Simulation</td></tr><tr id="22fb255d-72ff-8006-8f0d-e43827e987c2"><td id="irti" class="">https://leetcode.com/problems/permutation-sequence</td><td id="{hI\" class="">Permutation Sequence</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">5</td><td id="}xDe" class="">Math, Recursion</td></tr><tr id="22fb255d-72ff-809d-a48e-c275526db6f3"><td id="irti" class="">https://leetcode.com/problems/power-of-two</td><td id="{hI\" class="">Power of Two</td><td id="~&lt;qo" class="">100</td><td id="dd=A" class="">5</td><td id="}xDe" class="">Math, Bit Manipulation, Recursion</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

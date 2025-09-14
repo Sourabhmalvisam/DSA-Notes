@@ -1,0 +1,1961 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Stack &amp; Queue [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="ab0a2416-bfcf-4ff7-b4ef-4e29e12da443" class="page sans"><header><h1 class="page-title"><strong>Stack &amp; Queue [Top G]</strong></h1><p class="page-description"></p></header><div class="page-body"><h2 id="180b255d-72ff-8041-b7e9-f1c4b3f5e73a" class="">DSA Quick Revision</h2><ul id="239b255d-72ff-806c-bd16-ffdeff3eee94" class="toggle"><li><details open=""><summary>Valid Parentheses</summary></details></li></ul><ul id="a35045cf-3135-442e-a108-87ff37581412" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-5-lms/trapping-rainwater">Trapping Rain Water</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="f387adee-5fb5-4093-a613-3b49b3db7e26" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int trap(int[] height) {
+        int n = height.length;
+        int[] leftMax = new int[n];
+        int[] rightMax = new int[n];
+        
+        // Fill leftMax array
+        leftMax[0] = height[0];
+        for (int i = 1; i &lt; n; i++) {
+            leftMax[i] = Math.max(leftMax[i - 1], height[i]);
+        }
+        
+        // Fill rightMax array
+        rightMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i &gt;= 0; i--) {
+            rightMax[i] = Math.max(rightMax[i + 1], height[i]);
+        }
+        
+        // Calculate total trapped water
+        int maxWater = 0;
+        for (int i = 0; i &lt; n; i++) {
+            int water = Math.min(leftMax[i], rightMax[i]) - height[i];
+            maxWater += water;
+        }
+        
+        return maxWater;
+    }
+}
+</code></pre></details></li></ul><ul id="239b255d-72ff-8049-97ea-d03405003902" class="toggle"><li><details open=""><summary>Decode String</summary></details></li></ul><ul id="52dfd44e-7513-41ae-b9f0-6daa77d84909" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/stack-and-queue-ii/implement-min-stack">Min Stack</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="e391bdb5-d238-42b8-a7a3-fecaad37caf5" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class MinStack { //DSAConceptRevision
+    private Stack&lt;Integer&gt; st;
+    private int mini;
+
+    // Empty Constructor
+    public MinStack() {
+        st = new Stack&lt;&gt;();
+    }
+
+    // Method to push a value in stack
+    public void push(int value) {
+        // If stack is empty
+        if (st.isEmpty()) {
+            // Update the minimum value
+            mini = value;
+
+            // Push current value as minimum
+            st.push(value);
+            return;
+        }
+
+        // If the value is greater than the minimum
+        if (value &gt; mini) {
+            st.push(value);
+        } else {
+            // Add the modified value to stack
+            st.push(2 * value - mini);
+            // Update the minimum
+            mini = value;
+        }
+    }
+
+    // Method to pop a value from stack
+    public void pop() {
+        // Base case
+        if (st.isEmpty()) return;
+
+        // Get the top
+        int x = st.pop();
+
+        // If the modified value was added to stack
+        if (x &lt; mini) {
+            // Update the minimum
+            mini = 2 * mini - x;
+        }
+    }
+
+    // Method to get the top of stack
+    public int top() {
+        // Base case
+        if (st.isEmpty()) return -1;
+
+        // Get the top
+        int x = st.peek();
+
+        // Return top if minimum is less than the top
+        if (mini &lt; x) return x;
+
+        // Otherwise return mini
+        return mini;
+    }
+
+    // Method to get the minimum in stack
+    public int getMin() {
+        // Return the minimum
+        return mini;
+    }
+}</code></pre></details></li></ul><ul id="239b255d-72ff-80b4-9e23-d125ac92d66a" class="toggle"><li><details open=""><summary>Basic Calculator II</summary></details></li></ul><ul id="239b255d-72ff-8046-9871-d056208587b3" class="toggle"><li><details open=""><summary>Daily Temperatures</summary></details></li></ul><ul id="6d50a63f-9188-4b7c-b050-e63a4d1f3f3d" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-5-lms/largest-rectangle-in-a-histogram">Area of largest rectangle in Histogram</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="c31186e3-a0c5-4748-a47c-1c94f3da78e9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        int[] leftSmall = new int[n];
+        int[] rightSmall = new int[n];
+        
+        // Calculate leftSmall array
+        for (int i = 0; i &lt; n; i++) {
+            while (!st.isEmpty() &amp;&amp; heights[st.peek()] &gt;= heights[i]) {
+                st.pop();
+            }
+            
+            if (st.isEmpty()) {
+                leftSmall[i] = -1; // No smaller element to the left
+            } else {
+                leftSmall[i] = st.peek(); // Smallest element index
+            }
+            st.push(i);
+        }
+        
+        // Clear the stack to reuse it
+        st.clear();
+        
+        // Calculate rightSmall array
+        for (int i = n - 1; i &gt;= 0; i--) {
+            while (!st.isEmpty() &amp;&amp; heights[st.peek()] &gt;= heights[i]) {
+                st.pop();
+            }
+            
+            if (st.isEmpty()) {
+                rightSmall[i] = n; // No smaller element to the right
+            } else {
+                rightSmall[i] = st.peek(); // Smallest element index
+            }
+            st.push(i);
+        }
+        
+        // Calculate the maximum area
+        int maxArea = 0;
+        for (int i = 0; i &lt; n; i++) {
+            int width = rightSmall[i] - leftSmall[i] - 1;
+            maxArea = Math.max(maxArea, heights[i] * width);
+        }
+        
+        return maxArea;
+    }
+}</code></pre></details></li></ul><ul id="b4e55c66-b742-4590-92cc-186caaf9b7b6" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-5-lms/asteroid-collision">Asteroid Collision</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="b7789cdb-89e6-436e-9e11-de857364ab33" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+        for (int currentAsteroid : asteroids) {
+            boolean isAlive = true;
+
+            // Check for collisions with stack top (right-moving asteroid)
+            while (isAlive &amp;&amp; !stack.isEmpty() &amp;&amp; stack.peek() &gt; 0 &amp;&amp; currentAsteroid &lt; 0) {
+                int topAsteroid = stack.peek();
+
+                if (topAsteroid &lt; -currentAsteroid) {
+                    stack.pop(); // top explodes, check next one
+                } else if (topAsteroid == -currentAsteroid) {
+                    stack.pop(); // both explode
+                    isAlive = false;
+                } else {
+                    // top is bigger, current asteroid explodes
+                    isAlive = false;
+                }
+            }
+
+            if (isAlive) {
+                stack.push(currentAsteroid); // survived collisions
+            }
+        }
+
+        // Convert stack to result array
+        int[] result = new int[stack.size()];
+        for (int i = result.length - 1; i &gt;= 0; i--) {
+            result[i] = stack.pop();
+        }
+
+        return result;
+    }
+}
+</code></pre></details></li></ul><ul id="239b255d-72ff-809f-93c0-e93aa4fca476" class="toggle"><li><details open=""><summary>Simplify Path</summary></details></li></ul><ul id="239b255d-72ff-80f4-898d-c9774e6e9445" class="toggle"><li><details open=""><summary>Longest Valid Parentheses</summary></details></li></ul><ul id="239b255d-72ff-800d-b4b1-c824d18cff7f" class="toggle"><li><details open=""><summary>Basic Calculator</summary></details></li></ul><ul id="239b255d-72ff-8064-98a0-efbfacf66e9c" class="toggle"><li><details open=""><summary>Design Hit Counter</summary></details></li></ul><ul id="239b255d-72ff-807a-a758-cb02021f0753" class="toggle"><li><details open=""><summary>Evaluate Reverse Polish Notation</summary></details></li></ul><ul id="239b255d-72ff-8084-9564-f5c54a04b6a3" class="toggle"><li><details open=""><summary>Backspace String Compare</summary></details></li></ul><ul id="239b255d-72ff-808d-8e0f-eda91f9edc6c" class="toggle"><li><details open=""><summary>Flatten Nested List Iterator</summary></details></li></ul><ul id="180b255d-72ff-8019-8c37-c2584c10ca37" class="toggle"><li><details open=""><summary><strong><a href="https://leetcode.com/problems/next-greater-element-i/description/">Next Greater Element</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="180b255d-72ff-805c-91ec-d00bf0a4cb70" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    /* Function to find the next greater 
+    element for each element in the array */
+    public int[] nextLargerElement(int[] arr) {
+        
+        int n = arr.length; // size of array
+        
+        // To store the next greater elements
+        int[] ans = new int[n];
+        
+        // Stack to get elements in LIFO fashion
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Start traversing from the back
+        for(int i = n - 1; i &gt;= 0; i--) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            element is not the greater element */
+            while(!st.isEmpty() &amp;&amp; st.peek() &lt;= currEle) {
+                st.pop();
+            }
+            
+            /* If the greater element is not 
+            found, stack will be empty */
+            if(st.isEmpty()) 
+                ans[i] = -1;
+                
+            // Else store the answer
+            else 
+                ans[i] = st.peek();
+            
+            /* Push the current element in the stack 
+            maintaining the decreasing order */
+            st.push(currEle);
+        }
+        
+        // Return the result
+        return ans;
+    }
+}</code></pre></details></li></ul><ul id="239b255d-72ff-80c7-885b-fcc76cffeff5" class="toggle"><li><details open=""><summary>Basic Calculator III</summary></details></li></ul><ul id="1bcb255d-72ff-8029-99d7-e182b0e3e03c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-5-lms/remove-k-digits">Remove K Digits</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-8038-ae57-f24f11caf680" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    public String removeKdigits(String num, int k) {
+        StringBuilder sb = new StringBuilder();
+
+        for (char digit : num.toCharArray()) {
+            // Step 1: Remove bigger digits from the end
+            while (sb.length() &gt; 0 &amp;&amp; k &gt; 0 &amp;&amp; sb.charAt(sb.length() - 1) &gt; digit) {
+                sb.deleteCharAt(sb.length() - 1);
+                k--;
+            }
+            sb.append(digit);
+        }
+
+        // Step 2: If k is still &gt; 0, remove from end
+        while (k-- &gt; 0 &amp;&amp; sb.length() &gt; 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        // Step 3: Remove leading zeros
+        int i = 0;
+        while (i &lt; sb.length() &amp;&amp; sb.charAt(i) == &#x27;0&#x27;) {
+            i++;
+        }
+
+        String result = sb.substring(i);
+        return result.isEmpty() ? &quot;0&quot; : result;
+    }
+}</code></pre></details></li></ul><ul id="239b255d-72ff-80ec-a798-d5759dcc5775" class="toggle"><li><details open=""><summary>Number of Visible People in a Queue</summary></details></li></ul><ul id="239b255d-72ff-8074-b0ee-f84f3b60471f" class="toggle"><li><details open=""><summary>Moving Average from Data Stream</summary></details></li></ul><ul id="239b255d-72ff-8067-b7b9-ee0d32945877" class="toggle"><li><details open=""><summary>Design Circular Queue</summary></details></li></ul><ul id="239b255d-72ff-803f-9583-d02460cacddf" class="toggle"><li><details open=""><summary>Remove All Adjacent Duplicates in String II</summary></details></li></ul><ul id="1bcb255d-72ff-8032-b442-ead0b940a28e" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/stack-and-queue-i/sum-of-subarray-minimums">Sum of Subarray Minimums</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-80e0-a0f3-f9f58ba4865a" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    /* Function to find the indices of 
+    next smaller elements */
+    private int[] findNSE(int[] arr) {
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Start traversing from the back
+        for (int i = n - 1; i &gt;= 0; i--) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            element is not the smaller element */
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &gt;= arr[i]) {
+                st.pop();
+            }
+            
+            // Update the answer
+            ans[i] = !st.isEmpty() ? st.peek() : n;
+            
+            /* Push the index of current 
+            element in the stack */
+            st.push(i);
+        }
+        
+        // Return the answer
+        return ans;
+    }
+    
+    /* Function to find the indices of 
+    previous smaller or equal elements */
+    private int[] findPSEE(int[] arr) {
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Traverse on the array
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            elements are greater than the current element */
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &gt; arr[i]) {
+                st.pop();
+            }
+            
+            // Update the answer
+            ans[i] = !st.isEmpty() ? st.peek() : -1;
+            
+            /* Push the index of current 
+            element in the stack */
+            st.push(i);
+        }
+        
+        // Return the answer
+        return ans;
+    }
+
+    /* Function to find the sum of the 
+    minimum value in each subarray */
+    public int sumSubarrayMins(int[] arr) {
+        
+        int[] nse = findNSE(arr);
+        int[] psee = findPSEE(arr);
+        
+        // Size of array
+        int n = arr.length;
+        
+        int mod = (int)1e9 + 7; // Mod value
+        
+        // To store the sum
+        int sum = 0;
+        
+        // Traverse on the array
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Count of first type of subarrays
+            int left = i - psee[i];
+            
+            // Count of second type of subarrays
+            int right = nse[i] - i;
+            
+            /* Count of subarrays where 
+            current element is minimum */
+            long freq = left * right * 1L;
+            
+            // Contribution due to current element 
+            int val = (int)((freq * arr[i]) % mod);
+            
+            // Updating the sum
+            sum = (sum + val) % mod;
+        }
+        
+        // Return the computed sum
+        return sum;
+    }
+};
+</code></pre></details></li></ul><ul id="1d6b255d-72ff-80ef-9c67-ff37c2fc2886" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa/stack-and-queues/faqs/celebrity-problem">Celebrity Problem [Find the Celebrity Leetcode]</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80b2-b3a5-c018d920adf4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to find the index of celebrity
+    public int celebrity(int[][] M) {
+        
+        // Size of given matrix
+        int n = M.length;
+        
+        // Top and Down pointers
+        int top = 0, down = n - 1;
+        
+        // Traverse for all the people
+        while (top &lt; down) {
+            
+            /* If top knows down, 
+            it can not be a celebrity */
+            if (M[top][down] == 1) {
+                top = top + 1;
+            }
+            
+            /* If down knows top, 
+            it can not be a celebrity */
+            else if (M[down][top] == 1) {
+                down = down - 1;
+            }
+            
+            /* If both do not know each other, 
+            both cannot be the celebrity */
+            else {
+                top++;
+                down--;
+            }
+        }
+        
+        // Return -1 if no celebrity is found
+        if (top &gt; down) return -1;
+        
+        /* Check if the person pointed 
+        by top is celebrity */
+        for (int i = 0; i &lt; n; i++) {
+            if (i == top) continue;
+            
+            // Check if it is not a celebrity
+            if (M[top][i] == 1 || M[i][top] == 0) {
+                return -1;
+            }
+        }
+        
+        // Return the index of celebrity
+        return top;
+    }
+}</code></pre></details></li></ul><ul id="239b255d-72ff-8050-8a2d-ca7ca814dd90" class="toggle"><li><details open=""><summary>Minimum Remove to Make Valid Parentheses</summary></details></li></ul><ul id="239b255d-72ff-80b0-bbc3-fb85f9c01adc" class="toggle"><li><details open=""><summary>Remove Duplicate Letters</summary></details></li></ul><ul id="239b255d-72ff-80fd-b37b-ef61aa274e0f" class="toggle"><li><details open=""><summary>Car Fleet</summary></details></li></ul><ul id="239b255d-72ff-8069-a2d5-fc15969e517f" class="toggle"><li><details open=""><summary>Remove All Adjacent Duplicates In String</summary></details></li></ul><ul id="239b255d-72ff-80f4-b2fd-efcd29f89892" class="toggle"><li><details open=""><summary>Exclusive Time of Functions</summary></details></li></ul><ul id="239b255d-72ff-802d-9dc5-df35465d1957" class="toggle"><li><details open=""><summary>Design a Stack With Increment Operation</summary></details></li></ul><ul id="239b255d-72ff-80e4-92c5-e99530f07a4c" class="toggle"><li><details open=""><summary>Maximum Frequency Stack</summary></details></li></ul><ul id="239b255d-72ff-809b-ace6-dd10cfaf8311" class="toggle"><li><details open=""><summary>Minimum Number of Swaps to Make the String Balanced</summary></details></li></ul><ul id="239b255d-72ff-80f4-b7e2-d1e4de32e17b" class="toggle"><li><details open=""><summary>Number of Recent Calls</summary></details></li></ul><ul id="1d6b255d-72ff-8013-8dd0-e97df1c06f38" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-queue-using-stack">Implement Queue using Stack</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8012-85a6-dcb18bd81b0f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class StackQueue { //DSAStriver
+    private Stack&lt;Integer&gt; st1, st2;
+
+    // Constructor
+    public StackQueue() {
+        st1 = new Stack&lt;&gt;();
+        st2 = new Stack&lt;&gt;();
+    }
+
+    // Method to push elements in the queue
+    public void push(int x) {
+        /* Pop out elements from the first stack 
+        and push on top of the second stack */
+        while (!st1.isEmpty()) {
+            st2.push(st1.pop());
+        }
+
+        // Insert the desired element
+        st1.push(x);
+
+        /* Pop out elements from the second stack 
+        and push back on top of the first stack */
+        while (!st2.isEmpty()) {
+            st1.push(st2.pop());
+        }
+    }
+
+    // Method to pop element from the queue
+    public int pop() {
+        // Edge case
+        if (st1.isEmpty()) {
+            return -1; // Representing empty stack
+        }
+
+        // Get the top element
+        int topElement = st1.pop(); // Perform the pop operation
+
+        return topElement; // Return the popped value
+    }
+
+    // Method to get the front element from the queue 
+    public int peek() {
+        // Edge case
+        if (st1.isEmpty()) {
+            return -1; // Representing empty stack
+        }
+
+        // Return the top element
+        return st1.peek();
+    }
+
+    // Method to find whether the queue is empty
+    public boolean isEmpty() {
+        return st1.isEmpty();
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-80ef-ad02-f9bd47d0e9b0" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-stack-using-queue">Implement Stack using Queue</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80c4-8d15-db649a02adb4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class QueueStack { //DSAStriver
+    Queue&lt;Integer&gt; q = new LinkedList&lt;&gt;();
+
+    // Method to push element in the stack
+    public void push(int x) {
+        // Get size
+        int s = q.size();
+        // Add element
+        q.add(x);
+
+        // Move elements before new element to back
+        for (int i = 0; i &lt; s; i++) {
+            q.add(q.poll());
+        }
+    }
+
+    // Method to pop element from stack
+    public int pop() {
+        // Get front element
+        int n = q.peek();
+        // Remove front element
+        q.poll();
+        // Return removed element
+        return n;
+    }
+
+    // Method to return the top of stack
+    public int top() {
+        // Return front element
+        return q.peek();
+    }
+
+    // Method to check if the stack is empty
+    public boolean isEmpty() {
+        return q.isEmpty();
+    }
+}</code></pre></details></li></ul><ul id="1bcb255d-72ff-80be-81a1-e80f6b01f8d6" class="toggle"><li><details open=""><summary><strong><a href="http://takeuforward.org/plus/dsa-quick-revision/day-5-lms/sum-of-subarray-ranges">Sum of Subarray Ranges</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-807c-8430-ddd304b64977" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    
+    /* Function to find the indices of 
+    next smaller elements */
+    private int[] findNSE(int[] arr) {
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Start traversing from the back
+        for (int i = n - 1; i &gt;= 0; i--) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            element is not the smaller element */
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &gt;= currEle) {
+                st.pop();
+            }
+            
+            // Update the answer
+            ans[i] = !st.isEmpty() ? st.peek() : n;
+            
+            /* Push the index of current 
+            element in the stack */
+            st.push(i);
+        }
+        
+        // Return the answer
+        return ans;
+    }
+    
+    /* Function to find the indices of 
+    next greater elements */
+    private int[] findNGE(int[] arr) {
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Start traversing from the back
+        for (int i = n - 1; i &gt;= 0; i--) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            element is not the greater element */
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &lt;= currEle) {
+                st.pop();
+            }
+            
+            // Update the answer
+            ans[i] = !st.isEmpty() ? st.peek() : n;
+            
+            /* Push the index of current 
+            element in the stack */
+            st.push(i);
+        }
+        
+        // Return the answer
+        return ans;
+    }
+    
+    /* Function to find the indices of 
+    previous smaller or equal elements */
+    private int[] findPSEE(int[] arr) {
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Traverse on the array
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            elements are greater than the current element */
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &gt; currEle) {
+                st.pop();
+            }
+            
+            // Update the answer
+            ans[i] = !st.isEmpty() ? st.peek() : -1;
+            
+            /* Push the index of current 
+            element in the stack */
+            st.push(i);
+        }
+        
+        // Return the answer
+        return ans;
+    }
+    
+    /* Function to find the indices of 
+    previous greater or equal elements */
+    private int[] findPGEE(int[] arr) {
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Traverse on the array
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            elements are smaller than the current element */
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &lt; currEle) {
+                st.pop();
+            }
+            
+            // Update the answer
+            ans[i] = !st.isEmpty() ? st.peek() : -1;
+            
+            /* Push the index of current 
+            element in the stack */
+            st.push(i);
+        }
+        
+        // Return the answer
+        return ans;
+    }
+    
+    /* Function to find the sum of the 
+    minimum value in each subarray */
+    private long sumSubarrayMins(int[] arr) {
+        
+        int[] nse = findNSE(arr);
+        
+        int[] psee = findPSEE(arr);
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the sum
+        long sum = 0;
+        
+        // Traverse on the array
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Count of first type of subarrays
+            int left = i - psee[i];
+            
+            // Count of second type of subarrays
+            int right = nse[i] - i;
+            
+            /* Count of subarrays where 
+            current element is minimum */
+            long freq = left * right * 1L;
+            
+            // Contribution due to current element 
+            long val = (freq * arr[i] * 1L);
+            
+            // Updating the sum
+            sum += val;
+        }
+        
+        // Return the computed sum
+        return sum;
+    }
+    
+    /* Function to find the sum of the 
+    maximum value in each subarray */
+    private long sumSubarrayMaxs(int[] arr) {
+        
+        int[] nge = findNGE(arr);
+        
+        int[] pgee = findPGEE(arr);
+        
+        // Size of array
+        int n = arr.length;
+        
+        // To store the sum
+        long sum = 0;
+        
+        // Traverse on the array
+        for (int i = 0; i &lt; n; i++) {
+            
+            // Count of first type of subarrays
+            int left = i - pgee[i];
+            
+            // Count of second type of subarrays
+            int right = nge[i] - i;
+            
+            /* Count of subarrays where 
+            current element is maximum */
+            long freq = left * right * 1L;
+            
+            // Contribution due to current element 
+            long val = (freq * arr[i] * 1L);
+            
+            // Updating the sum
+            sum += val;
+        }
+        
+        // Return the computed sum
+        return sum;
+    }
+    
+    /* Function to find the sum of 
+    subarray ranges in each subarray */
+    public long subArrayRanges(int[] arr) {
+        
+        // Return the result
+        return ( sumSubarrayMaxs(arr) - 
+                 sumSubarrayMins(arr) );
+    }
+}</code></pre></details></li></ul><h2 id="1c7b255d-72ff-800e-a3c7-da57c37de93d" class="">DSA Concept Revision</h2><ul id="1bcb255d-72ff-804f-b1ba-c3c21e0a7676" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/stack-and-queue-i/next-greater-element---2">Next Greater Element - 2</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1bcb255d-72ff-8035-bfa8-ed9cc55cc2b6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int[] nextGreaterElements(int[] arr) {
+        int n = arr.length;
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        int[] ans = new int[n];
+
+        // Loop from 2n-1 to 0 to handle circular nature
+        for (int i = 2 * n - 1; i &gt;= 0; i--) {
+
+            int idx = i % n;  // Circular index
+            int ele = arr[idx];
+
+            // Pop smaller or equal elements from stack
+            while (!st.isEmpty() &amp;&amp; arr[st.peek()] &lt;= ele) {
+                st.pop();
+            }
+
+            // If stack empty =&gt; no greater element found
+            if (st.isEmpty()) {
+                ans[idx] = -1;
+            } else {
+                ans[idx] = arr[st.peek()]; // Top of stack is the next greater element
+            }
+
+            // Push current index onto stack for future comparison
+            st.push(idx);
+        }
+
+        return ans;
+    }
+}
+</code></pre></details></li></ul><h2 id="1d6b255d-72ff-80d3-a0ea-d3e25b1c00a2" class="">DSA Striver</h2><ul id="1d6b255d-72ff-809e-899b-f9f586fbff36" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-stack-using-arrays">Implement Stack using Arrays</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8082-beb3-ea9fa2aaf1c8" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class ArrayStack { //DSAStriver
+    // Array to hold elements
+    private int[] stackArray;
+    // Maximum capacity
+    private int capacity;
+    // Index of top element
+    private int topIndex;
+
+    // Constructor
+    public ArrayStack(int size) {
+        capacity = size;
+        stackArray = new int[capacity];
+        // Initialize stack as empty
+        topIndex = -1;
+    }
+
+    public ArrayStack() {
+        this(1000);
+    }
+
+    // Pushes element x 
+    public void push(int x) {
+        if (topIndex &gt;= capacity - 1) {
+            System.out.println(&quot;Stack overflow&quot;);
+            return;
+        }
+        stackArray[++topIndex] = x;
+    }
+
+    // Removes and returns top element
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println(&quot;Stack is empty&quot;);
+            // Return invalid value
+            return -1;
+        }
+        return stackArray[topIndex--];
+    }
+
+    // Returns top element
+    public int top() {
+        if (isEmpty()) {
+            System.out.println(&quot;Stack is empty&quot;);
+            return -1;
+        }
+        return stackArray[topIndex];
+    }
+
+    /* Returns true if the 
+       stack is empty, false otherwise */
+    public boolean isEmpty() {
+        return topIndex == -1;
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-8020-98bb-f4f4857810fb" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-queue-using-arrays">Implement Queue using Arrays</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80ce-bd9b-d677b03f6ba4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class ArrayQueue { //DSAStriver
+    // Array to store queue elements
+    int[] arr;
+    // Indices for start and end of the queue
+    int start, end;
+    // Current size and maximum size of the queue
+    int currSize, maxSize;
+
+    // Constructor
+    public ArrayQueue() {
+        arr = new int[10];
+        start = -1;
+        end = -1;
+        currSize = 0;
+        maxSize = 10;
+    }
+
+    // Method to push an element into the queue
+    public void push(int x) {
+        // Check if the queue is full
+        if (currSize == maxSize) {
+            System.out.println(&quot;Queue is full\nExiting...&quot;);
+            System.exit(1);
+        }
+
+        // If the queue is empty, initialize start and end
+        if (end == -1) {
+            start = 0;
+            end = 0;
+        } 
+        else {
+            // Circular increment of end
+            end = (end + 1) % maxSize;
+        }
+
+        arr[end] = x;
+        currSize++;
+    }
+
+    // Method to pop an element from the queue
+    public int pop() {
+        // Check if the queue is empty
+        if (start == -1) {
+            System.out.println(&quot;Queue Empty\nExiting...&quot;);
+            System.exit(1);
+        }
+        int popped = arr[start];
+
+        // If the queue has only one element, reset start and end
+        if (currSize == 1) {
+            start = -1;
+            end = -1;
+        } 
+        else {
+            // Circular increment of start
+            start = (start + 1) % maxSize;
+        }
+
+        currSize--;
+        return popped;
+    }
+
+    // Method to get the front element of the queue
+    public int peek() {
+        // Check if the queue is empty
+        if (start == -1) {
+            System.out.println(&quot;Queue is Empty&quot;);
+            System.exit(1);
+        }
+        return arr[start];
+    }
+
+    // Method to determine whether the queue is empty
+    public boolean isEmpty() {
+        return (currSize == 0);
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-801c-b613-d6eb2fe4520f" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-stack-using-linkedlist">Implement stack using LinkedList</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8049-928b-c9fc9135b3d6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">
+//DSAStriver
+class Node {
+    int val;
+    Node next;
+    Node(int d) {
+        val = d;
+        next = null;
+    }
+}
+
+// Structure to represent stack
+class LinkedListStack {
+    private Node head; // Top of Stack
+    private int size; // Size
+
+    // Constructor
+    public LinkedListStack() {
+        head = null;
+        size = 0;
+    }
+
+    // Method to push an element onto the stack
+    public void push(int x) {
+        // Creating a node
+        Node element = new Node(x);
+        
+        element.next = head; // Updating the pointers
+        head = element; // Updating the top
+        
+        // Increment size by 1
+        size++;
+    }
+
+    // Method to pop an element from the stack
+    public int pop() {
+        // If the stack is empty
+        if (head == null) {
+            return -1; // Pop operation cannot be performed
+        }
+        
+        int value = head.val; // Get the top value
+        Node temp = head; // Store the top temporarily
+        head = head.next; // Update top to next node
+        temp = null; // Delete old top node
+        size--; // Decrement size
+        
+        return value; // Return data
+    }
+
+    // Method to get the top element of the stack
+    public int top() {
+        // If the stack is empty
+        if (head == null) {
+            return -1; // Top element cannot be accessed
+        }
+        
+        return head.val; // Return the top
+    }
+
+    // Method to check if the stack is empty
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+}
+</code></pre></details></li></ul><ul id="1d6b255d-72ff-806b-87c6-c583ee87338c" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/implement-queue-using-linkedlist">Implement queue using LinkedList</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-808d-b000-e620f48f5a93" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Node { //DSAStriver
+    int val;
+    Node next;
+    Node(int d) {
+        val = d;
+        next = null;
+    }
+}
+
+// Structure to represent queue
+class LinkedListQueue {
+    private Node start; // Start of the queue
+    private Node end; // End of the queue
+    private int size; // Size of the queue
+
+    // Constructor
+    public LinkedListQueue() {
+        start = end = null;
+        size = 0;
+    }
+
+    // Method to push an element in the queue
+    public void push(int x) {
+        // Creating a node
+        Node element = new Node(x);
+        
+        // If it is the first element being pushed
+        if (start == null) {
+            // Initialize the pointers
+            start = end = element;
+        } else {
+            end.next = element; // Updating the pointers
+            end = element; // Updating the end
+        }
+        
+        // Increment size by 1
+        size++;
+    }
+
+    // Method to pop an element from the queue
+    public int pop() {
+        // If the queue is empty
+        if (start == null) {
+            return -1; // Pop operation cannot be performed
+        }
+        
+        int value = start.val; // Get the front value
+        Node temp = start; // Store the front temporarily
+        start = start.next; // Update front to next node
+        temp = null; // Delete old front node
+        size--; // Decrement size
+        
+        return value; // Return data
+    }
+
+    // Method to get the front element in the queue
+    public int peek() {
+        // If the queue is empty
+        if (start == null) {
+            return -1; // Front element cannot be accessed
+        }
+        
+        return start.val; // Return the front
+    }
+
+    // Method to check if the queue is empty
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-801a-b21a-fb42528fb60f" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/implementation/balanced-paranthesis">Balanced Parenthesis</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-802e-835a-c8548691f4de" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to match the opening 
+    and closing brackets */
+    private boolean isMatched(char open, char close) {
+       
+        // Match
+        if((open == &#x27;(&#x27; &amp;&amp; close == &#x27;)&#x27;) ||
+           (open == &#x27;[&#x27; &amp;&amp; close == &#x27;]&#x27;) ||
+           (open == &#x27;{&#x27; &amp;&amp; close == &#x27;}&#x27;)
+        )
+            return true;
+           
+        // Mismatch
+        return false;
+    }
+
+    /* Function to check if the 
+    string is valid */
+    public boolean isValid(String str) {
+       
+        // Initialize a stack
+        Stack&lt;Character&gt; st = new Stack&lt;&gt;();
+       
+        // Start iterating on the string
+        for(int i=0; i &lt; str.length(); i++) {
+           
+            // If an opening bracket is found
+            if(str.charAt(i) == &#x27;(&#x27; || str.charAt(i) == &#x27;[&#x27; || 
+               str.charAt(i) == &#x27;{&#x27;) {
+               
+                // Push on top of stack
+                st.push(str.charAt(i));
+            }
+           
+            // Else if a closing bracket is found
+            else {
+                // Return false if stack is empty
+                if(st.isEmpty()) return false;
+               
+                // Get the top element from stack
+                char ch = st.peek();
+                st.pop();
+               
+                /* If the opening and closing brackets 
+                are not matched, return false */
+                if(!isMatched(ch, str.charAt(i))) return false;
+            }
+        }
+       
+        /* If stack is empty, the 
+        string is valid, else invalid */
+        return st.isEmpty();
+    }
+}</code></pre></details></li></ul><ul id="1d6b255d-72ff-803e-b868-df3480e2fbe7" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/faqs/maximum-rectangles">Maximum Rectangles</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-8018-8413-ec28c8e787ae" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to find the largest rectangle area
+    private int largestRectangleArea(int[] heights) {
+        
+        int n = heights.length; // Size of array
+        
+        // Stack 
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // To store largest area
+        int largestArea = 0;
+        
+        // To store current area
+        int area;
+        
+        /* To store the indices of next 
+        and previous smaller elements */
+        int nse, pse;
+        
+        // Traverse on the array
+        for(int i = 0; i &lt; n; i++) {
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            elements is not the smaller element */
+            while(!st.isEmpty() &amp;&amp; 
+                  heights[st.peek()] &gt;= heights[i]){
+                      
+                // Get the index of top of stack
+                int ind = st.pop(); 
+                
+                /* Update the index of 
+                previous smaller element */
+                pse = st.isEmpty() ? -1 : st.peek();
+                
+                /* Next smaller element index for 
+                the popped element is current index */
+                nse = i;
+                
+                // Calculate the area of the popped element
+                area = heights[ind] * (nse - pse - 1);
+                
+                // Update the maximum area
+                largestArea = Math.max(largestArea, area);
+            }
+            
+            // Push the current index in stack
+            st.push(i);
+        }
+        
+        // For elements that are not popped from stack
+        while(!st.isEmpty()) {
+            
+            // NSE for such elements is size of array
+            nse = n;
+            
+            // Get the index of top of stack
+            int ind = st.pop(); 
+            
+            // Update the previous smaller element
+            pse = st.isEmpty() ? -1 : st.peek();
+            
+            // Calculate the area of the popped element
+            area = heights[ind] * (nse - pse - 1);
+            
+            // Update the maximum area
+            largestArea = Math.max(largestArea, area);
+        }
+        
+        // Return largest area found
+        return largestArea;
+    }
+    
+    /* Function to find the largest 
+    rectangle area containing all 1s */ 
+    public int maximalAreaOfSubMatrixOfAll1(int[][] matrix){
+        
+        // Determine the size of matrix
+        int n = matrix.length;
+        int m = matrix[0].length;
+        
+        /* Prefix sum matric to store heights 
+        for different ground levels */
+        int[][] prefixSum = new int[n][m];
+        
+        // Fill up the prefix sum matrix column wise
+        for(int j = 0; j &lt; m; j++) {
+            int sum = 0;
+            
+            for(int i = 0; i &lt; n; i++) {
+                sum += matrix[i][j];
+                
+                // If there is no base present
+                if(matrix[i][j] == 0) {
+                    prefixSum[i][j] = 0;
+                    sum = 0;
+                } else {
+                    // Store the height
+                    prefixSum[i][j] = sum;
+                }
+            }
+        }
+        
+        // To store the maximum area
+        int maxArea = 0;
+        
+        // Traverse for different levels of ground
+        for(int i = 0; i &lt; n; i++) {
+            
+            // Get the largest area for current level
+            int area = largestRectangleArea(prefixSum[i]);
+            
+            // Update the maximum area
+            maxArea = Math.max(area, maxArea);
+        }
+        
+        // Return the maximum area
+        return maxArea;
+    }
+};
+</code></pre></details></li></ul><ul id="1d6b255d-72ff-8059-ba0b-de69ade06e00" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/stack-and-queues/faqs/stock-span-problem">Stock span problem</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80aa-9957-c7b40d843528" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to find the indices of previous 
+    greater element for each element in the array */
+    private int[] findPGE(int[] arr) {
+        
+        int n = arr.length; //size of array
+        
+        // To store the previous greater elements
+        int[] ans = new int[n];
+        
+        // Stack to get elements in LIFO fashion
+        Stack&lt;Integer&gt; st = new Stack&lt;&gt;();
+        
+        // Start traversing from the front
+        for(int i = 0; i &lt; n; i++) {
+            
+            // Get the current element
+            int currEle = arr[i];
+            
+            /* Pop the elements in the stack until 
+            the stack is not empty and the top 
+            element is not the greater element */
+            while(!st.isEmpty() &amp;&amp; arr[st.peek()] &lt;= currEle) {
+                st.pop();
+            }
+            
+            /* If the greater element is not 
+            found, stack will be empty */
+            if(st.isEmpty()) 
+                ans[i] = -1;
+                
+            // Else store the answer
+            else 
+                ans[i] = st.peek();
+            
+            // Push the current index in the stack 
+            st.push(i);
+        }
+        
+        // Return the result
+        return ans;
+    }
+    
+    // Function to find the span of stock prices for each day
+    public int[] stockSpan(int[] arr, int n) {
+        
+        // Get the indices of previous greater elements
+        int[] PGE = findPGE(arr);
+        
+        // To store the answer
+        int[] ans = new int[n];
+        
+        // Compute the result
+        for(int i = 0; i &lt; n; i++) {
+            ans[i] = i - PGE[i];
+        }
+        
+        // Return the result
+        return ans;
+    }
+};
+</code></pre></details></li></ul><h2 id="239b255d-72ff-803a-9c09-dd32152eab6e" class="">Extras (Stack)</h2><table id="239b255d-72ff-80ab-a7e9-d993dc08da17" class="simple-table"><tbody><tr id="239b255d-72ff-8020-92b8-e0765f304823"><td id="iVPC" class="">Link</td><td id="AxFG" class="">Title</td><td id="h[eF" class="">Frequency</td><td id="A~CP" class="">Companies Count</td><td id="kREK" class="">Topics</td></tr><tr id="239b255d-72ff-80c9-aae4-e2fc255c4502"><td id="iVPC" class="">https://leetcode.com/problems/valid-parentheses</td><td id="AxFG" class="">Valid Parentheses</td><td id="h[eF" class="">100</td><td id="A~CP" class="">94</td><td id="kREK" class="">String, Stack</td></tr><tr id="239b255d-72ff-804d-a793-dc60017ab253"><td id="iVPC" class="">https://leetcode.com/problems/trapping-rain-water</td><td id="AxFG" class="">Trapping Rain Water</td><td id="h[eF" class="">100</td><td id="A~CP" class="">81</td><td id="kREK" class="">Array, Two Pointers, Dynamic Programming, Stack, Monotonic Stack</td></tr><tr id="239b255d-72ff-80b1-9dd6-ecaed6e3a05a"><td id="iVPC" class="">https://leetcode.com/problems/decode-string</td><td id="AxFG" class="">Decode String</td><td id="h[eF" class="">100</td><td id="A~CP" class="">36</td><td id="kREK" class="">String, Stack, Recursion</td></tr><tr id="239b255d-72ff-8097-a36b-dbccd0c6d1d9"><td id="iVPC" class="">https://leetcode.com/problems/min-stack</td><td id="AxFG" class="">Min Stack</td><td id="h[eF" class="">100</td><td id="A~CP" class="">33</td><td id="kREK" class="">Stack, Design</td></tr><tr id="239b255d-72ff-8074-acdc-cfb4edadab8f"><td id="iVPC" class="">https://leetcode.com/problems/basic-calculator-ii</td><td id="AxFG" class="">Basic Calculator II</td><td id="h[eF" class="">100</td><td id="A~CP" class="">27</td><td id="kREK" class="">Math, String, Stack</td></tr><tr id="239b255d-72ff-803c-a750-e99ecd401516"><td id="iVPC" class="">https://leetcode.com/problems/daily-temperatures</td><td id="AxFG" class="">Daily Temperatures</td><td id="h[eF" class="">100</td><td id="A~CP" class="">27</td><td id="kREK" class="">Array, Stack, Monotonic Stack</td></tr><tr id="239b255d-72ff-80d0-add0-cab5cfed6ead"><td id="iVPC" class="">https://leetcode.com/problems/largest-rectangle-in-histogram</td><td id="AxFG" class="">Largest Rectangle in Histogram</td><td id="h[eF" class="">100</td><td id="A~CP" class="">26</td><td id="kREK" class="">Array, Stack, Monotonic Stack</td></tr><tr id="239b255d-72ff-8003-9a46-d0b9a9e63a77"><td id="iVPC" class="">https://leetcode.com/problems/asteroid-collision</td><td id="AxFG" class="">Asteroid Collision</td><td id="h[eF" class="">100</td><td id="A~CP" class="">24</td><td id="kREK" class="">Array, Stack, Simulation</td></tr><tr id="239b255d-72ff-80c6-8498-c30c7d02c64e"><td id="iVPC" class="">https://leetcode.com/problems/simplify-path</td><td id="AxFG" class="">Simplify Path</td><td id="h[eF" class="">100</td><td id="A~CP" class="">23</td><td id="kREK" class="">String, Stack</td></tr><tr id="239b255d-72ff-80f2-b02f-f1078ee8b915"><td id="iVPC" class="">https://leetcode.com/problems/longest-valid-parentheses</td><td id="AxFG" class="">Longest Valid Parentheses</td><td id="h[eF" class="">100</td><td id="A~CP" class="">21</td><td id="kREK" class="">String, Dynamic Programming, Stack</td></tr><tr id="239b255d-72ff-8024-a7b0-fe16e6a6b538"><td id="iVPC" class="">https://leetcode.com/problems/basic-calculator</td><td id="AxFG" class="">Basic Calculator</td><td id="h[eF" class="">100</td><td id="A~CP" class="">17</td><td id="kREK" class="">Math, String, Stack, Recursion</td></tr><tr id="239b255d-72ff-8069-b125-d0a07d2394e4"><td id="iVPC" class="">https://leetcode.com/problems/maximal-rectangle</td><td id="AxFG" class="">Maximal Rectangle</td><td id="h[eF" class="">61.3</td><td id="A~CP" class="">15</td><td id="kREK" class="">Array, Dynamic Programming, Stack, Matrix, Monotonic Stack</td></tr><tr id="239b255d-72ff-8079-96a1-c947596acd6f"><td id="iVPC" class="">https://leetcode.com/problems/evaluate-reverse-polish-notation</td><td id="AxFG" class="">Evaluate Reverse Polish Notation</td><td id="h[eF" class="">100</td><td id="A~CP" class="">13</td><td id="kREK" class="">Array, Math, Stack</td></tr><tr id="239b255d-72ff-806a-86cf-cab23d7070da"><td id="iVPC" class="">https://leetcode.com/problems/palindrome-linked-list</td><td id="AxFG" class="">Palindrome Linked List</td><td id="h[eF" class="">100</td><td id="A~CP" class="">13</td><td id="kREK" class="">Linked List, Two Pointers, Stack, Recursion</td></tr><tr id="239b255d-72ff-80d2-be92-d4c50d0fbd33"><td id="iVPC" class="">https://leetcode.com/problems/backspace-string-compare</td><td id="AxFG" class="">Backspace String Compare</td><td id="h[eF" class="">100</td><td id="A~CP" class="">12</td><td id="kREK" class="">Two Pointers, String, Stack, Simulation</td></tr><tr id="239b255d-72ff-805b-a7a6-c22feb8db3de"><td id="iVPC" class="">https://leetcode.com/problems/flatten-nested-list-iterator</td><td id="AxFG" class="">Flatten Nested List Iterator</td><td id="h[eF" class="">100</td><td id="A~CP" class="">12</td><td id="kREK" class="">Stack, Tree, Depth-First Search, Design, Queue, Iterator</td></tr><tr id="239b255d-72ff-80b1-9c00-c9ab944e67f7"><td id="iVPC" class="">https://leetcode.com/problems/flatten-binary-tree-to-linked-list</td><td id="AxFG" class="">Flatten Binary Tree to Linked List</td><td id="h[eF" class="">83.8</td><td id="A~CP" class="">11</td><td id="kREK" class="">Linked List, Stack, Tree, Depth-First Search, Binary Tree</td></tr><tr id="239b255d-72ff-80a5-b222-eff5a3bd4ec0"><td id="iVPC" class="">https://leetcode.com/problems/next-greater-element-i</td><td id="AxFG" class="">Next Greater Element I</td><td id="h[eF" class="">100</td><td id="A~CP" class="">10</td><td id="kREK" class="">Array, Hash Table, Stack, Monotonic Stack</td></tr><tr id="239b255d-72ff-80f3-9689-c422e3ea13d0"><td id="iVPC" class="">https://leetcode.com/problems/basic-calculator-iii</td><td id="AxFG" class="">Basic Calculator III</td><td id="h[eF" class="">100</td><td id="A~CP" class="">10</td><td id="kREK" class="">Math, String, Stack, Recursion</td></tr><tr id="239b255d-72ff-805c-bc8e-f79b777c0b1b"><td id="iVPC" class="">https://leetcode.com/problems/remove-k-digits</td><td id="AxFG" class="">Remove K Digits</td><td id="h[eF" class="">94</td><td id="A~CP" class="">10</td><td id="kREK" class="">String, Stack, Greedy, Monotonic Stack</td></tr><tr id="239b255d-72ff-808e-9b78-ffb420e89f10"><td id="iVPC" class="">https://leetcode.com/problems/number-of-visible-people-in-a-queue</td><td id="AxFG" class="">Number of Visible People in a Queue</td><td id="h[eF" class="">100</td><td id="A~CP" class="">9</td><td id="kREK" class="">Array, Stack, Monotonic Stack</td></tr><tr id="239b255d-72ff-80da-9974-d9aaa7739661"><td id="iVPC" class="">https://leetcode.com/problems/reorder-list</td><td id="AxFG" class="">Reorder List</td><td id="h[eF" class="">88.6</td><td id="A~CP" class="">9</td><td id="kREK" class="">Linked List, Two Pointers, Stack, Recursion</td></tr><tr id="239b255d-72ff-8090-9337-dbecef823841"><td id="iVPC" class="">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii</td><td id="AxFG" class="">Remove All Adjacent Duplicates in String II</td><td id="h[eF" class="">100</td><td id="A~CP" class="">8</td><td id="kREK" class="">String, Stack</td></tr><tr id="239b255d-72ff-8038-9d32-d21b3211b9d3"><td id="iVPC" class="">https://leetcode.com/problems/design-a-text-editor</td><td id="AxFG" class="">Design a Text Editor</td><td id="h[eF" class="">100</td><td id="A~CP" class="">8</td><td id="kREK" class="">Linked List, String, Stack, Design, Simulation, Doubly-Linked List</td></tr><tr id="239b255d-72ff-8096-a936-e848c9574999"><td id="iVPC" class="">https://leetcode.com/problems/valid-parenthesis-string</td><td id="AxFG" class="">Valid Parenthesis String</td><td id="h[eF" class="">100</td><td id="A~CP" class="">7</td><td id="kREK" class="">String, Dynamic Programming, Stack, Greedy</td></tr><tr id="239b255d-72ff-80c4-ba2a-d240bd89b71f"><td id="iVPC" class="">https://leetcode.com/problems/sum-of-subarray-minimums</td><td id="AxFG" class="">Sum of Subarray Minimums</td><td id="h[eF" class="">100</td><td id="A~CP" class="">7</td><td id="kREK" class="">Array, Dynamic Programming, Stack, Monotonic Stack</td></tr><tr id="239b255d-72ff-8079-a182-d83cee8cde4e"><td id="iVPC" class="">https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses</td><td id="AxFG" class="">Minimum Remove to Make Valid Parentheses</td><td id="h[eF" class="">100</td><td id="A~CP" class="">7</td><td id="kREK" class="">String, Stack</td></tr><tr id="239b255d-72ff-8024-931c-e4759898b4de"><td id="iVPC" class="">https://leetcode.com/problems/remove-duplicate-letters</td><td id="AxFG" class="">Remove Duplicate Letters</td><td id="h[eF" class="">100</td><td id="A~CP" class="">7</td><td id="kREK" class="">String, Stack, Greedy, Monotonic Stack</td></tr><tr id="239b255d-72ff-80c1-a6f1-e39777d682f5"><td id="iVPC" class="">https://leetcode.com/problems/binary-tree-inorder-traversal</td><td id="AxFG" class="">Binary Tree Inorder Traversal</td><td id="h[eF" class="">49.5</td><td id="A~CP" class="">7</td><td id="kREK" class="">Stack, Tree, Depth-First Search, Binary Tree</td></tr><tr id="239b255d-72ff-80fa-8028-d6e7094817e4"><td id="iVPC" class="">https://leetcode.com/problems/car-fleet</td><td id="AxFG" class="">Car Fleet</td><td id="h[eF" class="">100</td><td id="A~CP" class="">6</td><td id="kREK" class="">Array, Stack, Sorting, Monotonic Stack</td></tr><tr id="239b255d-72ff-80a1-987a-f09ce0a783fd"><td id="iVPC" class="">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string</td><td id="AxFG" class="">Remove All Adjacent Duplicates In String</td><td id="h[eF" class="">100</td><td id="A~CP" class="">6</td><td id="kREK" class="">String, Stack</td></tr><tr id="239b255d-72ff-808d-9bf7-cf838ab1731d"><td id="iVPC" class="">https://leetcode.com/problems/exclusive-time-of-functions</td><td id="AxFG" class="">Exclusive Time of Functions</td><td id="h[eF" class="">100</td><td id="A~CP" class="">5</td><td id="kREK" class="">Array, Stack</td></tr><tr id="239b255d-72ff-806f-992b-ef38ad1663d2"><td id="iVPC" class="">https://leetcode.com/problems/design-a-stack-with-increment-operation</td><td id="AxFG" class="">Design a Stack With Increment Operation</td><td id="h[eF" class="">100</td><td id="A~CP" class="">5</td><td id="kREK" class="">Array, Stack, Design</td></tr><tr id="239b255d-72ff-807e-8d99-deeea65e81ea"><td id="iVPC" class="">https://leetcode.com/problems/maximum-frequency-stack</td><td id="AxFG" class="">Maximum Frequency Stack</td><td id="h[eF" class="">100</td><td id="A~CP" class="">5</td><td id="kREK" class="">Hash Table, Stack, Design, Ordered Set</td></tr><tr id="239b255d-72ff-800f-80e8-ff8639ac22bc"><td id="iVPC" class="">https://leetcode.com/problems/design-browser-history</td><td id="AxFG" class="">Design Browser History</td><td id="h[eF" class="">95.2</td><td id="A~CP" class="">5</td><td id="kREK" class="">Array, Linked List, Stack, Design, Doubly-Linked List, Data Stream</td></tr><tr id="239b255d-72ff-8015-aa64-d15aa7b9671b"><td id="iVPC" class="">https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced</td><td id="AxFG" class="">Minimum Number of Swaps to Make the String Balanced</td><td id="h[eF" class="">93.2</td><td id="A~CP" class="">5</td><td id="kREK" class="">Two Pointers, String, Stack, Greedy</td></tr><tr id="239b255d-72ff-80ed-b226-f663453b9398"><td id="iVPC" class="">https://leetcode.com/problems/implement-queue-using-stacks</td><td id="AxFG" class="">Implement Queue using Stacks</td><td id="h[eF" class="">87.2</td><td id="A~CP" class="">5</td><td id="kREK" class="">Stack, Design, Queue</td></tr><tr id="239b255d-72ff-80dc-ba0a-c4c449c64005"><td id="iVPC" class="">https://leetcode.com/problems/implement-stack-using-queues</td><td id="AxFG" class="">Implement Stack using Queues</td><td id="h[eF" class="">48.4</td><td id="A~CP" class="">5</td><td id="kREK" class="">Stack, Design, Queue</td></tr></tbody></table><h2 id="239b255d-72ff-8014-b2df-faa6f1784101" class="">Extras (Queue)</h2><table id="239b255d-72ff-8029-9b2f-e0aa6d554199" class="simple-table"><tbody><tr id="239b255d-72ff-8086-a612-cdedb12846db"><td id="PJ^y" class="">Link</td><td id="KCAy" class="">Title</td><td id="\v&lt;m" class="">Frequency</td><td id="[_W]" class="">Companies Count</td><td id="]iS=" class="">Topics</td></tr><tr id="239b255d-72ff-80e4-b15f-fb4a24877031"><td id="PJ^y" class="">https://leetcode.com/problems/sliding-window-maximum</td><td id="KCAy" class="">Sliding Window Maximum</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">34</td><td id="]iS=" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Monotonic Queue</td></tr><tr id="239b255d-72ff-806c-a409-f06315d18d11"><td id="PJ^y" class="">https://leetcode.com/problems/design-hit-counter</td><td id="KCAy" class="">Design Hit Counter</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">16</td><td id="]iS=" class="">Array, Binary Search, Design, Queue, Data Stream</td></tr><tr id="239b255d-72ff-808f-8339-ef9b9d3280b0"><td id="PJ^y" class="">https://leetcode.com/problems/first-unique-character-in-a-string</td><td id="KCAy" class="">First Unique Character in a String</td><td id="\v&lt;m" class="">78.1</td><td id="[_W]" class="">15</td><td id="]iS=" class="">Hash Table, String, Queue, Counting</td></tr><tr id="239b255d-72ff-8011-9222-ec85c7c1da23"><td id="PJ^y" class="">https://leetcode.com/problems/flatten-nested-list-iterator</td><td id="KCAy" class="">Flatten Nested List Iterator</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">12</td><td id="]iS=" class="">Stack, Tree, Depth-First Search, Design, Queue, Iterator</td></tr><tr id="239b255d-72ff-801c-a879-fc9f79b10cf1"><td id="PJ^y" class="">https://leetcode.com/problems/design-circular-queue</td><td id="KCAy" class="">Design Circular Queue</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">9</td><td id="]iS=" class="">Array, Linked List, Design, Queue</td></tr><tr id="239b255d-72ff-8004-94ed-d8e9ad3036ae"><td id="PJ^y" class="">https://leetcode.com/problems/moving-average-from-data-stream</td><td id="KCAy" class="">Moving Average from Data Stream</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">9</td><td id="]iS=" class="">Array, Design, Queue, Data Stream</td></tr><tr id="239b255d-72ff-80f7-9077-d7dad07bf731"><td id="PJ^y" class="">https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit</td><td id="KCAy" class="">Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">8</td><td id="]iS=" class="">Array, Queue, Sliding Window, Heap (Priority Queue), Ordered Set, Monotonic Queue</td></tr><tr id="239b255d-72ff-80dd-bea8-f0cd222521b1"><td id="PJ^y" class="">https://leetcode.com/problems/find-the-winner-of-the-circular-game</td><td id="KCAy" class="">Find the Winner of the Circular Game</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">6</td><td id="]iS=" class="">Array, Math, Recursion, Queue, Simulation</td></tr><tr id="239b255d-72ff-80a2-be86-e8b3837d05ef"><td id="PJ^y" class="">https://leetcode.com/problems/count-subarrays-with-fixed-bounds</td><td id="KCAy" class="">Count Subarrays With Fixed Bounds</td><td id="\v&lt;m" class="">100</td><td id="[_W]" class="">6</td><td id="]iS=" class="">Array, Queue, Sliding Window, Monotonic Queue</td></tr><tr id="239b255d-72ff-80cf-a9bf-fccce1382248"><td id="PJ^y" class="">https://leetcode.com/problems/implement-queue-using-stacks</td><td id="KCAy" class="">Implement Queue using Stacks</td><td id="\v&lt;m" class="">87.2</td><td id="[_W]" class="">5</td><td id="]iS=" class="">Stack, Design, Queue</td></tr><tr id="239b255d-72ff-8018-8f06-d99acd8d35af"><td id="PJ^y" class="">https://leetcode.com/problems/number-of-recent-calls</td><td id="KCAy" class="">Number of Recent Calls</td><td id="\v&lt;m" class="">59.6</td><td id="[_W]" class="">5</td><td id="]iS=" class="">Design, Queue, Data Stream</td></tr><tr id="239b255d-72ff-8061-a4f9-cc508193741c"><td id="PJ^y" class="">https://leetcode.com/problems/implement-stack-using-queues</td><td id="KCAy" class="">Implement Stack using Queues</td><td id="\v&lt;m" class="">48.4</td><td id="[_W]" class="">5</td><td id="]iS=" class="">Stack, Design, Queue</td></tr></tbody></table><p id="239b255d-72ff-80a0-96f7-e95ef322fc0f" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

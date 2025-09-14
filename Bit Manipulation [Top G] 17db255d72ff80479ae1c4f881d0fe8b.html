@@ -1,0 +1,956 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Bit Manipulation [Top G]</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.collection-content td {
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+blockquote.quote-large {
+	font-size: 1.25em;
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.highlight-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.highlight-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.highlight-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.highlight-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.highlight-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.highlight-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.highlight-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.highlight-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.highlight-default_background {
+	color: rgba(44, 44, 43, 1);
+}
+.highlight-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.highlight-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.highlight-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.highlight-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.highlight-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.highlight-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.highlight-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(142, 139, 134, 1);
+	fill: rgba(142, 139, 134, 1);
+}
+.block-color-brown {
+	color: rgba(182, 137, 101, 1);
+	fill: rgba(182, 137, 101, 1);
+}
+.block-color-orange {
+	color: rgba(213, 128, 59, 1);
+	fill: rgba(213, 128, 59, 1);
+}
+.block-color-yellow {
+	color: rgba(229, 178, 68, 1);
+	fill: rgba(229, 178, 68, 1);
+}
+.block-color-teal {
+	color: rgba(85, 167, 124, 1);
+	fill: rgba(85, 167, 124, 1);
+}
+.block-color-blue {
+	color: rgba(35, 131, 226, 1);
+	fill: rgba(35, 131, 226, 1);
+}
+.block-color-purple {
+	color: rgba(181, 119, 214, 1);
+	fill: rgba(181, 119, 214, 1);
+}
+.block-color-pink {
+	color: rgba(219, 105, 153, 1);
+	fill: rgba(219, 105, 153, 1);
+}
+.block-color-red {
+	color: rgba(229, 100, 88, 1);
+	fill: rgba(229, 100, 88, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(240, 239, 237, 1);
+}
+.block-color-brown_background {
+	background: rgba(245, 237, 233, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 235, 222, 1);
+}
+.block-color-yellow_background {
+	background: rgba(249, 243, 220, 1);
+}
+.block-color-teal_background {
+	background: rgba(232, 241, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(232, 242, 250, 1);
+}
+.block-color-purple_background {
+	background: rgba(243, 235, 249, 1);
+}
+.block-color-pink_background {
+	background: rgba(250, 233, 241, 1);
+}
+.block-color-red_background {
+	background: rgba(252, 233, 231, 1);
+}
+.select-value-color-default { background-color: rgba(42, 28, 0, 0.07); }
+.select-value-color-gray { background-color: rgba(28, 19, 1, 0.11); }
+.select-value-color-brown { background-color: rgba(127, 51, 0, 0.156); }
+.select-value-color-orange { background-color: rgba(196, 88, 0, 0.203); }
+.select-value-color-yellow { background-color: rgba(209, 156, 0, 0.282); }
+.select-value-color-green { background-color: rgba(0, 96, 38, 0.156); }
+.select-value-color-blue { background-color: rgba(0, 99, 174, 0.172); }
+.select-value-color-purple { background-color: rgba(92, 0, 163, 0.141); }
+.select-value-color-pink { background-color: rgba(183, 0, 78, 0.152); }
+.select-value-color-red { background-color: rgba(206, 24, 0, 0.164); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="17db255d-72ff-8047-9ae1-c4f881d0fe8b" class="page sans"><header><h1 class="page-title">Bit Manipulation [Top G]</h1><p class="page-description"></p></header><div class="page-body"><h2 id="1c7b255d-72ff-80fd-ad51-d3e1e8595941" class="">DSA Quick Revision</h2><ul id="1cdb255d-72ff-80f9-a8e8-d0833e1c9323" class="toggle"><li><details open=""><summary><strong>Basics of Bit Manipulation</strong></summary><h1 id="1cdb255d-72ff-8049-a0b9-fe2145885888" class=""><strong>Binary Number Conversion</strong></h1><h3 id="1cdb255d-72ff-8035-bf64-ea688caa08f7" class=""><strong>Decimal to Binary Conversion:</strong></h3><p id="1cdb255d-72ff-8064-a426-c78fb75be0d4" class="">By repeatedly dividing a number by 2 and recording the result, decimal values can be transformed into binary</p><h3 id="1cdb255d-72ff-80b9-894f-e90964ed0405" class=""><strong>Pseudo Code:</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8032-bbe5-fe59bd8592b4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">string decimalToBinary(int n) {  //DSAQuickRevision
+    result = &quot;&quot;
+    
+    while(n != 1) {
+        if(n % 2 == 1) result += &#x27;1&#x27;
+        else result += &#x27;0&#x27;
+        
+        n = n / 2
+    }
+    
+    reverse(result)
+    return result
+}</code></pre><h3 id="1cdb255d-72ff-80a4-98b0-f76d6035cd27" class=""><strong>Binary to Decimal Conversion:</strong></h3><p id="1cdb255d-72ff-80e4-9182-e7a6bacdaed4" class="">Converting a binary number back to its decimal equivalent involves a reverse process.</p><h3 id="1cdb255d-72ff-8009-9b34-e9a96b009309" class=""><strong>Pseudo Code:</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8041-a938-fefc914cfc12" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">string binaryToDecimal(string str) {
+    len = str.length
+    val = 1, num = 0
+    
+    for(i from len-1 to 0) {
+        if(str[i] == &#x27;1&#x27;) {
+            num = num + val
+        }
+        
+        val = val * 2
+    }
+    
+    return num
+}</code></pre><h1 id="1cdb255d-72ff-809b-883e-d6738d230fc4" class=""><strong>Understanding One&#x27;s Complement and Two&#x27;s Complement</strong></h1><h3 id="1cdb255d-72ff-8023-b528-c5cce7d87733" class=""><strong>One&#x27;s Complement</strong></h3><p id="1cdb255d-72ff-801b-b561-f26ec890ac54" class="">The one&#x27;s complement of a binary number is obtained by flipping all the bits. For example, the one&#x27;s complement of 13 (binary 1101) is:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80b0-9b1d-d08fb27f9cae" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">0000 1101 (binary of 13)</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80df-ac84-d6085d8c0095" class="code code-wrap"><code class="language-Plain Text" style="white-space:pre-wrap;word-break:break-all">1111 0010 (one&#x27;s complement of 13)</code></pre><h3 id="1cdb255d-72ff-807b-ba66-f01e4b7f533a" class=""><strong>Two&#x27;s Complement</strong></h3><p id="1cdb255d-72ff-8008-a867-d5ebd5dad17a" class="">The two&#x27;s complement is obtained by taking the one&#x27;s complement of a number and then adding 1. For example, the two&#x27;s complement of 13 (binary 1101) is:</p><ul id="1cdb255d-72ff-803f-86a0-c8cb741518e8" class="bulleted-list"><li style="list-style-type:disc"><em>Find the one&#x27;s complement: </em><em><code>0000 1101 (binary of 13)</code></em><em> </em><em><code>1111 0010 (one&#x27;s complement of 13)</code></em></li></ul><ul id="1cdb255d-72ff-8038-baff-c0b748fa00e6" class="bulleted-list"><li style="list-style-type:disc"><em>Add 1 to the one&#x27;s complement: </em><em><code>1111 0011</code></em></li></ul><hr id="1cdb255d-72ff-80f7-903d-d71a68b972a2"/><h3 id="1cdb255d-72ff-80e5-aa05-e9ca315e66bb" class=""><strong>Shift Operators</strong></h3><ul id="1cdb255d-72ff-8030-95f8-f65a2673d177" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Right Shift (&gt;&gt;):</strong></em><em> Shifts the bits to the right, discarding the bits that fall off and filling the leftmost bits with zeros. </em><em><strong>Example:</strong></em><em> </em><em><code> 13 &gt;&gt; 1 = 1101 &gt;&gt; 1 = 0110 (binary of 6)</code></em></li></ul><ul id="1cdb255d-72ff-8056-887d-efdd18b41977" class="bulleted-list"><li style="list-style-type:disc"><em><strong>Left Shift (&lt;&lt;):</strong></em><em> Shifts the bits to the left, discarding the bits that fall off and filling the rightmost bits with zeros. </em><em><strong>Example:</strong></em><em> </em><em><code> 13 &lt;&lt; 1 = 1101 &lt;&lt; 1 = 11010 (binary of 26)</code></em></li></ul></details></li></ul><ul id="17db255d-72ff-8005-860a-fb3bc646366b" class="toggle"><li><details open=""><summary><mark class="highlight-default"><strong><a href="https://takeuforward.org/plus/dsa/bit-manipulation/theory/introduction-to-bits-and-tricks">Bit Manipulation Tricks and Techniques</a></strong></mark></summary><h3 id="17db255d-72ff-80b9-bd1c-e69b4b1397bd" class="">1. <strong>Check if a Number is Odd or Even</strong></h3><ul id="17db255d-72ff-80f6-9427-cdf8d14fd381" class="bulleted-list"><li style="list-style-type:disc"><strong>Odd:</strong> The last bit is <code>1</code>.</li></ul><ul id="17db255d-72ff-80a9-9036-de8a267b599c" class="bulleted-list"><li style="list-style-type:disc"><strong>Even:</strong> The last bit is <code>0</code>.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80cb-a3ea-cceecee84211" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">if ((n &amp; 1) == 0) { //DSAQuickRevision
+    System.out.println(&quot;Even&quot;);
+} else {
+    System.out.println(&quot;Odd&quot;);
+}</code></pre><hr id="17db255d-72ff-804d-ac69-fb4fa7cbb24a"/><h3 id="17db255d-72ff-8027-a609-dc0d1de10156" class="">2. <strong>Check if the i-th Bit is Set</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80ad-9017-e69f04114cd4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">boolean isSet = (n &amp; (1 &lt;&lt; i)) != 0;</code></pre><hr id="17db255d-72ff-801e-b3b6-c2da6dc913df"/><h3 id="17db255d-72ff-802f-83c3-c1bb505708f5" class="">3. <strong>Set the i-th Bit</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-804c-a0dc-fccf95f68570" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">n = n | (1 &lt;&lt; i);</code></pre><hr id="17db255d-72ff-80f5-9f5c-f7b8537156b3"/><h3 id="17db255d-72ff-809a-be57-cb7b8754c2db" class="">4. <strong>Clear the i-th Bit</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80a4-8d01-f74b590857ef" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">n = n &amp; ~(1 &lt;&lt; i);</code></pre><hr id="17db255d-72ff-8025-a7ed-da628bdc8283"/><h3 id="17db255d-72ff-80ba-9fb8-f9221f9bdb83" class="">5. <strong>Toggle the i-th Bit</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-8071-8b7e-f7c65df67f4f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">n = n ^ (1 &lt;&lt; i);</code></pre><hr id="17db255d-72ff-809b-8d57-f8eb0137d8a1"/><h3 id="17db255d-72ff-8047-b094-ff416a365cc4" class=""><mark class="highlight-red">*6. </mark><mark class="highlight-red"><strong>Count the Number of Set Bits (Hamming Weight) [IMP]</strong></mark></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-804c-8ca3-d17c1cc6aaf6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int count = 0;
+while (n &gt; 0) {
+    n = n &amp; (n - 1);
+    count++;
+}</code></pre><ul id="17db255d-72ff-80c2-b906-e707ee38097e" class="bulleted-list"><li style="list-style-type:disc"><strong>Method 2:</strong> Built-in Java function.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-8093-a559-c58374cae156" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int count = Integer.bitCount(n);</code></pre><hr id="17db255d-72ff-80cf-82c7-ddae2bf718a1"/><h3 id="17db255d-72ff-808e-99b2-c1c4b3c70ae7" class="">7. <strong>Check if a Number is a Power of 2</strong></h3><ul id="17db255d-72ff-8011-a9ae-c9febfab7931" class="bulleted-list"><li style="list-style-type:disc">A number n is a power of 2 if it has exactly one set bit.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80f9-9c51-ca373d28f5ae" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">boolean isPowerOf2 = (n &amp; (n - 1)) == 0;</code></pre><hr id="17db255d-72ff-808a-992a-e2cabd2acf4f"/><h3 id="17db255d-72ff-8027-8c46-ff2c07e403ef" class="">8. <strong>Get the Rightmost Set Bit</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-8067-ac4d-f41560bbc83c" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int rightmostSetBit = n &amp; -n;</code></pre><hr id="17db255d-72ff-80a0-93f2-ce9cce41d850"/><h3 id="17db255d-72ff-8039-be61-fd44c3fd7cdc" class="">9. Unset <strong>the Last Set Bit [</strong><mark class="highlight-red"><strong>Remove</strong></mark><strong>]</strong></h3><ul id="17db255d-72ff-80f8-bd02-c69e5804cc8d" class="bulleted-list"><li style="list-style-type:disc">Removes the rightmost set bit from the number.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-809c-b3a1-fce46d48e1d9" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">n = n &amp; (n - 1);</code></pre><hr id="17db255d-72ff-80f2-aba8-ccf8fbdb7f19"/><h3 id="17db255d-72ff-8091-8e88-cf2eccdeaa36" class="">10. <strong>Swap Two Numbers Without a Temporary Variable</strong></h3><ul id="17db255d-72ff-80ca-a8cd-e00225c34d70" class="bulleted-list"><li style="list-style-type:disc">Use XOR to swap two numbers.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-801a-89e0-cc7cb8301093" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">a = a ^ b;
+b = a ^ b;
+a = a ^ b;</code></pre><hr id="17db255d-72ff-80a6-a3e2-f200d5428861"/><h3 id="17db255d-72ff-800e-9500-fd65a4e43504" class="">11. <strong>Find XOR of All Numbers from 1 to n</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80d7-9b96-df18c519fa9a" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int xor = switch(n % 4) {
+    case 0 -&gt; n;
+    case 1 -&gt; 1;
+    case 2 -&gt; n + 1;
+    default -&gt; 0;
+};</code></pre><hr id="17db255d-72ff-8031-b9b7-cd29102423e1"/><h3 id="17db255d-72ff-8064-89d6-f15ce23d81db" class="">12. <strong>Find the Only Non-Repeating Element (Single Number)</strong></h3><ul id="17db255d-72ff-80d5-bd72-f38450eb5ac4" class="bulleted-list"><li style="list-style-type:disc">XOR all elements; duplicates cancel out.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80b3-b2e1-f7631c170f70" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int result = 0;
+for (int num : arr) {
+    result ^= num;
+}</code></pre><hr id="17db255d-72ff-807a-8195-d9d7f33e7670"/><h3 id="17db255d-72ff-8077-8007-cad96c5116ee" class="">13. <strong>Reverse All Bits of a Number</strong></h3><ul id="17db255d-72ff-804d-a2e9-f94a2ac6ecce" class="bulleted-list"><li style="list-style-type:disc">Java provides a built-in method.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-801e-816d-d92188aa0d85" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int reversed = Integer.reverse(n);</code></pre><hr id="17db255d-72ff-803c-ab47-e855e24dca42"/><h3 id="17db255d-72ff-80d4-b1e7-fa3798608218" class="">14. <strong>Find the Position of the Most Significant Set Bit (1-Based Index)</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-8036-ae1e-f5b1a34a7340" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int msbPosition = (int)(Math.log(n) / Math.log(2)) + 1;</code></pre><hr id="17db255d-72ff-80cc-b918-d86d362d7990"/><h3 id="17db255d-72ff-8011-84f9-ff26211b8b8e" class="">15. <strong>Turn Off All Bits After the Most Significant Bit</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80d5-a134-f4f2ca62c53a" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int msbOnly = 1 &lt;&lt; (31 - Integer.numberOfLeadingZeros(n));</code></pre><hr id="17db255d-72ff-806d-9506-c8e5420dc332"/><h3 id="17db255d-72ff-8001-bfd0-f9ec6243028f" class="">16. <strong>Modulo of a Power of 2</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80bf-8a35-ccee6c46ab6f" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int mod = n &amp; ((1 &lt;&lt; k) - 1);</code></pre><hr id="17db255d-72ff-8098-953e-d624f7931dad"/><hr id="17db255d-72ff-80a3-b0b3-d9dbbf23fd7c"/><h3 id="17db255d-72ff-80d7-ba5d-d65e74487e3d" class="">17. <strong>Generate All Subsets of a Set</strong></h3><ul id="17db255d-72ff-801d-927b-fa33c24408a7" class="bulleted-list"><li style="list-style-type:disc">Use the bitmask approach. Each bit in the mask represents whether to include an element.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80c5-9acd-db047a505164" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">for (int mask = 0; mask &lt; (1 &lt;&lt; n); mask++) {
+    for (int i = 0; i &lt; n; i++) {
+        if ((mask &amp; (1 &lt;&lt; i)) != 0) {
+            System.out.print(arr[i] + &quot; &quot;);
+        }
+    }
+    System.out.println();
+}</code></pre><hr id="17db255d-72ff-8048-a8c1-c8f72726f8de"/><h3 id="17db255d-72ff-8059-a0bd-ddf3ef9962f5" class="">18. <strong>Check if nnn is a Palindrome in Binary</strong></h3><ul id="17db255d-72ff-805c-98e8-fc8e15985603" class="bulleted-list"><li style="list-style-type:disc">Reverse the binary representation of n and compare it with n.</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80e1-8f4d-d59b4d4f1ec3" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">isPalindrome = (n == Integer.reverse(n) &gt;&gt;&gt; Integer.numberOfLeadingZeros(n));</code></pre><hr id="17db255d-72ff-8052-b7cb-d22344f00d0b"/><h3 id="17db255d-72ff-8033-89d5-ea36780bd6f7" class="">19. <strong>Find XOR of All Elements in Two Ranges</strong></h3><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="17db255d-72ff-80fe-8ac1-f0c4a7f18459" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">int xorRange = prefixXor[end] ^ prefixXor[start - 1];</code></pre></details></li></ul><ul id="1d6b255d-72ff-80f4-a0d9-f9efe3d9af1d" class="toggle"><li><details open=""><summary><a href="https://takeuforward.org/plus/dsa/arrays/logic-building/find-missing-number">Missing number</a></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1d6b255d-72ff-80e1-a382-e71ba91d18f6" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    // Function to find missing number in array
+    public int missingNumber(int[] nums) {
+        int xor1 = 0, xor2 = 0;
+
+        // Calculate XOR of all array elements
+        for (int i = 0; i &lt; nums.length; i++) {
+            xor1 = xor1 ^ (i + 1); // XOR up to [1...N]
+            xor2 = xor2 ^ nums[i]; // XOR of array elements
+        }
+
+        // XOR of xor1 and xor2 gives missing number
+        return (xor1 ^ xor2);
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8049-b6ff-de99787c0fb9" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/bit-manipulation/problems/single-number---i">Single Number - I</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-8066-bc06-d4d179eb4317" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to get the single 
+    number in the given array */
+    public int singleNumber(int[] nums) {
+        /* Variable to store XOR
+        of all numbers in array */
+        int XOR = 0;
+        
+        /* Iterate on the array to
+        find XOR of all elements */
+        for (int i = 0; i &lt; nums.length; i++) {
+            XOR ^= nums[i];    
+        }
+        
+        // XOR stores the required answer
+        return XOR;        
+    }
+}</code></pre></details></li></ul><ul id="235b255d-72ff-8095-acd1-d39ef92bfbad" class="toggle"><li><details open=""><summary>Find the Duplicate Number</summary></details></li></ul><ul id="235b255d-72ff-8081-9a7b-d54710cfa659" class="toggle"><li><details open=""><summary>Divide Two Integers</summary></details></li></ul><ul id="235b255d-72ff-8033-bbbc-ea68d848a242" class="toggle"><li><details open=""><summary>Add Binary</summary></details></li></ul><ul id="1b5b255d-72ff-80f8-801b-e20b8b5051d8" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-quick-revision/day-3-lms/single-number---iii">Single Number - III</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80a6-9b0c-e4548e664052" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAQuickRevision
+    /* Function to get the single 
+    numbers in the given array */
+    public int[] singleNumber(int[] nums) {
+        // Variable to store size of array
+        int n = nums.length;
+        
+        // Variable to store XOR of all elements
+        long XOR = 0;
+        
+        // Traverse the array
+        for(int i=0; i &lt; n; i++) {
+            // Update the XOR
+            XOR = XOR ^ nums[i];
+        }
+        
+        /* Variable to get the rightmost 
+        set bit in overall XOR */
+        int rightmost = (int)(XOR &amp; (XOR - 1)) ^ (int)XOR;
+        
+        /* Variables to stores XOR of
+        elements in bucket 1 and 2 */
+        int XOR1 = 0, XOR2 = 0;
+        
+        // Traverse the array
+        for(int i=0; i &lt; n; i++) {
+            /* Divide the numbers among bucket 1
+             and 2 based on rightmost set bit */
+            if((nums[i] &amp; rightmost) != 0) {
+                XOR1 = XOR1 ^ nums[i];
+            }
+            else {
+                XOR2 = XOR2 ^ nums[i];
+            }
+        }
+        
+        // Return the result in sorted order
+        if(XOR1 &lt; XOR2) return new int[]{XOR1, XOR2};
+        return new int[]{XOR2, XOR1};
+    }
+}</code></pre></details></li></ul><h2 id="17fb255d-72ff-8097-9962-c2c9f59061d3" class="">DSA Concept Revision</h2><ul id="1b5b255d-72ff-80c7-a8a1-c3ca28586494" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-iii-and-bit-manipulation/single-number---ii">Single Number - II</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-804b-9761-f83a1ef77d60" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    public int singleNumber(int[] nums) {
+        // Two buckets
+        int ones = 0, twos = 0;
+
+        // Traverse the array 
+        for (int i = 0; i &lt; nums.length; i++) {
+            // Add the number to Ones, if it is not in Twos
+            ones = (ones ^ nums[i]) &amp; ~twos;
+
+            // Add the number to Twos, if it is already in Ones
+            twos = (twos ^ nums[i]) &amp; ~ones;
+        }
+
+        return ones;
+    }
+}</code></pre></details></li></ul><ul id="1b5b255d-72ff-8051-b9b9-c578bb88d6dc" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa-concept-revision/linked-list-iii-and-bit-manipulation/xor-of-numbers-in-a-given-range">XOR of numbers in a given range</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1b5b255d-72ff-80e0-9947-dfda9f35fda4" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAConceptRevision
+    /* Function to find the XOR 
+    of numbers from 1 to n */
+    private int XORtillN(int n) {
+        if(n % 4 == 1) return 1;
+        if(n % 4 == 2) return n + 1;
+        if(n % 4 == 3) return 0;
+        return n;
+    }
+    
+    /* Function to find the XOR 
+    of numbers from L to R */
+    public int findRangeXOR(int l, int r) {
+        return XORtillN(l - 1) ^ XORtillN(r);
+    }
+}</code></pre></details></li></ul><h2 id="1c7b255d-72ff-80c8-85f4-f84af491b7a4" class="">DSA Striver</h2><ul id="1cdb255d-72ff-8016-a6d2-e9d4b5201858" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/bit-manipulation/problems/minimum-bit-flips-to-convert-number">Minimum Bit Flips to Convert Number</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-807e-9f1d-c05d86376219" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution{ //DSAStriver
+    /* Function to get the minimum
+     bit flips to convert number */
+    public int minBitsFlip(int start, int goal) {
+        
+        /* Variable to store bits that
+        are different in both numbers */
+        int num = start ^ goal;
+        
+        /* Variable to count 
+        number of set bits */
+        int count = 0;
+
+        for (int i = 0; i &lt; 32; i++) {
+            /* Update count if the 
+            rightmost bit is set */
+            count += (num &amp; 1); 
+            
+            /* Shift the number every 
+            time by 1 place */
+            num = num &gt;&gt; 1;
+        }
+        return count;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-80f6-bd9b-edb8d6147a3d" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/bit-manipulation/problems/divide-two-numbers-without-multiplication-and-division">Divide two numbers without multiplication and division</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-809f-b2bf-cedf37672f45" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function to divide two numbers
+    without multiplication and division */
+    public int divide(int dividend, int divisor) {
+        
+        // Edge cases
+        if(dividend == divisor) return 1;
+        if(dividend == Integer.MIN_VALUE &amp;&amp; divisor == -1) return Integer.MAX_VALUE;
+        if(divisor == 1) return dividend;
+        
+        // Variable to store the sign of result
+        boolean isPositive = true;
+        
+        // Updating the sign of quotient
+        if(dividend &gt;= 0 &amp;&amp; divisor &lt; 0) 
+            isPositive = false;
+        else if(dividend &lt;= 0 &amp;&amp; divisor &gt; 0)
+            isPositive = false;
+            
+        // Storing absolute dividend &amp; divisor
+        long n = dividend;
+        long d = divisor;
+        
+        n = Math.abs(n);
+        d = Math.abs(d);
+        
+        // Variable to store the answer
+        int ans = 0;
+        
+        /* Looping while dividend is 
+        greater than equal to divisor */
+        while(n &gt;= d) {
+            int count = 0;
+            
+            /* Finding the required 
+            largest power of 2 */
+            while(n &gt;= (d &lt;&lt; (count + 1))) {
+                count++;
+            }
+            
+            // Updating the answer &amp; dividend
+            ans += (1 &lt;&lt; count);
+            n -= d * (1 &lt;&lt; count);
+        }
+        
+        // Handling overflowing condition
+        if(ans == (1 &lt;&lt; 31) &amp;&amp; isPositive) 
+            return Integer.MAX_VALUE;
+        if(ans == (1 &lt;&lt; 31) &amp;&amp; !isPositive)
+            return Integer.MIN_VALUE;
+        
+        /* Returning the quotient 
+        with proper sign */
+        return isPositive ? ans : -1 * ans;
+    }
+}</code></pre></details></li></ul><ul id="1cdb255d-72ff-8038-a4f8-e896dc60d8ce" class="toggle"><li><details open=""><summary><strong><a href="https://takeuforward.org/plus/dsa/bit-manipulation/problems/power-set-bit-manipulation">Power Set Bit Manipulation</a></strong></summary><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="1cdb255d-72ff-80e8-943d-db7ece91f78e" class="code code-wrap"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">class Solution { //DSAStriver
+    /* Function call to get the
+    Power set of given array */
+    public List&lt;List&lt;Integer&gt;&gt; powerSet(int[] nums) {
+        
+        // Variable to store size of array
+        int n = nums.length;
+        
+        // To store the answer
+        List&lt;List&lt;Integer&gt;&gt; ans = new ArrayList&lt;&gt;();
+        
+        /* Variable to store the 
+        count of total susbsets */
+        int count = (1 &lt;&lt; n);
+        
+        // Traverse for every value
+        for (int val = 0; val &lt; count; val++) {
+            
+            // To store the current subset
+            List&lt;Integer&gt; subset = new ArrayList&lt;&gt;();
+            
+            // Traverse on n bits
+            for (int i = 0; i &lt; n; i++) {
+                if ((val &amp; (1 &lt;&lt; i)) != 0) {
+                    subset.add(nums[i]);
+                }
+            }
+            
+            /* Add the current subset 
+            to final answer */
+            ans.add(subset);
+        }
+        
+        // Return stored answer
+        return ans;
+    }
+}</code></pre></details></li></ul><h2 id="22eb255d-72ff-8044-a72e-e6158acdcacb" class="">Extras</h2><table id="235b255d-72ff-80bd-9eca-ca4965891bec" class="simple-table"><tbody><tr id="235b255d-72ff-8086-9ef0-d5ba46e4c1c7"><td id="^sh^" class="">Link</td><td id="wphQ" class="">Title</td><td id="lSr}" class="">Frequency</td><td id="Tx]P" class="">Companies Count</td><td id="VltV" class="">Topics</td></tr><tr id="235b255d-72ff-8038-bc53-e9a01510d1c3"><td id="^sh^" class="">https://leetcode.com/problems/subsets</td><td id="wphQ" class="">Subsets</td><td id="lSr}" class="">100</td><td id="Tx]P" class="">21</td><td id="VltV" class="">Array, Backtracking, Bit Manipulation</td></tr><tr id="235b255d-72ff-80b4-8d49-e3866196a6ca"><td id="^sh^" class="">https://leetcode.com/problems/missing-number</td><td id="wphQ" class="">Missing Number</td><td id="lSr}" class="">89</td><td id="Tx]P" class="">16</td><td id="VltV" class="">Array, Hash Table, Math, Binary Search, Bit Manipulation, Sorting</td></tr><tr id="235b255d-72ff-8033-8c67-f36e3cda408b"><td id="^sh^" class="">https://leetcode.com/problems/single-number</td><td id="wphQ" class="">Single Number</td><td id="lSr}" class="">82</td><td id="Tx]P" class="">13</td><td id="VltV" class="">Array, Bit Manipulation</td></tr><tr id="235b255d-72ff-8066-9a46-e184ae0d16b7"><td id="^sh^" class="">https://leetcode.com/problems/find-the-duplicate-number</td><td id="wphQ" class="">Find the Duplicate Number</td><td id="lSr}" class="">88.9</td><td id="Tx]P" class="">12</td><td id="VltV" class="">Array, Two Pointers, Binary Search, Bit Manipulation</td></tr><tr id="235b255d-72ff-80a3-aaa4-deb156268b1d"><td id="^sh^" class="">https://leetcode.com/problems/divide-two-integers</td><td id="wphQ" class="">Divide Two Integers</td><td id="lSr}" class="">73.3</td><td id="Tx]P" class="">12</td><td id="VltV" class="">Math, Bit Manipulation</td></tr><tr id="235b255d-72ff-80ff-b8b9-ccbf1bc2d6bb"><td id="^sh^" class="">https://leetcode.com/problems/add-binary</td><td id="wphQ" class="">Add Binary</td><td id="lSr}" class="">71.9</td><td id="Tx]P" class="">11</td><td id="VltV" class="">Math, String, Bit Manipulation, Simulation</td></tr><tr id="235b255d-72ff-8074-b838-e668b7c91662"><td id="^sh^" class="">https://leetcode.com/problems/subsets-ii</td><td id="wphQ" class="">Subsets II</td><td id="lSr}" class="">79.2</td><td id="Tx]P" class="">9</td><td id="VltV" class="">Array, Backtracking, Bit Manipulation</td></tr><tr id="235b255d-72ff-8035-a223-fa57ef7eb0ae"><td id="^sh^" class="">https://leetcode.com/problems/optimal-account-balancing</td><td id="wphQ" class="">Optimal Account Balancing</td><td id="lSr}" class="">100</td><td id="Tx]P" class="">8</td><td id="VltV" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="235b255d-72ff-80d6-be13-df4e24571711"><td id="^sh^" class="">https://leetcode.com/problems/number-of-1-bits</td><td id="wphQ" class="">Number of 1 Bits</td><td id="lSr}" class="">100</td><td id="Tx]P" class="">6</td><td id="VltV" class="">Divide and Conquer, Bit Manipulation</td></tr><tr id="235b255d-72ff-80e7-b507-c81174a5ffa9"><td id="^sh^" class="">https://leetcode.com/problems/partition-array-into-two-arrays-to-minimize-sum-difference</td><td id="wphQ" class="">Partition Array Into Two Arrays to Minimize Sum Difference</td><td id="lSr}" class="">100</td><td id="Tx]P" class="">6</td><td id="VltV" class="">Array, Two Pointers, Binary Search, Dynamic Programming, Bit Manipulation, Ordered Set, Bitmask</td></tr><tr id="235b255d-72ff-80b7-8b03-dc0f9d48fdf5"><td id="^sh^" class="">https://leetcode.com/problems/beautiful-arrangement</td><td id="wphQ" class="">Beautiful Arrangement</td><td id="lSr}" class="">65.5</td><td id="Tx]P" class="">6</td><td id="VltV" class="">Array, Dynamic Programming, Backtracking, Bit Manipulation, Bitmask</td></tr><tr id="235b255d-72ff-80cd-874a-e7f0a7b1842e"><td id="^sh^" class="">https://leetcode.com/problems/power-of-two</td><td id="wphQ" class="">Power of Two</td><td id="lSr}" class="">100</td><td id="Tx]P" class="">5</td><td id="VltV" class="">Math, Bit Manipulation, Recursion</td></tr><tr id="235b255d-72ff-8078-b5ad-c0ab444ab633"><td id="^sh^" class="">https://leetcode.com/problems/minimum-operations-to-reduce-an-integer-to-0</td><td id="wphQ" class="">Minimum Operations to Reduce an Integer to 0</td><td id="lSr}" class="">100</td><td id="Tx]P" class="">5</td><td id="VltV" class="">Dynamic Programming, Greedy, Bit Manipulation</td></tr></tbody></table></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
